@@ -22,6 +22,11 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
+  <scm>
+    <connection>scm:svn:https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</connection>
+    <developerConnection>scm:svn:https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</url>
+  </scm>
   <build>
     <resources>
       <resource>
@@ -37,6 +42,16 @@
         </includes>
       </resource>
     </resources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <configuration>
+            <tagBase>https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/tags</tagBase>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
