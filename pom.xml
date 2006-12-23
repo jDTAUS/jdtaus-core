@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <parent>
+    <artifactId>jdtaus-core</artifactId>
+    <groupId>org.jdtaus</groupId>
+    <version>1.0-alpha-1</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jdtaus.mojo</groupId>
+  <artifactId>jdtaus-resource-mojo</artifactId>
+  <name>jDTAUS Core Resource Mojo</name>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>maven-plugin</packaging>
+  <description>Source generator for resource bundles.</description>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-project</artifactId>
+    </dependency>
+  </dependencies>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <aggregate>false</aggregate>
+          <author>true</author>
+          <charset>UTF-8</charset>
+          <docencoding>UTF-8</docencoding>
+          <encoding>UTF-8</encoding>
+          <doctitle>${pom.name} Specification ${pom.version}</doctitle>
+          <linksource>true</linksource>
+          <nodeprecated>true</nodeprecated>
+          <quiet>true</quiet>
+          <verbose>false</verbose>
+          <serialwarn>true</serialwarn>
+          <showPackage>false</showPackage>
+          <showPrivate>false</showPrivate>
+          <showProtected>true</showProtected>
+          <windowtitle>${pom.name} Specification ${pom.version}</windowtitle>
+          <links>
+            <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+            <link>http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/apidocs</link>
+          </links>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <configuration>
+          <sourceEncoding>UTF-8</sourceEncoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>surefire-report-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-plugin-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>
