@@ -110,7 +110,7 @@
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
-          <tagBase>https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags</tagBase>
+          <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags</tagBase>
         </configuration>
       </plugin>
     </plugins>
