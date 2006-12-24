@@ -83,12 +83,16 @@ public class CleanMojo extends AbstractSourceMojo {
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        final Collection sources = this.getAllSources();
+        if(new File(this.getMavenProject().
+            getBasedir(), "src/main/java").exists()) {
 
-        final SourceEditor editor = new RemoveTrailingSpacesEditor();
+            final Collection sources = this.getAllSources();
 
-        for(Iterator it = sources.iterator(); it.hasNext();) {
-            this.editFile((File) it.next(), editor);
+            final SourceEditor editor = new RemoveTrailingSpacesEditor();
+
+            for(Iterator it = sources.iterator(); it.hasNext();) {
+                this.editFile((File) it.next(), editor);
+            }
         }
     }
 
