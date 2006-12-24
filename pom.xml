@@ -9,7 +9,7 @@
   <artifactId>jdtaus-core-runtime</artifactId>
   <groupId>org.jdtaus.runtime</groupId>
   <name>jDTAUS Core Runtime</name>
-  <version>1.0-alpha-1</version>
+  <version>1.0-alpha-2-SNAPSHOT</version>
   <description>jDTAUS core runtime classes and interfaces.</description>
   <dependencies>
     <dependency>
@@ -20,9 +20,9 @@
     </dependency>
   </dependencies>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/tags/1.0-alpha-1</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/tags/1.0-alpha-1</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/tags/1.0-alpha-1</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</url>
   </scm>
   <build>
     <resources>
