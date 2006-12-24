@@ -86,9 +86,6 @@
           <quiet>true</quiet>
           <verbose>false</verbose>
           <serialwarn>true</serialwarn>
-          <showPackage>false</showPackage>
-          <showPrivate>false</showPrivate>
-          <showProtected>true</showProtected>
           <windowtitle>${pom.name} Specification ${pom.version}</windowtitle>
           <links>
             <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
