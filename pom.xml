@@ -84,9 +84,6 @@
           <quiet>true</quiet>
           <verbose>false</verbose>
           <serialwarn>true</serialwarn>
-          <showPackage>false</showPackage>
-          <showPrivate>false</showPrivate>
-          <showProtected>true</showProtected>
           <windowtitle>${pom.name} Specification ${pom.version}</windowtitle>
           <tag>pre:a:Preconditions:</tag>
           <tag>post:a:Guaranties:</tag>
