@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><project>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
@@ -12,52 +16,19 @@
   <version>1.0-SNAPSHOT</version>
   <description>Source generator for resource bundles.</description>
   <scm>
-    <connection>scm:svn:https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags/jdtaus-core-1.0-alpha-1</connection>
-    <developerConnection>scm:svn:https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags/jdtaus-core-1.0-alpha-1</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags/jdtaus-core-1.0-alpha-1</url>
+    <connection>scm:svn:https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/trunk</connection>
+    <developerConnection>scm:svn:https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/trunk</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-resource-mojo/trunk</url>
   </scm>
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <source>1.4</source>
-            <target>1.4</target>
-            <debug>true</debug>
-            <encoding>UTF-8</encoding>
-            <optimize>true</optimize>
-            <showDeprecation>true</showDeprecation>
-            <showWarnings>true</showWarnings>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <configuration>
-            <outputEncoding>UTF-8</outputEncoding>
-            <locales>en</locales>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-release-plugin</artifactId>
-          <configuration>
-            <tagBase>https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags</tagBase>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <configuration>
-            <encoding>UTF-8</encoding>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-release-plugin</artifactId>
-          <configuration>
-            <tagBase>https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags</tagBase>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <tagBase>https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags</tagBase>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
   <dependencies>
     <dependency>
