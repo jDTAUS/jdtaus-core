@@ -47,7 +47,7 @@
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
-          <tagBase>https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/tags</tagBase>
+          <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/tags</tagBase>
         </configuration>
       </plugin>
       <plugin>
