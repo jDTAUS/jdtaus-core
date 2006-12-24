@@ -98,9 +98,9 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo {
     /**
      * Processes all property files from the projects resources. If a file's
      * name matches the regular expression of the optional property
-     * {@code <fileExcludeRegexp>} it will be ignored. For all other property
+     * {@code fileExcludeRegexp} it will be ignored. For all other property
      * files {@code processProperty(}} is called for all properties whose keys
-     * are matching the value of property {@code <keyMatchRegexp>}.
+     * are matching the value of property {@code keyMatchRegexp}.
      *
      * @throws MojoExecutionException for runtime errors.
      * @throws MojoFailureException for build failures.
