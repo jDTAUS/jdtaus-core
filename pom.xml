@@ -68,9 +68,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/trunk</connection>
-    <developerConnection>scm:svn:https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/trunk</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/trunk</url>
+    <connection>scm:svn:https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-1</connection>
+    <developerConnection>scm:svn:https://svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-1</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/tags/1.0-alpha-1</url>
   </scm>
   <organization>
     <name>jDTAUS</name>
