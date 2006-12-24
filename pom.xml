@@ -8,7 +8,7 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.0-alpha-1</version>
+  <version>1.0-SNAPSHOT</version>
   <description>Parent module for the jDTAUS core library artifacts.</description>
   <url>http://www.jdtaus.org/jdtaus-core/1.0.x</url>
   <issueManagement>
