@@ -118,16 +118,16 @@
   <modules>
     <module>jdtaus-resource-mojo</module>
     <module>jdtaus-core-api</module>
-    <module>jdtaus-core-runtime</module>
-    <module>jdtaus-core-servlet-runtime</module>
+    <module>jdtaus-client-adapter</module>
+    <module>jdtaus-servlet-adapter</module>
     <module>jdtaus-container-mojo</module>
     <module>jdtaus-core-spi</module>
     <module>jdtaus-runtime-spi-limiting-memory-manager</module>
-    <module>jdtaus-runtime-spi-context-message-recorder</module>
-    <module>jdtaus-runtime-spi-jdk-logger</module>
-    <module>jdtaus-runtime-spi-commons-logger</module>
-    <module>jdtaus-runtime-spi-client-task-monitor</module>
-    <module>jdtaus-runtime-spi-server-task-monitor</module>
+    <module>jdtaus-context-i18n-adapter</module>
+    <module>jdtaus-jdk-logging-adapter</module>
+    <module>jdtaus-commons-logging-adapter</module>
+    <module>jdtaus-client-monitor-adapter</module>
+    <module>jdtaus-server-monitor-adapter</module>
   </modules>
   <repositories>
     <repository>
