@@ -10,7 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
   <artifactId>jdtaus-container-mojo</artifactId>
-  <name>jDTAUS Core Container Mojo</name>
+  <name>jDTAUS Mojo Container</name>
   <version>1.0-alpha-2-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <description>Source generator for the container model.</description>
@@ -28,12 +28,6 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-project</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jdtaus.runtime</groupId>
-      <artifactId>jdtaus-core-runtime</artifactId>
-      <version>[1.0-alpha-1, 1.1)</version>
-      <scope>runtime</scope>
     </dependency>
   </dependencies>
   <scm>
