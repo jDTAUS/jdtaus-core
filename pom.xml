@@ -1,14 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus</groupId>
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.0-alpha-3-SNAPSHOT</version>
+  <version>1.0-alpha-3</version>
   <description><![CDATA[
   jDTAUS Core provides a common application programming interface for jDTAUS
   integration. This is the parent module for the core artifacts.]]>
@@ -67,9 +64,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/trunk</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/trunk</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/trunk</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-3</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-3</developerConnection>
+    <url>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-3</url>
   </scm>
   <organization>
     <name>jDTAUS</name>
