@@ -57,7 +57,7 @@
           <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-spi/apidocs/index.html">JavaDoc</a>.
         </p>
       </subsection>
-      <subsection name="org.jdtaus.runtime: jDTAUS runtime">
+      <subsection name="org.jdtaus.runtime: Application runtime">
         <p>
           Artifacts of group <code>org.jdtaus.runtime</code> build the
           application runtime. These are standalone implementations implementing
@@ -80,7 +80,7 @@
           </p>
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-client-adapter</artifactId>
+  <artifactId>jdtaus-client-container-adapter</artifactId>
   <scope>runtime</scope>
 </dependency>
 
@@ -88,14 +88,14 @@ and (optionally)
 
 <dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-servlet-adapter</artifactId>
+  <artifactId>jdtaus-servlet-container-adapter</artifactId>
   <scope>runtime</scope>
 </dependency>]]>
           </source>
           <p>
-            jDTAUS RI Client Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-container-adapter/index.html">site</a> | 
+            jDTAUS RI Client Container Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-container-adapter/index.html">site</a> | 
             <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-container-adapter/apidocs/index.html">JavaDoc</a>.<br/>
-            jDTAUS RI Servlet Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-servlet-container-adapter/index.html">site</a> | 
+            jDTAUS RI Servlet Container Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-servlet-container-adapter/index.html">site</a> | 
             <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-servlet-container-adapter/apidocs/index.html">JavaDoc</a>.
           </p>
           <p>
