@@ -44,6 +44,7 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-resource-mojo</artifactId>
+        <version>RELEASE</version>
         <executions>
           <execution>
             <id>default</id>
