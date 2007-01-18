@@ -117,12 +117,12 @@
   <modules>
     <module>jdtaus-resource-mojo</module>
     <module>jdtaus-core-api</module>
-    <module>jdtaus-client-adapter</module>
-    <module>jdtaus-servlet-adapter</module>
+    <module>jdtaus-client-container-adapter</module>
+    <module>jdtaus-servlet-container-adapter</module>
     <module>jdtaus-container-mojo</module>
     <module>jdtaus-core-spi</module>
-    <module>jdtaus-runtime-spi-limiting-memory-manager</module>
-    <module>jdtaus-context-i18n-adapter</module>
+    <module>jdtaus-ri-lang-adapter</module>
+    <module>jdtaus-ri-i18n-adapter</module>
     <module>jdtaus-jdk-logging-adapter</module>
     <module>jdtaus-commons-logging-adapter</module>
     <module>jdtaus-client-monitor-adapter</module>
