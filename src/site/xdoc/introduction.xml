@@ -25,6 +25,7 @@
         <source><![CDATA[<dependency>
   <groupId>org.jdtaus.common</groupId>
   <artifactId>jdtaus-core-api</artifactId>
+  <version>RELEASE</version>
   <scope>compile</scope>
 </dependency>]]></source>
         <p>
@@ -50,6 +51,7 @@
         <source><![CDATA[<dependency>
   <groupId>org.jdtaus.spi</groupId>
   <artifactId>jdtaus-core-spi</artifactId>
+  <version>RELEASE</version>
   <scope>compile</scope>
 </dependency>]]></source>
         <p>
@@ -81,6 +83,7 @@
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
   <artifactId>jdtaus-client-container-adapter</artifactId>
+  <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>
 
@@ -89,6 +92,7 @@ and (optionally)
 <dependency>
   <groupId>org.jdtaus.runtime</groupId>
   <artifactId>jdtaus-servlet-container-adapter</artifactId>
+  <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>]]>
           </source>
@@ -111,6 +115,7 @@ and (optionally)
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
   <artifactId>jdtaus-jdk-logging-adapter</artifactId>
+  <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>
 
@@ -119,6 +124,7 @@ or
 <dependency>
   <groupId>org.jdtaus.runtime</groupId>
   <artifactId>jdtaus-commons-logging-adapter</artifactId>
+  <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>]]></source>
           <p>
@@ -138,6 +144,7 @@ or
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
   <artifactId>jdtaus-client-monitor-adapter</artifactId>
+  <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>
 
@@ -146,6 +153,7 @@ or
 <dependency>
   <groupId>org.jdtaus.runtime</groupId>
   <artifactId>jdtaus-server-monitor-adapter</artifactId>
+  <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>]]></source>
           <p>
@@ -162,6 +170,7 @@ or
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
   <artifactId>jdtaus-ri-lang-adapter</artifactId>
+  <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>]]></source>
           <p>
@@ -176,10 +185,11 @@ or
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
   <artifactId>jdtaus-ri-i18n-adapter</artifactId>
+  <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>]]></source>
           <p>
-            jDTAUS RI I!8N Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-i18n-adapter/index.html">site</a> | 
+            jDTAUS RI I18N Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-i18n-adapter/index.html">site</a> | 
             <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-i18n-adapter/apidocs/index.html">JavaDoc</a>.
           </p>
         </subsection>
