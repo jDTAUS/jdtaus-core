@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <properties>
+    <title>jDTAUS Core</title>
+    <author email="cs@jdtaus.org">Christian Schulte</author>
+  </properties>
+  <body>
+    <section name="Introduction">
+      jDTAUS Core provides a common application programming interface for
+      jDTAUS integration. It comes split into various artifacts of
+      different namespaces.
+      <subsection name="org.jdtaus.common: Application programming interface">
+        <p>
+          Artifacts of group <code>org.jdtaus.common</code> build the
+          application programming interface. The Core artifact provides
+          interfaces to core application services like task monitoring, data
+          validation or modular implementation management.
+        </p>
+        <p>
+          <b>Maven:</b> Artifacts of group <code>org.jdtaus.common</code> are
+          the only artifacts allowed in the compile classpath when building
+          applications. The Core artifact will almost ever be pulled in
+          transitively as will other common artifacts.
+        </p>
+        <source><![CDATA[<dependency>
+  <groupId>org.jdtaus.common</groupId>
+  <artifactId>jdtaus-core-api</artifactId>
+  <version>RELEASE</version>
+  <scope>compile</scope>
+</dependency>]]></source>
+        <p>
+          jDTAUS Core API <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/index.html">site</a> | 
+          <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/apidocs/index.html">JavaDoc</a>.
+        </p>
+      </subsection>
+      <subsection name="org.jdtaus.spi: Service programming interfaces">
+        <p>
+          Artifacts of group <code>org.jdtaus.spi</code> build the service
+          programming interface. The Core artifact provides interfaces to be
+          used by implementations to expose core application services to
+          applications.
+        </p>
+        <p>
+          <b>Maven:</b> Artifacts of group <code>org.jdtaus.spi</code> are
+          needed in the compile classpath when building implementations but must
+          not be in the compile classpath when building applications. Since
+          implementation code depends on them during compile time they will
+          almost ever be pulled in transitively via the application's runtime
+          artifacts.
+        </p>
+        <source><![CDATA[<dependency>
+  <groupId>org.jdtaus.spi</groupId>
+  <artifactId>jdtaus-core-spi</artifactId>
+  <version>RELEASE</version>
+  <scope>compile</scope>
+</dependency>]]></source>
+        <p>
+          jDTAUS Core SPI <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-spi/index.html">site</a> | 
+          <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-spi/apidocs/index.html">JavaDoc</a>.
+        </p>
+      </subsection>
+      <subsection name="org.jdtaus.runtime: Application runtime">
+        <p>
+          Artifacts of group <code>org.jdtaus.runtime</code> build the
+          application runtime. These are standalone implementations implementing
+          specifications from group <code>org.jdtaus.common</code> and providing
+          core application services by using the service interfaces defined
+          in group <code>org.jdtaus.spi</code>.
+        </p>
+        <p>
+          <b>Maven:</b> Artifacts of group <code>org.jdtaus.runtime</code> are
+          never pulled in transitively. The application runtime needs to be
+          assembled manually providing great integration flexibility. The Core
+          artifacts are mandatory runtime artifacts.
+        </p>
+        <subsection name="Container Adapters">
+          <p>
+            The client container adapter provides the jDTAUS Container reference
+            implementation and implements a runtime suitable for standalone,
+            single-user client applications. The servlet container adapter
+            extends that runtime for web applications.
+          </p>
+          <source><![CDATA[<dependency>
+  <groupId>org.jdtaus.runtime</groupId>
+  <artifactId>jdtaus-client-container-adapter</artifactId>
+  <version>RELEASE</version>
+  <scope>runtime</scope>
+</dependency>
+
+and (optionally)
+
+<dependency>
+  <groupId>org.jdtaus.runtime</groupId>
+  <artifactId>jdtaus-servlet-container-adapter</artifactId>
+  <version>RELEASE</version>
+  <scope>runtime</scope>
+</dependency>]]>
+          </source>
+          <p>
+            jDTAUS RI Client Container Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-container-adapter/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-container-adapter/apidocs/index.html">JavaDoc</a>.<br/>
+            jDTAUS RI Servlet Container Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-servlet-container-adapter/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-servlet-container-adapter/apidocs/index.html">JavaDoc</a>.
+          </p>
+          <p>
+            <b>Note:</b> Web applications must be configured manually to work
+            correctly with jDTAUS. See <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-servlet-container-adapter/apidocs/org/jdtaus/runtime/container/ServletFilter.html">ServletFilter</a>.
+          </p>
+        </subsection>
+        <subsection name="Logging Adapters">
+          <p>
+            Two logging implementations to choose from. JDK 1.4 or commons
+            logging.
+          </p>
+          <source><![CDATA[<dependency>
+  <groupId>org.jdtaus.runtime</groupId>
+  <artifactId>jdtaus-jdk-logging-adapter</artifactId>
+  <version>RELEASE</version>
+  <scope>runtime</scope>
+</dependency>
+
+or
+
+<dependency>
+  <groupId>org.jdtaus.runtime</groupId>
+  <artifactId>jdtaus-commons-logging-adapter</artifactId>
+  <version>RELEASE</version>
+  <scope>runtime</scope>
+</dependency>]]></source>
+          <p>
+            jDTAUS RI JDK 1.4 Logging Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-jdk-logging-adapter/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-jdk-logging-adapter/apidocs/index.html">JavaDoc</a>.<br/>
+            jDTAUS RI Commons Logging Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-commons-logging-adapter/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-commons-logging-adapter/apidocs/index.html">JavaDoc</a>.
+          </p>
+        </subsection>
+        <subsection name="Task Monitoring Adapters">
+          <p>
+            Two task monitoring implementations to choose from. The client
+            monitor adapter implements a runtime suitable for client
+            applications. The server monitor adapter implements a server
+            runtime.
+          </p>
+          <source><![CDATA[<dependency>
+  <groupId>org.jdtaus.runtime</groupId>
+  <artifactId>jdtaus-client-monitor-adapter</artifactId>
+  <version>RELEASE</version>
+  <scope>runtime</scope>
+</dependency>
+
+or
+
+<dependency>
+  <groupId>org.jdtaus.runtime</groupId>
+  <artifactId>jdtaus-server-monitor-adapter</artifactId>
+  <version>RELEASE</version>
+  <scope>runtime</scope>
+</dependency>]]></source>
+          <p>
+            jDTAUS RI Client Monitor Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-monitor-adapter/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-monitor-adapter/apidocs/index.html">JavaDoc</a>.<br/>
+            jDTAUS RI Server Monitor Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-server-monitor-adapter/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-server-monitor-adapter/apidocs/index.html">JavaDoc</a>.
+          </p>
+        </subsection>
+        <subsection name="Runtime Environment Adapters">
+          <p>
+            Currently only the reference implementation is available.
+          </p>
+          <source><![CDATA[<dependency>
+  <groupId>org.jdtaus.runtime</groupId>
+  <artifactId>jdtaus-ri-lang-adapter</artifactId>
+  <version>RELEASE</version>
+  <scope>runtime</scope>
+</dependency>]]></source>
+          <p>
+            jDTAUS RI Runtime Environment Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-lang-adapter/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-lang-adapter/apidocs/index.html">JavaDoc</a>.
+          </p>
+        </subsection>
+        <subsection name="Localization Adapters">
+          <p>
+            Currently only the reference implementation is available.
+          </p>
+          <source><![CDATA[<dependency>
+  <groupId>org.jdtaus.runtime</groupId>
+  <artifactId>jdtaus-ri-i18n-adapter</artifactId>
+  <version>RELEASE</version>
+  <scope>runtime</scope>
+</dependency>]]></source>
+          <p>
+            jDTAUS RI I18N Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-i18n-adapter/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-i18n-adapter/apidocs/index.html">JavaDoc</a>.
+          </p>
+        </subsection>
+      </subsection>
+    </section>
+  </body>
+</document>
