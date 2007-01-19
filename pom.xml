@@ -16,7 +16,7 @@
     <dependency>
       <groupId>org.jdtaus.common</groupId>
       <artifactId>jdtaus-core-api</artifactId>
-      <version>[1.0-alpha-1, 1.1)</version>
+      <version>RELEASE</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
