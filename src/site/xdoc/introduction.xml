@@ -109,12 +109,21 @@ and (optionally)
         </subsection>
         <subsection name="Logging Adapters">
           <p>
-            Two logging implementations to choose from. JDK 1.4 or commons
-            logging.
+            Three logging implementations to choose from. JDK 1.4, Log4J or
+            Commons logging.
           </p>
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
   <artifactId>jdtaus-jdk-logging-adapter</artifactId>
+  <version>RELEASE</version>
+  <scope>runtime</scope>
+</dependency>
+
+or
+
+<dependency>
+  <groupId>org.jdtaus.runtime</groupId>
+  <artifactId>jdtaus-log4j-logging-adapter</artifactId>
   <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>
@@ -130,6 +139,8 @@ or
           <p>
             jDTAUS RI JDK 1.4 Logging Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-jdk-logging-adapter/index.html">site</a> | 
             <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-jdk-logging-adapter/apidocs/index.html">JavaDoc</a>.<br/>
+            jDTAUS RI Log4J Logging Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-log4j-logging-adapter/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-log4j-logging-adapter/apidocs/index.html">JavaDoc</a>.<br/>
             jDTAUS RI Commons Logging Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-commons-logging-adapter/index.html">site</a> | 
             <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-commons-logging-adapter/apidocs/index.html">JavaDoc</a>.
           </p>
