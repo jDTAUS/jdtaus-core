@@ -905,7 +905,9 @@ public class ContainerMojo extends AbstractSourceMojo {
         final MessageFormat fmt = ContainerMojoBundle.
             getMissingMarkersMessage(getLocale());
 
+        String edited;
         final File source = this.getSource(impl.getIdentifier());
+        final String content = this.load(source);
         final String path = source.getAbsolutePath();
         final ImplementationEditor implEditor =
             new ImplementationEditor(path, impl);
@@ -919,50 +921,53 @@ public class ContainerMojo extends AbstractSourceMojo {
         final ConstructorsEditor ctorsEditor =
             new ConstructorsEditor(path, impl);
 
-        // Empty all sections.
-        this.editFile(source, new RemovingEditor(path,
+        edited = this.edit(content, new RemovingEditor(path,
             this.implementationsStartingMarker,
             this.implementationsEndingMarker));
 
-        this.editFile(source, new RemovingEditor(path,
+        edited = this.edit(edited, new RemovingEditor(path,
             this.dependenciesStartingMarker,
             this.dependenciesEndingMarker));
 
-        this.editFile(source, new RemovingEditor(path,
+        edited = this.edit(edited, new RemovingEditor(path,
             this.propertiesStartingMarker,
             this.propertiesEndingMarker));
 
-        this.editFile(source, new RemovingEditor(path,
+        edited = this.edit(edited, new RemovingEditor(path,
             this.constructorsStartingMarker,
             this.constructorsEndingMarker));
 
-        // Generate the code.
-        this.editFile(source, implEditor);
+        edited = this.edit(edited, implEditor);
+        edited = this.edit(edited, depEditor);
+        edited = this.edit(edited, propEditor);
+        edited = this.edit(edited, ctorsEditor);
+
         if(!implEditor.isModified()) {
             throw new MojoExecutionException(fmt.format(new Object[] {
                 this.implementationsStartingMarker, path
             }));
         }
 
-        this.editFile(source, depEditor);
         if(depEditor.isMarkersNeeded() && !depEditor.isModified()) {
             throw new MojoExecutionException(fmt.format(new Object[] {
                 this.dependenciesStartingMarker, path
             }));
         }
 
-        this.editFile(source, propEditor);
         if(propEditor.isMarkersNeeded() && !propEditor.isModified()) {
             throw new MojoExecutionException(fmt.format(new Object[] {
                 this.propertiesStartingMarker, path
             }));
         }
 
-        this.editFile(source, ctorsEditor);
         if(!ctorsEditor.isModified()) {
             throw new MojoExecutionException(fmt.format(new Object[] {
                 this.constructorsStartingMarker, path
             }));
+        }
+
+        if(!content.equals(edited)) {
+            this.save(source, edited);
         }
     }
 
@@ -981,18 +986,14 @@ public class ContainerMojo extends AbstractSourceMojo {
         final SpecificationEditor specEditor =
             new SpecificationEditor(path, spec);
 
-        // Empty all sections.
-        this.editFile(source, new RemovingEditor(path,
+        final String content = this.load(source);
+        String edited = this.edit(content, new RemovingEditor(path,
             this.specificationsStartingMarker,
             this.specificationsEndingMarker));
 
-        /* Generate code.
-        this.editFile(source, specEditor);
-        if(!specEditor.isModified()) {
-            throw new MojoExecutionException(fmt.format(new Object[] {
-                this.specificationsStartingMarker, path
-            }));
-        }*/
+        if(!content.equals(edited)) {
+            this.save(source, edited);
+        }
     }
 
     //-----------------------------------------------------------ContainerMojo--

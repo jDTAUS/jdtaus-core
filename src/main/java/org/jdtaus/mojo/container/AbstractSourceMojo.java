@@ -30,6 +30,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.MalformedURLException;
@@ -41,7 +42,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
@@ -64,14 +64,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      * @readonly
      */
     private MavenProject mavenProject;
-
-    /**
-     * Directory to store hashcodes of files in.
-     * @parameter expression="${hashDir}"
-     *            default-value="target/jdtaus-container-mojo/hashcodes"
-     *
-     */
-    private String hashDir;
 
     /**
      * Number of spaces to use per indentation level.
@@ -183,23 +175,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
         return ret;
     }
 
-    /**
-     * Getter for property {@code hashDir}.
-     * <p>If the directory does not exist, it will be created.</p>
-     *
-     * @return the directory to store hashcodes of files in.
-     */
-    protected final File getHashDir() {
-        final File ret = new File(this.getMavenProject().getBasedir(),
-            this.hashDir);
-
-        if(!ret.exists()) {
-            FileUtils.mkdir(ret.getAbsolutePath());
-        }
-
-        return ret;
-    }
-
     //-----------------------------------------------------------Configuration--
     //--AbstractSourceMojo------------------------------------------------------
 
@@ -226,24 +201,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
          * {@code false} if not.
          */
         boolean isModified();
-
-    }
-
-    /**
-     * Accessor to messages. Gets the message for {@code key} from a
-     * {@code ResourceBundle} named equally to the name returned by
-     * {@code clazz.getName()}.
-     *
-     * @param clazz The class used to decide which bundle to use.
-     * @param key The key of the message to return.
-     *
-     * @return the message for {@code key}.
-     */
-    protected final String getMessage(
-        final Class clazz, final String key) {
-
-        return ResourceBundle.getBundle(clazz.getName(),
-            this.getLocale()).getString(key);
 
     }
 
@@ -339,78 +296,23 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
     }
 
     /**
-     * Gets the hashcode of a file.
-     * <p>This method is used to manage the contents of the directory storing
-     * hashcodes for files controlled by property {@code hashDir}.</p>
+     * Edits a string.
      *
-     * @param file The file to return the hashcode for.
+     * @param str The string to edit.
+     * @param editor The editor to use for editing {@code str}.
      *
-     * @return the hashcode of {@code file}.
+     * @return {@code str} edited by {@code editor}.
      *
-     * @throws NullPointerException if {@code file} is {@code null}.
-     * @throws MojoFailureException if no hashcode can be computed for file.
-     */
-    protected final int getHashCode(
-        final File file) throws MojoFailureException {
-
-        if(file == null) {
-            throw new NullPointerException("file");
-        }
-
-        int hashCode;
-        final File hashFile = new File(this.getHashDir(),
-            String.valueOf(file.getAbsolutePath().hashCode()));
-
-        if(hashFile.exists()) {
-            hashCode = this.readHashFile(hashFile);
-        } else {
-            hashCode = this.readHashCode(file);
-            this.writeHashFile(hashFile, hashCode);
-        }
-
-        return hashCode;
-    }
-
-    /**
-     * Updates the hashcode of a file.
-     * <p>This method is used to manage the contents of the directory storing
-     * hashcodes for files controlled by property {@code hashDir}.</p>
-     *
-     * @param file The file to update the hashcode for.
-     * @param hashCode the new hash code of {@code file}.
-     *
-     * @throws NullPointerException if {@code file} is {@code null}.
-     * @throws MojoFailureException if the hashcode cannot be updated.
-     */
-    protected final void updateHashCode(
-        final File file, final int hashCode) throws MojoFailureException {
-
-        if(file == null) {
-            throw new NullPointerException("file");
-        }
-
-        final File hashFile = new File(this.getHashDir(),
-            String.valueOf(file.getAbsolutePath().hashCode()));
-
-        this.writeHashFile(hashFile, hashCode);
-    }
-
-    /**
-     * Edits the contents of a file.
-     *
-     * @param file The file to edit.
-     * @param editor The editor to use for editing the file.
-     *
-     * @throws NullPointerException if either {@code file} or {@code editor} is
+     * @throws NullPointerException if either {@code str} or {@code editor} is
      * {@code null}.
      * @throws MojoFailureException for unrecoverable errors.
      */
-    protected final void editFile(final File file,
+    protected final String edit(final String str,
         final AbstractSourceMojo.SourceEditor editor)
         throws MojoFailureException {
 
-        if(file == null) {
-            throw new NullPointerException("file");
+        if(str == null) {
+            throw new NullPointerException("str");
         }
         if(editor == null) {
             throw new NullPointerException("editor");
@@ -419,20 +321,14 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
         int i;
         String line;
         String replacement;
+        final int sepLength = System.getProperty("line.separator").length();
         final StringWriter writer = new StringWriter();
 
         try {
             char c;
             final char[] chars;
-            final Writer fileWriter;
-            final BufferedReader reader;
-            if(this.encoding == null) {
-                reader = new BufferedReader(new FileReader(file));
-            } else {
-                reader = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(file), this.encoding));
-
-            }
+            final BufferedReader reader =
+                new BufferedReader(new StringReader(str));
 
             while((line = reader.readLine()) != null) {
                 replacement = editor.editLine(line);
@@ -459,15 +355,83 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
                 }
             }
 
-            replacement = replacement.substring(0,
-                System.getProperty("line.separator").length() + i);
+            replacement = replacement.substring(0, i + 1);
+            return replacement.toString() + '\n';
 
+        } catch(IOException e) {
+            throw new MojoFailureException(e.getMessage());
+        }
+    }
+
+    /**
+     * Loads the contents of a file.
+     *
+     * @param file The file to load.
+     *
+     * @return the contents of {@code file}.
+     *
+     * @throws NullPointerException if {@code file} is {@code null}.
+     * @throws MojoFailureException for unrecoverable errors.
+     */
+    protected final String load(final File file) throws
+        MojoFailureException {
+
+        if(file == null) {
+            throw new NullPointerException("file");
+        }
+
+        String line;
+        final StringWriter writer = new StringWriter();
+
+        try {
+            final BufferedReader reader;
+            if(this.encoding == null) {
+                reader = new BufferedReader(new FileReader(file));
+            } else {
+                reader = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(file), this.encoding));
+
+            }
+
+            while((line = reader.readLine()) != null) {
+                writer.write(line.concat("\n"));
+            }
+
+            reader.close();
+            writer.close();
+
+            return writer.toString();
+        } catch(IOException e) {
+            throw new MojoFailureException(e.getMessage());
+        }
+    }
+
+    /**
+     * Saves a string to a file.
+     *
+     * @param file The file to save {@code str} to.
+     * @param str The string to save to {@code file}.
+     *
+     * @throws NullPointerException if either {@code file} or {@code str} is
+     * {@code null}.
+     * @throws MojoFailureException for unrecoverable errors.
+     */
+    protected final void save(final File file, final String str) throws
+        MojoFailureException {
+
+        if(file == null) {
+            throw new NullPointerException("file");
+        }
+        if(str == null) {
+            throw new NullPointerException("str");
+        }
+
+        final Writer fileWriter;
+
+        try {
             if(this.isTestMode()) {
-                this.getLog().info(replacement);
-            } else if ((i < chars.length - System.getProperty("line.separator").
-                length() || editor.isModified()) &&
-                this.getHashCode(file) != replacement.hashCode()) {
-
+                this.getLog().info(str);
+            } else {
                 if(this.encoding == null) {
                     fileWriter = new FileWriter(file);
                 } else {
@@ -480,42 +444,12 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
                     getFileInfoMessage(this.getLocale()).
                     format(new Object[] { file.getName() }));
 
-                fileWriter.write(replacement);
+                fileWriter.write(str);
                 fileWriter.close();
-
-                this.updateHashCode(file, replacement.hashCode());
             }
-
         } catch(IOException e) {
             throw new MojoFailureException(e.getMessage());
         }
-    }
-
-    /**
-     * Edits the contents of a source file for a given class name.
-     *
-     * @param className The name of the class whose defining source file should
-     * be edited.
-     * @param editor The editor to use for editing the file.
-     *
-     * @throws NullPointerException if either {@code className} or
-     * {@code editor} is {@code null}.
-     * @throws MojoFailureException for unrecoverable errors.
-     *
-     * @see #getSource(String)
-     */
-    protected final void editFile(final String className,
-        final AbstractSourceMojo.SourceEditor editor)
-        throws MojoFailureException {
-
-        if(className == null) {
-            throw new NullPointerException("className");
-        }
-        if(editor == null) {
-            throw new NullPointerException("editor");
-        }
-
-        this.editFile(this.getSource(className), editor);
     }
 
     /**
@@ -592,76 +526,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
                 this.getContextClassLoader());
 
         } catch(MalformedURLException e) {
-            throw new MojoFailureException(e.getMessage());
-        }
-    }
-
-    private int readHashFile(final File hashFile) throws MojoFailureException {
-        int ret;
-        DataInputStream in = null;
-
-        try {
-            in = new DataInputStream(new FileInputStream(hashFile));
-            ret = in.readInt();
-        } catch(IOException e) {
-            throw new MojoFailureException(e.getMessage());
-        } finally {
-            if(in != null) {
-                try {
-                    in.close();
-                } catch(IOException e) {
-                    throw new MojoFailureException(e.getMessage());
-                }
-            }
-        }
-
-        return ret;
-    }
-
-    private void writeHashFile(final File hashFile, final int hashCode) throws
-        MojoFailureException {
-
-        int ret;
-        DataOutputStream out = null;
-
-        try {
-            out = new DataOutputStream(new FileOutputStream(hashFile));
-            out.writeInt(hashCode);
-        } catch(IOException e) {
-            throw new MojoFailureException(e.getMessage());
-        } finally {
-            if(out != null) {
-                try {
-                    out.close();
-                } catch(IOException e) {
-                    throw new MojoFailureException(e.getMessage());
-                }
-            }
-        }
-    }
-
-    private int readHashCode(final File file) throws
-        MojoFailureException {
-
-        String line;
-        final BufferedReader reader;
-        final StringBuffer contents = new StringBuffer(65536);
-
-        try {
-            if(this.encoding == null) {
-                reader = new BufferedReader(new FileReader(file));
-            } else {
-                reader = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(file), this.encoding));
-
-            }
-
-            while((line = reader.readLine()) != null) {
-                contents.append(line).append('\n');
-            }
-
-            return contents.toString().hashCode();
-        } catch(IOException e) {
             throw new MojoFailureException(e.getMessage());
         }
     }

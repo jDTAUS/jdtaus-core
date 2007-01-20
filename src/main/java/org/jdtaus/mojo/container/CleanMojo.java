@@ -86,12 +86,19 @@ public class CleanMojo extends AbstractSourceMojo {
         if(new File(this.getMavenProject().
             getBasedir(), "src/main/java").exists()) {
 
+            File file;
+            String contents;
+            String edited;
             final Collection sources = this.getAllSources();
-
             final SourceEditor editor = new RemoveTrailingSpacesEditor();
 
             for(Iterator it = sources.iterator(); it.hasNext();) {
-                this.editFile((File) it.next(), editor);
+                file = (File) it.next();
+                contents = this.load(file);
+                edited = this.edit(contents, editor);
+                if(!contents.equals(edited)) {
+                    this.save(file, edited);
+                }
             }
         }
     }
