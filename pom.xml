@@ -5,7 +5,7 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.0-alpha-3</version>
+  <version>1.0-alpha-4-SNAPSHOT</version>
   <description><![CDATA[
   jDTAUS Core provides a common application programming interface for jDTAUS
   integration. This is the parent module for the core artifacts.]]>
@@ -122,6 +122,7 @@
     <module>jdtaus-ri-i18n-adapter</module>
     <module>jdtaus-jdk-logging-adapter</module>
     <module>jdtaus-commons-logging-adapter</module>
+    <module>jdtaus-log4j-logging-adapter</module>
     <module>jdtaus-client-monitor-adapter</module>
     <module>jdtaus-server-monitor-adapter</module>
     <module>jdtaus-core-manager-webapp</module>
@@ -180,7 +181,7 @@
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
-        <version>[1.2, 1.3)</version>
+        <version>1.2.14</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
@@ -188,6 +189,18 @@
         <artifactId>servlet-api</artifactId>
         <scope>compile</scope>
         <version>[2.2, 2.5)</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jstl</artifactId>
+        <scope>runtime</scope>
+        <version>1.1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>taglibs</groupId>
+        <artifactId>standard</artifactId>
+        <scope>runtime</scope>
+        <version>1.1.2</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven</groupId>
