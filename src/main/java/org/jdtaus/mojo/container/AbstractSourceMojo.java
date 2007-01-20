@@ -55,16 +55,16 @@ import org.codehaus.plexus.util.FileUtils;
  * @version $Id$
  */
 public abstract class AbstractSourceMojo extends AbstractMojo {
-    
+
     //--Configuration-----------------------------------------------------------
-    
+
     /**
      * @parameter expression="${project}"
      * @required
      * @readonly
      */
     private MavenProject mavenProject;
-    
+
     /**
      * Directory to store hashcodes of files in.
      * @parameter expression="${hashDir}"
@@ -72,13 +72,13 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      *
      */
     private String hashDir;
-    
+
     /**
      * Number of spaces to use per indentation level.
      * @parameter expression="${spacesPerIndentationLevel}" default-value="4"
      */
     private Integer spacesPerIndentationLevel;
-    
+
     /**
      * The encoding to use for reading and writing sources. By default the
      * system's default encoding will be used.
@@ -86,14 +86,14 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      * @optional
      */
     private String encoding;
-    
+
     /**
      * Flag indicating test mode. In test mode generated sources will be
      * printed to the console and no files will be written.
      * @parameter expression="${testMode}" default-value="false"
      */
     private Boolean testMode;
-    
+
     /**
      * Language to be used for javadoc comments. By default the system's
      * default locale will be used.
@@ -101,7 +101,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      * @optional
      */
     private String locale;
-    
+
     /**
      * Project runtime classpath.
      *
@@ -110,7 +110,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      * @readonly
      */
     private List classpathElements;
-    
+
     /**
      * A regular expression used for excluding elements from the runtime
      * classpath elements. By default no elements will be excluded.
@@ -118,7 +118,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      * @optional
      */
     private String classPathElementsExcludeRegexp;
-    
+
     /**
      * Accessor to the currently executed {@code MavenProject}.
      *
@@ -127,7 +127,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
     protected final MavenProject getMavenProject() {
         return this.mavenProject;
     }
-    
+
     /**
      * Getter for property {@code testMode}.
      *
@@ -137,7 +137,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
     protected final boolean isTestMode() {
         return this.testMode.booleanValue();
     }
-    
+
     /**
      * Getter for property {@code locale}.
      *
@@ -146,9 +146,9 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
     protected final Locale getLocale() {
         return this.locale == null ?
             Locale.getDefault() : new Locale(this.locale);
-        
+
     }
-    
+
     /**
      * Accessor to the runtime classpath elements.
      *
@@ -157,7 +157,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
     protected final List getClasspathElements() {
         return this.classpathElements;
     }
-    
+
     /**
      * Indicates wheter a class path element should be included in the
      * classpath.
@@ -171,18 +171,18 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      */
     protected boolean isClasspathElementIncluded(final String element) {
         boolean ret = true;
-        
+
         if(element == null) {
             throw new NullPointerException("element");
         }
-        
+
         if(this.classPathElementsExcludeRegexp != null) {
             ret = !element.matches(this.classPathElementsExcludeRegexp);
         }
-        
+
         return ret;
     }
-    
+
     /**
      * Getter for property {@code hashDir}.
      * <p>If the directory does not exist, it will be created.</p>
@@ -192,20 +192,20 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
     protected final File getHashDir() {
         final File ret = new File(this.getMavenProject().getBasedir(),
             this.hashDir);
-        
+
         if(!ret.exists()) {
             FileUtils.mkdir(ret.getAbsolutePath());
         }
-        
+
         return ret;
     }
-    
+
     //-----------------------------------------------------------Configuration--
     //--AbstractSourceMojo------------------------------------------------------
-    
+
     /** Interface to manipulate source files. */
     public interface SourceEditor {
-        
+
         /**
          * Replaces a line in a source file with some string.
          *
@@ -218,7 +218,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
          * @throws MojoFailureException for unrecoverable errors.
          */
         String editLine(String line) throws MojoFailureException;
-        
+
         /**
          * Flag indicating that the editor changed a line.
          *
@@ -226,9 +226,9 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
          * {@code false} if not.
          */
         boolean isModified();
-        
+
     }
-    
+
     /**
      * Accessor to messages. Gets the message for {@code key} from a
      * {@code ResourceBundle} named equally to the name returned by
@@ -241,12 +241,12 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      */
     protected final String getMessage(
         final Class clazz, final String key) {
-        
+
         return ResourceBundle.getBundle(clazz.getName(),
             this.getLocale()).getString(key);
-        
+
     }
-    
+
     /**
      * Accessor to a {@code *.java} file for a given class name.
      *
@@ -261,21 +261,21 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      */
     protected final File getSource(
         final String className) throws MojoFailureException {
-        
+
         if(className == null) {
             throw new NullPointerException("className");
         }
-        
+
         File file;
         String source;
         File ret = null;
         final Iterator it;
         final String fileName = className.replace('.', File.separatorChar).
             concat(".java");
-        
+
         for(it = this.getMavenProject().getCompileSourceRoots().
             iterator(); it.hasNext();) {
-            
+
             source = (String) it.next();
             file = new File(source.concat(File.separator).concat(fileName));
             if(file.canRead() && file.canWrite()) {
@@ -285,20 +285,20 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
                 throw new MojoFailureException(AbstractSourceMojoBundle.
                     getCannotReadOrWriteFileMessage(this.getLocale()).
                     format(new Object[] { file.getAbsolutePath() }));
-                
+
             }
         }
-        
+
         if(ret == null) {
             throw new MojoFailureException(AbstractSourceMojoBundle.
                 getSourceNotFoundMessage(this.getLocale()).
                 format(new Object[] { className }));
-            
+
         }
-        
+
         return ret;
     }
-    
+
     /**
      * Accessor to all {@code *.java} files.
      *
@@ -315,10 +315,10 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
         final Iterator i;
         Iterator j;
         final Collection files = new LinkedList();
-        
+
         for(i = this.getMavenProject().getCompileSourceRoots().
             iterator(); i.hasNext();) {
-            
+
             sourceRoot = (String) i.next();
             parentRoot = new File(sourceRoot);
             scanner = new DirectoryScanner();
@@ -326,18 +326,18 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
             scanner.setIncludes(new String[] {"**/*.java"});
             scanner.addDefaultExcludes();
             scanner.scan();
-            
+
             for (j = Arrays.asList(scanner.getIncludedFiles()).
                 iterator(); j.hasNext();) {
-                
+
                 file = new File(parentRoot, (String) j.next());
                 files.add(file);
             }
         }
-        
+
         return files;
     }
-    
+
     /**
      * Gets the hashcode of a file.
      * <p>This method is used to manage the contents of the directory storing
@@ -352,25 +352,25 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      */
     protected final int getHashCode(
         final File file) throws MojoFailureException {
-        
+
         if(file == null) {
             throw new NullPointerException("file");
         }
-        
+
         int hashCode;
         final File hashFile = new File(this.getHashDir(),
             String.valueOf(file.getAbsolutePath().hashCode()));
-        
+
         if(hashFile.exists()) {
             hashCode = this.readHashFile(hashFile);
         } else {
             hashCode = this.readHashCode(file);
             this.writeHashFile(hashFile, hashCode);
         }
-        
+
         return hashCode;
     }
-    
+
     /**
      * Updates the hashcode of a file.
      * <p>This method is used to manage the contents of the directory storing
@@ -384,17 +384,17 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      */
     protected final void updateHashCode(
         final File file, final int hashCode) throws MojoFailureException {
-        
+
         if(file == null) {
             throw new NullPointerException("file");
         }
-        
+
         final File hashFile = new File(this.getHashDir(),
             String.valueOf(file.getAbsolutePath().hashCode()));
-        
+
         this.writeHashFile(hashFile, hashCode);
     }
-    
+
     /**
      * Edits the contents of a file.
      *
@@ -408,19 +408,19 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
     protected final void editFile(final File file,
         final AbstractSourceMojo.SourceEditor editor)
         throws MojoFailureException {
-        
+
         if(file == null) {
             throw new NullPointerException("file");
         }
         if(editor == null) {
             throw new NullPointerException("editor");
         }
-        
+
         int i;
         String line;
         String replacement;
         final StringWriter writer = new StringWriter();
-        
+
         try {
             char c;
             final char[] chars;
@@ -431,66 +431,66 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
             } else {
                 reader = new BufferedReader(new InputStreamReader(
                     new FileInputStream(file), this.encoding));
-                
+
             }
-            
+
             while((line = reader.readLine()) != null) {
                 replacement = editor.editLine(line);
                 if(replacement != null) {
                     writer.write(replacement.concat("\n"));
                 }
             }
-            
+
             replacement = editor.editLine(null);
             if(replacement != null) {
                 writer.write(replacement.concat("\n"));
             }
-            
+
             reader.close();
             writer.close();
-            
+
             replacement = writer.toString();
             chars = replacement.toCharArray();
-            
+
             // Remove trailing newlines.
             for(i = chars.length - 1; i >= 0; i--) {
                 if(chars[i] != '\n' && chars[i] != '\r') {
                     break;
                 }
             }
-            
+
             replacement = replacement.substring(0,
                 System.getProperty("line.separator").length() + i);
-            
+
             if(this.isTestMode()) {
                 this.getLog().info(replacement);
             } else if ((i < chars.length - System.getProperty("line.separator").
                 length() || editor.isModified()) &&
                 this.getHashCode(file) != replacement.hashCode()) {
-                
+
                 if(this.encoding == null) {
                     fileWriter = new FileWriter(file);
                 } else {
                     fileWriter = new OutputStreamWriter(
                         new FileOutputStream(file), this.encoding);
-                    
+
                 }
-                
+
                 this.getLog().info(AbstractSourceMojoBundle.
                     getFileInfoMessage(this.getLocale()).
                     format(new Object[] { file.getName() }));
-                
+
                 fileWriter.write(replacement);
                 fileWriter.close();
-                
+
                 this.updateHashCode(file, replacement.hashCode());
             }
-            
+
         } catch(IOException e) {
             throw new MojoFailureException(e.getMessage());
         }
     }
-    
+
     /**
      * Edits the contents of a source file for a given class name.
      *
@@ -507,17 +507,17 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
     protected final void editFile(final String className,
         final AbstractSourceMojo.SourceEditor editor)
         throws MojoFailureException {
-        
+
         if(className == null) {
             throw new NullPointerException("className");
         }
         if(editor == null) {
             throw new NullPointerException("editor");
         }
-        
+
         this.editFile(this.getSource(className), editor);
     }
-    
+
     /**
      * Adds the configured number of spaces to a string buffer.
      *
@@ -530,14 +530,14 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
         if(stringBuffer == null) {
             throw new NullPointerException("stringBuffer");
         }
-        
+
         final char[] spaces =
             new char[this.spacesPerIndentationLevel.intValue()];
-        
+
         Arrays.fill(spaces, ' ');
         stringBuffer.append(spaces);
     }
-    
+
     /**
      * Getter for the current context's class loader.
      *
@@ -548,18 +548,18 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
     protected ClassLoader getContextClassLoader() throws MojoFailureException {
         ClassLoader classLoader = Thread.currentThread().
             getContextClassLoader();
-        
+
         if(classLoader == null) {
             classLoader = ClassLoader.getSystemClassLoader();
         }
-        
+
         if(classLoader == null) {
             throw new MojoFailureException("classLoader");
         }
-        
+
         return classLoader;
     }
-    
+
     /**
      * Provides access to the project's compile classpath.
      *
@@ -570,36 +570,36 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      */
     protected final ClassLoader getRuntimeClassLoader() throws
         MojoFailureException {
-        
+
         String element;
         File file;
         final Iterator it;
         final Collection urls = new LinkedList();
-        
+
         try {
             for(it = this.getClasspathElements().iterator(); it.hasNext();) {
                 element = (String) it.next();
                 if(!urls.contains(element) &&
                     this.isClasspathElementIncluded(element)) {
-                    
+
                     file = new File(element);
                     urls.add(file.toURI().toURL());
                 }
             }
-            
+
             return new URLClassLoader(
                 (URL[]) urls.toArray(new URL[urls.size()]),
                 this.getContextClassLoader());
-            
+
         } catch(MalformedURLException e) {
             throw new MojoFailureException(e.getMessage());
         }
     }
-    
+
     private int readHashFile(final File hashFile) throws MojoFailureException {
         int ret;
         DataInputStream in = null;
-        
+
         try {
             in = new DataInputStream(new FileInputStream(hashFile));
             ret = in.readInt();
@@ -614,16 +614,16 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
                 }
             }
         }
-        
+
         return ret;
     }
-    
+
     private void writeHashFile(final File hashFile, final int hashCode) throws
         MojoFailureException {
-        
+
         int ret;
         DataOutputStream out = null;
-        
+
         try {
             out = new DataOutputStream(new FileOutputStream(hashFile));
             out.writeInt(hashCode);
@@ -639,33 +639,33 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
             }
         }
     }
-    
+
     private int readHashCode(final File file) throws
         MojoFailureException {
-        
+
         String line;
         final BufferedReader reader;
         final StringBuffer contents = new StringBuffer(65536);
-        
+
         try {
             if(this.encoding == null) {
                 reader = new BufferedReader(new FileReader(file));
             } else {
                 reader = new BufferedReader(new InputStreamReader(
                     new FileInputStream(file), this.encoding));
-                
+
             }
-            
+
             while((line = reader.readLine()) != null) {
                 contents.append(line).append('\n');
             }
-            
+
             return contents.toString().hashCode();
         } catch(IOException e) {
             throw new MojoFailureException(e.getMessage());
         }
     }
-    
+
     //------------------------------------------------------AbstractSourceMojo--
-    
+
 }
