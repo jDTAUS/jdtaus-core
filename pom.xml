@@ -125,7 +125,6 @@
     <module>jdtaus-log4j-logging-adapter</module>
     <module>jdtaus-client-monitor-adapter</module>
     <module>jdtaus-server-monitor-adapter</module>
-    <module>jdtaus-core-manager-webapp</module>
   </modules>
   <repositories>
     <repository>
