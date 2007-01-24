@@ -6,9 +6,11 @@
   </properties>
   <body>
     <section name="Introduction">
-      jDTAUS Core provides a common application programming interface for
-      jDTAUS integration. It comes split into various artifacts of
-      different namespaces.
+      <p>
+        jDTAUS Core provides a common application programming interface for
+        jDTAUS integration. It comes split into various artifacts of
+        different namespaces.
+      </p>
       <subsection name="org.jdtaus.common: Application programming interface">
         <p>
           Artifacts of group <code>org.jdtaus.common</code> build the
@@ -18,9 +20,9 @@
         </p>
         <p>
           <b>Maven:</b> Artifacts of group <code>org.jdtaus.common</code> are
-          the only artifacts allowed in the compile classpath when building
+          the only artifacts needed in the compile classpath when building
           applications. The Core artifact will almost ever be pulled in
-          transitively as will other common artifacts.
+          transitively as may other common artifacts.
         </p>
         <source><![CDATA[<dependency>
   <groupId>org.jdtaus.common</groupId>
@@ -33,20 +35,19 @@
           <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/apidocs/index.html">JavaDoc</a>.
         </p>
       </subsection>
-      <subsection name="org.jdtaus.spi: Service programming interfaces">
+      <subsection name="org.jdtaus.spi: Implementation programming interfaces">
         <p>
-          Artifacts of group <code>org.jdtaus.spi</code> build the service
-          programming interface. The Core artifact provides interfaces to be
-          used by implementations to expose core application services to
-          applications.
+          Artifacts of group <code>org.jdtaus.spi</code> build the
+          implementation programming interface. The Core artifact provides
+          interfaces to be used by implementations to expose core application
+          services to applications.
         </p>
         <p>
           <b>Maven:</b> Artifacts of group <code>org.jdtaus.spi</code> are
-          needed in the compile classpath when building implementations but must
-          not be in the compile classpath when building applications. Since
-          implementation code depends on them during compile time they will
-          almost ever be pulled in transitively via the application's runtime
-          artifacts.
+          needed in the compile classpath when building implementations but not
+          when building applications. Since implementations depend on them
+          during compile time they will almost ever be pulled in transitively
+          via the application's runtime artifacts.
         </p>
         <source><![CDATA[<dependency>
   <groupId>org.jdtaus.spi</groupId>
@@ -64,14 +65,13 @@
           Artifacts of group <code>org.jdtaus.runtime</code> build the
           application runtime. These are standalone implementations implementing
           specifications from group <code>org.jdtaus.common</code> and providing
-          core application services by using the service interfaces defined
-          in group <code>org.jdtaus.spi</code>.
+          core application services by using the interfaces defined in group
+          <code>org.jdtaus.spi</code>.
         </p>
         <p>
-          <b>Maven:</b> Artifacts of group <code>org.jdtaus.runtime</code> are
-          never pulled in transitively. The application runtime needs to be
-          assembled manually providing great integration flexibility. The Core
-          artifacts are mandatory runtime artifacts.
+          <b>Maven:</b> The application runtime needs to be assembled manually
+          providing great integration flexibility. The Core artifacts are
+          mandatory runtime artifacts.
         </p>
         <subsection name="Container Adapters">
           <p>
