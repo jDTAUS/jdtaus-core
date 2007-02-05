@@ -114,17 +114,17 @@
   <modules>
     <module>jdtaus-resource-mojo</module>
     <module>jdtaus-core-api</module>
-    <module>jdtaus-client-container-adapter</module>
-    <module>jdtaus-servlet-container-adapter</module>
+    <module>jdtaus-core-client-container</module>
+    <module>jdtaus-core-servlet-container</module>
     <module>jdtaus-container-mojo</module>
     <module>jdtaus-core-spi</module>
     <module>jdtaus-ri-lang-adapter</module>
     <module>jdtaus-ri-i18n-adapter</module>
-    <module>jdtaus-jdk-logging-adapter</module>
-    <module>jdtaus-commons-logging-adapter</module>
-    <module>jdtaus-log4j-logging-adapter</module>
-    <module>jdtaus-client-monitor-adapter</module>
-    <module>jdtaus-server-monitor-adapter</module>
+    <module>jdtaus-core-jdk-logging</module>
+    <module>jdtaus-core-commons-logging</module>
+    <module>jdtaus-core-log4j-logging</module>
+    <module>jdtaus-core-client-monitoring</module>
+    <module>jdtaus-core-server-monitoring</module>
   </modules>
   <repositories>
     <repository>
