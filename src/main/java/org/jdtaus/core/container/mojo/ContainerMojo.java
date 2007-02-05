@@ -1,6 +1,6 @@
 /*
  *  jDTAUS - DTAUS fileformat.
- *  Copyright (C) 2005 - 2007 Christian Schulte <cs@schulte.it>
+ *  Copyright © 2005 - 2007 Christian Schulte <cs@schulte.it>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -17,22 +17,22 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.mojo.container;
+package org.jdtaus.core.container.mojo;
 
 import java.io.File;
 import java.text.MessageFormat;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.jdtaus.common.container.Dependencies;
-import org.jdtaus.common.container.Dependency;
-import org.jdtaus.common.container.Implementation;
-import org.jdtaus.common.container.Implementations;
-import org.jdtaus.common.container.ModelFactory;
-import org.jdtaus.common.container.Module;
-import org.jdtaus.common.container.Properties;
-import org.jdtaus.common.container.Property;
-import org.jdtaus.common.container.Specification;
-import org.jdtaus.common.container.Specifications;
+import org.jdtaus.core.container.Dependencies;
+import org.jdtaus.core.container.Dependency;
+import org.jdtaus.core.container.Implementation;
+import org.jdtaus.core.container.Implementations;
+import org.jdtaus.core.container.ModelFactory;
+import org.jdtaus.core.container.Module;
+import org.jdtaus.core.container.Properties;
+import org.jdtaus.core.container.Property;
+import org.jdtaus.core.container.Specification;
+import org.jdtaus.core.container.Specifications;
 
 /**
  * Mojo to generate infrastructure code.

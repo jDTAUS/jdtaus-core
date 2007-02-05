@@ -53,8 +53,8 @@
             </goals>
             <configuration>
               <bundles>
-                <bundle>org.jdtaus.mojo.container.AbstractSourceMojo</bundle>
-                <bundle>org.jdtaus.mojo.container.ContainerMojo</bundle>
+                <bundle>org.jdtaus.core.container.mojo.AbstractSourceMojo</bundle>
+                <bundle>org.jdtaus.core.container.mojo.ContainerMojo</bundle>
               </bundles>
               <encoding>UTF-8</encoding>
               <locale>en</locale>

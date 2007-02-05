@@ -1,6 +1,6 @@
 /*
  *  jDTAUS - DTAUS fileformat.
- *  Copyright (C) 2005 - 2007 Christian Schulte <cs@schulte.it>
+ *  Copyright © 2005 - 2007 Christian Schulte <cs@schulte.it>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.mojo.container;
+package org.jdtaus.core.container.mojo;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -319,16 +319,16 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
         }
 
         int i;
+        char c;
         String line;
         String replacement;
-        final int sepLength = System.getProperty("line.separator").length();
+        final char[] chars;
+        final BufferedReader reader;
         final StringWriter writer = new StringWriter();
+        final int sepLength = System.getProperty("line.separator").length();
 
         try {
-            char c;
-            final char[] chars;
-            final BufferedReader reader =
-                new BufferedReader(new StringReader(str));
+            reader = new BufferedReader(new StringReader(str));
 
             while((line = reader.readLine()) != null) {
                 replacement = editor.editLine(line);
@@ -381,10 +381,10 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
         }
 
         String line;
+        final BufferedReader reader;
         final StringWriter writer = new StringWriter();
 
         try {
-            final BufferedReader reader;
             if(this.encoding == null) {
                 reader = new BufferedReader(new FileReader(file));
             } else {

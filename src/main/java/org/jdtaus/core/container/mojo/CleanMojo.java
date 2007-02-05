@@ -1,6 +1,6 @@
 /*
  *  jDTAUS - DTAUS fileformat.
- *  Copyright (C) 2005 - 2007 Christian Schulte <cs@schulte.it>
+ *  Copyright © 2005 - 2007 Christian Schulte <cs@schulte.it>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -17,17 +17,17 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.mojo.container;
+package org.jdtaus.core.container.mojo;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.jdtaus.mojo.container.AbstractSourceMojo.SourceEditor;
+import org.jdtaus.core.container.mojo.AbstractSourceMojo.SourceEditor;
 
 /**
- * Mojo to cleanup source files.
+ * Mojo to cleanup source files (e.g. remove trailing spaces).
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
@@ -35,52 +35,7 @@ import org.jdtaus.mojo.container.AbstractSourceMojo.SourceEditor;
  */
 public class CleanMojo extends AbstractSourceMojo {
 
-    static class RemoveTrailingSpacesEditor
-        implements AbstractSourceMojo.SourceEditor {
-
-        private boolean modified;
-
-        public String editLine(final String line) throws MojoFailureException {
-            if(line == null) {
-                return null;
-            }
-
-            StringBuffer spaces = null;
-            boolean sawSpace = false;
-            final StringBuffer replacement = new StringBuffer(line.length());
-            final char[] chars = line.toCharArray();
-
-            for(int i = 0; i < chars.length; i++) {
-                if(chars[i] == ' ') {
-                    if(spaces == null) {
-                        spaces = new StringBuffer();
-                    }
-
-                    spaces.append(chars[i]);
-                    sawSpace = true;
-                } else {
-                    if(sawSpace) {
-                        replacement.append(spaces);
-                        sawSpace = false;
-                        spaces = null;
-                    }
-                    replacement.append(chars[i]);
-                }
-            }
-
-            final String ret = replacement.toString();
-            if(!this.modified) {
-                this.modified = !ret.equals(line);
-            }
-
-            return ret;
-        }
-
-        public boolean isModified() {
-            return this.modified;
-        }
-
-    }
+    //--AbstractMojo------------------------------------------------------------
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         if(new File(this.getMavenProject().
@@ -102,5 +57,57 @@ public class CleanMojo extends AbstractSourceMojo {
             }
         }
     }
+
+    //------------------------------------------------------------AbstractMojo--
+    //--CleanMojo---------------------------------------------------------------
+
+    /** Removes trailing spaces. */
+    public static class RemoveTrailingSpacesEditor
+        implements AbstractSourceMojo.SourceEditor {
+
+        private boolean modified;
+
+        public String editLine(final String line) throws MojoFailureException {
+            if(line == null) {
+                return null;
+            }
+
+            StringBuffer spaces = null;
+            boolean sawSpace = false;
+            final String ret;
+            final StringBuffer replacement = new StringBuffer(line.length());
+            final char[] chars = line.toCharArray();
+
+            for(int i = 0; i < chars.length; i++) {
+                if(chars[i] == ' ') {
+                    if(spaces == null) {
+                        spaces = new StringBuffer();
+                    }
+
+                    spaces.append(chars[i]);
+                    sawSpace = true;
+                } else {
+                    if(sawSpace) {
+                        replacement.append(spaces);
+                        sawSpace = false;
+                        spaces = null;
+                    }
+                    replacement.append(chars[i]);
+                }
+            }
+
+            ret = replacement.toString();
+            this.modified = !ret.equals(line);
+
+            return ret;
+        }
+
+        public boolean isModified() {
+            return this.modified;
+        }
+
+    }
+
+    //---------------------------------------------------------------CleanMojo--
 
 }
