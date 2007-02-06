@@ -119,7 +119,7 @@
     <module>jdtaus-container-mojo</module>
     <module>jdtaus-core-spi</module>
     <module>jdtaus-core-limiting-runtime</module>
-    <module>jdtaus-ri-i18n-adapter</module>
+    <module>jdtaus-core-application-logger</module>
     <module>jdtaus-core-jdk-logging</module>
     <module>jdtaus-core-commons-logging</module>
     <module>jdtaus-core-log4j-logging</module>
