@@ -82,7 +82,7 @@
           </p>
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-client-container-adapter</artifactId>
+  <artifactId>jdtaus-core-client-container</artifactId>
   <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>
@@ -91,20 +91,20 @@ and (optionally)
 
 <dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-servlet-container-adapter</artifactId>
+  <artifactId>jdtaus-core-servlet-container</artifactId>
   <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>]]>
           </source>
           <p>
-            jDTAUS RI Client Container Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-container-adapter/index.html">site</a> | 
-            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-container-adapter/apidocs/index.html">JavaDoc</a>.<br/>
-            jDTAUS RI Servlet Container Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-servlet-container-adapter/index.html">site</a> | 
-            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-servlet-container-adapter/apidocs/index.html">JavaDoc</a>.
+            jDTAUS RI Client Container <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/apidocs/index.html">JavaDoc</a>.<br/>
+            jDTAUS RI Servlet Container <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-servlet-container/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-servlet-container/apidocs/index.html">JavaDoc</a>.
           </p>
           <p>
             <b>Note:</b> Web applications must be configured manually to work
-            correctly with jDTAUS. See <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-servlet-container-adapter/apidocs/org/jdtaus/runtime/container/ServletFilter.html">ServletFilter</a>.
+            correctly with jDTAUS. See <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-servlet-container/apidocs/org/jdtaus/core/container/runtime/ServletFilter.html">ServletFilter</a>.
           </p>
         </subsection>
         <subsection name="Logging Adapters">
@@ -114,7 +114,7 @@ and (optionally)
           </p>
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-jdk-logging-adapter</artifactId>
+  <artifactId>jdtaus-core-jdk-logging</artifactId>
   <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>
@@ -123,7 +123,7 @@ or
 
 <dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-log4j-logging-adapter</artifactId>
+  <artifactId>jdtaus-core-log4j-logging</artifactId>
   <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>
@@ -132,17 +132,17 @@ or
 
 <dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-commons-logging-adapter</artifactId>
+  <artifactId>jdtaus-core-commons-logging</artifactId>
   <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>]]></source>
           <p>
-            jDTAUS RI JDK 1.4 Logging Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-jdk-logging-adapter/index.html">site</a> | 
-            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-jdk-logging-adapter/apidocs/index.html">JavaDoc</a>.<br/>
-            jDTAUS RI Log4J Logging Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-log4j-logging-adapter/index.html">site</a> | 
-            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-log4j-logging-adapter/apidocs/index.html">JavaDoc</a>.<br/>
-            jDTAUS RI Commons Logging Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-commons-logging-adapter/index.html">site</a> | 
-            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-commons-logging-adapter/apidocs/index.html">JavaDoc</a>.
+            jDTAUS RI JDK 1.4 Logging <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-jdk-logging/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-jdk-logging/apidocs/index.html">JavaDoc</a>.<br/>
+            jDTAUS RI Log4J Logging <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-log4j-logging/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-log4j-logging/apidocs/index.html">JavaDoc</a>.<br/>
+            jDTAUS RI Commons Logging <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-commons-logging/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-commons-logging/apidocs/index.html">JavaDoc</a>.
           </p>
         </subsection>
         <subsection name="Task Monitoring Adapters">
@@ -154,7 +154,7 @@ or
           </p>
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-client-monitor-adapter</artifactId>
+  <artifactId>jdtaus-core-client-monitoring</artifactId>
   <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>
@@ -163,15 +163,15 @@ or
 
 <dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-server-monitor-adapter</artifactId>
+  <artifactId>jdtaus-core-server-monitoring</artifactId>
   <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>]]></source>
           <p>
-            jDTAUS RI Client Monitor Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-monitor-adapter/index.html">site</a> | 
-            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-client-monitor-adapter/apidocs/index.html">JavaDoc</a>.<br/>
-            jDTAUS RI Server Monitor Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-server-monitor-adapter/index.html">site</a> | 
-            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-server-monitor-adapter/apidocs/index.html">JavaDoc</a>.
+            jDTAUS RI Client Monitoring <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-monitoring/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-monitoring/apidocs/index.html">JavaDoc</a>.<br/>
+            jDTAUS RI Server Monitoring <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-server-monitoring/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-server-monitoring/apidocs/index.html">JavaDoc</a>.
           </p>
         </subsection>
         <subsection name="Runtime Environment Adapters">
@@ -180,13 +180,13 @@ or
           </p>
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-ri-lang-adapter</artifactId>
+  <artifactId>jdtaus-core-limiting-runtime</artifactId>
   <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>]]></source>
           <p>
-            jDTAUS RI Runtime Environment Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-lang-adapter/index.html">site</a> | 
-            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-lang-adapter/apidocs/index.html">JavaDoc</a>.
+            jDTAUS RI Limiting Runtime <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-limiting-runtime/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-limiting-runtime/apidocs/index.html">JavaDoc</a>.
           </p>
         </subsection>
         <subsection name="Localization Adapters">
@@ -195,13 +195,13 @@ or
           </p>
           <source><![CDATA[<dependency>
   <groupId>org.jdtaus.runtime</groupId>
-  <artifactId>jdtaus-ri-i18n-adapter</artifactId>
+  <artifactId>jdtaus-core-application-logger</artifactId>
   <version>RELEASE</version>
   <scope>runtime</scope>
 </dependency>]]></source>
           <p>
-            jDTAUS RI I18N Adapter <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-i18n-adapter/index.html">site</a> | 
-            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-ri-i18n-adapter/apidocs/index.html">JavaDoc</a>.
+            jDTAUS RI Application Logger <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-application-logger/index.html">site</a> | 
+            <a href="http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-application-logger/apidocs/index.html">JavaDoc</a>.
           </p>
         </subsection>
       </subsection>
