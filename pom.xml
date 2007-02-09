@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
   <artifactId>jdtaus-container-mojo</artifactId>
-  <name>jDTAUS Mojo Container</name>
+  <name>jDTAUS Core Container Mojo</name>
   <version>1.0-alpha-8-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <description>Source generator for the container model.</description>
