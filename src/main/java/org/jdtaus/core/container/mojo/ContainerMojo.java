@@ -300,8 +300,8 @@ public class ContainerMojo extends AbstractSourceMojo {
                 this.editing = true;
                 this.modified = true;
                 final StringBuffer buf = new StringBuffer(1024);
-                final String implType = ContainerMojo.getTypeFromClassName(
-                    this.impl.getIdentifier());
+                //final String implType = ContainerMojo.getTypeFromClassName(
+                //    this.impl.getIdentifier());
 
                 buf.append(line).append("\n\n");
 
@@ -313,6 +313,7 @@ public class ContainerMojo extends AbstractSourceMojo {
                 buf.append("\n\n");
 
                 // Generate implementation name constant.
+                /*
                 indent(buf);
                 buf.append(ContainerMojoBundle.
                     getImplementationMetaDataCommentText(getLocale())).
@@ -329,6 +330,7 @@ public class ContainerMojo extends AbstractSourceMojo {
                 indent(buf);
                 buf.append("getImplementation(").append(implType).
                     append(".class.getName());\n");
+                 */
 
                 replacement = buf.toString();
             } else {
@@ -715,25 +717,19 @@ public class ContainerMojo extends AbstractSourceMojo {
                 }
 
                 /*
-                if(ContainerInitializer.class.
-                    isAssignableFrom(this.implClass)) {
+                indent(buf);
+                indent(buf);
+                buf.append("if(this instanceof ContainerInitializer) {\n");
 
-                    indent(buf);
-                    indent(buf);
-                    buf.append("this.initialize();\n");
-                }
+                indent(buf);
+                indent(buf);
+                indent(buf);
+                buf.append("this.initialize();\n");
 
-                if(ContextInitializer.class.
-                    isAssignableFrom(this.implClass)) {
-
-                    indent(buf);
-                    indent(buf);
-                    buf.append("this.initializeContext(ContextFactory.\n");
-                    indent(buf);
-                    indent(buf);
-                    indent(buf);
-                    buf.append("getContext());\n");
-                }*/
+                indent(buf);
+                indent(buf);
+                buf.append("}\n");
+                 */
 
                 indent(buf);
                 buf.append("}\n");
@@ -766,25 +762,19 @@ public class ContainerMojo extends AbstractSourceMojo {
                 }
 
                 /*
-                if(ContainerInitializer.class.
-                    isAssignableFrom(this.implClass)) {
+                indent(buf);
+                indent(buf);
+                buf.append("if(this instanceof ContainerInitializer) {\n");
 
-                    indent(buf);
-                    indent(buf);
-                    buf.append("this.initialize();n");
-                }
+                indent(buf);
+                indent(buf);
+                indent(buf);
+                buf.append("this.initialize();\n");
 
-                if(ContextInitializer.class.
-                    isAssignableFrom(this.implClass)) {
-
-                    indent(buf);
-                    indent(buf);
-                    buf.append("this.initializeContext(ContextFactory.\n");
-                    indent(buf);
-                    indent(buf);
-                    indent(buf);
-                    buf.append("getContext());n");
-                }*/
+                indent(buf);
+                indent(buf);
+                buf.append("}\n");
+                 */
 
                 indent(buf);
                 buf.append("}\n");
@@ -942,11 +932,11 @@ public class ContainerMojo extends AbstractSourceMojo {
         edited = this.edit(edited, propEditor);
         edited = this.edit(edited, ctorsEditor);
 
-        if(!implEditor.isModified()) {
-            throw new MojoExecutionException(fmt.format(new Object[] {
-                this.implementationsStartingMarker, path
-            }));
-        }
+        //if(!implEditor.isModified()) {
+        //    throw new MojoExecutionException(fmt.format(new Object[] {
+        //        this.implementationsStartingMarker, path
+        //    }));
+        //}
 
         if(depEditor.isMarkersNeeded() && !depEditor.isModified()) {
             throw new MojoExecutionException(fmt.format(new Object[] {
