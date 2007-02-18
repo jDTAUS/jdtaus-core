@@ -3,7 +3,7 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.0-alpha-5</version>
+    <version>1.0-alpha-6</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
@@ -49,7 +49,7 @@
       </snapshots>
       <id>jdtaus-releases</id>
       <name>jDTAUS Release Repository</name>
-      <url>http://maven2-repository.jdtaus.org/repos/releases</url>
+      <url>http://maven2-repository.jdtaus.org/releases</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -64,7 +64,7 @@
       </snapshots>
       <id>jdtaus-releases</id>
       <name>jDTAUS Release Repository</name>
-      <url>http://maven2-repository.jdtaus.org/repos/releases</url>
+      <url>http://maven2-repository.jdtaus.org/releases</url>
     </pluginRepository>
   </pluginRepositories>
   <reporting>
