@@ -5,7 +5,7 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.0-alpha-5</version>
+  <version>1.0-alpha-6-SNAPSHOT</version>
   <description><![CDATA[
   jDTAUS Core provides a common application programming interface for jDTAUS
   integration. This is the parent module for the core artifacts.]]>
@@ -64,9 +64,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-5</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-5</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-5</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/trunk</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/trunk</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/trunk</url>
   </scm>
   <organization>
     <name>jDTAUS</name>
