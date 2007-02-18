@@ -219,16 +219,16 @@
     <repository>
       <id>jdtaus-releases</id>
       <name>jDTAUS Release Repository</name>
-      <url>scp://shell.sourceforge.net/home/groups/j/jd/jdtaus/htdocs/repos/releases</url>
+      <url>scp://web.rent-a-mailserver.de/var/httpd/D0001/maven2-repository.jdtaus.org/releases</url>
     </repository>
     <snapshotRepository>
       <id>jdtaus-snapshots</id>
       <name>jDTAUS Development Repository</name>
-      <url>scp://shell.sourceforge.net/home/groups/j/jd/jdtaus/htdocs/repos/snapshots</url>
+      <url>scp://web.rent-a-mailserver.de/var/httpd/D0001/maven2-repository.jdtaus.org/snapshots</url>
     </snapshotRepository>
     <site>
       <id>jdtaus-website</id>
-      <url>scp://shell.sourceforge.net/home/groups/j/jd/jdtaus/htdocs/jdtaus-core/1.0.x</url>
+      <url>scp://web.rent-a-mailserver.de/var/httpd/D0001/maven2-repository.jdtaus.org/sites/jdtaus-core/1.0.x</url>
     </site>
   </distributionManagement>
 </project>
