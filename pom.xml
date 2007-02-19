@@ -3,7 +3,7 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.0-alpha-6</version>
+    <version>1.0-alpha-7</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
@@ -89,7 +89,7 @@
           <windowtitle>${pom.name} Specification ${pom.version}</windowtitle>
           <links>
             <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
-            <link>http://www.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/apidocs</link>
+            <link>http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/apidocs</link>
           </links>
         </configuration>
       </plugin>
