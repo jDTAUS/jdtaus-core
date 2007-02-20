@@ -300,8 +300,8 @@ public class ContainerMojo extends AbstractSourceMojo {
                 this.editing = true;
                 this.modified = true;
                 final StringBuffer buf = new StringBuffer(1024);
-                //final String implType = ContainerMojo.getTypeFromClassName(
-                //    this.impl.getIdentifier());
+                final String implType = ContainerMojo.getTypeFromClassName(
+                    this.impl.getIdentifier());
 
                 buf.append(line).append("\n\n");
 
@@ -313,24 +313,25 @@ public class ContainerMojo extends AbstractSourceMojo {
                 buf.append("\n\n");
 
                 // Generate implementation name constant.
-                /*
-                indent(buf);
-                buf.append(ContainerMojoBundle.
-                    getImplementationMetaDataCommentText(getLocale())).
-                    append('\n');
+                if(this.impl.getProperties().size() > 0) {
+                    indent(buf);
+                    buf.append(ContainerMojoBundle.
+                        getImplementationMetaDataCommentText(getLocale())).
+                        append('\n');
 
-                indent(buf);
-                buf.append("private static final Implementation IMPL =\n");
+                    indent(buf);
+                    buf.append("private static final Implementation META =\n");
 
-                indent(buf);
-                indent(buf);
-                buf.append("ModelFactory.getModel().getModules().\n");
+                    indent(buf);
+                    indent(buf);
+                    buf.append("ModelFactory.getModel().getModules().\n");
 
-                indent(buf);
-                indent(buf);
-                buf.append("getImplementation(").append(implType).
-                    append(".class.getName());\n");
-                 */
+                    indent(buf);
+                    indent(buf);
+                    buf.append("getImplementation(").
+                        append(implType).append(".class.getName());\n");
+
+                }
 
                 replacement = buf.toString();
             } else {
@@ -630,17 +631,28 @@ public class ContainerMojo extends AbstractSourceMojo {
 
             indent(buf);
             indent(buf);
+            buf.append("p = meta.getProperties().getProperty(\"").
+                append(property.getName()).append("\");\n");
+
+            indent(buf);
+            indent(buf);
+            buf.append("if(p == null) {\n");
+            indent(buf);
+            indent(buf);
+            indent(buf);
+            buf.append("throw new MissingPropertyException(META, \"").
+                append(property.getName()).append("\");\n");
+
+            indent(buf);
+            indent(buf);
+            buf.append("}\n");
+
+            indent(buf);
+            indent(buf);
             buf.append("this._").append(property.getName()).append(" = ").
                 append("(").append(isPrimitive ? "(" : "").
                 append(property.getValue().getClass().getName()).
-                append(") meta.getProperties().\n");
-
-
-            indent(buf);
-            indent(buf);
-            indent(buf);
-            buf.append("getProperty(\"").append(property.getName()).
-                append("\").getValue()");
+                append(") p.getValue()");
 
             buf.append(isPrimitive ? ")." +
                 property.getType().getName() + "Value();\n\n" : ";\n\n");
@@ -704,6 +716,10 @@ public class ContainerMojo extends AbstractSourceMojo {
                     "super();\n" : "super(meta);\n");
 
                 if(hasProperties) {
+                    indent(buf);
+                    indent(buf);
+                    buf.append("Property p;\n\n");
+
                     for(int i = properties.size() - 1; i >= 0; i--) {
                         property = properties.getProperty(i);
                         buf.append(this.getPropertyInitializer(property,
@@ -749,6 +765,10 @@ public class ContainerMojo extends AbstractSourceMojo {
                     "super();\n" : "super(meta);\n");
 
                 if(hasProperties) {
+                    indent(buf);
+                    indent(buf);
+                    buf.append("Property p;\n\n");
+
                     for(int i = properties.size() - 1; i >= 0; i--) {
                         property = properties.getProperty(i);
                         buf.append(this.getPropertyInitializer(property,
