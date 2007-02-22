@@ -393,7 +393,7 @@ public class BundleKeysMojo extends AbstractMojo {
 
             }
 
-            buf.append("private static String getMessage(").
+            buf.append("public static String getMessage(").
                 append("final String key, Locale locale) {\n");
             buf.append("    ");
             buf.append("if(locale == null) { locale = Locale.getDefault(); }\n");
