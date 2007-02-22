@@ -634,6 +634,7 @@ public class ContainerMojo extends AbstractSourceMojo {
             buf.append("p = meta.getProperties().getProperty(\"").
                 append(property.getName()).append("\");\n");
 
+            /*
             indent(buf);
             indent(buf);
             buf.append("if(p == null) {\n");
@@ -646,6 +647,7 @@ public class ContainerMojo extends AbstractSourceMojo {
             indent(buf);
             indent(buf);
             buf.append("}\n");
+             */
 
             indent(buf);
             indent(buf);
@@ -952,11 +954,11 @@ public class ContainerMojo extends AbstractSourceMojo {
         edited = this.edit(edited, propEditor);
         edited = this.edit(edited, ctorsEditor);
 
-        //if(!implEditor.isModified()) {
-        //    throw new MojoExecutionException(fmt.format(new Object[] {
-        //        this.implementationsStartingMarker, path
-        //    }));
-        //}
+        if(!implEditor.isModified()) {
+            throw new MojoExecutionException(fmt.format(new Object[] {
+                this.implementationsStartingMarker, path
+            }));
+        }
 
         if(depEditor.isMarkersNeeded() && !depEditor.isModified()) {
             throw new MojoExecutionException(fmt.format(new Object[] {
