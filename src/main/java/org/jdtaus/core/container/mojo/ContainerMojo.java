@@ -27,6 +27,7 @@ import org.jdtaus.core.container.Dependencies;
 import org.jdtaus.core.container.Dependency;
 import org.jdtaus.core.container.Implementation;
 import org.jdtaus.core.container.Implementations;
+import org.jdtaus.core.container.MissingPropertyException;
 import org.jdtaus.core.container.ModelFactory;
 import org.jdtaus.core.container.Module;
 import org.jdtaus.core.container.Properties;
@@ -313,25 +314,25 @@ public class ContainerMojo extends AbstractSourceMojo {
                 buf.append("\n\n");
 
                 // Generate implementation name constant.
-                if(this.impl.getProperties().size() > 0) {
-                    indent(buf);
-                    buf.append(ContainerMojoBundle.
-                        getImplementationMetaDataCommentText(getLocale())).
-                        append('\n');
+                //if(this.impl.getProperties().size() > 0) {
+                indent(buf);
+                buf.append(ContainerMojoBundle.
+                    getImplementationMetaDataCommentText(getLocale())).
+                    append('\n');
 
-                    indent(buf);
-                    buf.append("private static final Implementation META =\n");
+                indent(buf);
+                buf.append("private static final Implementation META =\n");
 
-                    indent(buf);
-                    indent(buf);
-                    buf.append("ModelFactory.getModel().getModules().\n");
+                indent(buf);
+                indent(buf);
+                buf.append("ModelFactory.getModel().getModules().\n");
 
-                    indent(buf);
-                    indent(buf);
-                    buf.append("getImplementation(").
-                        append(implType).append(".class.getName());\n");
+                indent(buf);
+                indent(buf);
+                buf.append("getImplementation(").
+                    append(implType).append(".class.getName());\n");
 
-                }
+                //}
 
                 replacement = buf.toString();
             } else {
@@ -525,6 +526,11 @@ public class ContainerMojo extends AbstractSourceMojo {
                         final String name;
 
                         prop = props.getProperty(i);
+                        if(ContainerMojo.checkPropertyInheritted(
+                            prop, this.impl)) {
+
+                            continue;
+                        }
 
                         c = prop.getName().toCharArray();
                         if(Character.isLowerCase(c[0])) {
@@ -595,6 +601,7 @@ public class ContainerMojo extends AbstractSourceMojo {
         public boolean isMarkersNeeded() {
             return this.markersNeeded;
         }
+
     }
 
     /** Adds implementation constructors. */
@@ -724,14 +731,20 @@ public class ContainerMojo extends AbstractSourceMojo {
 
                     for(int i = properties.size() - 1; i >= 0; i--) {
                         property = properties.getProperty(i);
+                        if(ContainerMojo.checkPropertyInheritted(
+                            property, this.impl)) {
+
+                            continue;
+                        }
+
                         buf.append(this.getPropertyInitializer(property,
                             i - 1 < 0));
 
                     }
 
-                    indent(buf);
-                    indent(buf);
-                    buf.append("this.assertValidProperties();\n");
+                    //indent(buf);
+                    //indent(buf);
+                    //buf.append("this.assertValidProperties();\n");
                 }
 
                 /*
@@ -773,14 +786,20 @@ public class ContainerMojo extends AbstractSourceMojo {
 
                     for(int i = properties.size() - 1; i >= 0; i--) {
                         property = properties.getProperty(i);
+                        if(ContainerMojo.checkPropertyInheritted(
+                            property, this.impl)) {
+
+                            continue;
+                        }
+
                         buf.append(this.getPropertyInitializer(property,
                             i - 1 < 0));
 
                     }
 
-                    indent(buf);
-                    indent(buf);
-                    buf.append("this.assertValidProperties();\n");
+                    //indent(buf);
+                    //indent(buf);
+                    //buf.append("this.assertValidProperties();\n");
                 }
 
                 /*
@@ -899,6 +918,31 @@ public class ContainerMojo extends AbstractSourceMojo {
 
     }
 
+    public static boolean checkPropertyInheritted(final Property p,
+        final Implementation impl) {
+
+        if(p == null) {
+            throw new NullPointerException("p");
+        }
+        if(impl == null) {
+            throw new NullPointerException("impl");
+        }
+
+        boolean inheritted = false;
+        final Implementation parent = impl.getParent();
+
+        if(parent != null) {
+            try {
+                parent.getProperties().getProperty(p.getName());
+                inheritted = true;
+            } catch(MissingPropertyException e) {
+                inheritted = false;
+            }
+        }
+
+        return inheritted;
+    }
+
     protected static String getTypeFromClassName(final String className) {
         if(className == null) {
             throw new NullPointerException("className");
@@ -919,6 +963,10 @@ public class ContainerMojo extends AbstractSourceMojo {
 
         String edited;
         final File source = this.getSource(impl.getIdentifier());
+        if(source == null) {
+            throw new MojoExecutionException(impl.getIdentifier());
+        }
+
         final String content = this.load(source);
         final String path = source.getAbsolutePath();
         final ImplementationEditor implEditor =
@@ -994,17 +1042,19 @@ public class ContainerMojo extends AbstractSourceMojo {
             getMissingMarkersMessage(getLocale());
 
         final File source = this.getSource(spec.getIdentifier());
-        final String path = source.getAbsolutePath();
-        final SpecificationEditor specEditor =
-            new SpecificationEditor(path, spec);
+        if(source != null) {
+            final String path = source.getAbsolutePath();
+            final SpecificationEditor specEditor =
+                new SpecificationEditor(path, spec);
 
-        final String content = this.load(source);
-        String edited = this.edit(content, new RemovingEditor(path,
-            this.specificationsStartingMarker,
-            this.specificationsEndingMarker));
+            final String content = this.load(source);
+            String edited = this.edit(content, new RemovingEditor(path,
+                this.specificationsStartingMarker,
+                this.specificationsEndingMarker));
 
-        if(!content.equals(edited)) {
-            this.save(source, edited);
+            if(!content.equals(edited)) {
+                this.save(source, edited);
+            }
         }
     }
 

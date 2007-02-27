@@ -20,8 +20,6 @@
 package org.jdtaus.core.container.mojo;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -46,7 +44,6 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.DirectoryScanner;
-import org.codehaus.plexus.util.FileUtils;
 
 /**
  * Base Mojo for manipulating source files.
@@ -211,14 +208,12 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      * {@code *.java} file for (needs to be in the project's compile source
      * roots). No inner classes are supported yet.
      *
-     * @return the source file for the class with name {@code className}.
+     * @return the source file for the class with name {@code className} or
+     * {@code null} if no corresponding source file can be found.
      *
      * @throws NullPointerException if {@code className} is {@code null}.
-     * @throws MojoFailureException if no source file can be found.
      */
-    protected final File getSource(
-        final String className) throws MojoFailureException {
-
+    protected final File getSource(final String className) {
         if(className == null) {
             throw new NullPointerException("className");
         }
@@ -239,18 +234,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
                 ret = file;
                 break;
             } else {
-                throw new MojoFailureException(AbstractSourceMojoBundle.
-                    getCannotReadOrWriteFileMessage(this.getLocale()).
-                    format(new Object[] { file.getAbsolutePath() }));
-
+                ret = null;
             }
-        }
-
-        if(ret == null) {
-            throw new MojoFailureException(AbstractSourceMojoBundle.
-                getSourceNotFoundMessage(this.getLocale()).
-                format(new Object[] { className }));
-
         }
 
         return ret;
