@@ -51,7 +51,8 @@ import org.codehaus.plexus.util.DirectoryScanner;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
  */
-public abstract class AbstractSourceMojo extends AbstractMojo {
+public abstract class AbstractSourceMojo extends AbstractMojo
+{
 
     //--Configuration-----------------------------------------------------------
 
@@ -113,7 +114,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      *
      * @return the currently executed {@code MavenProject}.
      */
-    protected final MavenProject getMavenProject() {
+    protected final MavenProject getMavenProject()
+    {
         return this.mavenProject;
     }
 
@@ -123,7 +125,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      * @return {@code true} if no sources will be touched; {@code false} if
      * sources will be changed.
      */
-    protected final boolean isTestMode() {
+    protected final boolean isTestMode()
+    {
         return this.testMode.booleanValue();
     }
 
@@ -132,7 +135,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      *
      * @return the locale to use for javadoc comments.
      */
-    protected final Locale getLocale() {
+    protected final Locale getLocale()
+    {
         return this.locale == null ?
             Locale.getDefault() : new Locale(this.locale);
 
@@ -143,7 +147,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      *
      * @return a list holding strings for each compile class path element.
      */
-    protected final List getClasspathElements() {
+    protected final List getClasspathElements()
+    {
         return this.classpathElements;
     }
 
@@ -158,14 +163,17 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      *
      * @throws NullPointerException if {@code element} is {@code null}.
      */
-    protected boolean isClasspathElementIncluded(final String element) {
+    protected boolean isClasspathElementIncluded(final String element)
+    {
         boolean ret = true;
 
-        if(element == null) {
+        if(element == null)
+        {
             throw new NullPointerException("element");
         }
 
-        if(this.classPathElementsExcludeRegexp != null) {
+        if(this.classPathElementsExcludeRegexp != null)
+        {
             ret = !element.matches(this.classPathElementsExcludeRegexp);
         }
 
@@ -176,7 +184,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
     //--AbstractSourceMojo------------------------------------------------------
 
     /** Interface to manipulate source files. */
-    public interface SourceEditor {
+    public interface SourceEditor
+    {
 
         /**
          * Replaces a line in a source file with some string.
@@ -213,8 +222,10 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      *
      * @throws NullPointerException if {@code className} is {@code null}.
      */
-    protected final File getSource(final String className) {
-        if(className == null) {
+    protected final File getSource(final String className)
+    {
+        if(className == null)
+        {
             throw new NullPointerException("className");
         }
 
@@ -226,14 +237,18 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
             concat(".java");
 
         for(it = this.getMavenProject().getCompileSourceRoots().
-            iterator(); it.hasNext();) {
+            iterator(); it.hasNext();)
+        {
 
             source = (String) it.next();
             file = new File(source.concat(File.separator).concat(fileName));
-            if(file.canRead() && file.canWrite()) {
+            if(file.canRead() && file.canWrite())
+            {
                 ret = file;
                 break;
-            } else {
+            }
+            else
+            {
                 ret = null;
             }
         }
@@ -249,7 +264,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      *
      * @throws MojoFailureException if no source files could be found.
      */
-    protected final Collection getAllSources() throws MojoFailureException {
+    protected final Collection getAllSources() throws MojoFailureException
+    {
         File file;
         File parentRoot;
         String sourceRoot;
@@ -259,7 +275,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
         final Collection files = new LinkedList();
 
         for(i = this.getMavenProject().getCompileSourceRoots().
-            iterator(); i.hasNext();) {
+            iterator(); i.hasNext();)
+        {
 
             sourceRoot = (String) i.next();
             parentRoot = new File(sourceRoot);
@@ -270,7 +287,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
             scanner.scan();
 
             for (j = Arrays.asList(scanner.getIncludedFiles()).
-                iterator(); j.hasNext();) {
+                iterator(); j.hasNext();)
+            {
 
                 file = new File(parentRoot, (String) j.next());
                 files.add(file);
@@ -294,12 +312,15 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      */
     protected final String edit(final String str,
         final AbstractSourceMojo.SourceEditor editor)
-        throws MojoFailureException {
+        throws MojoFailureException
+    {
 
-        if(str == null) {
+        if(str == null)
+        {
             throw new NullPointerException("str");
         }
-        if(editor == null) {
+        if(editor == null)
+        {
             throw new NullPointerException("editor");
         }
 
@@ -312,18 +333,22 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
         final StringWriter writer = new StringWriter();
         final int sepLength = System.getProperty("line.separator").length();
 
-        try {
+        try
+        {
             reader = new BufferedReader(new StringReader(str));
 
-            while((line = reader.readLine()) != null) {
+            while((line = reader.readLine()) != null)
+            {
                 replacement = editor.editLine(line);
-                if(replacement != null) {
+                if(replacement != null)
+                {
                     writer.write(replacement.concat("\n"));
                 }
             }
 
             replacement = editor.editLine(null);
-            if(replacement != null) {
+            if(replacement != null)
+            {
                 writer.write(replacement.concat("\n"));
             }
 
@@ -334,8 +359,10 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
             chars = replacement.toCharArray();
 
             // Remove trailing newlines.
-            for(i = chars.length - 1; i >= 0; i--) {
-                if(chars[i] != '\n' && chars[i] != '\r') {
+            for(i = chars.length - 1; i >= 0; i--)
+            {
+                if(chars[i] != '\n' && chars[i] != '\r')
+                {
                     break;
                 }
             }
@@ -343,7 +370,9 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
             replacement = replacement.substring(0, i + 1);
             return replacement.toString() + '\n';
 
-        } catch(IOException e) {
+        }
+        catch(IOException e)
+        {
             throw new MojoFailureException(e.getMessage());
         }
     }
@@ -359,9 +388,11 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      * @throws MojoFailureException for unrecoverable errors.
      */
     protected final String load(final File file) throws
-        MojoFailureException {
+        MojoFailureException
+    {
 
-        if(file == null) {
+        if(file == null)
+        {
             throw new NullPointerException("file");
         }
 
@@ -369,16 +400,21 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
         final BufferedReader reader;
         final StringWriter writer = new StringWriter();
 
-        try {
-            if(this.encoding == null) {
+        try
+        {
+            if(this.encoding == null)
+            {
                 reader = new BufferedReader(new FileReader(file));
-            } else {
+            }
+            else
+            {
                 reader = new BufferedReader(new InputStreamReader(
                     new FileInputStream(file), this.encoding));
 
             }
 
-            while((line = reader.readLine()) != null) {
+            while((line = reader.readLine()) != null)
+            {
                 writer.write(line.concat("\n"));
             }
 
@@ -386,7 +422,9 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
             writer.close();
 
             return writer.toString();
-        } catch(IOException e) {
+        }
+        catch(IOException e)
+        {
             throw new MojoFailureException(e.getMessage());
         }
     }
@@ -402,24 +440,34 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      * @throws MojoFailureException for unrecoverable errors.
      */
     protected final void save(final File file, final String str) throws
-        MojoFailureException {
+        MojoFailureException
+    {
 
-        if(file == null) {
+        if(file == null)
+        {
             throw new NullPointerException("file");
         }
-        if(str == null) {
+        if(str == null)
+        {
             throw new NullPointerException("str");
         }
 
         final Writer fileWriter;
 
-        try {
-            if(this.isTestMode()) {
+        try
+        {
+            if(this.isTestMode())
+            {
                 this.getLog().info(str);
-            } else {
-                if(this.encoding == null) {
+            }
+            else
+            {
+                if(this.encoding == null)
+                {
                     fileWriter = new FileWriter(file);
-                } else {
+                }
+                else
+                {
                     fileWriter = new OutputStreamWriter(
                         new FileOutputStream(file), this.encoding);
 
@@ -432,7 +480,9 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
                 fileWriter.write(str);
                 fileWriter.close();
             }
-        } catch(IOException e) {
+        }
+        catch(IOException e)
+        {
             throw new MojoFailureException(e.getMessage());
         }
     }
@@ -445,8 +495,10 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      *
      * @throws NullPointerException if {@code stringBuffer} is {@code null}.
      */
-    protected final void indent(final StringBuffer stringBuffer) {
-        if(stringBuffer == null) {
+    protected final void indent(final StringBuffer stringBuffer)
+    {
+        if(stringBuffer == null)
+        {
             throw new NullPointerException("stringBuffer");
         }
 
@@ -464,15 +516,18 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      *
      * @throws MojoFailureException if no class loader is available.
      */
-    protected ClassLoader getContextClassLoader() throws MojoFailureException {
+    protected ClassLoader getContextClassLoader() throws MojoFailureException
+    {
         ClassLoader classLoader = Thread.currentThread().
             getContextClassLoader();
 
-        if(classLoader == null) {
+        if(classLoader == null)
+        {
             classLoader = ClassLoader.getSystemClassLoader();
         }
 
-        if(classLoader == null) {
+        if(classLoader == null)
+        {
             throw new MojoFailureException("classLoader");
         }
 
@@ -488,18 +543,22 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
      * @throws MojoFailureException for unrecoverable technical errors.
      */
     protected final ClassLoader getRuntimeClassLoader() throws
-        MojoFailureException {
+        MojoFailureException
+    {
 
         String element;
         File file;
         final Iterator it;
         final Collection urls = new LinkedList();
 
-        try {
-            for(it = this.getClasspathElements().iterator(); it.hasNext();) {
+        try
+        {
+            for(it = this.getClasspathElements().iterator(); it.hasNext();)
+            {
                 element = (String) it.next();
                 if(!urls.contains(element) &&
-                    this.isClasspathElementIncluded(element)) {
+                    this.isClasspathElementIncluded(element))
+                {
 
                     file = new File(element);
                     urls.add(file.toURI().toURL());
@@ -510,7 +569,9 @@ public abstract class AbstractSourceMojo extends AbstractMojo {
                 (URL[]) urls.toArray(new URL[urls.size()]),
                 this.getContextClassLoader());
 
-        } catch(MalformedURLException e) {
+        }
+        catch(MalformedURLException e)
+        {
             throw new MojoFailureException(e.getMessage());
         }
     }

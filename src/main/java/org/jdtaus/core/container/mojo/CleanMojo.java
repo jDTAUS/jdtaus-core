@@ -33,13 +33,16 @@ import org.jdtaus.core.container.mojo.AbstractSourceMojo.SourceEditor;
  * @version $Id$
  * @goal clean-sources
  */
-public class CleanMojo extends AbstractSourceMojo {
+public class CleanMojo extends AbstractSourceMojo
+{
 
     //--AbstractMojo------------------------------------------------------------
 
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() throws MojoExecutionException, MojoFailureException
+    {
         if(new File(this.getMavenProject().
-            getBasedir(), "src/main/java").exists()) {
+            getBasedir(), "src/main/java").exists())
+        {
 
             File file;
             String contents;
@@ -47,11 +50,13 @@ public class CleanMojo extends AbstractSourceMojo {
             final Collection sources = this.getAllSources();
             final SourceEditor editor = new RemoveTrailingSpacesEditor();
 
-            for(Iterator it = sources.iterator(); it.hasNext();) {
+            for(Iterator it = sources.iterator(); it.hasNext();)
+            {
                 file = (File) it.next();
                 contents = this.load(file);
                 edited = this.edit(contents, editor);
-                if(!contents.equals(edited)) {
+                if(!contents.equals(edited))
+                {
                     this.save(file, edited);
                 }
             }
@@ -63,12 +68,15 @@ public class CleanMojo extends AbstractSourceMojo {
 
     /** Removes trailing spaces. */
     public static class RemoveTrailingSpacesEditor
-        implements AbstractSourceMojo.SourceEditor {
+        implements AbstractSourceMojo.SourceEditor
+    {
 
         private boolean modified;
 
-        public String editLine(final String line) throws MojoFailureException {
-            if(line == null) {
+        public String editLine(final String line) throws MojoFailureException
+        {
+            if(line == null)
+            {
                 return null;
             }
 
@@ -78,16 +86,22 @@ public class CleanMojo extends AbstractSourceMojo {
             final StringBuffer replacement = new StringBuffer(line.length());
             final char[] chars = line.toCharArray();
 
-            for(int i = 0; i < chars.length; i++) {
-                if(chars[i] == ' ') {
-                    if(spaces == null) {
+            for(int i = 0; i < chars.length; i++)
+            {
+                if(chars[i] == ' ')
+                {
+                    if(spaces == null)
+                    {
                         spaces = new StringBuffer();
                     }
 
                     spaces.append(chars[i]);
                     sawSpace = true;
-                } else {
-                    if(sawSpace) {
+                }
+                else
+                {
+                    if(sawSpace)
+                    {
                         replacement.append(spaces);
                         sawSpace = false;
                         spaces = null;
@@ -102,7 +116,8 @@ public class CleanMojo extends AbstractSourceMojo {
             return ret;
         }
 
-        public boolean isModified() {
+        public boolean isModified()
+        {
             return this.modified;
         }
 
