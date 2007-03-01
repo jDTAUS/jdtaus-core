@@ -30,9 +30,11 @@ import java.text.MessageFormat;
  * @goal test-messageformat
  * @phase process-resources
  */
-public class MessagesTestMojo extends AbstractPropertyFileProcessorMojo {
+public class MessagesTestMojo extends AbstractPropertyFileProcessorMojo
+{
 
-    protected final void processProperty(String key, String value) {
+    protected final void processProperty(String key, String value)
+    {
         new MessageFormat(value);
     }
 

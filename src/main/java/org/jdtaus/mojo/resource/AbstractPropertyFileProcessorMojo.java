@@ -43,7 +43,8 @@ import org.codehaus.plexus.util.DirectoryScanner;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
  */
-public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo {
+public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
+{
 
     /**
      * The project resources.
@@ -79,8 +80,10 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo {
      *
      * @throws NullPointerException {@code if(key == null)}
      */
-    private MessageFormat i18n(final String key) {
-        if(key == null) {
+    private MessageFormat i18n(final String key)
+    {
+        if(key == null)
+        {
             throw new NullPointerException("key");
         }
 
@@ -108,7 +111,8 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo {
      * @see #processProperty(String, String)
      */
     public final void execute() throws MojoExecutionException,
-        MojoFailureException {
+        MojoFailureException
+    {
 
         Resource rsrc;
         Properties props;
@@ -117,9 +121,11 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo {
         final Pattern fileExcludePat = this.fileExcludeRegexp != null ?
             Pattern.compile(this.fileExcludeRegexp) : null;
 
-        for (Iterator i = this.resources.iterator(); i.hasNext();) {
+        for (Iterator i = this.resources.iterator(); i.hasNext();)
+        {
             rsrc = (Resource) i.next();
-            if (!new File(rsrc.getDirectory()).exists()) {
+            if (!new File(rsrc.getDirectory()).exists())
+            {
                 continue;
             }
 
@@ -132,19 +138,24 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo {
             scanner.scan();
 
             for (Iterator j = Arrays.asList(scanner.getIncludedFiles()).
-                iterator(); j.hasNext();) {
+                iterator(); j.hasNext();)
+            {
 
                 msgArgs[0] = (String) j.next();
                 if(fileExcludePat != null &&
-                    fileExcludePat.matcher(msgArgs[0]).matches()) {
+                    fileExcludePat.matcher(msgArgs[0]).matches())
+                {
 
                     msgArgs[1] = this.fileExcludeRegexp;
                     this.getLog().info(this.i18n("ignoringFile").
                         format(msgArgs));
 
-                } else {
+                }
+                else
+                {
                     props = new Properties();
-                    try {
+                    try
+                    {
                         this.getLog().debug(this.i18n("testingFile").
                             format(msgArgs));
 
@@ -152,7 +163,9 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo {
                             new File(rsrc.getDirectory(), msgArgs[0])));
 
                         this.processProperties(props);
-                    } catch (IOException e) {
+                    }
+                    catch (IOException e)
+                    {
                         throw new MojoExecutionException(
                             this.i18n("technicalError").format(null), e);
 
@@ -162,18 +175,23 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo {
         }
     }
 
-    private void processProperties(final Properties properties) {
+    private void processProperties(final Properties properties)
+    {
         final String[] args = new String[2];
         final Pattern pat = Pattern.compile(this.keyMatchRegexp);
         args[1] = this.keyMatchRegexp;
 
-        for(Iterator i = properties.keySet().iterator(); i.hasNext();) {
+        for(Iterator i = properties.keySet().iterator(); i.hasNext();)
+        {
             args[0] = (String) i.next();
-            if(pat.matcher(args[0]).matches()) {
+            if(pat.matcher(args[0]).matches())
+            {
                 this.processProperty(args[0],
                     properties.getProperty(args[0]));
 
-            } else {
+            }
+            else
+            {
                 this.getLog().info(this.i18n("notMatchingKey").format(args));
             }
         }

@@ -53,7 +53,8 @@ import org.codehaus.plexus.util.FileUtils;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
  */
-public class BundleKeysMojo extends AbstractMojo {
+public class BundleKeysMojo extends AbstractMojo
+{
 
     /**
      * The project's output directory.
@@ -129,42 +130,50 @@ public class BundleKeysMojo extends AbstractMojo {
      *
      * @return the locale to use for javadoc comments.
      */
-    protected final Locale getLocale() {
+    protected final Locale getLocale()
+    {
         return this.locale == null ?
             Locale.getDefault() : new Locale(this.locale);
 
     }
 
-    protected final MavenProject getProject() {
+    protected final MavenProject getProject()
+    {
         return this.project;
     }
 
-    protected final String getGenDirectory() {
+    protected final String getGenDirectory()
+    {
         return this.genDirectory;
     }
 
-    protected final String getOutputDirectory() {
+    protected final String getOutputDirectory()
+    {
         return this.outputDirectory;
     }
 
-    protected final String getNameSuffix() {
+    protected final String getNameSuffix()
+    {
         return this.nameSuffix;
     }
 
-    protected final boolean isJavadoc() {
+    protected final boolean isJavadoc()
+    {
         return this.javadoc.booleanValue();
     }
 
     //--AbstractMojo------------------------------------------------------------
 
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() throws MojoExecutionException, MojoFailureException
+    {
         final ClassLoader mavenLoader =
             Thread.currentThread().getContextClassLoader();
 
         Thread.currentThread().setContextClassLoader(
             this.getClasspathClassLoader());
 
-        if (!FileUtils.fileExists(this.getGenDirectory())) {
+        if (!FileUtils.fileExists(this.getGenDirectory()))
+        {
             FileUtils.mkdir(this.getGenDirectory());
         }
 
@@ -173,7 +182,8 @@ public class BundleKeysMojo extends AbstractMojo {
         String pkg;
         final Iterator it;
         final Map bundles = this.getBundles();
-        for(it = bundles.keySet().iterator(); it.hasNext();) {
+        for(it = bundles.keySet().iterator(); it.hasNext();)
+        {
             pkg = (String) it.next();
             this.generatePackage(pkg, (Map) bundles.get(pkg));
         }
@@ -189,7 +199,8 @@ public class BundleKeysMojo extends AbstractMojo {
      *
      * @return a list holding strings for each compile class path element.
      */
-    protected final List getClasspathElements() {
+    protected final List getClasspathElements()
+    {
         return this.classpathElements;
     }
 
@@ -202,23 +213,28 @@ public class BundleKeysMojo extends AbstractMojo {
      * @throws MojoFailureException for unrecoverable technical errors.
      */
     protected final ClassLoader getClasspathClassLoader() throws
-        MojoFailureException {
+        MojoFailureException
+    {
 
         String element;
         File file;
         final Iterator it;
         final Collection urls = new LinkedList();
 
-        try {
-            for(it = this.getClasspathElements().iterator(); it.hasNext();) {
+        try
+        {
+            for(it = this.getClasspathElements().iterator(); it.hasNext();)
+            {
                 element = (String) it.next();
-                if(!urls.contains(element)) {
+                if(!urls.contains(element))
+                {
                     file = new File(element);
                     urls.add(file.toURI().toURL());
                 }
             }
 
-            if(!urls.contains(this.getOutputDirectory())) {
+            if(!urls.contains(this.getOutputDirectory()))
+            {
                 file = new File(this.getOutputDirectory());
                 urls.add(file.toURI().toURL());
             }
@@ -227,12 +243,15 @@ public class BundleKeysMojo extends AbstractMojo {
                 (URL[]) urls.toArray(new URL[urls.size()]),
                 Thread.currentThread().getContextClassLoader());
 
-        } catch(MalformedURLException e) {
+        }
+        catch(MalformedURLException e)
+        {
             throw new MojoFailureException(e.getMessage());
         }
     }
 
-    protected Map getBundles() {
+    protected Map getBundles()
+    {
         int i;
         final Map ret = new HashMap();
         Map map;
@@ -241,26 +260,32 @@ public class BundleKeysMojo extends AbstractMojo {
         String bundlePackage;
         String bundleLocation;
 
-        if(this.bundles != null) {
-            for(i = this.bundles.length - 1; i >= 0; i--) {
+        if(this.bundles != null)
+        {
+            for(i = this.bundles.length - 1; i >= 0; i--)
+            {
                 bundle = this.bundles[i];
                 bundleName = BundleKeysMojo.getNameForBundle(bundle);
                 bundlePackage = BundleKeysMojo.getPackageForBundle(bundle);
                 bundleLocation = bundle.replaceAll("\\.", "/");
 
                 map = (Map) ret.get(bundlePackage);
-                if(map == null) {
+                if(map == null)
+                {
                     map = new HashMap();
                     ret.put(bundlePackage, map);
                 }
 
-                try {
+                try
+                {
                     map.put(bundleName,
                         ResourceBundle.getBundle(bundleLocation,
                         this.getLocale(),
                         Thread.currentThread().getContextClassLoader()));
 
-                } catch(MissingResourceException e) {
+                }
+                catch(MissingResourceException e)
+                {
                     this.getLog().warn(e.getMessage());
                 }
             }
@@ -269,24 +294,30 @@ public class BundleKeysMojo extends AbstractMojo {
         return ret;
     }
 
-    protected static String getPackageForBundle(final String bundleName) {
-        if(bundleName == null) {
+    protected static String getPackageForBundle(final String bundleName)
+    {
+        if(bundleName == null)
+        {
             throw new NullPointerException("bundleName");
         }
 
         return bundleName.substring(0, bundleName.lastIndexOf('.'));
     }
 
-    protected static String getNameForBundle(final String bundleName) {
-        if(bundleName == null) {
+    protected static String getNameForBundle(final String bundleName)
+    {
+        if(bundleName == null)
+        {
             throw new NullPointerException("bundleName");
         }
 
         return bundleName.substring(bundleName.lastIndexOf('.') + 1);
     }
 
-    protected MessageFormat getMessage(final String key) {
-        if(key == null) {
+    protected MessageFormat getMessage(final String key)
+    {
+        if(key == null)
+        {
             throw new NullPointerException("key");
         }
 
@@ -296,12 +327,15 @@ public class BundleKeysMojo extends AbstractMojo {
     }
 
     protected void generatePackage(final String pkg, final Map bundles) throws
-        MojoFailureException {
+        MojoFailureException
+    {
 
-        if(pkg == null) {
+        if(pkg == null)
+        {
             throw new NullPointerException("pkg");
         }
-        if(bundles == null) {
+        if(bundles == null)
+        {
             throw new NullPointerException("bundles");
         }
 
@@ -310,11 +344,13 @@ public class BundleKeysMojo extends AbstractMojo {
         final String pkgDir = this.getGenDirectory() + File.separator +
             pkg.replaceAll("\\.", "/");
 
-        if (!FileUtils.fileExists(pkgDir)) {
+        if (!FileUtils.fileExists(pkgDir))
+        {
             FileUtils.mkdir(pkgDir);
         }
 
-        for(it = bundles.keySet().iterator(); it.hasNext();) {
+        for(it = bundles.keySet().iterator(); it.hasNext();)
+        {
             bundleName = (String) it.next();
             this.generateBundle(bundleName, pkg,
                 new File(pkgDir, bundleName + this.getNameSuffix() + ".java"),
@@ -325,27 +361,33 @@ public class BundleKeysMojo extends AbstractMojo {
 
     protected void generateBundle(final String bundleName,
         final String packageName, final File outputFile,
-        final ResourceBundle bundle) throws MojoFailureException {
+        final ResourceBundle bundle) throws MojoFailureException
+    {
 
         String key;
 
-        if(bundleName == null) {
+        if(bundleName == null)
+        {
             throw new NullPointerException("bundleName");
         }
-        if(outputFile == null) {
+        if(outputFile == null)
+        {
             throw new NullPointerException("outputFile");
         }
-        if(bundle == null) {
+        if(bundle == null)
+        {
             throw new NullPointerException("bundle");
         }
-        if(packageName == null) {
+        if(packageName == null)
+        {
             throw new NullPointerException("packageName");
         }
 
         this.getLog().info(this.getMessage("writingBundle").
             format(new Object[] { outputFile.getName() }));
 
-        try {
+        try
+        {
             final FileOutputStream out = new FileOutputStream(outputFile);
             final Writer writer = this.encoding == null ?
                 new OutputStreamWriter(out) :
@@ -359,10 +401,12 @@ public class BundleKeysMojo extends AbstractMojo {
             buf.append("\nabstract class ").append(bundleName).
                 append(this.getNameSuffix()).append("{ \n\n");
 
-            for(Enumeration e = bundle.getKeys(); e.hasMoreElements();) {
+            for(Enumeration e = bundle.getKeys(); e.hasMoreElements();)
+            {
                 key = (String) e.nextElement();
 
-                if(this.isJavadoc()) {
+                if(this.isJavadoc())
+                {
                     buf.append("/** <pre> ").append(bundle.getObject(key)).
                         append("</pre>. */\n");
 
@@ -376,7 +420,8 @@ public class BundleKeysMojo extends AbstractMojo {
                 buf.append("return getMessage(\"").
                     append(key).append("\", locale);\n}\n\n");
 
-                if(this.isJavadoc()) {
+                if(this.isJavadoc())
+                {
                     buf.append("/** <pre> ").append(bundle.getObject(key)).
                         append("</pre>. */\n");
 
@@ -408,18 +453,23 @@ public class BundleKeysMojo extends AbstractMojo {
             buf.append("}\n");
             writer.write(buf.toString());
             writer.close();
-        } catch(IOException e) {
+        }
+        catch(IOException e)
+        {
             throw new MojoFailureException(e.getMessage());
         }
     }
 
-    protected static String getMessageGetterNameForKey(String key) {
-        if(key == null) {
+    protected static String getMessageGetterNameForKey(String key)
+    {
+        if(key == null)
+        {
             throw new NullPointerException("key");
         }
 
         final char[] c = key.toCharArray();
-        if(Character.isLowerCase(c[0])) {
+        if(Character.isLowerCase(c[0]))
+        {
             c[0] = Character.toUpperCase(c[0]);
         }
 
@@ -430,13 +480,16 @@ public class BundleKeysMojo extends AbstractMojo {
 
     }
 
-    protected static String getStringGetterNameForKey(String key) {
-        if(key == null) {
+    protected static String getStringGetterNameForKey(String key)
+    {
+        if(key == null)
+        {
             throw new NullPointerException("key");
         }
 
         final char[] c = key.toCharArray();
-        if(Character.isLowerCase(c[0])) {
+        if(Character.isLowerCase(c[0]))
+        {
             c[0] = Character.toUpperCase(c[0]);
         }
 
