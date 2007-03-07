@@ -15,8 +15,8 @@
     </head>
     
     <menu name="jDTAUS Core">
-      <item name="Introduction" href="introduction.html"/>
-      <item name="Maven 2 Repository" href="maven2-repository.html"/>
+      <item name="Introduction" href="http://sites.jdtaus.org/jdtaus-core/1.0.x/introduction.html"/>
+      <item name="Maven 2 Repository" href="http://sites.jdtaus.org/jdtaus-core/1.0.x/maven2-repository.html"/>
     </menu>
     
     <menu ref="reports"/>
