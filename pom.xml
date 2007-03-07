@@ -5,29 +5,33 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.0-alpha-8-SNAPSHOT</version>
+  <version>1.0-alpha-8</version>
   <description><![CDATA[
   jDTAUS Core provides a common application programming interface for jDTAUS
   integration. This is the parent module for the core artifacts.]]>
   </description>
   <url>http://sites.jdtaus.org/jdtaus-core/1.0.x</url>
   <issueManagement>
-    <system>Sourceforge</system>
-    <url>http://sourceforge.net/tracker/?group_id=144535&amp;atid=759050</url>
+    <system>Bugzilla</system>
+    <url>http://bugzilla.jdtaus.org/cgi-bin/bugzilla/index.cgi</url>
   </issueManagement>
   <ciManagement>
     <system>Continuum</system>
-    <url>http://m2.jdtaus.org:65000/continuum</url>
+    <url>http://continuum.jdtaus.org/continuum</url>
     <notifiers>
       <notifier>
         <type>mail</type>
+        <sendOnError>true</sendOnError>
+        <sendOnFailure>true</sendOnFailure>
+        <sendOnSuccess>false</sendOnSuccess>
+        <sendOnWarning>false</sendOnWarning>
         <configuration>
-          <address>cs@schulte.it</address>
+          <address>support@jdtaus.org</address>
         </configuration>
       </notifier>
     </notifiers>
   </ciManagement>
-  <inceptionYear>2006</inceptionYear>
+  <inceptionYear>2005</inceptionYear>
   <mailingLists>
     <mailingList>
       <name>jdtaus-cvs</name>
@@ -64,9 +68,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/trunk</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/trunk</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/trunk</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-8</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-8</developerConnection>
+    <url>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/1.0-alpha-8</url>
   </scm>
   <organization>
     <name>jDTAUS</name>
@@ -108,6 +112,36 @@
         <configuration>
           <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags</tagBase>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>sign</id>
+            <phase>package</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+            <configuration>
+              <storepass>${storepass}</storepass>
+              <keypass>${keypass}</keypass>
+              <alias>Christian Schulte</alias>
+              <signedjar>${project.build.directory}/signed/${project.build.finalName}.jar</signedjar>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
