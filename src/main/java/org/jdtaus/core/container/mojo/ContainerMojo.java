@@ -630,7 +630,10 @@ public class ContainerMojo extends AbstractSourceMojo
                         buf.append(prop.getType().getName()).
                             append(prop.getType() == Boolean.TYPE ||
                             prop.getType() == Boolean.class ? " is" : " get").
-                            append(name).append("() {\n");
+                            append(name).append("()\n");
+
+                        indent(buf);
+                        buf.append("{\n");
 
                         indent(buf);
                         indent(buf);
@@ -798,7 +801,10 @@ public class ContainerMojo extends AbstractSourceMojo
 
                 indent(buf);
                 buf.append("protected ").append(implType).
-                    append("(final Implementation meta) {\n");
+                    append("(final Implementation meta)\n");
+
+                indent(buf);
+                buf.append("{\n");
 
                 indent(buf);
                 indent(buf);
@@ -817,7 +823,6 @@ public class ContainerMojo extends AbstractSourceMojo
                         if(ContainerMojo.checkPropertyInheritted(
                             property, this.impl))
                         {
-
                             continue;
                         }
 
@@ -856,7 +861,10 @@ public class ContainerMojo extends AbstractSourceMojo
 
                 indent(buf);
                 buf.append("protected ").append(implType).
-                    append("(final Dependency meta) {\n");
+                    append("(final Dependency meta)\n");
+
+                indent(buf);
+                buf.append("{\n");
 
                 indent(buf);
                 indent(buf);
@@ -875,7 +883,6 @@ public class ContainerMojo extends AbstractSourceMojo
                         if(ContainerMojo.checkPropertyInheritted(
                             property, this.impl))
                         {
-
                             continue;
                         }
 
