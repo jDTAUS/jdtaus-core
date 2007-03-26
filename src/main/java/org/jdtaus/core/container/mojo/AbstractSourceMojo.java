@@ -257,14 +257,12 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     }
 
     /**
-     * Accessor to all {@code *.java} files.
+     * Gets all {@code *.java} files from the project's compile source roots.
      *
      * @return a {@code Collection} holding {@code File} instances for all
      * {@code *.java} files found in all compile source roots.
-     *
-     * @throws MojoFailureException if no source files could be found.
      */
-    protected final Collection getAllSources() throws MojoFailureException
+    protected final Collection getAllSources()
     {
         File file;
         File parentRoot;
@@ -277,7 +275,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         for(i = this.getMavenProject().getCompileSourceRoots().
             iterator(); i.hasNext();)
         {
-
             sourceRoot = (String) i.next();
             parentRoot = new File(sourceRoot);
             scanner = new DirectoryScanner();
@@ -290,6 +287,45 @@ public abstract class AbstractSourceMojo extends AbstractMojo
                 iterator(); j.hasNext();)
             {
 
+                file = new File(parentRoot, (String) j.next());
+                files.add(file);
+            }
+        }
+
+        return files;
+    }
+
+    /**
+     * Gets all {@code *.java} files from the project's test compile source
+     * roots.
+     *
+     * @return a {@code Collection} holding {@code File} instances for all
+     * {@code *.java} files found in all test compile source roots.
+     */
+    protected final Collection getTestSources()
+    {
+        File file;
+        File parentRoot;
+        String sourceRoot;
+        DirectoryScanner scanner;
+        final Iterator i;
+        Iterator j;
+        final Collection files = new LinkedList();
+
+        for(i = this.getMavenProject().getTestCompileSourceRoots().
+            iterator(); i.hasNext();)
+        {
+            sourceRoot = (String) i.next();
+            parentRoot = new File(sourceRoot);
+            scanner = new DirectoryScanner();
+            scanner.setBasedir(sourceRoot);
+            scanner.setIncludes(new String[] {"**/*.java"});
+            scanner.addDefaultExcludes();
+            scanner.scan();
+
+            for (j = Arrays.asList(scanner.getIncludedFiles()).
+                iterator(); j.hasNext();)
+            {
                 file = new File(parentRoot, (String) j.next());
                 files.add(file);
             }

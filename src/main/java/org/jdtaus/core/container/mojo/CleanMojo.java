@@ -22,6 +22,7 @@ package org.jdtaus.core.container.mojo;
 import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.jdtaus.core.container.mojo.AbstractSourceMojo.SourceEditor;
@@ -40,25 +41,31 @@ public class CleanMojo extends AbstractSourceMojo
 
     public void execute() throws MojoExecutionException, MojoFailureException
     {
-        if(new File(this.getMavenProject().
-            getBasedir(), "src/main/java").exists())
+        File file;
+        String contents;
+        String edited;
+        final Collection sources = new LinkedList();
+        final SourceEditor editor = new RemoveTrailingSpacesEditor();
+
+        if(new File(this.getMavenProject().getBasedir(),
+            "src/main/java").exists())
         {
+            sources.addAll(this.getAllSources());
+        }
+        if(new File(this.getMavenProject().getBasedir(),
+            "src/test/java").exists())
+        {
+            sources.addAll(this.getTestSources());
+        }
 
-            File file;
-            String contents;
-            String edited;
-            final Collection sources = this.getAllSources();
-            final SourceEditor editor = new RemoveTrailingSpacesEditor();
-
-            for(Iterator it = sources.iterator(); it.hasNext();)
+        for(Iterator it = sources.iterator(); it.hasNext();)
+        {
+            file = (File) it.next();
+            contents = this.load(file);
+            edited = this.edit(contents, editor);
+            if(!contents.equals(edited))
             {
-                file = (File) it.next();
-                contents = this.load(file);
-                edited = this.edit(contents, editor);
-                if(!contents.equals(edited))
-                {
-                    this.save(file, edited);
-                }
+                this.save(file, edited);
             }
         }
     }
