@@ -140,12 +140,10 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
             for (Iterator j = Arrays.asList(scanner.getIncludedFiles()).
                 iterator(); j.hasNext();)
             {
-
                 msgArgs[0] = (String) j.next();
                 if(fileExcludePat != null &&
                     fileExcludePat.matcher(msgArgs[0]).matches())
                 {
-
                     msgArgs[1] = this.fileExcludeRegexp;
                     this.getLog().info(this.i18n("ignoringFile").
                         format(msgArgs));
