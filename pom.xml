@@ -1,9 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.0-alpha-9</version>
+    <version>1.0-alpha-10</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
@@ -27,6 +29,12 @@
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-project</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.jdtaus.core.container</groupId>
+      <artifactId>jdtaus-core-client-container</artifactId>
+      <version>RELEASE</version>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
   <scm>
     <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/trunk</connection>
@@ -41,7 +49,7 @@
           <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/tags</tagBase>
         </configuration>
       </plugin>
-
+      
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-resource-mojo</artifactId>
@@ -64,7 +72,7 @@
           </execution>
         </executions>
       </plugin>
-
+      
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <executions>
@@ -100,7 +108,7 @@
           </execution>
         </executions>
       </plugin>
-
+      
     </plugins>
   </build>
   <repositories>
@@ -115,7 +123,7 @@
       </snapshots>
       <id>jdtaus-releases</id>
       <name>jDTAUS Release Repository</name>
-      <url>http://maven2-repository.jdtaus.org/releases</url>
+      <url>http://repository.jdtaus.org/releases</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -130,7 +138,7 @@
       </snapshots>
       <id>jdtaus-releases</id>
       <name>jDTAUS Release Repository</name>
-      <url>http://maven2-repository.jdtaus.org/releases</url>
+      <url>http://repository.jdtaus.org/releases</url>
     </pluginRepository>
   </pluginRepositories>
   <reporting>
