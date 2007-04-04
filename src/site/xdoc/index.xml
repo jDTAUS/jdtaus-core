@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <properties>
+    <title>jDTAUS Core</title>
+    <author email="cs@jdtaus.org">Christian Schulte</author>
+  </properties>
+  <body>
+    <section name="Introduction">
+      <p>
+        jDTAUS Core provides a common application programming interface for
+        jDTAUS integration. It is split into various artifacts providing
+        flexible integration facilities. The
+        <a href="jdtaus-core-api/project-summary.html">Core API artifact</a>
+        provides <a href="jdtaus-core-api/apidocs/index.html">interfaces</a> to
+        core application services like task monitoring or modular implementation
+        management. As with all jDTAUS API artifacts the corresponding
+        application runtime needs to be assembled manually. Whenever the Core
+        API artifact is used at compile time (whether pulled in transitively or
+        requested), the application assembler needs to provide additional
+        runtime artifacts (see below) for proper operation.
+      </p>
+      <subsection name="Container Adapters">
+        <p>
+          The <a href="jdtaus-core-client-container/project-summary.html">client
+          container adapter</a> provides the jDTAUS Container
+          <a href="jdtaus-core-client-container/apidocs/index.html">reference
+          implementation</a> and implements a runtime suitable for standalone,
+          single-user client applications. The
+          <a href="jdtaus-core-servlet-container/project-summary.html">servlet
+          container adapter</a> extends that runtime for web applications and is
+          only needed for integration into web applications.
+        </p>
+        <p>
+          <b>Note:</b> Web applications must be configured manually to work
+          correctly with jDTAUS. See <a href="jdtaus-core-servlet-container/apidocs/org/jdtaus/core/container/runtime/ServletFilter.html">ServletFilter</a>.
+        </p>
+      </subsection>
+      <subsection name="Logging Adapters">
+        <p>
+          Three logging implementations to choose from.
+          <a href="jdtaus-core-jdk-logging/project-summary.html">JDK 1.4</a>,
+          <a href="jdtaus-core-log4j-logging/project-summary.html">Log4J</a>
+          or <a href="jdtaus-core-commons-logging/project-summary.html">
+          Commons</a> logging.
+        </p>
+      </subsection>
+      <subsection name="Task Monitoring Adapters">
+        <p>
+          Two task monitoring implementations to choose from. The
+          <a href="jdtaus-core-client-monitoring/project-summary.html">client
+          monitor adapter</a> implements a runtime suitable for client
+          applications displaying progress to the users. The
+          <a href="jdtaus-core-server-monitoring/project-summary.html">server
+          monitor adapter</a> implements a runtime suitable for server
+          applications not displaying progress to the users.
+          The different behaviour is documented in the corresponding
+          implementation classes. See the
+          <a href="jdtaus-core-client-monitoring/apidocs/index.html">client</a>
+          and <a href="jdtaus-core-server-monitoring/apidocs/index.html">server
+          </a> API documentation.
+        </p>
+      </subsection>
+      <subsection name="Runtime Environment Adapters">
+        <p>
+          Currently only the
+          <a href="jdtaus-core-limiting-runtime/project-summary.html">reference
+          implementation</a> is available.
+        </p>
+      </subsection>
+      <subsection name="Localization Adapters">
+        <p>
+          Currently only the
+          <a href="jdtaus-core-application-logger/project-summary.html">
+          reference implementation</a> is available.
+        </p>
+      </subsection>
+      <subsection name="Implementation programming interfaces">
+        <p>
+          The <a href="jdtaus-core-spi/project-summary.html">Core SPI artifact</a>
+          provides interfaces to be used by implementations to expose core
+          application services to applications. The above runtime artifacts all
+          share the Core SPI artifact at compile time so that it will almost
+          ever be pulled in transitively during application assembly.
+        </p>
+      </subsection>
+      <subsection name="Maven 2 Repository">
+        <p>
+          All jDTAUS artifacts are provided via a Maven 2 repository located at
+          <a href="http://repository.jdtaus.org">http://repository.jdtaus.org</a>.
+          <source><![CDATA[<repositories>
+  <repository>
+    <releases>
+      <enabled>true</enabled>
+      <updatePolicy>never</updatePolicy>
+    </releases>
+    <snapshots>
+      <enabled>false</enabled>
+      <updatePolicy>daily</updatePolicy>
+    </snapshots>
+    <id>jdtaus-releases</id>
+    <name>jDTAUS Release Repository</name>
+    <url>http://repository.jdtaus.org/releases</url>
+  </repository>
+</repositories>
+
+<pluginRepositories>
+  <pluginRepository>
+    <releases>
+      <enabled>true</enabled>
+      <updatePolicy>never</updatePolicy>
+    </releases>
+    <snapshots>
+      <enabled>false</enabled>
+      <updatePolicy>daily</updatePolicy>
+    </snapshots>
+    <id>jdtaus-releases</id>
+    <name>jDTAUS Release Repository</name>
+    <url>http://repository.jdtaus.org/releases</url>
+  </pluginRepository>
+</pluginRepositories>]]></source>
+        </p>
+      </subsection>
+    </section>
+  </body>
+</document>
