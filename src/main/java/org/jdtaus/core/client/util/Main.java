@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.core.client;
+package org.jdtaus.core.client.util;
 
 import java.util.HashMap;
 import java.util.Locale;

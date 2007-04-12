@@ -17,10 +17,10 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.core.client.spi;
+package org.jdtaus.core.client.util.spi;
 
 import java.io.File;
-import org.jdtaus.core.client.Application;
+import org.jdtaus.core.client.util.Application;
 import org.jdtaus.core.container.ContainerInitializer;
 import org.jdtaus.core.container.Dependency;
 import org.jdtaus.core.container.Implementation;

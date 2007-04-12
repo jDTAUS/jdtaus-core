@@ -17,12 +17,12 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.core.client.spi;
+package org.jdtaus.core.client.util.spi;
 
 import java.awt.Component;
 import java.util.EmptyStackException;
 import java.util.Stack;
-import org.jdtaus.core.client.UserInterface;
+import org.jdtaus.core.client.util.UserInterface;
 import org.jdtaus.core.container.Dependency;
 import org.jdtaus.core.container.Implementation;
 import org.jdtaus.core.container.ModelFactory;
