@@ -398,7 +398,7 @@ public class Main implements ContainerInitializer
             public void run()
             {
                 ContainerFactory.getContainer().getImplementation(Main.class,
-                    "jDTAUS Core RI Client Application");
+                    "jDTAUS Core Utilities");
 
             }
         });
