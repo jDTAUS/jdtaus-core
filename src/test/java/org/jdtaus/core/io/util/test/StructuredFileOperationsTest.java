@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.core.io.spi.test;
+package org.jdtaus.core.io.util.test;
 
 import java.io.IOException;
 import org.jdtaus.core.io.StructuredFile;
