@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.core.io.utilities;
+package org.jdtaus.core.io.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +28,7 @@ import org.jdtaus.core.container.Implementation;
 import org.jdtaus.core.container.ModelFactory;
 import org.jdtaus.core.container.Property;
 import org.jdtaus.core.container.PropertyException;
+import org.jdtaus.core.io.FileOperations;
 
 /**
  * Adapts a {@link java.io.RandomAccessFile} to {@code FileOperations}.

@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+  
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
@@ -89,7 +89,8 @@
             </goals>
             <configuration>
               <bundles>
-                <bundle>org.jdtaus.core.io.utilities.MemoryFileOperations</bundle>
+                <bundle>org.jdtaus.core.io.util.MemoryFileOperations</bundle>
+                <bundle>org.jdtaus.core.io.util.StructuredFileOperations</bundle>
               </bundles>
               <encoding>UTF-8</encoding>
               <locale>en</locale>
@@ -106,6 +107,7 @@
           <execution>
             <id>default</id>
             <goals>
+              <goal>clean-sources</goal>
               <goal>generate-container</goal>
             </goals>
             <configuration>
@@ -113,12 +115,12 @@
               <encoding>UTF-8</encoding>
               <locale>en</locale>
               <testMode>false</testMode>
-              <classPathElementsExcludeRegexp>(.*jdtaus-core-api.*jar|.*classes.*)</classPathElementsExcludeRegexp>
+              <classPathElementsExcludeRegexp>(.*jdtaus-core-api.*jar)</classPathElementsExcludeRegexp>
             </configuration>
           </execution>
         </executions>
       </plugin>
-
+      
     </plugins>
   </build>
   <dependencies>
@@ -131,6 +133,36 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jdtaus.core</groupId>
+      <artifactId>jdtaus-core-it</artifactId>
+      <version>1.0-alpha-1-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jdtaus.core.container</groupId>
+      <artifactId>jdtaus-core-client-container</artifactId>
+      <version>RELEASE</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jdtaus.core.logging</groupId>
+      <artifactId>jdtaus-core-jdk-logging</artifactId>
+      <version>RELEASE</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jdtaus.core.monitor</groupId>
+      <artifactId>jdtaus-core-server-monitoring</artifactId>
+      <version>RELEASE</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jdtaus.core.lang</groupId>
+      <artifactId>jdtaus-core-limiting-runtime</artifactId>
+      <version>RELEASE</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
   <repositories>
@@ -184,6 +216,8 @@
           <windowtitle>${pom.name} Specification ${pom.version}</windowtitle>
           <links>
             <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+            <link>http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/apidocs</link>
+            <link>http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-spi/apidocs</link>
           </links>
         </configuration>
       </plugin>
