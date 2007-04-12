@@ -3,18 +3,18 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.0-alpha-10</version>
+    <version>1.0-beta-1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-utilities</artifactId>
   <name>jDTAUS Core Utilities</name>
-  <version>1.0-alpha-4-SNAPSHOT</version>
+  <version>1.0-beta-1</version>
   <description>jDTAUS core utility components.</description>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/1.0-alpha-3</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/1.0-alpha-3</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/1.0-alpha-3</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/1.0-beta-1</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/1.0-beta-1</developerConnection>
+    <url>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/1.0-beta-1</url>
   </scm>
   <build>
     <resources>
@@ -82,7 +82,6 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-resource-mojo</artifactId>
-        <version>RELEASE</version>
         <executions>
           <execution>
             <id>default</id>
@@ -106,7 +105,6 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-        <version>RELEASE</version>
         <executions>
           <execution>
             <id>clean</id>
