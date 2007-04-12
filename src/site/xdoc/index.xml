@@ -13,11 +13,18 @@
         <a href="jdtaus-core-api/project-summary.html">Core API artifact</a>
         provides <a href="jdtaus-core-api/apidocs/index.html">interfaces</a> to
         core application services like task monitoring or modular implementation
-        management. As with all jDTAUS API artifacts the corresponding
-        application runtime needs to be assembled manually. Whenever the Core
-        API artifact is used at compile time (whether pulled in transitively or
-        requested), the application assembler needs to provide additional
-        runtime artifacts (see below) for proper operation.
+        management. The <a href="jdtaus-core-utilities/project-summary.html">
+        Core Utilities artifact</a> provides
+        <a href="jdtaus-core-utilities/apidocs/index.html">core utility
+        implementations</a> which may be used together with the Core API
+        artifact if desired. 
+      </p>
+      <p>
+        As with all jDTAUS API artifacts the corresponding application runtime
+        needs to be assembled manually. Whenever the Core API artifact is used
+        at compile time (whether pulled in transitively by e.g. the Core
+        Utilities artifact or requested), the application assembler needs to
+        provide additional runtime artifacts (see below) for proper operation.
       </p>
       <subsection name="Container Adapters">
         <p>
