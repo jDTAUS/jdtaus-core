@@ -36,10 +36,10 @@ import org.jdtaus.core.io.util.RandomAccessFileOperations;
 public class RandomAccessFileOperationsTest extends FileOperationsTest
 {
     //--FileOperationsTest------------------------------------------------------
-    
+
     /** Temporary random access file. */
     private File tmp;
-    
+
     public FileOperations getFileOperations()
     {
         try
@@ -48,22 +48,22 @@ public class RandomAccessFileOperationsTest extends FileOperationsTest
             {
                 this.tmp.delete();
             }
-            
+
             this.tmp = File.createTempFile("jdtaus", "tmp");
             this.tmp.deleteOnExit();
             return new RandomAccessFileOperations(
                 new RandomAccessFile(this.tmp, "rw"));
-            
+
         }
         catch(IOException e)
         {
             throw new AssertionError(e);
         }
     }
-    
+
     //------------------------------------------------------FileOperationsTest--
     //--RandomAccessFileOperationsTest------------------------------------------
-    
+
     /**
      * Tests the {@link FileOperations#read(OutputStream}} and
      * {@link FileOperations#write(InputStream)} methods.
@@ -78,19 +78,19 @@ public class RandomAccessFileOperationsTest extends FileOperationsTest
         final File testFile = File.createTempFile("jdtaus", "tmp");
         final RandomAccessFileOperations ops = new RandomAccessFileOperations(
             new RandomAccessFile(testFile, "rw"));
-        
+
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        
+
         ops.write(this.getTestFile());
         ops.read(out);
         out.close();
         this.assertValidTestFile(new String(out.toByteArray(), "UTF-8"));
         testFile.delete();
     }
-    
+
     //------------------------------------------RandomAccessFileOperationsTest--
     //--Object------------------------------------------------------------------
-    
+
     public void finalize()
     {
         if(this.tmp != null && this.tmp.exists())
@@ -98,7 +98,7 @@ public class RandomAccessFileOperationsTest extends FileOperationsTest
             this.tmp.delete();
         }
     }
-    
+
     //------------------------------------------------------------------Object--
-    
+
 }

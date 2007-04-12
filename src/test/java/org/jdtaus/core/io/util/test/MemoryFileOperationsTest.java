@@ -33,15 +33,15 @@ import org.jdtaus.core.io.util.MemoryFileOperations;
 public class MemoryFileOperationsTest extends FileOperationsTest
 {
     //--FileOperationsTest------------------------------------------------------
-    
+
     public FileOperations getFileOperations()
     {
         return new MemoryFileOperations();
     }
-    
+
     //------------------------------------------------------FileOperationsTest--
     //--MemoryFileOperationsTest------------------------------------------------
-    
+
     /**
      * Tests the {@link FileOperations#read(OutputStream}} and
      * {@link FileOperations#write(InputStream)} methods.
@@ -55,14 +55,14 @@ public class MemoryFileOperationsTest extends FileOperationsTest
     {
         final MemoryFileOperations ops = new MemoryFileOperations();
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        
+
         ops.write(this.getTestFile());
         this.assertValidTestFile(new String(ops.getData(), "UTF-8"));
         ops.read(out);
         out.close();
         this.assertValidTestFile(new String(out.toByteArray(), "UTF-8"));
     }
-    
+
     //------------------------------------------------MemoryFileOperationsTest--
-    
+
 }

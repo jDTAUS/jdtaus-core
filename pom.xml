@@ -105,9 +105,19 @@
         <version>RELEASE</version>
         <executions>
           <execution>
-            <id>default</id>
+            <id>clean</id>
+            <phase>process-sources</phase>
             <goals>
               <goal>clean-sources</goal>
+            </goals>
+            <configuration>
+              <encoding>UTF-8</encoding>
+              <classPathElementsExcludeRegexp>.*jdtaus-core-api.*jar</classPathElementsExcludeRegexp>
+            </configuration>
+          </execution>
+          <execution>
+            <id>default</id>
+            <goals>
               <goal>generate-container</goal>
             </goals>
             <configuration>

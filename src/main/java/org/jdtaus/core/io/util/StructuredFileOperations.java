@@ -62,27 +62,27 @@ import org.jdtaus.core.monitor.spi.TaskMonitor;
 public class StructuredFileOperations
     implements StructuredFile, ContainerInitializer
 {
-    
+
     //--Fields------------------------------------------------------------------
-    
+
     /** Cache for {@code readAhead} blocks. */
     private byte[] cache;
-    
+
     /** Index of the block starting at {@code cache[0]}. */
     private long cacheIndex;
-    
+
     /** Number of blocks read-ahead into cache. */
     private int cacheMaxIndex;
-    
+
     /** Information about changes in memory which need to be persisted. */
     private boolean[] dirtyCache;
-    
+
     /** Pre-allocated temporary buffer. */
     private byte[] minimumBuffer;
-    
+
     /** List for {@code StructuredFileListener}s. */
     private final EventListenerList fileListeners = new EventListenerList();
-    
+
     //------------------------------------------------------------------Fields--
     //--Implementation----------------------------------------------------------
 
@@ -141,7 +141,7 @@ public class StructuredFileOperations
 
     //------------------------------------------------------------Constructors--
     //--ContainerInitializer----------------------------------------------------
-    
+
     /**
      * (Re-)Initializes the instance.
      * {@inheritDoc}
@@ -152,28 +152,28 @@ public class StructuredFileOperations
     public void initialize()
     {
         this.assertValidProperties();
-        
+
         try
         {
             final int minBufferedBlocks = this.getMinBufferedBlocks();
             final int readAhead = this.getReadAhead();
             final int blockSize = this.getBlockSize();
-            
+
             if(this.fileOperations != null)
             {
                 this.flush();
             }
-            
+
             this.fileOperations = null;
             this.minimumBuffer = this.getMemoryManager().
                 allocateBytes(minBufferedBlocks * blockSize);
-            
+
             this.cache = this.getMemoryManager().
                 allocateBytes(blockSize * readAhead);
-            
+
             this.dirtyCache = this.getMemoryManager().
                 allocateBoolean(readAhead);
-            
+
             this.cacheIndex = -1L;
             this.cacheMaxIndex = -1;
         }
@@ -182,7 +182,7 @@ public class StructuredFileOperations
             throw new ImplementationException(StructuredFileOperations.META, e);
         }
     }
-    
+
     //----------------------------------------------------ContainerInitializer--
     //--Dependencies------------------------------------------------------------
 
@@ -301,18 +301,18 @@ public class StructuredFileOperations
 
     //--------------------------------------------------------------Properties--
     //--StructuredFile----------------------------------------------------------
-    
+
     public final long getBlockCount() throws IOException
     {
         return this.getFileOperations().getLength() / this.getBlockSize();
     }
-    
+
     public void deleteBlocks(final long index,
         final long count) throws IOException
     {
-        
+
         final long blockCount = this.getBlockCount();
-        
+
         // Preconditions.
         if(index < 0L || index > blockCount - count)
         {
@@ -322,50 +322,50 @@ public class StructuredFileOperations
         {
             throw new ArrayIndexOutOfBoundsException((int) count);
         }
-        
+
         this.deleteBlocksImpl(index, count, blockCount);
     }
-    
+
     private void deleteBlocksImpl(final long index, final long count,
         final long blockCount) throws IOException
     {
-        
+
         final byte[] buf;
         final long block = index + count;
         final DeleteBlocksTask task = new DeleteBlocksTask();
         long toMoveByte = (blockCount - block) * this.getBlockSize();
         long readPos = block * this.getBlockSize();
         long writePos = index * this.getBlockSize();
-        
+
         // Flush the cache.
         if(!(this.cacheIndex < 0) && this.cacheIndex >= index)
         {
             this.flush();
             this.cacheIndex = -1L;
         }
-        
+
         // No blocks are following the ones to remove.
         if(toMoveByte == 0L)
         {
             this.getFileOperations().setLength(this.getFileOperations().
                 getLength() - count * this.getBlockSize());
-            
+
             this.fireBlocksDeleted(index, count);
             return;
         }
-        
+
         buf = this.newTemporaryBuffer(toMoveByte >
             Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) toMoveByte);
-        
-        
+
+
         task.setIndeterminate(false);
         task.setMinimum(0);
         task.setMaximum(toMoveByte > Integer.MAX_VALUE ?
             Integer.MAX_VALUE : (int) toMoveByte);
-        
+
         task.setProgress(0);
         this.getTaskMonitor().monitor(task);
-        
+
         try
         {
             // Move following blocks to the position of the first block to
@@ -375,14 +375,14 @@ public class StructuredFileOperations
                 this.getFileOperations().setFilePointer(readPos);
                 final int len = toMoveByte <= buf.length ?
                     (int) toMoveByte : buf.length;
-                
+
                 int read = 0;
                 int total = 0;
                 do
                 {
                     read = this.getFileOperations().
                         read(buf, total, len - total);
-                    
+
                     if(read == -1)
                     {
                         throw new EOFException();
@@ -391,25 +391,25 @@ public class StructuredFileOperations
                     {
                         total += read;
                     }
-                    
+
                 } while(total < len);
-                
+
                 // Move the block count blocks to the beginning.
                 this.getFileOperations().setFilePointer(writePos);
                 this.getFileOperations().write(buf, 0, len);
-                
+
                 readPos += len;
                 writePos += len;
                 toMoveByte -= len;
                 task.setProgress(task.getProgress() + len > Integer.MAX_VALUE ?
                     Integer.MAX_VALUE : task.getProgress() + len);
-                
+
             }
-            
+
             // Truncate the file.
             this.getFileOperations().setLength(this.getFileOperations().
                 getLength() - count * this.getBlockSize());
-            
+
             this.fireBlocksDeleted(index, count);
         }
         finally
@@ -417,13 +417,13 @@ public class StructuredFileOperations
             this.getTaskMonitor().finish(task);
         }
     }
-    
+
     public void insertBlocks(final long index,
         final long count) throws IOException
     {
-        
+
         final long blockCount = this.getBlockCount();
-        
+
         // Preconditions.
         if(index < 0L || index > blockCount)
         {
@@ -433,50 +433,50 @@ public class StructuredFileOperations
         {
             throw new ArrayIndexOutOfBoundsException((int) count);
         }
-        
+
         this.insertBlocksImpl(index, count, blockCount);
     }
-    
+
     private void insertBlocksImpl(final long index, final long count,
         final long blockCount) throws IOException
     {
-        
+
         final byte[] buf;
         final InsertBlocksTask task = new InsertBlocksTask();
         long toMoveByte = (blockCount - index) * this.getBlockSize();
         long readPos = blockCount * this.getBlockSize();
         long writePos = readPos + count * this.getBlockSize();
-        
+
         // Flush the cache.
         if(!(this.cacheIndex < 0) && this.cacheIndex >= index)
         {
             this.flush();
             this.cacheIndex = -1L;
         }
-        
+
         // Increase the length of the file.
         this.getFileOperations().setLength(this.getFileOperations().
             getLength() + this.getBlockSize() * count);
-        
+
         // New blocks are inserted at the end of the file.
         if(toMoveByte <= 0L)
         {
             this.fireBlocksInserted(index, count);
             return;
         }
-        
+
         buf = this.newTemporaryBuffer(toMoveByte > Integer.MAX_VALUE ?
             Integer.MAX_VALUE : (int) toMoveByte);
-        
-        
+
+
         task.setIndeterminate(false);
         task.setMinimum(0);
         task.setMaximum(toMoveByte > Integer.MAX_VALUE ?
             Integer.MAX_VALUE : (int) toMoveByte);
-        
+
         task.setProgress(0);
         this.getTaskMonitor().monitor(task);
-        
+
         try
         {
             // Move all blocks from index inclusive count blocks to the end of
@@ -485,18 +485,18 @@ public class StructuredFileOperations
             {
                 final int moveLen = buf.length >= toMoveByte ?
                     (int) toMoveByte : buf.length;
-                
+
                 readPos -= moveLen;
                 writePos -= moveLen;
                 this.getFileOperations().setFilePointer(readPos);
                 int read = 0;
                 int total = 0;
-                
+
                 do
                 {
                     read = this.getFileOperations().
                         read(buf, total, moveLen - total);
-                    
+
                     if(read == -1)
                     {
                         throw new EOFException();
@@ -505,20 +505,20 @@ public class StructuredFileOperations
                     {
                         total += read;
                     }
-                    
+
                 } while(total < moveLen);
-                
+
                 // Move the block count blocks to the end.
                 this.getFileOperations().setFilePointer(writePos);
                 this.getFileOperations().write(buf, 0, moveLen);
-                
+
                 toMoveByte -= moveLen;
                 task.setProgress(
                     task.getProgress() + moveLen > Integer.MAX_VALUE ?
                         Integer.MAX_VALUE : task.getProgress() + moveLen);
-                
+
             }
-            
+
             this.fireBlocksInserted(index, count);
         }
         finally
@@ -529,18 +529,18 @@ public class StructuredFileOperations
             }
         }
     }
-    
+
     public final void readBlock(final long block, final int off,
         final byte[] buf) throws IOException
     {
-        
+
         this.readBlock(block, off, buf, 0, buf.length);
     }
-    
+
     public void readBlock(final long block, final int off, final byte[] buf,
         final int index, final int length) throws IOException
     {
-        
+
         this.assertValidArguments(block, off, buf, index, length);
         // Fill the cache.
         this.readAhead(block, this.getBlockCount());
@@ -548,153 +548,153 @@ public class StructuredFileOperations
         System.arraycopy(this.cache,
             ((int) ((block - this.cacheIndex) * this.getBlockSize())) + off,
             buf, index, length);
-        
+
     }
-    
+
     public final void writeBlock(final long block, final int off,
         final byte[] buf) throws IOException
     {
-        
+
         this.writeBlock(block, off, buf, 0, buf.length);
     }
-    
-    
+
+
     public void writeBlock(final long block, final int off, final byte[] buf,
         final int index, final int length) throws IOException
     {
-        
+
         this.assertValidArguments(block, off, buf, index, length);
-        
+
         if(!(this.cacheIndex < 0L) && block >= this.cacheIndex &&
             block <= this.cacheIndex + this.cacheMaxIndex)
         {
-            
+
             System.arraycopy(buf, index, this.cache,
                 (int) (block - this.cacheIndex) * this.getBlockSize() + off,
                 length);
-            
+
             this.dirtyCache[(int) (block - this.cacheIndex)] = true;
         }
         else
         {
             this.getFileOperations().
                 setFilePointer(block * this.getBlockSize() + off);
-            
+
             this.getFileOperations().write(buf, index, length);
         }
     }
-    
+
     public final void addStructuredFileListener(
         final StructuredFileListener listener)
     {
-        
+
         this.fileListeners.add(StructuredFileListener.class, listener);
     }
-    
+
     public final void removeStructuredFileListener(
         final StructuredFileListener listener)
     {
-        
+
         this.fileListeners.remove(StructuredFileListener.class, listener);
     }
-    
+
     public final StructuredFileListener[] getStructuredFileListeners()
     {
         return (StructuredFileListener[]) this.fileListeners.getListeners(
             StructuredFileListener.class);
-        
+
     }
-    
+
     //----------------------------------------------------------StructuredFile--
     //--StructuredFileOperations------------------------------------------------
-    
+
     /** Underlying {@code FileOperations}. */
     private FileOperations fileOperations;
-    
+
     /** Message: {@code Removing blocks.} */
     public static final class DeleteBlocksMessage extends Message
     {
-        
+
         private static final Object[] NO_ARGS = {};
-        
+
         public Object[] getFormatArguments(final Locale locale)
         {
             return NO_ARGS;
         }
-        
+
         public String getText(final Locale locale)
         {
             return StructuredFileOperationsBundle.
                 getDeleteBlocksTaskText(locale);
-            
+
         }
     }
-    
+
     /** Message: {@code Inserting blocks.} */
     public static final class InsertBlocksMessage extends Message
     {
-        
+
         private static final Object[] NO_ARGS = {};
-        
+
         public Object[] getFormatArguments(final Locale locale)
         {
             return NO_ARGS;
         }
-        
+
         public String getText(final Locale locale)
         {
             return StructuredFileOperationsBundle.
                 getInsertBlocksTaskText(locale);
-            
+
         }
     }
-    
+
     /** Task deleting blocks. */
     public static class DeleteBlocksTask extends Task
     {
-        
+
         /**
          * Description of the task.
          * @serial
          */
         private Message description;
-        
+
         public Message getDescription()
         {
             if(this.description == null)
             {
                 this.description =
                     new StructuredFileOperations.DeleteBlocksMessage();
-                
+
             }
-            
+
             return this.description;
         }
     }
-    
+
     /** Task inserting blocks. */
     public static class InsertBlocksTask extends Task
     {
-        
+
         /**
          * Description of the task.
          * @serial
          */
         private Message description;
-        
+
         public Message getDescription()
         {
             if(this.description == null)
             {
                 this.description =
                     new StructuredFileOperations.InsertBlocksMessage();
-                
+
             }
-            
+
             return this.description;
         }
     }
-    
+
     /**
      * Creates a new {@code StructuredFileOperations} instance.
      *
@@ -711,21 +711,21 @@ public class StructuredFileOperations
     public StructuredFileOperations(final int blockSize,
         final FileOperations fileOperations) throws IOException
     {
-        
+
         this(ModelFactory.getModel().getModules().
             getImplementation(StructuredFileOperations.class.getName()));
-        
+
         if(fileOperations == null)
         {
             throw new NullPointerException("fileOperations");
         }
-        
+
         this._blockSize = blockSize;
         this.initialize();
         this.fileOperations = fileOperations;
         this.assertValidFileLength();
     }
-    
+
     /**
      * Gets the {@code FileOperations} implementation operations are performed
      * with.
@@ -737,7 +737,7 @@ public class StructuredFileOperations
     {
         return this.fileOperations;
     }
-    
+
     /**
      * Setter for the {@code FileOperations} implementation to operate on.
      *
@@ -750,17 +750,17 @@ public class StructuredFileOperations
     public final void setFileOperations(
         final FileOperations fileOperations) throws IOException
     {
-        
+
         if(fileOperations == null)
         {
             throw new NullPointerException("fileOperations");
         }
-        
+
         this.initialize();
         this.fileOperations = fileOperations;
         this.assertValidFileLength();
     }
-    
+
     /**
      * Flushes internal caches.
      * <p>Must be called at least once after finishing work with an instance to
@@ -778,7 +778,7 @@ public class StructuredFileOperations
             final int readAhead = this.getReadAhead();
             final int toWrite = blockCount - this.cacheIndex < readAhead ?
                 (int) (blockCount - this.cacheIndex) : readAhead;
-            
+
             for(int i = 0; i < toWrite; i++)
             {
                 if(!this.dirtyCache[i])
@@ -787,10 +787,10 @@ public class StructuredFileOperations
                     {
                         this.getFileOperations().setFilePointer(
                             (this.cacheIndex + writeOffset) * getBlockSize());
-                        
+
                         this.getFileOperations().write(this.cache, writeOffset *
                             this.getBlockSize(), writeLength);
-                        
+
                     }
                     writeOffset = i + 1;
                     writeLength = 0;
@@ -801,19 +801,19 @@ public class StructuredFileOperations
                     writeLength += this.getBlockSize();
                 }
             }
-            
+
             if(writeLength > 0)
             {
                 this.getFileOperations().setFilePointer(
                     (this.cacheIndex + writeOffset) * this.getBlockSize());
-                
+
                 this.getFileOperations().write(this.cache,
                     writeOffset * this.getBlockSize(), writeLength);
-                
+
             }
         }
     }
-    
+
     /**
      * Checks arguments provided to the {@code readBlock} and {@code writeBlock}
      * methods.
@@ -831,9 +831,9 @@ public class StructuredFileOperations
         final byte[] buf, final int index, final int length) throws
         NullPointerException, IndexOutOfBoundsException, IOException
     {
-        
+
         final long blockCount = this.getBlockCount();
-        
+
         if(buf == null)
         {
             throw new NullPointerException("buf");
@@ -853,11 +853,11 @@ public class StructuredFileOperations
         if(length < 0L || length > buf.length - index ||
             length > this.getBlockSize() - off)
         {
-            
+
             throw new ArrayIndexOutOfBoundsException(length);
         }
     }
-    
+
     /**
      * Checks the length of the provided {@code FileOperations} implementation
      * against property {@code blockSize}.
@@ -873,15 +873,15 @@ public class StructuredFileOperations
             if(this.getFileOperations().getLength() %
                 this.getBlockSize() != 0L)
             {
-                
+
                 throw new IllegalArgumentException(Long.toString(
                     this.getFileOperations().getLength() %
                     this.getBlockSize()));
-                
+
             }
         }
     }
-    
+
     /**
      * Checks configured properties.
      *
@@ -892,32 +892,32 @@ public class StructuredFileOperations
         final int minBufferedBlocks = this.getMinBufferedBlocks();
         final int readAhead = this.getReadAhead();
         final int blockSize = this.getBlockSize();
-        
+
         // minBufferedBlocks must be a positive integer.
         if(!(minBufferedBlocks > 0))
         {
             throw new PropertyException("minBufferedBlocks",
                 Integer.toString(minBufferedBlocks));
-            
+
         }
-        
+
         // readAhead must be a positive integer.
         if(!(readAhead > 0))
         {
             throw new PropertyException("readAhead",
                 Integer.toString(readAhead));
-            
+
         }
-        
+
         // blockSize must be a positive integer.
         if(!(blockSize > 0))
         {
             throw new PropertyException("blockSize",
                 Integer.toString(blockSize));
-            
+
         }
     }
-    
+
     /**
      * Notifies all registered {@code StructuredFileListener}s about inserted
      * blocks.
@@ -931,7 +931,7 @@ public class StructuredFileOperations
     protected final void fireBlocksInserted(final long index,
         final long insertedBlocks) throws IOException
     {
-        
+
         final Object[] listeners = this.fileListeners.getListenerList();
         for (int i = listeners.length - 2; i >= 0; i -= 2)
         {
@@ -939,11 +939,11 @@ public class StructuredFileOperations
             {
                 ((StructuredFileListener) listeners[i + 1]).
                     blocksInserted(index, insertedBlocks);
-                
+
             }
         }
     }
-    
+
     /**
      * Notifies all registered {@code StructuredFileListener}s about deleted
      * blocks.
@@ -957,7 +957,7 @@ public class StructuredFileOperations
     protected final void fireBlocksDeleted(final long index,
         final long deletedBlocks) throws IOException
     {
-        
+
         final Object[] listeners = this.fileListeners.getListenerList();
         for (int i = listeners.length - 2; i >= 0; i -= 2)
         {
@@ -965,37 +965,37 @@ public class StructuredFileOperations
             {
                 ((StructuredFileListener) listeners[i + 1]).
                     blocksDeleted(index, deletedBlocks);
-                
+
             }
         }
     }
-    
+
     private void readAhead(final long index,
         final long blockCount) throws IOException
     {
-        
+
         final int readAhead = this.getReadAhead();
         if(this.cacheIndex < 0L || index < this.cacheIndex ||
             index > this.cacheIndex + this.cacheMaxIndex)
         {
-            
+
             final int toRead = blockCount - index < readAhead ?
                 (int) (blockCount - index) : readAhead;
-            
+
             final int cacheByte = this.getBlockSize() * toRead;
             int read = 0;
             int total = 0;
-            
+
             this.flush();
             this.getFileOperations().
                 setFilePointer(index * this.getBlockSize());
-            
+
             this.cacheMaxIndex = toRead - 1;
             do
             {
                 read = this.getFileOperations().read(this.cache, total,
                     cacheByte - total);
-                
+
                 if(read == -1)
                 {
                     throw new EOFException();
@@ -1004,30 +1004,30 @@ public class StructuredFileOperations
                 {
                     total += read;
                 }
-                
+
             } while(total < cacheByte);
             this.cacheIndex = index;
             Arrays.fill(this.dirtyCache, false);
         }
     }
-    
+
     private byte[] newTemporaryBuffer(final int requested) throws IOException
     {
         final byte[] tmp;
         final long length = this.getFileOperations().getLength();
-        
+
         if(requested <= 0 || requested > length)
         {
             throw new IllegalArgumentException(Integer.toString(requested));
         }
-        
+
         return requested <= this.minimumBuffer.length ||
             this.getMemoryManager().getAvailableBytes() < requested
             ? this.minimumBuffer
             : this.getMemoryManager().allocateBytes(requested);
-        
+
     }
-    
+
     //------------------------------------------------StructuredFileOperations--
-    
+
 }
