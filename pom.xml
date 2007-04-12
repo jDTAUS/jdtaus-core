@@ -3,20 +3,20 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.0-alpha-10</version>
+    <version>1.0-beta-1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
   <artifactId>jdtaus-container-mojo</artifactId>
   <name>jDTAUS Core Container Mojo</name>
-  <version>1.0-alpha-20-SNAPSHOT</version>
+  <version>1.0-beta-1</version>
   <packaging>maven-plugin</packaging>
   <description>Source generator for the container model.</description>
   <dependencies>
     <dependency>
       <groupId>org.jdtaus.common</groupId>
       <artifactId>jdtaus-core-api</artifactId>
-      <version>RELEASE</version>
+      <version>1.0-beta-1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -30,14 +30,14 @@
     <dependency>
       <groupId>org.jdtaus.core.container</groupId>
       <artifactId>jdtaus-core-client-container</artifactId>
-      <version>RELEASE</version>
+      <version>1.0-beta-1</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/trunk</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/trunk</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-container-mojo/trunk</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/tags/1.0-beta-1</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/tags/1.0-beta-1</developerConnection>
+    <url>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/tags/1.0-beta-1</url>
   </scm>
   <build>
     <plugins>
@@ -51,7 +51,6 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-resource-mojo</artifactId>
-        <version>RELEASE</version>
         <executions>
           <execution>
             <id>default</id>
