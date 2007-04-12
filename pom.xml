@@ -76,9 +76,10 @@
         </configuration>
       </plugin>
       
-      <!-- plugin>
+      <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-resource-mojo</artifactId>
+        <version>RELEASE</version>
         <executions>
           <execution>
             <id>default</id>
@@ -88,30 +89,14 @@
             </goals>
             <configuration>
               <bundles>
-                <bundle>org.jdtaus.core.container.ContainerError</bundle>
-                <bundle>org.jdtaus.core.container.ContextError</bundle>
-                <bundle>org.jdtaus.core.container.DuplicateDependencyException</bundle>
-                <bundle>org.jdtaus.core.container.DuplicateImplementationException</bundle>
-                <bundle>org.jdtaus.core.container.DuplicateModuleException</bundle>
-                <bundle>org.jdtaus.core.container.DuplicatePropertyException</bundle>
-                <bundle>org.jdtaus.core.container.DuplicateSpecificationException</bundle>
-                <bundle>org.jdtaus.core.container.PropertyException</bundle>
-                <bundle>org.jdtaus.core.container.ImplementationException</bundle>
-                <bundle>org.jdtaus.core.container.InstantiationException</bundle>
-                <bundle>org.jdtaus.core.container.MissingDependencyException</bundle>
-                <bundle>org.jdtaus.core.container.MissingImplementationException</bundle>
-                <bundle>org.jdtaus.core.container.MissingModuleException</bundle>
-                <bundle>org.jdtaus.core.container.MissingPropertyException</bundle>
-                <bundle>org.jdtaus.core.container.MissingSpecificationException</bundle>
-                <bundle>org.jdtaus.core.container.ModelError</bundle>
-                <bundle>org.jdtaus.core.io.MemoryFileOperations</bundle>
+                <bundle>org.jdtaus.core.io.utilities.MemoryFileOperations</bundle>
               </bundles>
               <encoding>UTF-8</encoding>
               <locale>en</locale>
             </configuration>
           </execution>
         </executions>
-      </plugin -->
+      </plugin>
       
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
