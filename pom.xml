@@ -159,14 +159,14 @@
     <module>jdtaus-container-mojo</module>
     <module>jdtaus-core-spi</module>
     <module>jdtaus-core-it</module>
-    <module>jdtaus-core-utilities</module>
     <module>jdtaus-core-limiting-runtime</module>
-    <module>jdtaus-core-application-logger</module>
     <module>jdtaus-core-jdk-logging</module>
+    <module>jdtaus-core-application-logger</module>
     <module>jdtaus-core-commons-logging</module>
     <module>jdtaus-core-log4j-logging</module>
     <module>jdtaus-core-client-monitoring</module>
     <module>jdtaus-core-server-monitoring</module>
+    <module>jdtaus-core-utilities</module>
   </modules>
   <repositories>
     <repository>
