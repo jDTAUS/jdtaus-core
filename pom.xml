@@ -74,36 +74,6 @@
       <artifactId>maven-plugin-api</artifactId>
     </dependency>
   </dependencies>
-  <repositories>
-    <repository>
-      <releases>
-        <enabled>true</enabled>
-        <updatePolicy>never</updatePolicy>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-        <updatePolicy>daily</updatePolicy>
-      </snapshots>
-      <id>jdtaus-releases</id>
-      <name>jDTAUS Release Repository</name>
-      <url>http://maven2-repository.jdtaus.org/releases</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <releases>
-        <enabled>true</enabled>
-        <updatePolicy>never</updatePolicy>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-        <updatePolicy>daily</updatePolicy>
-      </snapshots>
-      <id>jdtaus-releases</id>
-      <name>jDTAUS Release Repository</name>
-      <url>http://maven2-repository.jdtaus.org/releases</url>
-    </pluginRepository>
-  </pluginRepositories>
   <reporting>
     <plugins>
       <plugin>
