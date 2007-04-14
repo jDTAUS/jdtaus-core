@@ -265,6 +265,13 @@ public class DefaultIconSet implements IconSet, ContainerInitializer
     //-----------------------------------------------------------------IconSet--
     //--DefaultIconSet----------------------------------------------------------
 
+    /** Creates a new {@code DefaultIconSet} instance. */
+    public DefaultIconSet()
+    {
+        this(DefaultIconSet.META);
+        this.initialize();
+    }
+
     /**
      * Checks configured properties.
      *

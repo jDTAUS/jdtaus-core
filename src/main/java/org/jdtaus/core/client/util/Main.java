@@ -45,7 +45,7 @@ import org.jdtaus.core.text.MessageListener;
  * Main entry point for client applications.
  * <p>This class provides the {@link #main(String[])} method invoked by the VM
  * during startup which is responsible for initializing the application's
- * runtime and for bringing up the user interface of the application.</p>
+ * runtime.</p>
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
@@ -391,6 +391,11 @@ public class Main implements ContainerInitializer
     //--------------------------------------------------------------Properties--
     //--Main--------------------------------------------------------------------
 
+    /**
+     * Main application entry point invoked by the VM.
+     *
+     * @param args the command line arguments provided to the VM.
+     */
     public static final void main(String[] args)
     {
         SwingUtilities.invokeLater(new Runnable()

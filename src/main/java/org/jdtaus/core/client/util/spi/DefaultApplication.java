@@ -237,6 +237,13 @@ public class DefaultApplication implements Application, ContainerInitializer
     private static final String SYS_BASEDIRECTORY =
         DefaultApplication.class.getName() + ".baseDirectory";
 
+    /** Creates a new {@code DefaultApplication} instance. */
+    public DefaultApplication()
+    {
+        this(DefaultApplication.META);
+        this.initialize();
+    }
+
     /**
      * Gets the base directory the application is installed in.
      * <p>The base directory the application is installed in is specified via
@@ -267,7 +274,9 @@ public class DefaultApplication implements Application, ContainerInitializer
 
         if(!file.exists() || !file.isDirectory())
         {
-            throw new ImplementationException(DefaultApplication.META, path);
+            throw new PropertyException(DefaultApplication.SYS_BASEDIRECTORY,
+                path);
+
         }
 
         return file;
