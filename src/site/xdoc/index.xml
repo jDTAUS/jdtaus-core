@@ -39,7 +39,7 @@
         </p>
         <p>
           <b>Note:</b> Web applications must be configured manually to work
-          correctly with jDTAUS. See <a href="jdtaus-core-servlet-container/apidocs/org/jdtaus/core/container/runtime/ServletFilter.html">ServletFilter</a>.
+          with jDTAUS correctly. See <a href="jdtaus-core-servlet-container/apidocs/org/jdtaus/core/container/ri/servlet/ServletFilter.html">ServletFilter</a>.
         </p>
       </subsection>
       <subsection name="Logging Adapters">
