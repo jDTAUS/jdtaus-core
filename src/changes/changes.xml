@@ -1,0 +1,18 @@
+<document>
+  <properties>
+    <title>jDTAUS Editor Changelog</title>
+    <author email="cs@jdtaus.org">Christian Schulte</author>
+  </properties>
+  <body>
+    <release version="1.0-beta-2" date="2007-06-01"
+             description="Second beta release">
+      
+      <action dev="schulte2005" type="update"><![CDATA[
+        Removed Swing initialization from class <code>Main</code>.
+        All initialization is now performed on the thread executing the main
+        method leaving Swing initialization to the concrete
+        <code>Application</code> implementations.]]>
+      </action>
+    </release>
+  </body>
+</document>

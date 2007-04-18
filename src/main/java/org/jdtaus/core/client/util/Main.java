@@ -97,57 +97,61 @@ public class Main implements ContainerInitializer
      * {@code TaskEvent}s to Swing {@code ProgressMonitor}s. Then registers a
      * {@code MessageListener} with the {@code MessageEventSource} configured as
      * a dependency to this implementation and adapts {@code MessageEvent}s to
-     * Swing {@code JOptionPane}s. The last step in the initialization
-     * process is to bring up the user interface by setting the property
-     * {@code visible} of the root component of the {@code UserInterface}
-     * configured as a dependency to this implementation to {@code true}.</p>
+     * Swing {@code JOptionPane}s. Initialization then continues with requesting
+     * initialization of the {@code Application} configured as a dependency.</p>
      */
     public void initialize()
     {
-
         // Listen to library task events.
         this.getTaskEventSource().addTaskListener(new TaskListener()
         {
             public void onTaskEvent(final TaskEvent taskEvent)
             {
-                ProgressMonitor monitor;
-                final Task task = taskEvent.getTask();
-
-                switch(taskEvent.getType())
+                SwingUtilities.invokeLater(new Runnable()
                 {
-                    case TaskEvent.STARTED:
-                        monitor = new ProgressMonitor(
-                            getUserInterface().getParent(),
-                            task.getDescription().getText(Locale.getDefault()),
-                            null, task.getMinimum(), task.getMaximum());
+                    public void run()
+                    {
+                        ProgressMonitor monitor;
+                        final Task task = taskEvent.getTask();
 
-                        if(task.isIndeterminate())
+                        switch(taskEvent.getType())
                         {
-                            monitor.setMinimum(0);
-                            monitor.setMaximum(0);
+                            case TaskEvent.STARTED:
+                                monitor = new ProgressMonitor(
+                                    getUserInterface().getParent(),
+                                    task.getDescription().getText(
+                                    Locale.getDefault()), null,
+                                    task.getMinimum(), task.getMaximum());
+
+                                if(task.isIndeterminate())
+                                {
+                                    monitor.setMinimum(0);
+                                    monitor.setMaximum(0);
+                                }
+
+                                monitor.setProgress(task.getProgress());
+                                monitor.setMillisToPopup(1000);
+                                tasks.put(taskEvent.getTask(), monitor);
+                                break;
+
+                            case TaskEvent.CHANGED_STATE:
+                                monitor = (ProgressMonitor) tasks.get(task);
+                                monitor.setMinimum(task.getMinimum());
+                                monitor.setMaximum(task.getMaximum());
+                                monitor.setProgress(task.getProgress());
+                                break;
+
+                            case TaskEvent.ENDED:
+                                monitor = (ProgressMonitor) tasks.remove(task);
+                                monitor.close();
+                                break;
+
+                            default:
+                                getLogger().error(task.toString());
+
                         }
-
-                        monitor.setProgress(task.getProgress());
-                        monitor.setMillisToPopup(1000);
-                        tasks.put(taskEvent.getTask(), monitor);
-                        break;
-
-                    case TaskEvent.CHANGED_STATE:
-                        monitor = (ProgressMonitor) tasks.get(task);
-                        monitor.setMinimum(task.getMinimum());
-                        monitor.setMaximum(task.getMaximum());
-                        monitor.setProgress(task.getProgress());
-                        break;
-
-                    case TaskEvent.ENDED:
-                        monitor = (ProgressMonitor) tasks.remove(task);
-                        monitor.close();
-                        break;
-
-                    default:
-                        getLogger().error(task.toString());
-
-                }
+                    }
+                });
             }
         });
 
@@ -202,7 +206,7 @@ public class Main implements ContainerInitializer
             }
         });
 
-        // Application initialization.
+        // Request application initialization.
         this.getApplication();
     }
 
@@ -398,15 +402,9 @@ public class Main implements ContainerInitializer
      */
     public static final void main(String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                ContainerFactory.getContainer().getImplementation(Main.class,
-                    "jDTAUS Core Utilities");
+        ContainerFactory.getContainer().getImplementation(Main.class,
+            "jDTAUS Core Utilities");
 
-            }
-        });
     }
 
     //--------------------------------------------------------------------Main--
