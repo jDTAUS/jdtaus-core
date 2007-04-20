@@ -159,7 +159,7 @@
     <module>jdtaus-container-mojo</module>
     <module>jdtaus-core-spi</module>
     <module>jdtaus-core-it</module>
-    <module>jdtaus-core-limiting-runtime</module>
+    <module>jdtaus-core-memory-manager</module>
     <module>jdtaus-core-jdk-logging</module>
     <module>jdtaus-core-application-logger</module>
     <module>jdtaus-core-commons-logging</module>
