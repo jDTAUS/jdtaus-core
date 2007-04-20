@@ -32,7 +32,7 @@
                jdtaus:name="${pom.name}"
                jdtaus:description="${pom.description}"
                jdtaus:version="1.0">
-
+  
   <jdtaus:specifications>
     <jdtaus:specification jdtaus:identifier="org.jdtaus.core.client.util.Application"
                           jdtaus:description="${pom.description}"
@@ -57,24 +57,6 @@
                           jdtaus:vendor="${organization.name}"
                           jdtaus:version="${pom.version}"
                           jdtaus:singleton="true"/>
-
-    <jdtaus:specification jdtaus:identifier="org.jdtaus.core.io.util.MemoryFileOperations"
-                          jdtaus:description="${pom.description}"
-                          jdtaus:vendor="${pom.organization.name}"
-                          jdtaus:version="${pom.version}"
-                          jdtaus:singleton="false"/>
-    
-    <jdtaus:specification jdtaus:identifier="org.jdtaus.core.io.util.RandomAccessFileOperations"
-                          jdtaus:description="${pom.description}"
-                          jdtaus:vendor="${pom.organization.name}"
-                          jdtaus:version="${pom.version}"
-                          jdtaus:singleton="false"/>
-    
-    <jdtaus:specification jdtaus:identifier="org.jdtaus.core.io.util.StructuredFileOperations"
-                          jdtaus:description="${pom.description}"
-                          jdtaus:vendor="${pom.organization.name}"
-                          jdtaus:version="${pom.version}"
-                          jdtaus:singleton="false"/>
     
   </jdtaus:specifications>
   
@@ -120,7 +102,7 @@
         <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.client.util.UserInterface"/>
       </jdtaus:implementedSpecifications>
     </jdtaus:implementation>
-
+    
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.client.util.spi.DefaultIconSet"
                            jdtaus:name="${pom.name}"
                            jdtaus:vendor="${organization.name}"
@@ -183,16 +165,34 @@
         
       </jdtaus:dependencies>
     </jdtaus:implementation>
-
+    
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.io.util.MemoryFileOperations"
                            jdtaus:name="MemoryFileOperations"
                            jdtaus:vendor="${pom.organization.name}"
                            jdtaus:version="${pom.version}">
       
-      <jdtaus:implementedSpecifications>
-        <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.io.FileOperations"/>
-        <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.io.util.MemoryFileOperations"/>
-      </jdtaus:implementedSpecifications>
+      <jdtaus:dependencies>
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
+                           jdtaus:implementationName="jDTAUS Core SPI"
+                           jdtaus:name="Logger"
+                           jdtaus:bound="true">
+          
+          <jdtaus:properties>
+            <jdtaus:property jdtaus:name="name"
+                             jdtaus:type="java.lang.String"
+                             jdtaus:value="org.jdtaus.core.io.util.MemoryFileOperations"
+                             jdtaus:api="true"/>
+            
+          </jdtaus:properties>
+        </jdtaus:dependency>
+        
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
+                           jdtaus:implementationName="jDTAUS Core SPI"
+                           jdtaus:name="MemoryManager"
+                           jdtaus:bound="true"/>
+
+      </jdtaus:dependencies>
+      
       <jdtaus:properties>
         <jdtaus:property jdtaus:name="bufferSize"
                          jdtaus:type="int"
@@ -206,10 +206,6 @@
                            jdtaus:vendor="${pom.organization.name}"
                            jdtaus:version="${pom.version}">
       
-      <jdtaus:implementedSpecifications>
-        <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.io.FileOperations"/>
-        <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.io.util.RandomAccessFileOperations"/>
-      </jdtaus:implementedSpecifications>
       <jdtaus:properties>
         <jdtaus:property jdtaus:name="bufferSize"
                          jdtaus:type="int"
@@ -217,17 +213,12 @@
         
       </jdtaus:properties>
     </jdtaus:implementation>
-
+    
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.io.util.StructuredFileOperations"
                            jdtaus:name="StructuredFileOperations"
                            jdtaus:vendor="${pom.organization.name}"
                            jdtaus:version="${pom.version}">
       
-      <jdtaus:implementedSpecifications>
-        <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.io.StructuredFile"/>
-        <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.io.util.StructuredFileOperations"/>
-      </jdtaus:implementedSpecifications>
-
       <jdtaus:dependencies>
         <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
                            jdtaus:implementationName="jDTAUS Core SPI"

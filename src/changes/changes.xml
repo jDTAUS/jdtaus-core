@@ -13,6 +13,10 @@
         method leaving Swing initialization to the concrete
         <code>Application</code> implementations.]]>
       </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+        Added final modifier to reference implementation classes. Updated to
+        the latest container hooks.]]>
+      </action>
     </release>
   </body>
 </document>
