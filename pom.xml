@@ -172,7 +172,7 @@
     </dependency>
     <dependency>
       <groupId>org.jdtaus.core.lang</groupId>
-      <artifactId>jdtaus-core-limiting-runtime</artifactId>
+      <artifactId>jdtaus-core-memory-manager</artifactId>
       <version>RELEASE</version>
       <scope>test</scope>
     </dependency>
