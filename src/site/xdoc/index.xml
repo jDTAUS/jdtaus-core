@@ -70,7 +70,7 @@
       <subsection name="Runtime Environment Adapters">
         <p>
           Currently only the
-          <a href="jdtaus-core-limiting-runtime/project-summary.html">reference
+          <a href="jdtaus-core-memory-manager/project-summary.html">reference
           implementation</a> is available.
         </p>
       </subsection>
