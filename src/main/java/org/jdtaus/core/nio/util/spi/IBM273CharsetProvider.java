@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.core.nio.spi;
+package org.jdtaus.core.nio.util.spi;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * CharsetProvider for IBM273 Charset.
+ * {@code CharsetProvider} for IBM273 Charset.
  * <p>
  * Name: IBM273<br>
  * MIBenum: 2030<br>
@@ -42,6 +42,8 @@ import java.util.NoSuchElementException;
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
+ *
+ * @see org.jdtaus.core.nio.util.Charsets
  */
 public class IBM273CharsetProvider extends CharsetProvider
 {
@@ -439,7 +441,7 @@ public class IBM273CharsetProvider extends CharsetProvider
     public static class IBM273Charset extends Charset
     {
 
-        IBM273Charset()
+        public IBM273Charset()
         {
             super(IBM273CharsetProvider.COMMON_NAME,
                 IBM273CharsetProvider.ALIAS_NAMES);

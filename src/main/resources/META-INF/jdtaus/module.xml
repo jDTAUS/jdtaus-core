@@ -34,24 +34,6 @@
                jdtaus:version="1.0">
   
   <jdtaus:specifications>
-    <jdtaus:specification jdtaus:identifier="org.jdtaus.core.client.util.Application"
-                          jdtaus:description="${pom.description}"
-                          jdtaus:vendor="${organization.name}"
-                          jdtaus:version="${pom.version}"
-                          jdtaus:singleton="true"/>
-    
-    <jdtaus:specification jdtaus:identifier="org.jdtaus.core.client.util.UserInterface"
-                          jdtaus:description="${pom.description}"
-                          jdtaus:vendor="${organization.name}"
-                          jdtaus:version="${pom.version}"
-                          jdtaus:singleton="true"/>
-    
-    <jdtaus:specification jdtaus:identifier="org.jdtaus.core.client.util.Main"
-                          jdtaus:description="${pom.description}"
-                          jdtaus:vendor="${organization.name}"
-                          jdtaus:version="${pom.version}"
-                          jdtaus:singleton="true"/>
-    
     <jdtaus:specification jdtaus:identifier="org.jdtaus.core.client.util.IconSet"
                           jdtaus:description="${pom.description}"
                           jdtaus:vendor="${organization.name}"
@@ -61,48 +43,6 @@
   </jdtaus:specifications>
   
   <jdtaus:implementations>
-    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.client.util.spi.DefaultApplication"
-                           jdtaus:name="${pom.name}"
-                           jdtaus:vendor="${organization.name}"
-                           jdtaus:version="${pom.version}">
-      
-      <jdtaus:implementedSpecifications>
-        <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.client.util.Application"/>
-      </jdtaus:implementedSpecifications>
-      <jdtaus:properties>
-        <jdtaus:property jdtaus:name="binDirectoryName"
-                         jdtaus:type="java.lang.String"
-                         jdtaus:value="bin"
-                         jdtaus:api="false"/>
-        
-        <jdtaus:property jdtaus:name="configDirectoryName"
-                         jdtaus:type="java.lang.String"
-                         jdtaus:value="etc"
-                         jdtaus:api="false"/>
-        
-        <jdtaus:property jdtaus:name="dataDirectoryName"
-                         jdtaus:type="java.lang.String"
-                         jdtaus:value="share"
-                         jdtaus:api="false"/>
-        
-        <jdtaus:property jdtaus:name="stateDirectoryName"
-                         jdtaus:type="java.lang.String"
-                         jdtaus:value="var"
-                         jdtaus:api="false"/>
-        
-      </jdtaus:properties>
-    </jdtaus:implementation>
-    
-    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.client.util.spi.DefaultUserInterface"
-                           jdtaus:name="${pom.name}"
-                           jdtaus:vendor="${organization.name}"
-                           jdtaus:version="${pom.version}">
-      
-      <jdtaus:implementedSpecifications>
-        <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.client.util.UserInterface"/>
-      </jdtaus:implementedSpecifications>
-    </jdtaus:implementation>
-    
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.client.util.spi.DefaultIconSet"
                            jdtaus:name="${pom.name}"
                            jdtaus:vendor="${organization.name}"
@@ -118,52 +58,6 @@
                          jdtaus:api="true"/>
         
       </jdtaus:properties>
-    </jdtaus:implementation>
-    
-    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.client.util.Main"
-                           jdtaus:name="${pom.name}"
-                           jdtaus:vendor="${organization.name}"
-                           jdtaus:version="${pom.version}">
-      
-      <jdtaus:implementedSpecifications>
-        <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.client.util.Main"/>
-      </jdtaus:implementedSpecifications>
-      <jdtaus:dependencies>
-        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.monitor.TaskEventSource"
-                           jdtaus:implementationName="jDTAUS Core SPI"
-                           jdtaus:name="TaskEventSource"
-                           jdtaus:bound="true"/>
-        
-        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.text.MessageEventSource"
-                           jdtaus:implementationName="jDTAUS Core SPI"
-                           jdtaus:name="MessageEventSource"
-                           jdtaus:bound="true"/>
-        
-        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.client.util.Application"
-                           jdtaus:implementationName="jDTAUS Core Client Application"
-                           jdtaus:name="Application"
-                           jdtaus:bound="true"/>
-        
-        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.client.util.UserInterface"
-                           jdtaus:implementationName="jDTAUS Core Client UserInterface"
-                           jdtaus:name="UserInterface"
-                           jdtaus:bound="true"/>
-        
-        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
-                           jdtaus:implementationName="jDTAUS Core SPI"
-                           jdtaus:name="Logger"
-                           jdtaus:bound="true">
-          
-          <jdtaus:properties>
-            <jdtaus:property jdtaus:name="name"
-                             jdtaus:type="java.lang.String"
-                             jdtaus:value="org.jdtaus.core.client.util.Main"
-                             jdtaus:api="true"/>
-            
-          </jdtaus:properties>
-        </jdtaus:dependency>
-        
-      </jdtaus:dependencies>
     </jdtaus:implementation>
     
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.io.util.MemoryFileOperations"
@@ -190,7 +84,7 @@
                            jdtaus:implementationName="jDTAUS Core SPI"
                            jdtaus:name="MemoryManager"
                            jdtaus:bound="true"/>
-
+        
       </jdtaus:dependencies>
       
       <jdtaus:properties>
@@ -247,5 +141,6 @@
         
       </jdtaus:properties>
     </jdtaus:implementation>
+    
   </jdtaus:implementations>
 </jdtaus:module>

@@ -17,19 +17,33 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.core.nio.spi;
+package org.jdtaus.core.nio.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.spi.CharsetProvider;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Charset coder and decoder utilities.
+ * Charset coder and decoder utility.
  * <p>This class extends the former charset provider implementations which
  * cannot be used in every environment (e.g. WebStart, Maven) without
  * installation in the JRE extensions directory where they are available to the
- * system classloader.</p>
+ * system classloader. It uses the same service provider files as the
+ * platform implementation ({@code java.nio.charset.spi.CharsetProvider}) but
+ * is capable of using the current thread's classloader before falling back
+ * to the system classloader for loading {@code CharsetProvider} classes.</p>
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
@@ -38,76 +52,108 @@ public class Charsets
 {
     //--Charsets----------------------------------------------------------------
 
-    /** Constant for the DIN-66003 Charset. */
-    public static final Integer DIN66003 = new Integer(1);
-    private static final int DIN66003_INT = 1;
+    /** Cached {@code CharsetProvider} instances. */
+    private static final List providers = new LinkedList();
 
-    /** Constant for the IBM-273 Charset. */
-    public static final Integer IBM273 = new Integer(2);
-    private static final int IBM273_INT = 2;
+    /** Cached {@code Charset} instances by name. */
+    private static final Map charsets = new HashMap(100);
 
-    /** All supported charsets. */
-    private static final Integer[] ALL = {
-        DIN66003, IBM273
-    };
-
-    /** Charset instances. */
-    private static final HashMap charsets = new HashMap(100);
+    /** Private constructor. */
+    private Charsets()
+    {
+        super();
+    }
 
     /**
-     * Gets a charset for the given constant.
+     * Gets a charset for the given name.
      *
-     * @param charset the constant value of the charset to return.
+     * @param name the name of the charset to return.
      *
-     * @throws NullPointerException if {@code charset} is {@code null}.
-     * @throws IllegalArgumentException if {@code charset} is not a valid
-     * charset constant.
+     * @return a {@code Charset} corresponding to {@code name} or {@code null}
+     * if no such {@code Charset} is available.
+     *
+     * @throws IOException if reading the service provider files fails.
+     * @throws ClassNotFoundException if a service provider file defines
+     * a class which cannot be loaded.
+     * @throws InstantiationException if creating an instance of a
+     * {@code CharsetProvider} fails.
+     * @throws IllegalAccessException if a {@code CharsetProvider} class
+     * does not define a public no-arg constructor.
      */
-    private static Charset getCharset(final Integer charset)
+    private static Charset getCharset(final String name) throws IOException,
+        ClassNotFoundException, InstantiationException, IllegalAccessException
     {
+        // Populate the provider list with available providers if it is empty.
+        if(providers.size() == 0)
+        {
+            // Use the current thread's context classloader if available or
+            // fall back to the system classloader.
+            ClassLoader classLoader = Thread.currentThread().
+                getContextClassLoader();
+
+            if(classLoader == null)
+            {
+                classLoader = ClassLoader.getSystemClassLoader();
+            }
+
+            assert classLoader != null :
+                "Expected system classloader to always be available.";
+
+            // Read all service provider files and load all defined
+            // provider classes.
+            final Enumeration providerFiles = classLoader.getResources(
+                "META-INF/services/java.nio.charset.spi.CharsetProvider");
+
+            if(providerFiles != null)
+            {
+                for(;providerFiles.hasMoreElements();)
+                {
+                    final URL url = (URL) providerFiles.nextElement();
+                    final InputStream in = url.openStream();
+
+                    try
+                    {
+                        String line;
+                        final BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(in, "UTF-8"));
+
+                        while((line = reader.readLine()) != null)
+                        {
+                            // Check that the line denotes a valid Java
+                            // classname and load that class using reflection.
+                            if(line.indexOf('#') < 0)
+                            {
+                                providers.add(classLoader.loadClass(line).
+                                    newInstance());
+
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        in.close();
+                    }
+                }
+            }
+        }
+
+        Charset charset = (Charset) charsets.get(name);
         if(charset == null)
         {
-            throw new NullPointerException("charset");
-        }
-
-        boolean valid = false;
-
-        for(int i = ALL.length - 1; i >= 0; i--)
-        {
-            if(ALL[i].equals(charset))
+            // Search all available providers for a charset matching "name".
+            for(Iterator it = providers.iterator(); it.hasNext();)
             {
-                valid = true;
-                break;
+                charset = ((CharsetProvider) it.next()).charsetForName(name);
+
+                if(charset != null)
+                {
+                    charsets.put(name, charset);
+                    break;
+                }
             }
         }
 
-        if(!valid)
-        {
-            throw new IllegalArgumentException(charset.toString());
-        }
-
-        Charset ret = (Charset) charsets.get(charset);
-        if(ret == null)
-        {
-            switch(charset.intValue())
-            {
-                case Charsets.DIN66003_INT:
-                    ret = new DIN66003CharsetProvider.DIN66003Charset();
-                    break;
-
-                case Charsets.IBM273_INT:
-                    ret = new IBM273CharsetProvider.IBM273Charset();
-                    break;
-
-                default:
-                    throw new IllegalArgumentException(charset.toString());
-
-            }
-
-            charsets.put(charset, ret);
-        }
-
-        return ret;
+        return charset;
     }
 
     /**
@@ -115,31 +161,61 @@ public class Charsets
      * of the string in a given charset.
      *
      * @param str the string to encode.
-     * @param charset the constant value of the charset to use.
+     * @param charset the name of the charset to use.
      *
      * @throws NullPointerException if {@code str} or {@code charset} is
      * {@code null}.
      * @throws IllegalArgumentException if {@code charset} is not a valid
      * charset constant.
      */
-    public static byte[] encode(final String str, final Integer charset)
+    public static byte[] encode(final String str, final String charset)
     {
         if(str == null)
         {
             throw new NullPointerException("str");
         }
+        if(charset == null)
+        {
+            throw new NullPointerException("charset");
+        }
 
         final byte[] ret;
-        final ByteBuffer buf = Charsets.getCharset(charset).encode(str);
+        try
+        {
+            final Charset cset = Charsets.getCharset(charset);
+            if(cset == null)
+            {
+                throw new IllegalArgumentException(charset);
+            }
 
-        if(buf.hasArray())
-        {
-            ret = buf.array();
+            final ByteBuffer buf = cset.encode(str);
+
+            if(buf.hasArray())
+            {
+                ret = buf.array();
+            }
+            else
+            {
+                ret = new byte[buf.limit()];
+                buf.get(ret);
+            }
+
         }
-        else
+        catch(ClassNotFoundException e)
         {
-            ret = new byte[buf.limit()];
-            buf.get(ret);
+            throw new AssertionError(e);
+        }
+        catch(InstantiationException e)
+        {
+            throw new AssertionError(e);
+        }
+        catch(IllegalAccessException e)
+        {
+            throw new AssertionError(e);
+        }
+        catch(IOException e)
+        {
+            throw new AssertionError(e);
         }
 
         return ret;
@@ -149,33 +225,61 @@ public class Charsets
      * Decodes the bytes of a given array to a string.
      *
      * @param bytes the bytes to decode.
-     * @param charset the constant value of the charset to use.
+     * @param charset the name of the charset to use.
      *
      * @throws NullPointerException if {@code bytes} or {@code charset} is
      * {@code null}.
      * @throws IllegalArgumentException if {@code charset} is not a valid
      * charset constant.
      */
-    public static String decode(final byte[] bytes, final Integer charset)
+    public static String decode(final byte[] bytes, final String charset)
     {
         if(bytes == null)
         {
             throw new NullPointerException("bytes");
         }
+        if(charset == null)
+        {
+            throw new NullPointerException("charset");
+        }
 
         final String ret;
-        final CharBuffer buf = Charsets.getCharset(charset).
-            decode(ByteBuffer.wrap(bytes));
+        try
+        {
+            final Charset cset = Charsets.getCharset(charset);
+            if(cset == null)
+            {
+                throw new IllegalArgumentException(charset);
+            }
 
-        if(buf.hasArray())
-        {
-            ret = new String(buf.array());
+            final CharBuffer buf = cset.decode(ByteBuffer.wrap(bytes));
+
+            if(buf.hasArray())
+            {
+                ret = new String(buf.array());
+            }
+            else
+            {
+                final char[] c = new char[buf.limit()];
+                buf.get(c);
+                ret = new String(c);
+            }
         }
-        else
+        catch(ClassNotFoundException e)
         {
-            final char[] c = new char[buf.limit()];
-            buf.get(c);
-            ret = new String(c);
+            throw new AssertionError(e);
+        }
+        catch(InstantiationException e)
+        {
+            throw new AssertionError(e);
+        }
+        catch(IllegalAccessException e)
+        {
+            throw new AssertionError(e);
+        }
+        catch(IOException e)
+        {
+            throw new AssertionError(e);
         }
 
         return ret;
@@ -187,7 +291,7 @@ public class Charsets
      * @param bytes the bytes to decode.
      * @param off the offset from where to start decoding.
      * @param count the number of bytes to decode starting at {@code offset}.
-     * @param charset the constant value of the charset to use.
+     * @param charset the name of the charset to use.
      *
      * @throws NullPointerException if {@code bytes} or {@code charset} is
      * {@code null}.
@@ -198,11 +302,15 @@ public class Charsets
      * greater than the length of {@code bytes}.
      */
     public static String decode(final byte[] bytes, final int off,
-        final int count, final Integer charset)
+        final int count, final String charset)
     {
         if(bytes == null)
         {
             throw new NullPointerException("bytes");
+        }
+        if(charset == null)
+        {
+            throw new NullPointerException("charset");
         }
         if(off < 0 || off >= bytes.length)
         {
@@ -214,18 +322,43 @@ public class Charsets
         }
 
         final String ret;
-        final CharBuffer buf = Charsets.getCharset(charset).
-            decode(ByteBuffer.wrap(bytes, off, count));
+        try
+        {
+            final Charset cset = Charsets.getCharset(charset);
+            if(cset == null)
+            {
+                throw new IllegalArgumentException(charset);
+            }
 
-        if(buf.hasArray())
-        {
-            ret = new String(buf.array());
+            final CharBuffer buf = cset.decode(
+                ByteBuffer.wrap(bytes, off, count));
+
+            if(buf.hasArray())
+            {
+                ret = new String(buf.array());
+            }
+            else
+            {
+                final char[] c = new char[buf.limit()];
+                buf.get(c);
+                ret = new String(c);
+            }
         }
-        else
+        catch(ClassNotFoundException e)
         {
-            final char[] c = new char[buf.limit()];
-            buf.get(c);
-            ret = new String(c);
+            throw new AssertionError(e);
+        }
+        catch(InstantiationException e)
+        {
+            throw new AssertionError(e);
+        }
+        catch(IllegalAccessException e)
+        {
+            throw new AssertionError(e);
+        }
+        catch(IOException e)
+        {
+            throw new AssertionError(e);
         }
 
         return ret;

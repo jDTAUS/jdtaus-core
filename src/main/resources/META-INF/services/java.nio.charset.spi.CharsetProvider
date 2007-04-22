@@ -1,2 +1,2 @@
-org.jdtaus.core.nio.spi.DIN66003CharsetProvider
-org.jdtaus.core.nio.spi.IBM273CharsetProvider
+org.jdtaus.core.nio.util.spi.DIN66003CharsetProvider
+org.jdtaus.core.nio.util.spi.IBM273CharsetProvider

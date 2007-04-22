@@ -8,14 +8,10 @@
              description="Second beta release">
       
       <action dev="schulte2005" type="update"><![CDATA[
-        Removed Swing initialization from class <code>Main</code>.
-        All initialization is now performed on the thread executing the main
-        method leaving Swing initialization to the concrete
-        <code>Application</code> implementations.]]>
-      </action>
-      <action dev="schulte2005" type="update"><![CDATA[
-        Added final modifier to reference implementation classes. Updated to
-        the latest container hooks.]]>
+        Removed Swing client application utility classes. Added final modifier
+        to reference implementation classes. Updated to the latest container
+        hooks. Added package <code>org.jdtaus.core.nio.util</code> providing
+        utilities for encoding and decoding bytes for various charsets.]]>
       </action>
     </release>
   </body>

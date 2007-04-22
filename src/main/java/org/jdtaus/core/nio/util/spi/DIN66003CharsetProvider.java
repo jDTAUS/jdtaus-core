@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.core.nio.spi;
+package org.jdtaus.core.nio.util.spi;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -32,7 +32,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * CharsetProvider for DIN-66003 Charset.
+ * {@code CharsetProvider} for DIN-66003 Charset.
  * <p>
  * Name: DIN_66003<br>
  * MIBenum: 24<br>
@@ -45,6 +45,8 @@ import java.util.NoSuchElementException;
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
+ *
+ * @see org.jdtaus.core.nio.util.Charsets
  */
 public class DIN66003CharsetProvider extends CharsetProvider
 {
@@ -174,7 +176,7 @@ public class DIN66003CharsetProvider extends CharsetProvider
     public static class DIN66003Charset extends Charset
     {
 
-        DIN66003Charset()
+        public DIN66003Charset()
         {
             super(DIN66003CharsetProvider.COMMON_NAME,
                 DIN66003CharsetProvider.ALIAS_NAMES);

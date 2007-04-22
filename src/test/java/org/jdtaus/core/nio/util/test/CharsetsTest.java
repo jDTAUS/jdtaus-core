@@ -17,11 +17,11 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.core.nio.spi.test;
+package org.jdtaus.core.nio.util.test;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.jdtaus.core.nio.spi.Charsets;
+import org.jdtaus.core.nio.util.Charsets;
 
 /**
  * Tests the {@code Charsets} implementation.
@@ -38,15 +38,15 @@ public class CharsetsTest extends TestCase
 
     public void testDIN66003() throws Exception
     {
-        final byte[] encoded = Charsets.encode(TEST, Charsets.DIN66003);
-        final String decoded = Charsets.decode(encoded, Charsets.DIN66003);
+        final byte[] encoded = Charsets.encode(TEST, "ISO646-DE");
+        final String decoded = Charsets.decode(encoded, "ISO646-DE");
         Assert.assertEquals(TEST, decoded);
     }
 
     public void testIBM273() throws Exception
     {
-        final byte[] encoded = Charsets.encode(TEST, Charsets.IBM273);
-        final String decoded = Charsets.decode(encoded, Charsets.IBM273);
+        final byte[] encoded = Charsets.encode(TEST, "IBM273");
+        final String decoded = Charsets.decode(encoded, "IBM273");
         Assert.assertEquals(TEST, decoded);
     }
 
