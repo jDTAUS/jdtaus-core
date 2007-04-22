@@ -34,19 +34,12 @@ public class CharsetsTest extends TestCase
     //--Tests-------------------------------------------------------------------
 
     private static final String TEST =
-        "ABCDEFGHIJKLMNOPQRSTUVWXY0123456789äöüßÄÖÜß#$&^`";
+        "ABCDEFGHIJKLMNOPQRSTUVWXY0123456789";
 
-    public void testDIN66003() throws Exception
+    public void testUSASCII() throws Exception
     {
-        final byte[] encoded = Charsets.encode(TEST, "ISO646-DE");
-        final String decoded = Charsets.decode(encoded, "ISO646-DE");
-        Assert.assertEquals(TEST, decoded);
-    }
-
-    public void testIBM273() throws Exception
-    {
-        final byte[] encoded = Charsets.encode(TEST, "IBM273");
-        final String decoded = Charsets.decode(encoded, "IBM273");
+        final byte[] encoded = Charsets.encode(TEST, "US-ASCII");
+        final String decoded = Charsets.decode(encoded, "US-ASCII");
         Assert.assertEquals(TEST, decoded);
     }
 

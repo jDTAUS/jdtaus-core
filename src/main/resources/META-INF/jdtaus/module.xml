@@ -32,34 +32,8 @@
                jdtaus:name="${pom.name}"
                jdtaus:description="${pom.description}"
                jdtaus:version="1.0">
-  
-  <jdtaus:specifications>
-    <jdtaus:specification jdtaus:identifier="org.jdtaus.core.client.util.IconSet"
-                          jdtaus:description="${pom.description}"
-                          jdtaus:vendor="${organization.name}"
-                          jdtaus:version="${pom.version}"
-                          jdtaus:singleton="true"/>
     
-  </jdtaus:specifications>
-  
-  <jdtaus:implementations>
-    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.client.util.spi.DefaultIconSet"
-                           jdtaus:name="${pom.name}"
-                           jdtaus:vendor="${organization.name}"
-                           jdtaus:version="${pom.version}">
-      
-      <jdtaus:implementedSpecifications>
-        <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.client.util.IconSet"/>
-      </jdtaus:implementedSpecifications>
-      <jdtaus:properties>
-        <jdtaus:property jdtaus:name="configurationBundle"
-                         jdtaus:type="java.lang.String"
-                         jdtaus:value="org/jdtaus/core/client/util/spi/DefaultIconSet"
-                         jdtaus:api="true"/>
-        
-      </jdtaus:properties>
-    </jdtaus:implementation>
-    
+  <jdtaus:implementations>    
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.io.util.MemoryFileOperations"
                            jdtaus:name="MemoryFileOperations"
                            jdtaus:vendor="${pom.organization.name}"

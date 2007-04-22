@@ -22,11 +22,6 @@
         <filtering>true</filtering>
         <directory>src/main/resources</directory>
       </resource>
-      <resource>
-        <filtering>false</filtering>
-        <directory>src/main/jlfgr-1_0</directory>
-        <targetPath>jlfgr-1_0</targetPath>
-      </resource>
     </resources>
     <plugins>
       <plugin>
@@ -93,7 +88,6 @@
               <bundles>
                 <bundle>org.jdtaus.core.io.util.MemoryFileOperations</bundle>
                 <bundle>org.jdtaus.core.io.util.StructuredFileOperations</bundle>
-                <bundle>org.jdtaus.core.client.util.Main</bundle>
               </bundles>
               <encoding>UTF-8</encoding>
               <locale>en</locale>
@@ -173,7 +167,7 @@
     <dependency>
       <groupId>org.jdtaus.core.lang</groupId>
       <artifactId>jdtaus-core-memory-manager</artifactId>
-      <version>RELEASE</version>
+      <version>1.0-beta-2-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
