@@ -70,7 +70,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <forkMode>never</forkMode>
-          <skip>true</skip>
+          <skip>false</skip>
         </configuration>
       </plugin>
       
@@ -167,7 +167,7 @@
     <dependency>
       <groupId>org.jdtaus.core.lang</groupId>
       <artifactId>jdtaus-core-memory-manager</artifactId>
-      <version>1.0-beta-2-SNAPSHOT</version>
+      <version>RELEASE</version>
       <scope>test</scope>
     </dependency>
     <dependency>
