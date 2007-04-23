@@ -13,6 +13,16 @@
         hooks. Added package <code>org.jdtaus.core.nio.util</code> providing
         utilities for encoding and decoding bytes for various charsets.]]>
       </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+        Documentation updates.]]>
+      </action>
+    </release>
+    <release version="1.0-beta-3" date="2007-06-01"
+             description="Third beta release">
+      
+      <action dev="schulte2005" type="update"><![CDATA[
+        Documentation updates.]]>
+      </action>
     </release>
   </body>
 </document>
