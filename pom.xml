@@ -14,7 +14,7 @@
   <scm>
     <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/trunk</connection>
     <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/trunk</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/trunk</url>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-core-utilities/trunk</url>
   </scm>
   <build>
     <resources>
@@ -196,6 +196,7 @@
           <serialwarn>true</serialwarn>
           <show>public</show>
           <windowtitle>${pom.name} Specification ${pom.version}</windowtitle>
+          <source>1.4</source>
           <links>
             <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
             <link>http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/apidocs</link>
