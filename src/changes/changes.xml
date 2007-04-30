@@ -21,7 +21,13 @@
              description="Third beta release">
       
       <action dev="schulte2005" type="update"><![CDATA[
-        Documentation updates.]]>
+        Documentation updates.
+        Updated class <code>Charsets</code> to first lookup charsets by using
+        <code>Charset.forName()</code> falling back to looking up
+        <code>CharsetProvider</code> instances by using the current thread's
+        context classloader before re-throwing the
+        <code>UnsupportedCharsetException</code> thrown by
+        <code>Charset.forName()</code>.]]>
       </action>
     </release>
   </body>

@@ -27,6 +27,8 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
+import java.nio.charset.UnsupportedCharsetException;
 import java.nio.charset.spi.CharsetProvider;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -79,6 +81,8 @@ public class Charsets
      * {@code CharsetProvider} fails.
      * @throws IllegalAccessException if a {@code CharsetProvider} class
      * does not define a public no-arg constructor.
+     * @throws IllegalCharsetNameException if {@code name} is no valid
+     * charset name.
      */
     private static Charset getCharset(final String name) throws IOException,
         ClassNotFoundException, InstantiationException, IllegalAccessException
@@ -137,18 +141,28 @@ public class Charsets
             }
         }
 
-        Charset charset = (Charset) charsets.get(name);
-        if(charset == null)
+        // Try the system default charsets first.
+        Charset charset = null;
+        try
+        {
+            charset = Charset.forName(name);
+        }
+        catch(UnsupportedCharsetException e)
         {
             // Search all available providers for a charset matching "name".
-            for(Iterator it = providers.iterator(); it.hasNext();)
+            charset = (Charset) charsets.get(name);
+            if(charset == null)
             {
-                charset = ((CharsetProvider) it.next()).charsetForName(name);
-
-                if(charset != null)
+                for(Iterator it = providers.iterator(); it.hasNext();)
                 {
-                    charsets.put(name, charset);
-                    break;
+                    charset = ((CharsetProvider) it.next()).
+                        charsetForName(name);
+
+                    if(charset != null)
+                    {
+                        charsets.put(name, charset);
+                        break;
+                    }
                 }
             }
         }
@@ -165,8 +179,9 @@ public class Charsets
      *
      * @throws NullPointerException if {@code str} or {@code charset} is
      * {@code null}.
-     * @throws IllegalArgumentException if {@code charset} is not a valid
-     * charset constant.
+     * @throws IllegalCharsetNameException if {@code charset} is no valid
+     * charset name.
+     * @throws UnsupportedCharsetException if {@code charset} is not supported.
      */
     public static byte[] encode(final String str, final String charset)
     {
@@ -185,21 +200,13 @@ public class Charsets
             final Charset cset = Charsets.getCharset(charset);
             if(cset == null)
             {
-                throw new IllegalArgumentException(charset);
+                throw new UnsupportedCharsetException(charset);
             }
 
             final ByteBuffer buf = cset.encode(str);
-
-            if(buf.hasArray())
-            {
-                ret = buf.array();
-            }
-            else
-            {
-                ret = new byte[buf.limit()];
-                buf.get(ret);
-            }
-
+            ret = new byte[buf.limit()];
+            buf.rewind();
+            buf.get(ret);
         }
         catch(ClassNotFoundException e)
         {
@@ -229,8 +236,9 @@ public class Charsets
      *
      * @throws NullPointerException if {@code bytes} or {@code charset} is
      * {@code null}.
-     * @throws IllegalArgumentException if {@code charset} is not a valid
-     * charset constant.
+     * @throws IllegalCharsetNameException if {@code charset} is no valid
+     * charset name.
+     * @throws UnsupportedCharsetException if {@code charset} is not supported.
      */
     public static String decode(final byte[] bytes, final String charset)
     {
@@ -249,21 +257,14 @@ public class Charsets
             final Charset cset = Charsets.getCharset(charset);
             if(cset == null)
             {
-                throw new IllegalArgumentException(charset);
+                throw new UnsupportedCharsetException(charset);
             }
 
             final CharBuffer buf = cset.decode(ByteBuffer.wrap(bytes));
-
-            if(buf.hasArray())
-            {
-                ret = new String(buf.array());
-            }
-            else
-            {
-                final char[] c = new char[buf.limit()];
-                buf.get(c);
-                ret = new String(c);
-            }
+            final char[] c = new char[buf.length()];
+            buf.rewind();
+            buf.get(c);
+            ret = new String(c);
         }
         catch(ClassNotFoundException e)
         {
@@ -295,11 +296,12 @@ public class Charsets
      *
      * @throws NullPointerException if {@code bytes} or {@code charset} is
      * {@code null}.
-     * @throws IllegalArgumentException if {@code charset} is not a valid
-     * charset constant.
      * @throws IndexOutOfBoundsException if {@code off} is negative or greater
      * than the length of {@code bytes} or {@code off + count} is negative or
      * greater than the length of {@code bytes}.
+     * @throws IllegalCharsetNameException if {@code charset} is no valid
+     * charset name.
+     * @throws UnsupportedCharsetException if {@code charset} is not supported.
      */
     public static String decode(final byte[] bytes, final int off,
         final int count, final String charset)
@@ -327,22 +329,16 @@ public class Charsets
             final Charset cset = Charsets.getCharset(charset);
             if(cset == null)
             {
-                throw new IllegalArgumentException(charset);
+                throw new UnsupportedCharsetException(charset);
             }
 
             final CharBuffer buf = cset.decode(
                 ByteBuffer.wrap(bytes, off, count));
 
-            if(buf.hasArray())
-            {
-                ret = new String(buf.array());
-            }
-            else
-            {
-                final char[] c = new char[buf.limit()];
-                buf.get(c);
-                ret = new String(c);
-            }
+            final char[] c = new char[buf.length()];
+            buf.rewind();
+            buf.get(c);
+            ret = new String(c);
         }
         catch(ClassNotFoundException e)
         {
