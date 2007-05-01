@@ -4,8 +4,8 @@
     <author email="cs@jdtaus.org">Christian Schulte</author>
   </properties>
   <body>
-    <release version="1.0-beta-2" date="2007-06-01"
-             description="Second beta release">
+    <release version="1.0-beta-2" date="2007-04-01"
+             description="2nd beta release">
       
       <action dev="schulte2005" type="update"><![CDATA[
         Removed Swing client application utility classes. Added final modifier
@@ -17,8 +17,8 @@
         Documentation updates.]]>
       </action>
     </release>
-    <release version="1.0-beta-3" date="2007-06-01"
-             description="Third beta release">
+    <release version="1.0-beta-3" date="2007-04-15"
+             description="3rd beta release">
       
       <action dev="schulte2005" type="update"><![CDATA[
         Documentation updates.
@@ -28,6 +28,13 @@
         context classloader before re-throwing the
         <code>UnsupportedCharsetException</code> thrown by
         <code>Charset.forName()</code>.]]>
+      </action>
+    </release>
+    <release version="1.0-beta-4" date="2007-06-01"
+             description="4th beta release">
+      
+      <action dev="schulte2005" type="fix"><![CDATA[
+        Fixed performance regression introduced in 1.0-beta-3.]]>
       </action>
     </release>
   </body>

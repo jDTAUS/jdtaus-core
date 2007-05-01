@@ -83,6 +83,7 @@ public class Charsets
      * does not define a public no-arg constructor.
      * @throws IllegalCharsetNameException if {@code name} is no valid
      * charset name.
+     * @throws UnsupportedCharsetException if {@code name} is not supported.
      */
     private static Charset getCharset(final String name) throws IOException,
         ClassNotFoundException, InstantiationException, IllegalAccessException
@@ -141,30 +142,29 @@ public class Charsets
             }
         }
 
-        // Try the system default charsets first.
-        Charset charset = null;
-        try
-        {
-            charset = Charset.forName(name);
-        }
-        catch(UnsupportedCharsetException e)
+        // Search cached charsets.
+        Charset charset = (Charset) charsets.get(name);
+        if(charset == null)
         {
             // Search all available providers for a charset matching "name".
-            charset = (Charset) charsets.get(name);
-            if(charset == null)
+            for(Iterator it = providers.iterator(); it.hasNext();)
             {
-                for(Iterator it = providers.iterator(); it.hasNext();)
-                {
-                    charset = ((CharsetProvider) it.next()).
-                        charsetForName(name);
+                charset = ((CharsetProvider) it.next()).
+                    charsetForName(name);
 
-                    if(charset != null)
-                    {
-                        charsets.put(name, charset);
-                        break;
-                    }
+                if(charset != null)
+                {
+                    charsets.put(name, charset);
+                    break;
                 }
             }
+        }
+
+        // Fall back to platform charsets if nothing is found so far.
+        if(charset == null)
+        {
+            charset = Charset.forName(name);
+            charsets.put(name, charset);
         }
 
         return charset;
@@ -198,15 +198,20 @@ public class Charsets
         try
         {
             final Charset cset = Charsets.getCharset(charset);
-            if(cset == null)
-            {
-                throw new UnsupportedCharsetException(charset);
-            }
-
             final ByteBuffer buf = cset.encode(str);
             ret = new byte[buf.limit()];
-            buf.rewind();
-            buf.get(ret);
+
+            if(buf.hasArray())
+            {
+                System.arraycopy(buf.array(), buf.arrayOffset(),
+                    ret, 0, ret.length);
+
+            }
+            else
+            {
+                buf.rewind();
+                buf.get(ret);
+            }
         }
         catch(ClassNotFoundException e)
         {
@@ -255,15 +260,21 @@ public class Charsets
         try
         {
             final Charset cset = Charsets.getCharset(charset);
-            if(cset == null)
-            {
-                throw new UnsupportedCharsetException(charset);
-            }
-
             final CharBuffer buf = cset.decode(ByteBuffer.wrap(bytes));
             final char[] c = new char[buf.length()];
-            buf.rewind();
-            buf.get(c);
+
+            if(buf.hasArray())
+            {
+                System.arraycopy(buf.array(), buf.arrayOffset(),
+                    c, 0, c.length);
+
+            }
+            else
+            {
+                buf.rewind();
+                buf.get(c);
+            }
+
             ret = new String(c);
         }
         catch(ClassNotFoundException e)
@@ -327,17 +338,22 @@ public class Charsets
         try
         {
             final Charset cset = Charsets.getCharset(charset);
-            if(cset == null)
-            {
-                throw new UnsupportedCharsetException(charset);
-            }
-
             final CharBuffer buf = cset.decode(
                 ByteBuffer.wrap(bytes, off, count));
 
             final char[] c = new char[buf.length()];
-            buf.rewind();
-            buf.get(c);
+            if(buf.hasArray())
+            {
+                System.arraycopy(buf.array(), buf.arrayOffset(),
+                    c, 0, c.length);
+
+            }
+            else
+            {
+                buf.rewind();
+                buf.get(c);
+            }
+
             ret = new String(c);
         }
         catch(ClassNotFoundException e)
