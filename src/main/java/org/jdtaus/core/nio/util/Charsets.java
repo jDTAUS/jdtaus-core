@@ -199,16 +199,24 @@ public class Charsets
         {
             final Charset cset = Charsets.getCharset(charset);
             final ByteBuffer buf = cset.encode(str);
-            ret = new byte[buf.limit()];
 
             if(buf.hasArray())
             {
-                System.arraycopy(buf.array(), buf.arrayOffset(),
-                    ret, 0, ret.length);
+                if(buf.array().length == buf.limit())
+                {
+                    ret = buf.array();
+                }
+                else
+                {
+                    ret = new byte[buf.limit()];
+                    System.arraycopy(buf.array(), buf.arrayOffset(),
+                        ret, 0, ret.length);
 
+                }
             }
             else
             {
+                ret = new byte[buf.limit()];
                 buf.rewind();
                 buf.get(ret);
             }
@@ -261,21 +269,20 @@ public class Charsets
         {
             final Charset cset = Charsets.getCharset(charset);
             final CharBuffer buf = cset.decode(ByteBuffer.wrap(bytes));
-            final char[] c = new char[buf.length()];
 
             if(buf.hasArray())
             {
-                System.arraycopy(buf.array(), buf.arrayOffset(),
-                    c, 0, c.length);
+                ret = String.valueOf(buf.array(), buf.arrayOffset(),
+                    buf.length());
 
             }
             else
             {
+                final char[] c = new char[buf.length()];
                 buf.rewind();
                 buf.get(c);
+                ret = String.valueOf(c);
             }
-
-            ret = new String(c);
         }
         catch(ClassNotFoundException e)
         {
@@ -341,20 +348,19 @@ public class Charsets
             final CharBuffer buf = cset.decode(
                 ByteBuffer.wrap(bytes, off, count));
 
-            final char[] c = new char[buf.length()];
             if(buf.hasArray())
             {
-                System.arraycopy(buf.array(), buf.arrayOffset(),
-                    c, 0, c.length);
+                ret = String.valueOf(buf.array(), buf.arrayOffset(),
+                    buf.length());
 
             }
             else
             {
+                final char[] c = new char[buf.length()];
                 buf.rewind();
                 buf.get(c);
+                ret = String.valueOf(c);
             }
-
-            ret = new String(c);
         }
         catch(ClassNotFoundException e)
         {

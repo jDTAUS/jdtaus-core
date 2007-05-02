@@ -37,5 +37,12 @@
         Fixed performance regression introduced in 1.0-beta-3.]]>
       </action>
     </release>
+    <release version="1.0-beta-5" date="2007-06-01"
+             description="5th beta release">
+      
+      <action dev="schulte2005" type="fix"><![CDATA[
+        Fixed another performance regression introduced in 1.0-beta-3.]]>
+      </action>
+    </release>
   </body>
 </document>
