@@ -361,13 +361,11 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         }
 
         int i;
-        char c;
         String line;
         String replacement;
         final char[] chars;
         final BufferedReader reader;
         final StringWriter writer = new StringWriter();
-        final int sepLength = System.getProperty("line.separator").length();
 
         try
         {
@@ -404,7 +402,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
             }
 
             replacement = replacement.substring(0, i + 1);
-            return replacement.toString() + '\n';
+            return replacement + '\n';
 
         }
         catch(IOException e)

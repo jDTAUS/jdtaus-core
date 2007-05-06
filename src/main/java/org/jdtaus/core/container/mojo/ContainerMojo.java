@@ -783,8 +783,6 @@ public class ContainerMojo extends AbstractSourceMojo
                     this.impl.getIdentifier());
 
                 properties = this.impl.getProperties();
-                final boolean hasProperties = properties.size() > 0;
-
                 buf.append(line).append("\n\n");
 
                 final MessageFormat warning = ContainerMojoBundle.
@@ -1206,16 +1204,10 @@ public class ContainerMojo extends AbstractSourceMojo
             throw new NullPointerException("spec");
         }
 
-        final MessageFormat fmt = ContainerMojoBundle.
-            getMissingMarkersMessage(getLocale());
-
         final File source = this.getSource(spec.getIdentifier());
         if(source != null)
         {
             final String path = source.getAbsolutePath();
-            final SpecificationEditor specEditor =
-                new SpecificationEditor(path, spec);
-
             final String content = this.load(source);
             String edited = this.edit(content, new RemovingEditor(path,
                 this.specificationsStartingMarker,

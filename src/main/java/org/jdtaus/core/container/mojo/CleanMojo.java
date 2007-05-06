@@ -82,43 +82,44 @@ public class CleanMojo extends AbstractSourceMojo
 
         public String editLine(final String line) throws MojoFailureException
         {
-            if(line == null)
+            String ret = null;
+
+            if(line != null)
             {
-                return null;
-            }
+                StringBuffer spaces = null;
+                boolean sawSpace = false;
+                final StringBuffer replacement =
+                    new StringBuffer(line.length());
 
-            StringBuffer spaces = null;
-            boolean sawSpace = false;
-            final String ret;
-            final StringBuffer replacement = new StringBuffer(line.length());
-            final char[] chars = line.toCharArray();
+                final char[] chars = line.toCharArray();
 
-            for(int i = 0; i < chars.length; i++)
-            {
-                if(chars[i] == ' ')
+                for(int i = 0; i < chars.length; i++)
                 {
-                    if(spaces == null)
+                    if(chars[i] == ' ')
                     {
-                        spaces = new StringBuffer();
-                    }
+                        if(spaces == null)
+                        {
+                            spaces = new StringBuffer();
+                        }
 
-                    spaces.append(chars[i]);
-                    sawSpace = true;
-                }
-                else
-                {
-                    if(sawSpace)
-                    {
-                        replacement.append(spaces);
-                        sawSpace = false;
-                        spaces = null;
+                        spaces.append(chars[i]);
+                        sawSpace = true;
                     }
-                    replacement.append(chars[i]);
+                    else
+                    {
+                        if(sawSpace)
+                        {
+                            replacement.append(spaces);
+                            sawSpace = false;
+                            spaces = null;
+                        }
+                        replacement.append(chars[i]);
+                    }
                 }
+
+                ret = replacement.toString();
+                this.modified = !ret.equals(line);
             }
-
-            ret = replacement.toString();
-            this.modified = !ret.equals(line);
 
             return ret;
         }
