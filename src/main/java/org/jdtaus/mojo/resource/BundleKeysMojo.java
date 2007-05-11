@@ -395,6 +395,8 @@ public class BundleKeysMojo extends AbstractMojo
 
             final StringBuffer buf = new StringBuffer(4096);
             buf.append("package ").append(packageName).append(";\n\n");
+            buf.append("import java.util.HashMap;\n");
+            buf.append("import java.util.Map;\n");
             buf.append("import java.util.Locale;\n");
             buf.append("import java.util.ResourceBundle;\n");
             buf.append("import java.text.MessageFormat;\n");
@@ -438,15 +440,32 @@ public class BundleKeysMojo extends AbstractMojo
 
             }
 
+            buf.append("private static final Map cache = new HashMap();\n\n");
             buf.append("private static String getMessage(").
                 append("final String key, Locale locale) {\n");
             buf.append("    ");
             buf.append("if(locale == null) { locale = Locale.getDefault(); }\n");
             buf.append("    ");
-            buf.append("return ResourceBundle.getBundle(\n");
+            buf.append("Map msgCache = (Map) cache.get(locale);\n");
+            buf.append("    ");
+            buf.append("if(msgCache == null)\n    {\n");
+            buf.append("        ");
+            buf.append("msgCache = new HashMap();\n");
+            buf.append("        ");
+            buf.append("cache.put(locale, msgCache);\n    }\n\n");
+            buf.append("    ");
+            buf.append("String msg = (String) msgCache.get(key);\n");
+            buf.append("    ");
+            buf.append("if(msg == null)\n    {\n");
+            buf.append("        ");
+            buf.append("msg = ResourceBundle.getBundle(\n");
             buf.append("        ");
             buf.append('"').append(packageName).append('.').append(bundleName);
             buf.append('"').append(", locale).getString(key);\n");
+            buf.append("        ");
+            buf.append("msgCache.put(key, msg);\n");
+            buf.append("    };\n");
+            buf.append("    return msg;\n");
 
             buf.append("}\n\n");
 
