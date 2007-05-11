@@ -30,18 +30,26 @@
         <code>Charset.forName()</code>.]]>
       </action>
     </release>
-    <release version="1.0-beta-4" date="2007-06-01"
+    <release version="1.0-beta-4" date="2007-04-22"
              description="4th beta release">
       
       <action dev="schulte2005" type="fix"><![CDATA[
         Fixed performance regression introduced in 1.0-beta-3.]]>
       </action>
     </release>
-    <release version="1.0-beta-5" date="2007-06-01"
+    <release version="1.0-beta-5" date="2007-04-28"
              description="5th beta release">
       
       <action dev="schulte2005" type="fix"><![CDATA[
         Fixed another performance regression introduced in 1.0-beta-3.]]>
+      </action>
+    </release>
+    <release version="1.0-beta-6" date="2007-05-11"
+             description="5th beta release">
+      
+      <action dev="schulte2005" type="update"><![CDATA[
+        Updated class <code>StructuredFileOperations</code> to stop monitoring
+        tasks not moving more than a configurable amount of bytes.]]>
       </action>
     </release>
   </body>

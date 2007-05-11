@@ -112,7 +112,12 @@
         <jdtaus:property jdtaus:name="minBufferedBlocks"
                          jdtaus:type="int"
                          jdtaus:value="1024"/>
-        
+
+        <jdtaus:property jdtaus:name="monitoringThreshold"
+                         jdtaus:type="int"
+                         jdtaus:value="5242880"
+                         jdtaus:api="true"/>
+
       </jdtaus:properties>
     </jdtaus:implementation>
     

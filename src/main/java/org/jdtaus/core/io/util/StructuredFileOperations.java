@@ -110,6 +110,10 @@ public final class StructuredFileOperations implements StructuredFile
             throw new NullPointerException("meta");
         }
 
+        p = meta.getProperty("monitoringThreshold");
+        this._monitoringThreshold = ((java.lang.Integer) p.getValue()).intValue();
+
+
         p = meta.getProperty("minBufferedBlocks");
         this._minBufferedBlocks = ((java.lang.Integer) p.getValue()).intValue();
 
@@ -211,6 +215,22 @@ public final class StructuredFileOperations implements StructuredFile
     // This section is managed by jdtaus-container-mojo.
 
     /**
+     * Property {@code monitoringThreshold}.
+     * @serial
+     */
+    private int _monitoringThreshold;
+
+    /**
+     * Gets the value of property <code>monitoringThreshold</code>.
+     *
+     * @return the value of property <code>monitoringThreshold</code>.
+     */
+    public int getMonitoringThreshold()
+    {
+        return this._monitoringThreshold;
+    }
+
+    /**
      * Property {@code minBufferedBlocks}.
      * @serial
      */
@@ -289,8 +309,6 @@ public final class StructuredFileOperations implements StructuredFile
     private void deleteBlocksImpl(final long index, final long count,
         final long blockCount) throws IOException
     {
-
-        final byte[] buf;
         final long block = index + count;
         final DeleteBlocksTask task = new DeleteBlocksTask();
         long toMoveByte = (blockCount - block) * this.getBlockSize();
@@ -314,7 +332,7 @@ public final class StructuredFileOperations implements StructuredFile
             return;
         }
 
-        buf = this.newTemporaryBuffer(toMoveByte >
+        final byte[] buf = this.newTemporaryBuffer(toMoveByte >
             Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) toMoveByte);
 
 
@@ -324,7 +342,12 @@ public final class StructuredFileOperations implements StructuredFile
             Integer.MAX_VALUE : (int) toMoveByte);
 
         task.setProgress(0);
-        this.getTaskMonitor().monitor(task);
+
+        final boolean monitoring = toMoveByte > this.getMonitoringThreshold();
+        if(monitoring)
+        {
+            this.getTaskMonitor().monitor(task);
+        }
 
         try
         {
@@ -374,7 +397,10 @@ public final class StructuredFileOperations implements StructuredFile
         }
         finally
         {
-            this.getTaskMonitor().finish(task);
+            if(monitoring)
+            {
+                this.getTaskMonitor().finish(task);
+            }
         }
     }
 
@@ -400,8 +426,6 @@ public final class StructuredFileOperations implements StructuredFile
     private void insertBlocksImpl(final long index, final long count,
         final long blockCount) throws IOException
     {
-
-        final byte[] buf;
         final InsertBlocksTask task = new InsertBlocksTask();
         long toMoveByte = (blockCount - index) * this.getBlockSize();
         long readPos = blockCount * this.getBlockSize();
@@ -425,9 +449,9 @@ public final class StructuredFileOperations implements StructuredFile
             return;
         }
 
-        buf = this.newTemporaryBuffer(toMoveByte > Integer.MAX_VALUE ?
-            Integer.MAX_VALUE : (int) toMoveByte);
-
+        final byte[] buf  = this.newTemporaryBuffer(
+            toMoveByte > Integer.MAX_VALUE ?
+                Integer.MAX_VALUE : (int) toMoveByte);
 
         task.setIndeterminate(false);
         task.setMinimum(0);
@@ -435,7 +459,12 @@ public final class StructuredFileOperations implements StructuredFile
             Integer.MAX_VALUE : (int) toMoveByte);
 
         task.setProgress(0);
-        this.getTaskMonitor().monitor(task);
+
+        final boolean monitoring = toMoveByte > this.getMonitoringThreshold();
+        if(monitoring)
+        {
+            this.getTaskMonitor().monitor(task);
+        }
 
         try
         {
@@ -483,7 +512,7 @@ public final class StructuredFileOperations implements StructuredFile
         }
         finally
         {
-            if(task != null)
+            if(monitoring)
             {
                 this.getTaskMonitor().finish(task);
             }
@@ -777,7 +806,7 @@ public final class StructuredFileOperations implements StructuredFile
      * {@code index} is negative, greater than or equal to the length of
      * {@code buf}, or {@code length} is negative or greater than the
      * length of {@code buf} minus {@code index} or greater than
-     * {@code getBlockSize() - off}.
+     * {@code getBlockSize() minus {@code off}.
      */
     private void assertValidArguments(final long block, final int off,
         final byte[] buf, final int index, final int length) throws
@@ -844,6 +873,7 @@ public final class StructuredFileOperations implements StructuredFile
         final int minBufferedBlocks = this.getMinBufferedBlocks();
         final int readAhead = this.getReadAhead();
         final int blockSize = this.getBlockSize();
+        final int monitoringThreshold = this.getMonitoringThreshold();
 
         // minBufferedBlocks must be a positive integer.
         if(!(minBufferedBlocks > 0))
@@ -866,6 +896,14 @@ public final class StructuredFileOperations implements StructuredFile
         {
             throw new PropertyException("blockSize",
                 Integer.toString(blockSize));
+
+        }
+
+        // monitoringThreshold must be a positive integer.
+        if(!(monitoringThreshold > 0))
+        {
+            throw new PropertyException("monitoringThreshold",
+                Integer.toString(monitoringThreshold));
 
         }
     }
