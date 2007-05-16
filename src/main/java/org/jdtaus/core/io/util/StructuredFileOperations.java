@@ -37,7 +37,7 @@ import org.jdtaus.core.io.FileOperations;
 import org.jdtaus.core.io.StructuredFile;
 import org.jdtaus.core.io.StructuredFileListener;
 import org.jdtaus.core.lang.spi.MemoryManager;
-import org.jdtaus.core.monitor.Task;
+import org.jdtaus.core.monitor.spi.Task;
 import org.jdtaus.core.monitor.spi.TaskMonitor;
 
 /**
@@ -310,10 +310,11 @@ public final class StructuredFileOperations implements StructuredFile
         final long blockCount) throws IOException
     {
         final long block = index + count;
-        final DeleteBlocksTask task = new DeleteBlocksTask();
+        final Task task = new Task();
         long toMoveByte = (blockCount - block) * this.getBlockSize();
         long readPos = block * this.getBlockSize();
         long writePos = index * this.getBlockSize();
+        long progress = 0L;
 
         // Flush the cache.
         if(!(this.cacheIndex < 0) && this.cacheIndex >= index)
@@ -337,11 +338,13 @@ public final class StructuredFileOperations implements StructuredFile
 
 
         task.setIndeterminate(false);
+        task.setCancelable(false);
         task.setMinimum(0);
         task.setMaximum(toMoveByte > Integer.MAX_VALUE ?
             Integer.MAX_VALUE : (int) toMoveByte);
 
-        task.setProgress(0);
+        task.setProgress((int) progress);
+        task.setDescription(new DeleteBlocksMessage());
 
         final boolean monitoring = toMoveByte > this.getMonitoringThreshold();
         if(monitoring)
@@ -384,9 +387,10 @@ public final class StructuredFileOperations implements StructuredFile
                 readPos += len;
                 writePos += len;
                 toMoveByte -= len;
-                task.setProgress(task.getProgress() + len > Integer.MAX_VALUE ?
-                    Integer.MAX_VALUE : task.getProgress() + len);
+                progress = progress + len > Integer.MAX_VALUE ?
+                    Integer.MAX_VALUE : progress + len;
 
+                task.setProgress((int) progress);
             }
 
             // Truncate the file.
@@ -426,10 +430,11 @@ public final class StructuredFileOperations implements StructuredFile
     private void insertBlocksImpl(final long index, final long count,
         final long blockCount) throws IOException
     {
-        final InsertBlocksTask task = new InsertBlocksTask();
+        final Task task = new Task();
         long toMoveByte = (blockCount - index) * this.getBlockSize();
         long readPos = blockCount * this.getBlockSize();
         long writePos = readPos + count * this.getBlockSize();
+        long progress = 0L;
 
         // Flush the cache.
         if(!(this.cacheIndex < 0) && this.cacheIndex >= index)
@@ -454,11 +459,13 @@ public final class StructuredFileOperations implements StructuredFile
                 Integer.MAX_VALUE : (int) toMoveByte);
 
         task.setIndeterminate(false);
+        task.setCancelable(false);
         task.setMinimum(0);
         task.setMaximum(toMoveByte > Integer.MAX_VALUE ?
             Integer.MAX_VALUE : (int) toMoveByte);
 
-        task.setProgress(0);
+        task.setProgress((int) progress);
+        task.setDescription(new InsertBlocksMessage());
 
         final boolean monitoring = toMoveByte > this.getMonitoringThreshold();
         if(monitoring)
@@ -502,10 +509,10 @@ public final class StructuredFileOperations implements StructuredFile
                 this.getFileOperations().write(buf, 0, moveLen);
 
                 toMoveByte -= moveLen;
-                task.setProgress(
-                    task.getProgress() + moveLen > Integer.MAX_VALUE ?
-                        Integer.MAX_VALUE : task.getProgress() + moveLen);
+                progress = progress + moveLen > Integer.MAX_VALUE ?
+                    Integer.MAX_VALUE : progress + moveLen;
 
+                task.setProgress((int) progress);
             }
 
             this.fireBlocksInserted(index, count);
@@ -597,19 +604,14 @@ public final class StructuredFileOperations implements StructuredFile
     //----------------------------------------------------------StructuredFile--
     //--StructuredFileOperations------------------------------------------------
 
-    /** Underlying {@code FileOperations}. */
-    private FileOperations fileOperations;
-
     /** Message: {@code Removing blocks.} */
     private static final class DeleteBlocksMessage extends Message
     {
         private static final Object[] NO_ARGS = {};
-
         public Object[] getFormatArguments(final Locale locale)
         {
             return NO_ARGS;
         }
-
         public String getText(final Locale locale)
         {
             return StructuredFileOperationsBundle.
@@ -621,14 +623,11 @@ public final class StructuredFileOperations implements StructuredFile
     /** Message: {@code Inserting blocks.} */
     private static final class InsertBlocksMessage extends Message
     {
-
         private static final Object[] NO_ARGS = {};
-
         public Object[] getFormatArguments(final Locale locale)
         {
             return NO_ARGS;
         }
-
         public String getText(final Locale locale)
         {
             return StructuredFileOperationsBundle.
@@ -637,51 +636,8 @@ public final class StructuredFileOperations implements StructuredFile
         }
     }
 
-    /** Task deleting blocks. */
-    private static class DeleteBlocksTask extends Task
-    {
-
-        /**
-         * Description of the task.
-         * @serial
-         */
-        private Message description;
-
-        public Message getDescription()
-        {
-            if(this.description == null)
-            {
-                this.description =
-                    new StructuredFileOperations.DeleteBlocksMessage();
-
-            }
-
-            return this.description;
-        }
-    }
-
-    /** Task inserting blocks. */
-    private static class InsertBlocksTask extends Task
-    {
-
-        /**
-         * Description of the task.
-         * @serial
-         */
-        private Message description;
-
-        public Message getDescription()
-        {
-            if(this.description == null)
-            {
-                this.description =
-                    new StructuredFileOperations.InsertBlocksMessage();
-
-            }
-
-            return this.description;
-        }
-    }
+    /** {@code FileOperations} backing the instance. */
+    private FileOperations fileOperations;
 
     /**
      * Creates a new {@code StructuredFileOperations} instance.

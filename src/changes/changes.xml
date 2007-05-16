@@ -45,11 +45,19 @@
       </action>
     </release>
     <release version="1.0-beta-6" date="2007-05-11"
-             description="5th beta release">
+             description="6th beta release">
       
       <action dev="schulte2005" type="update"><![CDATA[
         Updated class <code>StructuredFileOperations</code> to stop monitoring
         tasks not moving more than a configurable amount of bytes.]]>
+      </action>
+    </release>
+    <release version="1.0-beta-7" date="2007-05-16"
+             description="7th beta release">
+      
+      <action dev="schulte2005" type="update"><![CDATA[
+        Removed deprecated API calls due to new task cancellation support
+        introduced in jdtaus-core-api 1.0-beta-4.]]>
       </action>
     </release>
   </body>
