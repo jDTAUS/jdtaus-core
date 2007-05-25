@@ -36,7 +36,6 @@ import org.jdtaus.core.container.mojo.AbstractSourceMojo.SourceEditor;
  */
 public class CleanMojo extends AbstractSourceMojo
 {
-
     //--AbstractMojo------------------------------------------------------------
 
     public void execute() throws MojoExecutionException, MojoFailureException
@@ -132,5 +131,4 @@ public class CleanMojo extends AbstractSourceMojo
     }
 
     //---------------------------------------------------------------CleanMojo--
-
 }

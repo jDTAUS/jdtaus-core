@@ -53,7 +53,6 @@ import org.codehaus.plexus.util.DirectoryScanner;
  */
 public abstract class AbstractSourceMojo extends AbstractMojo
 {
-
     //--Configuration-----------------------------------------------------------
 
     /**
@@ -611,5 +610,4 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     }
 
     //------------------------------------------------------AbstractSourceMojo--
-
 }

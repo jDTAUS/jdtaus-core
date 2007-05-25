@@ -46,7 +46,6 @@ import org.jdtaus.core.container.Specifications;
  */
 public class ContainerMojo extends AbstractSourceMojo
 {
-
     //--Configuration-----------------------------------------------------------
 
     /**
@@ -1220,6 +1219,5 @@ public class ContainerMojo extends AbstractSourceMojo
         }
     }
 
-//-----------------------------------------------------------ContainerMojo--
-
+    //-----------------------------------------------------------ContainerMojo--
 }
