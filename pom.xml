@@ -14,7 +14,7 @@
   <scm>
     <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/jdtaus-core-utilities-1.0</connection>
     <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/jdtaus-core-utilities-1.0</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/jdtaus-core-utilities-1.0</url>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/jdtaus-core-utilities-1.0</url>
   </scm>
   <build>
     <resources>
