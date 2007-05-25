@@ -32,10 +32,12 @@ import java.text.MessageFormat;
  */
 public class MessagesTestMojo extends AbstractPropertyFileProcessorMojo
 {
+    //--AbstractPropertyFileProcessorMojo---------------------------------------
 
     protected final void processProperty(String key, String value)
     {
         new MessageFormat(value);
     }
 
+    //---------------------------------------AbstractPropertyFileProcessorMojo--
 }

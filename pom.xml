@@ -3,19 +3,19 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.0-beta-3</version>
+    <version>1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
   <artifactId>jdtaus-resource-mojo</artifactId>
   <packaging>maven-plugin</packaging>
   <name>jDTAUS Core Resource Mojo</name>
-  <version>1.0-beta-5-SNAPSHOT</version>
+  <version>1.0</version>
   <description>Source generator for resource bundles.</description>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/trunk</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/trunk</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-resource-mojo/trunk</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags/jdtaus-resource-mojo-1.0</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags/jdtaus-resource-mojo-1.0</developerConnection>
+    <url>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags/jdtaus-resource-mojo-1.0</url>
   </scm>
   <build>
     <plugins>

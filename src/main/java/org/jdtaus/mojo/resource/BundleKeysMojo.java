@@ -55,6 +55,7 @@ import org.codehaus.plexus.util.FileUtils;
  */
 public class BundleKeysMojo extends AbstractMojo
 {
+    //--Configuration-----------------------------------------------------------
 
     /**
      * The project's output directory.
@@ -162,6 +163,7 @@ public class BundleKeysMojo extends AbstractMojo
         return this.javadoc.booleanValue();
     }
 
+    //-----------------------------------------------------------Configuration--
     //--AbstractMojo------------------------------------------------------------
 
     public void execute() throws MojoExecutionException, MojoFailureException

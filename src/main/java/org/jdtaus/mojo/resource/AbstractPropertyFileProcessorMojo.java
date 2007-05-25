@@ -45,6 +45,7 @@ import org.codehaus.plexus.util.DirectoryScanner;
  */
 public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
 {
+    //--Configuration-----------------------------------------------------------
 
     /**
      * The project resources.
@@ -93,6 +94,7 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
 
     }
 
+    //-----------------------------------------------------------Configuration--
     //--AbstractMojo------------------------------------------------------------
 
     /** Include all property files by default. */
