@@ -4,61 +4,8 @@
     <author email="cs@jdtaus.org">Christian Schulte</author>
   </properties>
   <body>
-    <release version="1.0-beta-2" date="2007-04-01"
-             description="2nd beta release">
-      
-      <action dev="schulte2005" type="update"><![CDATA[
-        Removed Swing client application utility classes. Added final modifier
-        to reference implementation classes. Updated to the latest container
-        hooks. Added package <code>org.jdtaus.core.nio.util</code> providing
-        utilities for encoding and decoding bytes for various charsets.]]>
-      </action>
-      <action dev="schulte2005" type="update"><![CDATA[
-        Documentation updates.]]>
-      </action>
-    </release>
-    <release version="1.0-beta-3" date="2007-04-15"
-             description="3rd beta release">
-      
-      <action dev="schulte2005" type="update"><![CDATA[
-        Documentation updates.
-        Updated class <code>Charsets</code> to first lookup charsets by using
-        <code>Charset.forName()</code> falling back to looking up
-        <code>CharsetProvider</code> instances by using the current thread's
-        context classloader before re-throwing the
-        <code>UnsupportedCharsetException</code> thrown by
-        <code>Charset.forName()</code>.]]>
-      </action>
-    </release>
-    <release version="1.0-beta-4" date="2007-04-22"
-             description="4th beta release">
-      
-      <action dev="schulte2005" type="fix"><![CDATA[
-        Fixed performance regression introduced in 1.0-beta-3.]]>
-      </action>
-    </release>
-    <release version="1.0-beta-5" date="2007-04-28"
-             description="5th beta release">
-      
-      <action dev="schulte2005" type="fix"><![CDATA[
-        Fixed another performance regression introduced in 1.0-beta-3.]]>
-      </action>
-    </release>
-    <release version="1.0-beta-6" date="2007-05-11"
-             description="6th beta release">
-      
-      <action dev="schulte2005" type="update"><![CDATA[
-        Updated class <code>StructuredFileOperations</code> to stop monitoring
-        tasks not moving more than a configurable amount of bytes.]]>
-      </action>
-    </release>
-    <release version="1.0-beta-7" date="2007-05-16"
-             description="7th beta release">
-      
-      <action dev="schulte2005" type="update"><![CDATA[
-        Removed deprecated API calls due to new task cancellation support
-        introduced in jdtaus-core-api 1.0-beta-4.]]>
-      </action>
-    </release>
+    <release version="1.0" date="2007-06-01"
+             description="First stable release."/>
+
   </body>
 </document>

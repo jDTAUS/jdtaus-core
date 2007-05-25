@@ -315,6 +315,8 @@ public final class StructuredFileOperations implements StructuredFile
         long readPos = block * this.getBlockSize();
         long writePos = index * this.getBlockSize();
         long progress = 0L;
+        long progressDivisor = 1L;
+        long maxProgress = toMoveByte;
 
         // Flush the cache.
         if(!(this.cacheIndex < 0) && this.cacheIndex >= index)
@@ -336,13 +338,16 @@ public final class StructuredFileOperations implements StructuredFile
         final byte[] buf = this.newTemporaryBuffer(toMoveByte >
             Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) toMoveByte);
 
+        while(maxProgress > Integer.MAX_VALUE)
+        {
+            maxProgress /= 2L;
+            progressDivisor *= 2L;
+        }
 
         task.setIndeterminate(false);
         task.setCancelable(false);
         task.setMinimum(0);
-        task.setMaximum(toMoveByte > Integer.MAX_VALUE ?
-            Integer.MAX_VALUE : (int) toMoveByte);
-
+        task.setMaximum((int) maxProgress);
         task.setProgress((int) progress);
         task.setDescription(new DeleteBlocksMessage());
 
@@ -387,10 +392,9 @@ public final class StructuredFileOperations implements StructuredFile
                 readPos += len;
                 writePos += len;
                 toMoveByte -= len;
-                progress = progress + len > Integer.MAX_VALUE ?
-                    Integer.MAX_VALUE : progress + len;
+                progress += len;
 
-                task.setProgress((int) progress);
+                task.setProgress((int) (progress / progressDivisor));
             }
 
             // Truncate the file.
@@ -435,6 +439,8 @@ public final class StructuredFileOperations implements StructuredFile
         long readPos = blockCount * this.getBlockSize();
         long writePos = readPos + count * this.getBlockSize();
         long progress = 0L;
+        long progressDivisor = 1L;
+        long maxProgress = toMoveByte;
 
         // Flush the cache.
         if(!(this.cacheIndex < 0) && this.cacheIndex >= index)
@@ -458,12 +464,16 @@ public final class StructuredFileOperations implements StructuredFile
             toMoveByte > Integer.MAX_VALUE ?
                 Integer.MAX_VALUE : (int) toMoveByte);
 
+        while(maxProgress > Integer.MAX_VALUE)
+        {
+            maxProgress /= 2L;
+            progressDivisor *= 2L;
+        }
+
         task.setIndeterminate(false);
         task.setCancelable(false);
         task.setMinimum(0);
-        task.setMaximum(toMoveByte > Integer.MAX_VALUE ?
-            Integer.MAX_VALUE : (int) toMoveByte);
-
+        task.setMaximum((int) maxProgress);
         task.setProgress((int) progress);
         task.setDescription(new InsertBlocksMessage());
 
@@ -509,10 +519,9 @@ public final class StructuredFileOperations implements StructuredFile
                 this.getFileOperations().write(buf, 0, moveLen);
 
                 toMoveByte -= moveLen;
-                progress = progress + moveLen > Integer.MAX_VALUE ?
-                    Integer.MAX_VALUE : progress + moveLen;
+                progress += moveLen;
 
-                task.setProgress((int) progress);
+                task.setProgress((int) (progress / progressDivisor));
             }
 
             this.fireBlocksInserted(index, count);
@@ -972,5 +981,4 @@ public final class StructuredFileOperations implements StructuredFile
     }
 
     //------------------------------------------------StructuredFileOperations--
-
 }

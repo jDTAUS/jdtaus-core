@@ -50,7 +50,6 @@ import org.jdtaus.core.logging.spi.Logger;
 public final class MemoryFileOperations implements
     FileOperations, Serializable, Cloneable
 {
-
     //--Fields------------------------------------------------------------------
 
     /**
@@ -545,5 +544,4 @@ public final class MemoryFileOperations implements
     }
 
     //------------------------------------------------------------------Object--
-
 }
