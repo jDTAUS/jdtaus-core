@@ -35,9 +35,9 @@
     </dependency>
   </dependencies>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/tags/jdtaus-container-mojo-1.0</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/tags/jdtaus-container-mojo-1.0</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-container-mojo/tags/jdtaus-container-mojo-1.0</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/branches/jdtaus-container-mojo-1.x</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-container-mojo/branches/jdtaus-container-mojo-1.x</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-container-mojo/branches/jdtaus-container-mojo-1.x</url>
   </scm>
   <build>
     <plugins>
