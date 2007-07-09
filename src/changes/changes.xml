@@ -7,5 +7,15 @@
     <release version="1.0" date="2007-06-01"
              description="First stable release."/>
 
+    <release version="1.1" date="2007-07-09"
+             description="Feature enhancements.">
+
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added mojo configuration parameter hashDirectory. Updated the mojo to
+      create hash files for any generated bundle and to use these hash files to
+      decide if a bundle needs to get regenerated.]]>
+      </action>
+    </release>
+
   </body>
 </document>
