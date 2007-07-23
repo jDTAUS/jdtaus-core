@@ -4,7 +4,7 @@ BASE="https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core"
 
 $SVN diff $BASE/trunk $BASE/branches/jdtaus-core-1.x
 
-$SNV diff $BASE/jdtaus-resource-mojo/trunk \
+$SVN diff $BASE/jdtaus-resource-mojo/trunk \
         $BASE/jdtaus-resource-mojo/branches/jdtaus-resource-mojo-1.x
 
 $SVN diff $BASE/jdtaus-container-mojo/trunk \
