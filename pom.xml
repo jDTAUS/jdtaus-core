@@ -61,6 +61,7 @@
               <bundles>
                 <bundle>org.jdtaus.core.container.mojo.AbstractSourceMojo</bundle>
                 <bundle>org.jdtaus.core.container.mojo.ContainerMojo</bundle>
+                <bundle>org.jdtaus.core.container.mojo.VerifyModelMojo</bundle>
               </bundles>
               <encoding>UTF-8</encoding>
               <locale>en</locale>
