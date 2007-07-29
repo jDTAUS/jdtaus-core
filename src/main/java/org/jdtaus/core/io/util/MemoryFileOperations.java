@@ -40,7 +40,7 @@ import org.jdtaus.core.logging.spi.Logger;
 
 /**
  * Implementation of elementary I/O operations in heap memory.
- * <p>This implementation performs IO in memory. The value of property
+ * <p>This implementation performs I/O in memory. The value of property
  * {@code length} is limited to a maximum of {@code Integer.MAX_VALUE} (4 GB).
  * </p>
  *
@@ -79,16 +79,19 @@ public final class MemoryFileOperations implements
     //------------------------------------------------------------------Fields--
     //--Implementation----------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausImplementation
     // This section is managed by jdtaus-container-mojo.
 
     /** Meta-data describing the implementation. */
     private static final Implementation META =
         ModelFactory.getModel().getModules().
         getImplementation(MemoryFileOperations.class.getName());
+// </editor-fold>//GEN-END:jdtausImplementation
 
     //----------------------------------------------------------Implementation--
     //--Constructors------------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
     // This section is managed by jdtaus-container-mojo.
 
     /**
@@ -98,7 +101,7 @@ public final class MemoryFileOperations implements
      *
      * @throws NullPointerException if {@code meta} is {@code null}.
      */
-    protected void initializeProperties(final Properties meta)
+    private void initializeProperties(final Properties meta)
     {
         Property p;
 
@@ -111,10 +114,12 @@ public final class MemoryFileOperations implements
         this._bufferSize = ((java.lang.Integer) p.getValue()).intValue();
 
     }
+// </editor-fold>//GEN-END:jdtausConstructors
 
     //------------------------------------------------------------Constructors--
     //--Properties--------------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausProperties
     // This section is managed by jdtaus-container-mojo.
 
     /**
@@ -128,15 +133,17 @@ public final class MemoryFileOperations implements
      *
      * @return the value of property <code>bufferSize</code>.
      */
-    protected int getBufferSize()
+    private int getBufferSize()
     {
         return this._bufferSize;
     }
 
+// </editor-fold>//GEN-END:jdtausProperties
 
     //--------------------------------------------------------------Properties--
     //--Dependencies------------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>MemoryManager</code> implementation. */
@@ -215,6 +222,7 @@ public final class MemoryFileOperations implements
 
         return ret;
     }
+// </editor-fold>//GEN-END:jdtausDependencies
 
     //------------------------------------------------------------Dependencies--
     //--FileOperations----------------------------------------------------------
@@ -238,12 +246,11 @@ public final class MemoryFileOperations implements
         }
 
         this.resize((int) newLength);
-        if(this.filePointer > this.data.length)
-        {
-            this.filePointer = this.data.length;
-        }
-
         this.length = (int) newLength;
+        if(this.filePointer > this.length)
+        {
+            this.filePointer = this.length;
+        }
     }
 
     public long getFilePointer()
@@ -295,7 +302,7 @@ public final class MemoryFileOperations implements
         else if(this.filePointer >= this.length)
         {
             // EOF
-            ret = -1;
+            ret = FileOperations.EOF;
         }
         else if(this.filePointer + len > this.length)
         {
@@ -344,7 +351,7 @@ public final class MemoryFileOperations implements
             throw new ArrayIndexOutOfBoundsException(Integer.MAX_VALUE);
         }
 
-        if(newLen > this.length - 1L)
+        if(newLen > this.length)
         {
             this.setLength(newLen);
         }
@@ -361,6 +368,7 @@ public final class MemoryFileOperations implements
         }
 
         out.write(this.data, 0, this.length);
+        this.filePointer = this.length;
     }
 
     public void write(final InputStream in) throws IOException
@@ -373,7 +381,7 @@ public final class MemoryFileOperations implements
         int read;
         final byte[] buf = this.getDefaultBuffer();
 
-        while((read = in.read(buf, 0, buf.length)) != - 1)
+        while((read = in.read(buf, 0, buf.length)) != FileOperations.EOF)
         {
             this.write(buf, 0, read);
         }
@@ -387,6 +395,24 @@ public final class MemoryFileOperations implements
     {
         this.initializeProperties(META.getProperties());
         this.assertValidProperties();
+    }
+
+    /**
+     * Creates a new {@code MemoryFileOperations} instance of no length
+     * taking an initial capacity.
+     *
+     * @param initialCapacity the number of bytes to pre-allocate when
+     * creating the new instance.
+     *
+     * @throws OutOfMemoryError if not enough memory is available to create a
+     * buffer with a length of {@code initialCapacity}.
+     */
+    public MemoryFileOperations(final int initialCapacity)
+    {
+        this.initializeProperties(META.getProperties());
+        this.assertValidProperties();
+
+        this.data = this.getMemoryManager().allocateBytes(initialCapacity);
     }
 
     /**

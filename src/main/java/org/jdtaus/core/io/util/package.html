@@ -2,5 +2,42 @@
 <html>
   <body>
     System input and output utility components.
+    <p>
+      This package provides general purpose I/O utility components.
+      The {@link org.jdtaus.core.io.util.MemoryFileOperations} class can be used
+      as a {@code FileOperations} implementation performing I/O in memory
+      without actually performing any real system I/O at all. It is best used
+      for small amounts of data which can be obtained as an array of bytes
+      easily.
+      The {@link org.jdtaus.core.io.util.RandomAccessFileOperations} class can
+      be used as a {@code FileOperations} implementation performing real system
+      I/O backed by a {@code RandomAccessFile}.
+    </p>
+    <p>
+      When writing I/O intensive applications cacheing may become a concern.
+      This package provides two general purpose cache implementations for use
+      with {@code FileOperations} implementations. The
+      {@link org.jdtaus.core.io.util.ReadAheadFileOperations} cache
+      implementation may reduce I/O when reading most of the time. The
+      {@link org.jdtaus.core.io.util.CoalescingFileOperations} cache
+      implementation may reduce I/O when writing most of the time. In rare
+      circumstances a combination of the two implementations may also reduce
+      I/O. Cacheing should be used with caution. It may not be the correct way
+      to solve a problem which could be solved elsewhere in a more efficient
+      way. If you encounter performance degradation of your application caused
+      by too much I/O operations, the following considerations should be taken
+      into account, <i>before</i> using any of the provided cache
+      implementations. First of all, try to reduce the number of I/O operations
+      by carefully reviewing your application. Also collect some profiling
+      results at this point. Only if you see no way in decreasing the number of
+      I/O operations performed by your application, consider using one of the
+      provided cache implementations. Use the
+      {@link org.jdtaus.core.io.util.ReadAheadFileOperations} cache
+      implementation if reading most of the time and the
+      {@link org.jdtaus.core.io.util.CoalescingFileOperations} cache
+      implementation if writing most of the time to reduce I/O gaining more
+      throughput. Make sure to always measure the results and compare with
+      what you collected without cacheing.
+    </p>
   </body>
 </html>

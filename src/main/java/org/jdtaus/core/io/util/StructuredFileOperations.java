@@ -19,10 +19,8 @@
  */
 package org.jdtaus.core.io.util;
 
-import java.io.EOFException;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Locale;
+import java.math.BigDecimal;
 import javax.swing.event.EventListenerList;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.container.ContextFactory;
@@ -32,7 +30,8 @@ import org.jdtaus.core.container.ModelFactory;
 import org.jdtaus.core.container.Properties;
 import org.jdtaus.core.container.Property;
 import org.jdtaus.core.container.PropertyException;
-import org.jdtaus.core.text.Message;
+import org.jdtaus.core.messages.DeletesBlocksMessage;
+import org.jdtaus.core.messages.InsertsBlocksMessage;
 import org.jdtaus.core.io.FileOperations;
 import org.jdtaus.core.io.StructuredFile;
 import org.jdtaus.core.io.StructuredFileListener;
@@ -42,56 +41,59 @@ import org.jdtaus.core.monitor.spi.TaskMonitor;
 
 /**
  * {@code StructuredFile} implementation based on {@code FileOperations}.
- * <p>This implementation performs read-ahead caching for the
- * {@code readBlock()} methods. Changes done via the {@code writeBlock()}
- * methods will only be cached if the blocks beeing changed were read-ahead into
- * the cache via the {@code readBlock()} methods before. All other writes will
- * directly be performed with calls to {@code FileOperations} methods. The
- * {@code flush()} method must be used to write out cached changes to the
- * underlying {@code FileOperations} implementation.<p/>
- * <p><b>Note:</b><br>
- * This implementation is not thread-safe. Concurrent changes to the underlying
- * {@code FileOperations} implementation are not supported.</p>
+ * <p>Pre {@code FlushableFileOperations} and its implementations this
+ * implementation performed read-ahead caching. This behaviour got changed
+ * in favour of {@code ReadAheadFileOperations} and
+ * {@code CoalescingFileOperations} which are generalized replacements for any
+ * cacheing formerly performed by this implementation. Since this class does
+ * not implement any cacheing anymore, the {@link #flush()} method will write
+ * out pending changes of any underlying {@code FlushableFileOperations}
+ * implementation, if any, by calling the corresponding {@code flush()} method
+ * of that {@code FlushableFileOperations} instance.</p>
  *
+ * <p><b>Note:</b><br>
+ * This implementation is not thread-safe and concurrent changes to the
+ * underlying {@code FileOperations} implementation are not supported.</p>
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
+ *
+ * @see CoalescingFileOperations
+ * @see ReadAheadFileOperations
  */
 public final class StructuredFileOperations implements StructuredFile
 {
     //--Fields------------------------------------------------------------------
 
-    /** Cache for {@code readAhead} blocks. */
-    private byte[] cache;
-
-    /** Index of the block starting at {@code cache[0]}. */
-    private long cacheIndex;
-
-    /** Number of blocks read-ahead into cache. */
-    private int cacheMaxIndex;
-
-    /** Information about changes in memory which need to be persisted. */
-    private boolean[] dirtyCache;
-
     /** Pre-allocated temporary buffer. */
     private byte[] minimumBuffer;
+
+    /** Caches the value of property blockCount. */
+    private long cachedBlockCount = NO_CACHED_BLOCKCOUNT;
+    private static final long NO_CACHED_BLOCKCOUNT = Long.MIN_VALUE;
 
     /** List for {@code StructuredFileListener}s. */
     private final EventListenerList fileListeners = new EventListenerList();
 
+    /** Value of property {@code blockSize} as a {@code BigDecimal}. */
+    private final BigDecimal decimalBlockSize;
+
     //------------------------------------------------------------------Fields--
     //--Implementation----------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausImplementation
     // This section is managed by jdtaus-container-mojo.
 
     /** Meta-data describing the implementation. */
     private static final Implementation META =
         ModelFactory.getModel().getModules().
         getImplementation(StructuredFileOperations.class.getName());
+// </editor-fold>//GEN-END:jdtausImplementation
 
     //----------------------------------------------------------Implementation--
     //--Constructors------------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
     // This section is managed by jdtaus-container-mojo.
 
     /**
@@ -101,7 +103,7 @@ public final class StructuredFileOperations implements StructuredFile
      *
      * @throws NullPointerException if {@code meta} is {@code null}.
      */
-    protected void initializeProperties(final Properties meta)
+    private void initializeProperties(final Properties meta)
     {
         Property p;
 
@@ -118,18 +120,16 @@ public final class StructuredFileOperations implements StructuredFile
         this._minBufferedBlocks = ((java.lang.Integer) p.getValue()).intValue();
 
 
-        p = meta.getProperty("readAhead");
-        this._readAhead = ((java.lang.Integer) p.getValue()).intValue();
-
-
         p = meta.getProperty("blockSize");
         this._blockSize = ((java.lang.Integer) p.getValue()).intValue();
 
     }
+// </editor-fold>//GEN-END:jdtausConstructors
 
     //------------------------------------------------------------Constructors--
     //--Dependencies------------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>TaskMonitor</code> implementation. */
@@ -208,10 +208,12 @@ public final class StructuredFileOperations implements StructuredFile
 
         return ret;
     }
+// </editor-fold>//GEN-END:jdtausDependencies
 
     //------------------------------------------------------------Dependencies--
     //--Properties--------------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausProperties
     // This section is managed by jdtaus-container-mojo.
 
     /**
@@ -241,25 +243,9 @@ public final class StructuredFileOperations implements StructuredFile
      *
      * @return the value of property <code>minBufferedBlocks</code>.
      */
-    protected int getMinBufferedBlocks()
+    private int getMinBufferedBlocks()
     {
         return this._minBufferedBlocks;
-    }
-
-    /**
-     * Property {@code readAhead}.
-     * @serial
-     */
-    private int _readAhead;
-
-    /**
-     * Gets the value of property <code>readAhead</code>.
-     *
-     * @return the value of property <code>readAhead</code>.
-     */
-    protected int getReadAhead()
-    {
-        return this._readAhead;
     }
 
     /**
@@ -278,19 +264,28 @@ public final class StructuredFileOperations implements StructuredFile
         return this._blockSize;
     }
 
+// </editor-fold>//GEN-END:jdtausProperties
 
     //--------------------------------------------------------------Properties--
     //--StructuredFile----------------------------------------------------------
 
     public long getBlockCount() throws IOException
     {
-        return this.getFileOperations().getLength() / this.getBlockSize();
+        if(this.cachedBlockCount == NO_CACHED_BLOCKCOUNT)
+        {
+            this.cachedBlockCount =
+                new BigDecimal(this.getFileOperations().getLength()).
+                divide(this.decimalBlockSize).longValue();
+            // TODO JDK 1.5 longValueExact()
+
+        }
+
+        return this.cachedBlockCount;
     }
 
     public void deleteBlocks(final long index,
         final long count) throws IOException
     {
-
         final long blockCount = this.getBlockCount();
 
         // Preconditions.
@@ -318,12 +313,8 @@ public final class StructuredFileOperations implements StructuredFile
         long progressDivisor = 1L;
         long maxProgress = toMoveByte;
 
-        // Flush the cache.
-        if(!(this.cacheIndex < 0) && this.cacheIndex >= index)
-        {
-            this.flush();
-            this.cacheIndex = -1L;
-        }
+        // Clear the cached block count.
+        this.cachedBlockCount = NO_CACHED_BLOCKCOUNT;
 
         // No blocks are following the ones to remove.
         if(toMoveByte == 0L)
@@ -349,7 +340,7 @@ public final class StructuredFileOperations implements StructuredFile
         task.setMinimum(0);
         task.setMaximum((int) maxProgress);
         task.setProgress((int) progress);
-        task.setDescription(new DeleteBlocksMessage());
+        task.setDescription(new DeletesBlocksMessage());
 
         final boolean monitoring = toMoveByte > this.getMonitoringThreshold();
         if(monitoring)
@@ -374,14 +365,10 @@ public final class StructuredFileOperations implements StructuredFile
                     read = this.getFileOperations().
                         read(buf, total, len - total);
 
-                    if(read == -1)
-                    {
-                        throw new EOFException();
-                    }
-                    else
-                    {
-                        total += read;
-                    }
+                    assert read != FileOperations.EOF :
+                        "Unexpected end of file.";
+
+                    total += read;
 
                 } while(total < len);
 
@@ -415,7 +402,6 @@ public final class StructuredFileOperations implements StructuredFile
     public void insertBlocks(final long index,
         final long count) throws IOException
     {
-
         final long blockCount = this.getBlockCount();
 
         // Preconditions.
@@ -442,12 +428,8 @@ public final class StructuredFileOperations implements StructuredFile
         long progressDivisor = 1L;
         long maxProgress = toMoveByte;
 
-        // Flush the cache.
-        if(!(this.cacheIndex < 0) && this.cacheIndex >= index)
-        {
-            this.flush();
-            this.cacheIndex = -1L;
-        }
+        // Clear the cached block count.
+        this.cachedBlockCount = NO_CACHED_BLOCKCOUNT;
 
         // Increase the length of the file.
         this.getFileOperations().setLength(this.getFileOperations().
@@ -475,7 +457,7 @@ public final class StructuredFileOperations implements StructuredFile
         task.setMinimum(0);
         task.setMaximum((int) maxProgress);
         task.setProgress((int) progress);
-        task.setDescription(new InsertBlocksMessage());
+        task.setDescription(new InsertsBlocksMessage());
 
         final boolean monitoring = toMoveByte > this.getMonitoringThreshold();
         if(monitoring)
@@ -503,14 +485,10 @@ public final class StructuredFileOperations implements StructuredFile
                     read = this.getFileOperations().
                         read(buf, total, moveLen - total);
 
-                    if(read == -1)
-                    {
-                        throw new EOFException();
-                    }
-                    else
-                    {
-                        total += read;
-                    }
+                    assert read != FileOperations.EOF :
+                        "Unexpected end of file.";
+
+                    total += read;
 
                 } while(total < moveLen);
 
@@ -538,28 +516,37 @@ public final class StructuredFileOperations implements StructuredFile
     public void readBlock(final long block, final int off,
         final byte[] buf) throws IOException
     {
-
         this.readBlock(block, off, buf, 0, buf.length);
     }
 
     public void readBlock(final long block, final int off, final byte[] buf,
         final int index, final int length) throws IOException
     {
-
         this.assertValidArguments(block, off, buf, index, length);
-        // Fill the cache.
-        this.readAhead(block, this.getBlockCount());
-        // Copy from cache.
-        System.arraycopy(this.cache,
-            ((int) ((block - this.cacheIndex) * this.getBlockSize())) + off,
-            buf, index, length);
 
+        int totalRead = 0;
+        int toRead = length;
+
+        this.getFileOperations().setFilePointer(
+            block * this.getBlockSize() + off);
+
+        do
+        {
+            final int read = this.getFileOperations().
+                read(buf, index + totalRead, toRead);
+
+            assert read != FileOperations.EOF :
+                "Unexpected end of file.";
+
+            totalRead += read;
+            toRead -= read;
+
+        } while(totalRead < length);
     }
 
     public void writeBlock(final long block, final int off,
         final byte[] buf) throws IOException
     {
-
         this.writeBlock(block, off, buf, 0, buf.length);
     }
 
@@ -567,39 +554,23 @@ public final class StructuredFileOperations implements StructuredFile
     public void writeBlock(final long block, final int off, final byte[] buf,
         final int index, final int length) throws IOException
     {
-
         this.assertValidArguments(block, off, buf, index, length);
 
-        if(!(this.cacheIndex < 0L) && block >= this.cacheIndex &&
-            block <= this.cacheIndex + this.cacheMaxIndex)
-        {
+        this.getFileOperations().setFilePointer(
+            block * this.getBlockSize() + off);
 
-            System.arraycopy(buf, index, this.cache,
-                (int) (block - this.cacheIndex) * this.getBlockSize() + off,
-                length);
-
-            this.dirtyCache[(int) (block - this.cacheIndex)] = true;
-        }
-        else
-        {
-            this.getFileOperations().
-                setFilePointer(block * this.getBlockSize() + off);
-
-            this.getFileOperations().write(buf, index, length);
-        }
+        this.getFileOperations().write(buf, index, length);
     }
 
     public void addStructuredFileListener(
         final StructuredFileListener listener)
     {
-
         this.fileListeners.add(StructuredFileListener.class, listener);
     }
 
     public void removeStructuredFileListener(
         final StructuredFileListener listener)
     {
-
         this.fileListeners.remove(StructuredFileListener.class, listener);
     }
 
@@ -612,38 +583,6 @@ public final class StructuredFileOperations implements StructuredFile
 
     //----------------------------------------------------------StructuredFile--
     //--StructuredFileOperations------------------------------------------------
-
-    /** Message: {@code Removing blocks.} */
-    private static final class DeleteBlocksMessage extends Message
-    {
-        private static final Object[] NO_ARGS = {};
-        public Object[] getFormatArguments(final Locale locale)
-        {
-            return NO_ARGS;
-        }
-        public String getText(final Locale locale)
-        {
-            return StructuredFileOperationsBundle.
-                getDeleteBlocksTaskText(locale);
-
-        }
-    }
-
-    /** Message: {@code Inserting blocks.} */
-    private static final class InsertBlocksMessage extends Message
-    {
-        private static final Object[] NO_ARGS = {};
-        public Object[] getFormatArguments(final Locale locale)
-        {
-            return NO_ARGS;
-        }
-        public String getText(final Locale locale)
-        {
-            return StructuredFileOperationsBundle.
-                getInsertBlocksTaskText(locale);
-
-        }
-    }
 
     /** {@code FileOperations} backing the instance. */
     private FileOperations fileOperations;
@@ -678,21 +617,13 @@ public final class StructuredFileOperations implements StructuredFile
         this.fileOperations = fileOperations;
 
         final int minBufferedBlocks = this.getMinBufferedBlocks();
-        final int readAhead = this.getReadAhead();
 
         this.minimumBuffer = this.getMemoryManager().
             allocateBytes(minBufferedBlocks * blockSize);
 
-        this.cache = this.getMemoryManager().
-            allocateBytes(blockSize * readAhead);
-
-        this.dirtyCache = this.getMemoryManager().
-            allocateBoolean(readAhead);
-
-        this.cacheIndex = -1L;
-        this.cacheMaxIndex = -1;
-
         this.assertValidFileLength();
+
+        this.decimalBlockSize = new BigDecimal(blockSize);
     }
 
     /**
@@ -708,55 +639,16 @@ public final class StructuredFileOperations implements StructuredFile
     }
 
     /**
-     * Flushes internal caches.
-     * <p>Must be called at least once after finishing work with an instance to
-     * write out cached changes.</p>
+     * Calls the {@code flush()} method of an underlying
+     * {@code FlushableFileOperations} instance, if any.
      *
-     * @throws IOError for unrecoverable I/O errors.
+     * @throws IOException if reading or writing fails.
      */
     public void flush() throws IOException
     {
-        if(this.cacheIndex >= 0L)
+        if(this.getFileOperations() instanceof FlushableFileOperations)
         {
-            int writeOffset = 0;
-            int writeLength = 0;
-            final long blockCount = this.getBlockCount();
-            final int readAhead = this.getReadAhead();
-            final int toWrite = blockCount - this.cacheIndex < readAhead ?
-                (int) (blockCount - this.cacheIndex) : readAhead;
-
-            for(int i = 0; i < toWrite; i++)
-            {
-                if(!this.dirtyCache[i])
-                {
-                    if (writeLength > 0)
-                    {
-                        this.getFileOperations().setFilePointer(
-                            (this.cacheIndex + writeOffset) * getBlockSize());
-
-                        this.getFileOperations().write(this.cache, writeOffset *
-                            this.getBlockSize(), writeLength);
-
-                    }
-                    writeOffset = i + 1;
-                    writeLength = 0;
-                }
-                else
-                {
-                    this.dirtyCache[i] = false;
-                    writeLength += this.getBlockSize();
-                }
-            }
-
-            if(writeLength > 0)
-            {
-                this.getFileOperations().setFilePointer(
-                    (this.cacheIndex + writeOffset) * this.getBlockSize());
-
-                this.getFileOperations().write(this.cache,
-                    writeOffset * this.getBlockSize(), writeLength);
-
-            }
+            ((FlushableFileOperations) this.getFileOperations()).flush();
         }
     }
 
@@ -777,7 +669,6 @@ public final class StructuredFileOperations implements StructuredFile
         final byte[] buf, final int index, final int length) throws
         NullPointerException, IndexOutOfBoundsException, IOException
     {
-
         final long blockCount = this.getBlockCount();
 
         if(buf == null)
@@ -799,7 +690,6 @@ public final class StructuredFileOperations implements StructuredFile
         if(length < 0L || length > buf.length - index ||
             length > this.getBlockSize() - off)
         {
-
             throw new ArrayIndexOutOfBoundsException(length);
         }
     }
@@ -819,7 +709,6 @@ public final class StructuredFileOperations implements StructuredFile
             if(this.getFileOperations().getLength() %
                 this.getBlockSize() != 0L)
             {
-
                 throw new IllegalArgumentException(Long.toString(
                     this.getFileOperations().getLength() %
                     this.getBlockSize()));
@@ -836,7 +725,6 @@ public final class StructuredFileOperations implements StructuredFile
     private void assertValidProperties()
     {
         final int minBufferedBlocks = this.getMinBufferedBlocks();
-        final int readAhead = this.getReadAhead();
         final int blockSize = this.getBlockSize();
         final int monitoringThreshold = this.getMonitoringThreshold();
 
@@ -845,14 +733,6 @@ public final class StructuredFileOperations implements StructuredFile
         {
             throw new PropertyException("minBufferedBlocks",
                 Integer.toString(minBufferedBlocks));
-
-        }
-
-        // readAhead must be a positive integer.
-        if(!(readAhead > 0))
-        {
-            throw new PropertyException("readAhead",
-                Integer.toString(readAhead));
 
         }
 
@@ -920,46 +800,6 @@ public final class StructuredFileOperations implements StructuredFile
                     blocksDeleted(index, deletedBlocks);
 
             }
-        }
-    }
-
-    private void readAhead(final long index,
-        final long blockCount) throws IOException
-    {
-        final int readAhead = this.getReadAhead();
-        if(this.cacheIndex < 0L || index < this.cacheIndex ||
-            index > this.cacheIndex + this.cacheMaxIndex)
-        {
-
-            final int toRead = blockCount - index < readAhead ?
-                (int) (blockCount - index) : readAhead;
-
-            final int cacheByte = this.getBlockSize() * toRead;
-            int read = 0;
-            int total = 0;
-
-            this.flush();
-            this.getFileOperations().
-                setFilePointer(index * this.getBlockSize());
-
-            this.cacheMaxIndex = toRead - 1;
-            do
-            {
-                read = this.getFileOperations().read(this.cache, total,
-                    cacheByte - total);
-
-                if(read == -1)
-                {
-                    throw new EOFException();
-                }
-                else
-                {
-                    total += read;
-                }
-
-            } while(total < cacheByte);
-            this.cacheIndex = index;
-            Arrays.fill(this.dirtyCache, false);
         }
     }
 

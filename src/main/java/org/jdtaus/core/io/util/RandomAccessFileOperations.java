@@ -40,16 +40,19 @@ public final class RandomAccessFileOperations implements FileOperations
 {
     //--Implementation----------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausImplementation
     // This section is managed by jdtaus-container-mojo.
 
     /** Meta-data describing the implementation. */
     private static final Implementation META =
         ModelFactory.getModel().getModules().
         getImplementation(RandomAccessFileOperations.class.getName());
+// </editor-fold>//GEN-END:jdtausImplementation
 
     //----------------------------------------------------------Implementation--
     //--Constructors------------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
     // This section is managed by jdtaus-container-mojo.
 
     /**
@@ -59,7 +62,7 @@ public final class RandomAccessFileOperations implements FileOperations
      *
      * @throws NullPointerException if {@code meta} is {@code null}.
      */
-    protected void initializeProperties(final Properties meta)
+    private void initializeProperties(final Properties meta)
     {
         Property p;
 
@@ -72,10 +75,12 @@ public final class RandomAccessFileOperations implements FileOperations
         this._bufferSize = ((java.lang.Integer) p.getValue()).intValue();
 
     }
+// </editor-fold>//GEN-END:jdtausConstructors
 
     //------------------------------------------------------------Constructors--
     //--Properties--------------------------------------------------------------
 
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausProperties
     // This section is managed by jdtaus-container-mojo.
 
     /**
@@ -89,21 +94,23 @@ public final class RandomAccessFileOperations implements FileOperations
      *
      * @return the value of property <code>bufferSize</code>.
      */
-    protected int getBufferSize()
+    private int getBufferSize()
     {
         return this._bufferSize;
     }
 
+// </editor-fold>//GEN-END:jdtausProperties
 
     //--------------------------------------------------------------Properties--
     //--FileOperations----------------------------------------------------------
 
     /** Cache for the value of property {@code length}. */
-    private transient long cachedLength = -1L;
+    private transient long cachedLength = NO_CACHEDLENGTH;
+    private static final long NO_CACHEDLENGTH = Long.MIN_VALUE;
 
     public long getLength() throws IOException
     {
-        return this.cachedLength >= 0L ?
+        return this.cachedLength != NO_CACHEDLENGTH ?
             this.cachedLength : (this.cachedLength =
             this.getRandomAccessFile().length());
 
@@ -137,12 +144,12 @@ public final class RandomAccessFileOperations implements FileOperations
 
         file.write(buf, off, len);
 
-        if(this.cachedLength >= 0L && pointer + len > this.cachedLength)
+        if(this.cachedLength != NO_CACHEDLENGTH &&
+            pointer + len > this.cachedLength)
         {
             this.cachedLength = file.length();
         }
     }
-
 
     public int read(byte[] buf, int off, int len) throws IOException
     {
@@ -166,6 +173,9 @@ public final class RandomAccessFileOperations implements FileOperations
             do
             {
                 read = this.read(buf, 0 , buf.length);
+
+                assert read != FileOperations.EOF : "Unexpected end of file.";
+
                 toRead -= read;
                 out.write(buf, 0, read);
             } while(toRead > 0L);
@@ -182,7 +192,7 @@ public final class RandomAccessFileOperations implements FileOperations
         int read;
         final byte[] buf = this.getDefaultBuffer();
 
-        while((read = in.read(buf, 0, buf.length)) != - 1)
+        while((read = in.read(buf, 0, buf.length)) != FileOperations.EOF)
         {
             this.write(buf, 0, read);
         }

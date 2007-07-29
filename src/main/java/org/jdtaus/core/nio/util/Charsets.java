@@ -27,8 +27,6 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
-import java.nio.charset.IllegalCharsetNameException;
-import java.nio.charset.UnsupportedCharsetException;
 import java.nio.charset.spi.CharsetProvider;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -81,9 +79,10 @@ public class Charsets
      * {@code CharsetProvider} fails.
      * @throws IllegalAccessException if a {@code CharsetProvider} class
      * does not define a public no-arg constructor.
-     * @throws IllegalCharsetNameException if {@code name} is no valid
-     * charset name.
-     * @throws UnsupportedCharsetException if {@code name} is not supported.
+     * @throws java.nio.charset.IllegalCharsetNameException if {@code name} is
+     * no valid charset name.
+     * @throws java.nio.charset.UnsupportedCharsetException if {@code name} is
+     * not supported.
      */
     private static Charset getCharset(final String name) throws IOException,
         ClassNotFoundException, InstantiationException, IllegalAccessException
@@ -91,52 +90,56 @@ public class Charsets
         // Populate the provider list with available providers if it is empty.
         if(providers.size() == 0)
         {
-            // Use the current thread's context classloader if available or
-            // fall back to the system classloader.
-            ClassLoader classLoader = Thread.currentThread().
-                getContextClassLoader();
-
-            if(classLoader == null)
+            synchronized(Charsets.class)
             {
-                classLoader = ClassLoader.getSystemClassLoader();
-            }
+                // Use the current thread's context classloader if available or
+                // fall back to the system classloader.
+                ClassLoader classLoader = Thread.currentThread().
+                    getContextClassLoader();
 
-            assert classLoader != null :
-                "Expected system classloader to always be available.";
-
-            // Read all service provider files and load all defined
-            // provider classes.
-            final Enumeration providerFiles = classLoader.getResources(
-                "META-INF/services/java.nio.charset.spi.CharsetProvider");
-
-            if(providerFiles != null)
-            {
-                for(;providerFiles.hasMoreElements();)
+                if(classLoader == null)
                 {
-                    final URL url = (URL) providerFiles.nextElement();
-                    final InputStream in = url.openStream();
+                    classLoader = ClassLoader.getSystemClassLoader();
+                }
 
-                    try
+                assert classLoader != null :
+                    "Expected system classloader to always be available.";
+
+                // Read all service provider files and load all defined
+                // provider classes.
+                final Enumeration providerFiles = classLoader.getResources(
+                    "META-INF/services/java.nio.charset.spi.CharsetProvider");
+
+                if(providerFiles != null)
+                {
+                    for(;providerFiles.hasMoreElements();)
                     {
-                        String line;
-                        final BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(in, "UTF-8"));
+                        final URL url = (URL) providerFiles.nextElement();
+                        final InputStream in = url.openStream();
 
-                        while((line = reader.readLine()) != null)
+                        try
                         {
-                            // Check that the line denotes a valid Java
-                            // classname and load that class using reflection.
-                            if(line.indexOf('#') < 0)
-                            {
-                                providers.add(classLoader.loadClass(line).
-                                    newInstance());
+                            String line;
+                            final BufferedReader reader = new BufferedReader(
+                                new InputStreamReader(in, "UTF-8"));
 
+                            while((line = reader.readLine()) != null)
+                            {
+                                // Check that the line denotes a valid Java
+                                // classname and load that class using
+                                // reflection.
+                                if(line.indexOf('#') < 0)
+                                {
+                                    providers.add(classLoader.loadClass(line).
+                                        newInstance());
+
+                                }
                             }
                         }
-                    }
-                    finally
-                    {
-                        in.close();
+                        finally
+                        {
+                            in.close();
+                        }
                     }
                 }
             }
@@ -146,16 +149,19 @@ public class Charsets
         Charset charset = (Charset) charsets.get(name);
         if(charset == null)
         {
-            // Search all available providers for a charset matching "name".
-            for(Iterator it = providers.iterator(); it.hasNext();)
+            synchronized(Charsets.class)
             {
-                charset = ((CharsetProvider) it.next()).
-                    charsetForName(name);
-
-                if(charset != null)
+                // Search all available providers for a charset matching "name".
+                for(Iterator it = providers.iterator(); it.hasNext();)
                 {
-                    charsets.put(name, charset);
-                    break;
+                    charset = ((CharsetProvider) it.next()).
+                        charsetForName(name);
+
+                    if(charset != null)
+                    {
+                        charsets.put(name, charset);
+                        break;
+                    }
                 }
             }
         }
@@ -163,8 +169,11 @@ public class Charsets
         // Fall back to platform charsets if nothing is found so far.
         if(charset == null)
         {
-            charset = Charset.forName(name);
-            charsets.put(name, charset);
+            synchronized(Charsets.class)
+            {
+                charset = Charset.forName(name);
+                charsets.put(name, charset);
+            }
         }
 
         return charset;
@@ -179,9 +188,10 @@ public class Charsets
      *
      * @throws NullPointerException if {@code str} or {@code charset} is
      * {@code null}.
-     * @throws IllegalCharsetNameException if {@code charset} is no valid
-     * charset name.
-     * @throws UnsupportedCharsetException if {@code charset} is not supported.
+     * @throws java.nio.charset.IllegalCharsetNameException if {@code charset}
+     * is no valid charset name.
+     * @throws java.nio.charset.UnsupportedCharsetException if {@code charset}
+     * is not supported.
      */
     public static byte[] encode(final String str, final String charset)
     {
@@ -249,9 +259,10 @@ public class Charsets
      *
      * @throws NullPointerException if {@code bytes} or {@code charset} is
      * {@code null}.
-     * @throws IllegalCharsetNameException if {@code charset} is no valid
-     * charset name.
-     * @throws UnsupportedCharsetException if {@code charset} is not supported.
+     * @throws java.nio.charset.IllegalCharsetNameException if {@code charset}
+     * is no valid charset name.
+     * @throws java.nio.charset.UnsupportedCharsetException if {@code charset}
+     * is not supported.
      */
     public static String decode(final byte[] bytes, final String charset)
     {
@@ -317,9 +328,10 @@ public class Charsets
      * @throws IndexOutOfBoundsException if {@code off} is negative or greater
      * than the length of {@code bytes} or {@code off + count} is negative or
      * greater than the length of {@code bytes}.
-     * @throws IllegalCharsetNameException if {@code charset} is no valid
-     * charset name.
-     * @throws UnsupportedCharsetException if {@code charset} is not supported.
+     * @throws java.nio.charset.IllegalCharsetNameException if {@code charset}
+     * is no valid charset name.
+     * @throws java.nio.charset.UnsupportedCharsetException if {@code charset}
+     * is not supported.
      */
     public static String decode(final byte[] bytes, final int off,
         final int count, final String charset)

@@ -28,20 +28,20 @@
 <jdtaus:module xmlns="http://jdtaus.org/runtime/container/xml"
                xmlns:jdtaus="http://jdtaus.org/runtime/container/xml"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xsi:schemaLocation="http://jdtaus.org/runtime/container/xml http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/jdtaus-module-1.0.xsd"
+               xsi:schemaLocation="http://jdtaus.org/runtime/container/xml http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/jdtaus-module-1.1.xsd"
                jdtaus:name="${pom.name}"
                jdtaus:description="${pom.description}"
-               jdtaus:version="1.0">
-    
+               jdtaus:version="1.1">
+  
   <jdtaus:implementations>    
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.io.util.MemoryFileOperations"
                            jdtaus:name="MemoryFileOperations"
                            jdtaus:vendor="${pom.organization.name}"
-                           jdtaus:version="${pom.version}">
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
       
       <jdtaus:dependencies>
         <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
-                           jdtaus:implementationName="jDTAUS Core SPI"
                            jdtaus:name="Logger"
                            jdtaus:bound="true">
           
@@ -55,7 +55,6 @@
         </jdtaus:dependency>
         
         <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
-                           jdtaus:implementationName="jDTAUS Core SPI"
                            jdtaus:name="MemoryManager"
                            jdtaus:bound="true"/>
         
@@ -72,7 +71,8 @@
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.io.util.RandomAccessFileOperations"
                            jdtaus:name="RandomAccessFileOperations"
                            jdtaus:vendor="${pom.organization.name}"
-                           jdtaus:version="${pom.version}">
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
       
       <jdtaus:properties>
         <jdtaus:property jdtaus:name="bufferSize"
@@ -85,16 +85,15 @@
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.io.util.StructuredFileOperations"
                            jdtaus:name="StructuredFileOperations"
                            jdtaus:vendor="${pom.organization.name}"
-                           jdtaus:version="${pom.version}">
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
       
       <jdtaus:dependencies>
         <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
-                           jdtaus:implementationName="jDTAUS Core SPI"
                            jdtaus:name="MemoryManager"
                            jdtaus:bound="true"/>
         
         <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.monitor.spi.TaskMonitor"
-                           jdtaus:implementationName="jDTAUS Core SPI"
                            jdtaus:name="TaskMonitor"
                            jdtaus:bound="true"/>
         
@@ -105,21 +104,155 @@
                          jdtaus:value="1"
                          jdtaus:api="true"/>
         
-        <jdtaus:property jdtaus:name="readAhead"
-                         jdtaus:type="int"
-                         jdtaus:value="6"/>
-        
         <jdtaus:property jdtaus:name="minBufferedBlocks"
                          jdtaus:type="int"
                          jdtaus:value="1024"/>
-
+        
         <jdtaus:property jdtaus:name="monitoringThreshold"
                          jdtaus:type="int"
                          jdtaus:value="5242880"
                          jdtaus:api="true"/>
-
+        
       </jdtaus:properties>
     </jdtaus:implementation>
     
+    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.io.util.CoalescingFileOperations"
+                           jdtaus:name="CoalescingFileOperations"
+                           jdtaus:vendor="${pom.organization.name}"
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
+      
+      <jdtaus:dependencies>
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
+                           jdtaus:name="MemoryManager"
+                           jdtaus:bound="true"/>
+        
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
+                           jdtaus:name="Logger"
+                           jdtaus:bound="true">
+          
+          <jdtaus:properties>
+            <jdtaus:property jdtaus:name="name"
+                             jdtaus:type="java.lang.String"
+                             jdtaus:value="org.jdtaus.core.io.util.CoalescingFileOperations"
+                             jdtaus:api="true"/>
+            
+          </jdtaus:properties>
+        </jdtaus:dependency>
+      </jdtaus:dependencies>
+      <jdtaus:properties>
+        <jdtaus:property jdtaus:name="blockSize"
+                         jdtaus:type="int"
+                         jdtaus:value="2097152"/>
+        
+        <jdtaus:property jdtaus:name="cacheSize"
+                         jdtaus:type="int"
+                         jdtaus:value="5"/>
+        
+      </jdtaus:properties>
+    </jdtaus:implementation>
+    
+    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.io.util.ReadAheadFileOperations"
+                           jdtaus:name="ReadAheadFileOperations"
+                           jdtaus:vendor="${pom.organization.name}"
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
+      
+      <jdtaus:dependencies>
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
+                           jdtaus:name="MemoryManager"
+                           jdtaus:bound="true"/>
+        
+      </jdtaus:dependencies>
+      <jdtaus:properties>
+        <jdtaus:property jdtaus:name="cacheSize"
+                         jdtaus:type="int"
+                         jdtaus:value="16384"/>
+        
+      </jdtaus:properties>
+    </jdtaus:implementation>
+    
+    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.monitor.util.SwingProgressMonitor"
+                           jdtaus:name="ProgressMonitor"
+                           jdtaus:vendor="${pom.organization.name}"
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
+      
+      <jdtaus:dependencies>
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
+                           jdtaus:name="Logger"
+                           jdtaus:bound="true">
+          
+          <jdtaus:properties>
+            <jdtaus:property jdtaus:name="name"
+                             jdtaus:type="java.lang.String"
+                             jdtaus:value="org.jdtaus.core.monitor.util.SwingProgressMonitor"
+                             jdtaus:api="true"/>
+            
+          </jdtaus:properties>
+        </jdtaus:dependency>
+      </jdtaus:dependencies>
+      <jdtaus:properties>
+        <jdtaus:property jdtaus:name="millisToDecideToPopup"
+                         jdtaus:type="int"
+                         jdtaus:value="500"/>
+        
+        <jdtaus:property jdtaus:name="millisToPopup"
+                         jdtaus:type="int"
+                         jdtaus:value="2000"/>
+        
+      </jdtaus:properties>
+    </jdtaus:implementation>
+    
+    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.text.util.SwingMessagePane"
+                           jdtaus:name="SwingMessagePane"
+                           jdtaus:vendor="${pom.organization.name}"
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
+      
+      <jdtaus:dependencies>
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
+                           jdtaus:name="Logger"
+                           jdtaus:bound="true">
+          
+          <jdtaus:properties>
+            <jdtaus:property jdtaus:name="name"
+                             jdtaus:type="java.lang.String"
+                             jdtaus:value="org.jdtaus.core.text.util.SwingMessagePane"
+                             jdtaus:api="true"/>
+            
+          </jdtaus:properties>
+        </jdtaus:dependency>
+      </jdtaus:dependencies>
+    </jdtaus:implementation>
+    
+    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.monitor.util.TaskDurationLogger"
+                           jdtaus:name="TaskDurationLogger"
+                           jdtaus:vendor="${pom.organization.name}"
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
+      
+      <jdtaus:dependencies>
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
+                           jdtaus:name="Logger"
+                           jdtaus:bound="true">
+          
+          <jdtaus:properties>
+            <jdtaus:property jdtaus:name="name"
+                             jdtaus:type="java.lang.String"
+                             jdtaus:value="org.jdtaus.core.monitor.util.TaskDurationLogger"
+                             jdtaus:api="true"/>
+            
+          </jdtaus:properties>
+        </jdtaus:dependency>
+      </jdtaus:dependencies>
+      <jdtaus:properties>
+        <jdtaus:property jdtaus:name="loggingThresholdMillis"
+                         jdtaus:type="long"
+                         jdtaus:value="60000"
+                         jdtaus:api="true"/>
+        
+      </jdtaus:properties>
+    </jdtaus:implementation>
   </jdtaus:implementations>
 </jdtaus:module>

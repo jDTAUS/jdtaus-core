@@ -7,5 +7,37 @@
     <release version="1.0" date="2007-06-01"
              description="First stable release."/>
 
+    <release version="1.1" date="2007-08-01"
+             description="Feature enhancements and bugfixes.">
+
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added classes<ul>
+      <li><code>org.jdtaus.core.io.util.ReadAheadFileOperations</code></li>
+      <li><code>org.jdtaus.core.io.util.CoalescingFileOperations</code></li>
+      <li><code>org.jdtaus.core.monitor.util.SwingProgressMonitor</code></li>
+      <li><code>org.jdtaus.core.monitor.util.TaskDurationLogger</code></li>
+      <li><code>org.jdtaus.core.monitor.util.SwingProgressMonitor</code></li>
+      <li><code>org.jdtaus.core.text.util.SwingMessagePane</code></li></ul>
+      Added interfaces<ul>
+      <li><code>org.jdtaus.core.io.util.FlushableFileOperations</code></li></ul>
+      Updated classes<ul>
+      <li>Added a constructor taking an initial capacity to class
+      <code>org.jdtaus.core.io.util.MemoryFileOperations</code>.</li>
+      <li>Removed any caching performed by class
+      <code>org.jdtaus.core.io.util.StructuredFileOperations</code> in favour
+      of the new generalized caching implementations.</li></ul>
+      Updated the XML module descriptor to the 1.1 model version.]]>
+      </action>
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Classes <code>org.jdtaus.core.io.util.MemoryFileOperations</code>
+      and <code>org.jdtaus.core.io.util.RandomAccessFileOperations>/code> did
+      not update the file pointer value when using one of the methods
+      <code>read(OutputStream)</code> or <code>write(InputStream)</code>.]]>
+      </action>
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Class <code>org.jdtaus.core.io.util.MemoryFileOperations</code> did not
+      update the file pointer value correctly when truncating a file.]]>
+      </action>
+    </release>
   </body>
 </document>
