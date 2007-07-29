@@ -53,18 +53,9 @@
       </subsection>
       <subsection name="Task Monitoring Adapters">
         <p>
-          Two task monitoring implementations to choose from. The
-          <a href="jdtaus-core-client-monitoring/project-summary.html">client
-          monitor adapter</a> implements a runtime suitable for client
-          applications displaying progress to the users. The
-          <a href="jdtaus-core-server-monitoring/project-summary.html">server
-          monitor adapter</a> implements a runtime suitable for server
-          applications not displaying progress to the users.
-          The different behaviour is documented in the corresponding
-          implementation classes. See the
-          <a href="jdtaus-core-client-monitoring/apidocs/index.html">client</a>
-          and <a href="jdtaus-core-server-monitoring/apidocs/index.html">server
-          </a> API documentation.
+          Currently only the
+          <a href="jdtaus-core-task-monitor/project-summary.html">
+          reference implementation</a> is available.
         </p>
       </subsection>
       <subsection name="Runtime Environment Adapters">
