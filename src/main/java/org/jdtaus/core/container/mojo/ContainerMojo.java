@@ -130,7 +130,7 @@ public class ContainerMojo extends AbstractSourceMojo
      * generating folding markers specific to IDE editors. Currently available
      * options are {@code none} and {@code netbeans}.
      *
-     * @parameter expression="${targetIde}" default-value="netbeans"
+     * @parameter expression="${targetEditor}" default-value="netbeans"
      */
     protected String targetEditor;
 
