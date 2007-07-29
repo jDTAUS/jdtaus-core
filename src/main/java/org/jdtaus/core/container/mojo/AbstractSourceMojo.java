@@ -349,7 +349,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         final AbstractSourceMojo.SourceEditor editor)
         throws MojoFailureException
     {
-
         if(str == null)
         {
             throw new NullPointerException("str");
@@ -423,7 +422,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     protected final String load(final File file) throws
         MojoFailureException
     {
-
         if(file == null)
         {
             throw new NullPointerException("file");
@@ -475,7 +473,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     protected final void save(final File file, final String str) throws
         MojoFailureException
     {
-
         if(file == null)
         {
             throw new NullPointerException("file");
@@ -568,7 +565,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     }
 
     /**
-     * Provides access to the project's compile classpath.
+     * Provides access to the project's runtime classpath.
      *
      * @return a {@code ClassLoader} initialized with the project's runtime
      * classpath.
@@ -578,7 +575,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     protected final ClassLoader getRuntimeClassLoader() throws
         MojoFailureException
     {
-
         String element;
         File file;
         final Iterator it;
@@ -592,7 +588,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo
                 if(!urls.contains(element) &&
                     this.isClasspathElementIncluded(element))
                 {
-
                     file = new File(element);
                     urls.add(file.toURI().toURL());
                 }
