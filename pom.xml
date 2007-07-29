@@ -5,7 +5,7 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description><![CDATA[
   jDTAUS Core provides a common application programming interface for jDTAUS
   integration. This is the parent module for the core artifacts.]]>
@@ -165,8 +165,8 @@
     <module>jdtaus-core-application-logger</module>
     <module>jdtaus-core-commons-logging</module>
     <module>jdtaus-core-log4j-logging</module>
-    <module>jdtaus-core-client-monitoring</module>
-    <module>jdtaus-core-server-monitoring</module>
+    <module>jdtaus-core-task-monitor</module>
+    <module>jdtaus-core-messages</module>
     <module>jdtaus-core-utilities</module>
   </modules>
   <reporting>
@@ -199,7 +199,7 @@
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>servlet-api</artifactId>
-        <scope>compile</scope>
+        <scope>provided</scope>
         <version>[2.2, 2.5)</version>
       </dependency>
       <dependency>
