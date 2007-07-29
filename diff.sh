@@ -19,8 +19,8 @@ $SVN diff $BASE/jdtaus-core-application-logger/trunk \
 $SVN diff $BASE/jdtaus-core-client-container/trunk \
         $BASE/jdtaus-core-client-container/branches/jdtaus-core-client-container-1.x
 
-$SVN diff $BASE/jdtaus-core-client-monitoring/trunk \
-        $BASE/jdtaus-core-client-monitoring/branches/jdtaus-core-client-monitoring-1.x
+$SVN diff $BASE/jdtaus-core-task-monitor/trunk \
+        $BASE/jdtaus-core-task-monitor/branches/jdtaus-core-task-monitor-1.x
 
 $SVN diff $BASE/jdtaus-core-it/trunk \
         $BASE/jdtaus-core-it/branches/jdtaus-core-it-1.x
@@ -31,11 +31,12 @@ $SVN diff $BASE/jdtaus-core-jdk-logging/trunk \
 $SVN diff $BASE/jdtaus-core-memory-manager/trunk \
         $BASE/jdtaus-core-memory-manager/branches/jdtaus-core-memory-manager-1.x
 
-$SVN diff $BASE/jdtaus-core-server-monitoring/trunk \
-        $BASE/jdtaus-core-server-monitoring/branches/jdtaus-core-server-monitoring-1.x
-
 $SVN diff $BASE/jdtaus-core-spi/trunk \
         $BASE/jdtaus-core-spi/branches/jdtaus-core-spi-1.x
 
 $SVN diff $BASE/jdtaus-core-utilities/trunk \
         $BASE/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x
+
+$SVN diff $BASE/jdtaus-core-messages/trunk \
+	$BASE/jdtaus-core-messages/branches/jdtaus-core-messages-1.x
+
