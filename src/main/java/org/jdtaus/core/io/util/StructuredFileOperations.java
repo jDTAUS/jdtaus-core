@@ -275,9 +275,10 @@ public final class StructuredFileOperations implements StructuredFile
         {
             this.cachedBlockCount =
                 new BigDecimal(this.getFileOperations().getLength()).
-                divide(this.decimalBlockSize).longValue();
-            // TODO JDK 1.5 longValueExact()
+                divide(this.decimalBlockSize, BigDecimal.ROUND_UNNECESSARY).
+                longValue();
 
+            // TODO JDK 1.5 longValueExact()
         }
 
         return this.cachedBlockCount;
