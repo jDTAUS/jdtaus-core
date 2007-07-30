@@ -9,12 +9,12 @@
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-utilities</artifactId>
   <name>jDTAUS Core Utilities</name>
-  <version>1.1</version>
+  <version>1.2-SNAPSHOT</version>
   <description>jDTAUS core utility components.</description>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/jdtaus-core-utilities-1.1</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/jdtaus-core-utilities-1.1</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/jdtaus-core-utilities-1.1</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x</url>
   </scm>
   <build>
     <resources>
