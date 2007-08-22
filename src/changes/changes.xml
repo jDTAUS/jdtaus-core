@@ -15,5 +15,20 @@
       <code>targetEditor</code> to goal <code>generate-container</code>.]]>
       </action>
     </release>
+
+    <release version="1.2" date="2007-08-24"
+             description="Feature enhancement.">
+      
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added support for test modules. Added mojo configuration parameters
+      <code>testModuleName</code> and <code>mode</code> to goal
+      <code>generate-container</code>.]]>
+      </action>
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Added missing test for consistent use of <code>final</code> modifiers
+      to goal <code>verify-model</code>.]]>
+      </action>
+    </release>
+
   </body>
 </document>

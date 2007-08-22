@@ -82,6 +82,7 @@ public class VerifyModelMojo extends AbstractSourceMojo
                     impl.getIdentifier());
 
                 this.assertImplementsAllSpecifications(impl, modules, clazz);
+                this.assertFinalModifier(impl, clazz);
             }
 
             // Check mandatory implementations to exist.
@@ -174,10 +175,9 @@ public class VerifyModelMojo extends AbstractSourceMojo
         }
     }
 
-    private void assertFinalModifier(final Implementation impl)
-    throws MojoExecutionException, MojoFailureException
+    private void assertFinalModifier(final Implementation impl,
+        final Class clazz) throws MojoExecutionException, MojoFailureException
     {
-        final Class clazz = this.assertClassAvailable(impl.getIdentifier());
         if(Modifier.isFinal(clazz.getModifiers()) != impl.isFinal())
         {
             throw new MojoExecutionException(VerifyModelMojoBundle.

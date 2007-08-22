@@ -21,6 +21,7 @@ package org.jdtaus.core.container.mojo;
 
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Locale;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -28,6 +29,7 @@ import org.jdtaus.core.container.Dependencies;
 import org.jdtaus.core.container.Dependency;
 import org.jdtaus.core.container.Implementation;
 import org.jdtaus.core.container.Implementations;
+import org.jdtaus.core.container.MissingModuleException;
 import org.jdtaus.core.container.MissingPropertyException;
 import org.jdtaus.core.container.ModelFactory;
 import org.jdtaus.core.container.Module;
@@ -54,6 +56,18 @@ public class ContainerMojo extends AbstractSourceMojo
      * @parameter expression="${moduleName}" default-value="${pom.name}"
      */
     private String moduleName;
+
+    /**
+     * The name of the test module to process.
+     * @parameter expression="${testModuleName}" default-value="${pom.name} Tests"
+     */
+    private String testModuleName;
+
+    /**
+     * The operation mode to use (one of main or test).
+     * @parameter expression="${mode}" default-value="main"
+     */
+    private String mode;
 
     /**
      * The string marking the starting line where to start inserting specification
@@ -147,6 +161,35 @@ public class ContainerMojo extends AbstractSourceMojo
     }
 
     /**
+     * Accessor to the currently executed jDTAUS test module.
+     *
+     * @return the currently executed jDTAUS test module or {@code null} if
+     * no test module is defined for the currently executed jDTAUS module.
+     */
+    protected final Module getTestModule()
+    {
+        Module module = null;
+
+        if(this.testModuleName != null)
+        {
+            try
+            {
+                module = ModelFactory.newModel().getModules().
+                    getModule(this.testModuleName);
+
+            }
+            catch(MissingModuleException e)
+            {
+                this.getLog().info(ContainerMojoBundle.
+                    getSkippingTestModuleText(Locale.getDefault()));
+
+            }
+        }
+
+        return module;
+    }
+
+    /**
      * Gets the target editor to use when generating source code.
      *
      * @return the target editor to use when generating source code.
@@ -166,30 +209,67 @@ public class ContainerMojo extends AbstractSourceMojo
         Implementations impls;
         Specifications specs;
 
-        // All runtime dependencies are available so all required modules should
-        // also be available.
         final ClassLoader mavenLoader =
             Thread.currentThread().getContextClassLoader();
 
-        final ClassLoader runtimeLoader = this.getRuntimeClassLoader();
-        Thread.currentThread().setContextClassLoader(runtimeLoader);
-
         try
         {
-            final Module mod = this.getModule();
-            if(mod != null)
+            if(this.mode.equalsIgnoreCase("main"))
             {
-                specs = mod.getSpecifications();
-                impls = mod.getImplementations();
+                // All runtime dependencies are available so all required
+                // modules should also be available.
+                Thread.currentThread().setContextClassLoader(
+                    this.getRuntimeClassLoader());
 
-                for(i = specs.size() - 1; i >= 0; i--)
+                final Module mod = this.getModule();
+
+                if(mod != null)
                 {
-                    this.generateSpecification(specs.getSpecification(i));
+                    specs = mod.getSpecifications();
+                    impls = mod.getImplementations();
+
+                    for(i = specs.size() - 1; i >= 0; i--)
+                    {
+                        this.generateSpecification(
+                            this.getMavenProject().getCompileSourceRoots(),
+                            specs.getSpecification(i));
+                    }
+
+                    for(i = impls.size() - 1; i >= 0; i--)
+                    {
+                        this.generateImplementation(
+                            this.getMavenProject().getCompileSourceRoots(),
+                            impls.getImplementation(i));
+
+                    }
                 }
+            }
+            else if(this.mode.equalsIgnoreCase("test"))
+            {
+                Thread.currentThread().setContextClassLoader(
+                    this.getTestClassLoader());
 
-                for(i = impls.size() - 1; i >= 0; i--)
+                final Module testMod = this.getTestModule();
+                if(testMod != null)
                 {
-                    this.generateImplementation(impls.getImplementation(i));
+                    specs = testMod.getSpecifications();
+                    impls = testMod.getImplementations();
+
+                    for(i = specs.size() - 1; i >= 0; i--)
+                    {
+                        this.generateSpecification(
+                            this.getMavenProject().getTestCompileSourceRoots(),
+                            specs.getSpecification(i));
+
+                    }
+
+                    for(i = impls.size() - 1; i >= 0; i--)
+                    {
+                        this.generateImplementation(
+                            this.getMavenProject().getTestCompileSourceRoots(),
+                            impls.getImplementation(i));
+
+                    }
                 }
             }
         }
@@ -1163,9 +1243,14 @@ public class ContainerMojo extends AbstractSourceMojo
         return className.substring(className.lastIndexOf('.') + 1);
     }
 
-    protected void generateImplementation(final Implementation impl) throws
-        MojoExecutionException, MojoFailureException
+    protected void generateImplementation(final List roots,
+        final Implementation impl) throws MojoExecutionException,
+        MojoFailureException
     {
+        if(roots == null)
+        {
+            throw new NullPointerException("roots");
+        }
         if(impl == null)
         {
             throw new NullPointerException("impl");
@@ -1175,7 +1260,8 @@ public class ContainerMojo extends AbstractSourceMojo
             getMissingMarkersMessage(getLocale());
 
         String edited;
-        final File source = this.getSource(impl.getIdentifier());
+        final File source = this.getSource(roots, impl.getIdentifier());
+
         if(source == null)
         {
             throw new MojoExecutionException(impl.getIdentifier());
@@ -1250,15 +1336,20 @@ public class ContainerMojo extends AbstractSourceMojo
         }
     }
 
-    protected void generateSpecification(final Specification spec) throws
-        MojoExecutionException, MojoFailureException
+    protected void generateSpecification(final List roots,
+        final Specification spec) throws MojoExecutionException,
+        MojoFailureException
     {
         if(spec == null)
         {
             throw new NullPointerException("spec");
         }
+        if(roots == null)
+        {
+            throw new NullPointerException("roots");
+        }
 
-        final File source = this.getSource(spec.getIdentifier());
+        final File source = this.getSource(roots, spec.getIdentifier());
         if(source != null)
         {
             final String path = source.getAbsolutePath();

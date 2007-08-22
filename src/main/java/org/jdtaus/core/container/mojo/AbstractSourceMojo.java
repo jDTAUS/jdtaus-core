@@ -40,6 +40,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
@@ -101,12 +102,29 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     private List classpathElements;
 
     /**
+     * Project test classpath.
+     *
+     * @parameter expression="${project.testClasspathElements}"
+     * @required
+     * @readonly
+     */
+    private List testClasspathElements;
+
+    /**
      * A regular expression used for excluding elements from the runtime
      * classpath elements. By default no elements will be excluded.
      * @parameter expression="${classPathElementsExcludeRegexp}"
      * @optional
      */
     private String classPathElementsExcludeRegexp;
+
+    /**
+     * A regular expression used for excluding elements from the test
+     * classpath elements. By default no elements will be excluded.
+     * @parameter expression="${testClassPathElementsExcludeRegexp}"
+     * @optional
+     */
+    private String testClassPathElementsExcludeRegexp;
 
     /**
      * Accessor to the currently executed {@code MavenProject}.
@@ -144,11 +162,21 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     /**
      * Accessor to the runtime classpath elements.
      *
-     * @return a list holding strings for each compile class path element.
+     * @return a list holding strings for each runtime class path element.
      */
     protected final List getClasspathElements()
     {
         return this.classpathElements;
+    }
+
+    /**
+     * Accessor to the test classpath elements.
+     *
+     * @return a list holding strings for each test class path element.
+     */
+    protected final List getTestClasspathElements()
+    {
+        return this.testClasspathElements;
     }
 
     /**
@@ -174,6 +202,34 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         if(this.classPathElementsExcludeRegexp != null)
         {
             ret = !element.matches(this.classPathElementsExcludeRegexp);
+        }
+
+        return ret;
+    }
+
+    /**
+     * Indicates wheter a class path element should be included in the
+     * classpath.
+     *
+     * @param element the element to check for classpath inclusion.
+     *
+     * @return {@code true} if {@code element} should be included in the
+     * classpath; {@code false} if not.
+     *
+     * @throws NullPointerException if {@code element} is {@code null}.
+     */
+    protected boolean isTestClasspathElementIncluded(final String element)
+    {
+        boolean ret = true;
+
+        if(element == null)
+        {
+            throw new NullPointerException("element");
+        }
+
+        if(this.testClassPathElementsExcludeRegexp != null)
+        {
+            ret = !element.matches(this.testClassPathElementsExcludeRegexp);
         }
 
         return ret;
@@ -212,6 +268,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     /**
      * Accessor to a {@code *.java} file for a given class name.
      *
+     * @param roots list of source roots to search.
      * @param className The class name to return the corresponding
      * {@code *.java} file for (needs to be in the project's compile source
      * roots). No inner classes are supported yet.
@@ -219,13 +276,18 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      * @return the source file for the class with name {@code className} or
      * {@code null} if no corresponding source file can be found.
      *
-     * @throws NullPointerException if {@code className} is {@code null}.
+     * @throws NullPointerException if either {@code roots} or {@code className}
+     * is {@code null}.
      */
-    protected final File getSource(final String className)
+    protected final File getSource(final List roots, final String className)
     {
         if(className == null)
         {
             throw new NullPointerException("className");
+        }
+        if(roots == null)
+        {
+            throw new NullPointerException("roots");
         }
 
         File file;
@@ -235,10 +297,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         final String fileName = className.replace('.', File.separatorChar).
             concat(".java");
 
-        for(it = this.getMavenProject().getCompileSourceRoots().
-            iterator(); it.hasNext();)
+        for(it = roots.iterator(); it.hasNext();)
         {
-
             source = (String) it.next();
             file = new File(source.concat(File.separator).concat(fileName));
             if(file.canRead() && file.canWrite())
@@ -285,7 +345,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo
             for (j = Arrays.asList(scanner.getIncludedFiles()).
                 iterator(); j.hasNext();)
             {
-
                 file = new File(parentRoot, (String) j.next());
                 files.add(file);
             }
@@ -572,8 +631,8 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      *
      * @throws MojoFailureException for unrecoverable technical errors.
      */
-    protected final ClassLoader getRuntimeClassLoader() throws
-        MojoFailureException
+    protected final ClassLoader getRuntimeClassLoader()
+    throws MojoFailureException
     {
         String element;
         File file;
@@ -599,6 +658,51 @@ public abstract class AbstractSourceMojo extends AbstractMojo
 
         }
         catch(MalformedURLException e)
+        {
+            throw new MojoFailureException(e.getMessage());
+        }
+    }
+
+    /**
+     * Provides access to the project's test classpath.
+     *
+     * @return a {@code ClassLoader} initialized with the project's test
+     * classpath.
+     *
+     * @throws MojoFailureException for unrecoverable technical errors.
+     */
+    protected final ClassLoader getTestClassLoader()
+    throws MojoFailureException
+    {
+        String element;
+        File file;
+        final Iterator it;
+        final Collection urls = new LinkedList();
+
+        try
+        {
+            for(it = this.getMavenProject().
+                getTestClasspathElements().iterator(); it.hasNext();)
+            {
+                element = (String) it.next();
+                if(!urls.contains(element) &&
+                    this.isTestClasspathElementIncluded(element))
+                {
+                    file = new File(element);
+                    urls.add(file.toURI().toURL());
+                }
+            }
+
+            return new URLClassLoader(
+                (URL[]) urls.toArray(new URL[urls.size()]),
+                this.getContextClassLoader());
+
+        }
+        catch(MalformedURLException e)
+        {
+            throw new MojoFailureException(e.getMessage());
+        }
+        catch(DependencyResolutionRequiredException e)
         {
             throw new MojoFailureException(e.getMessage());
         }
