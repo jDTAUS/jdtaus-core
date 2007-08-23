@@ -21,8 +21,6 @@ package org.jdtaus.core.io.util.test;
 
 import java.io.IOException;
 import org.jdtaus.core.io.FileOperations;
-import org.jdtaus.core.io.it.FileOperationsTest;
-import org.jdtaus.core.io.util.MemoryFileOperations;
 import org.jdtaus.core.io.util.ReadAheadFileOperations;
 
 /**

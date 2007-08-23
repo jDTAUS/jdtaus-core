@@ -45,7 +45,7 @@ import org.jdtaus.core.logging.spi.Logger;
  * configuration property {@code blockSize}. By default property
  * {@code blockSize} is initialized to {@code 2097152} leading to a cache
  * size of 10 MB (multiplied by property {@code cacheSize} which defaults to
- * {@code 5}). All memory is allocated during instantiation so that a
+ * {@code 5}). All memory is allocated during instantiation so that an
  * {@code OutOfMemoryError} may be thrown when constructing the cache but not
  * when working with the instance.</p>
  *
@@ -218,7 +218,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      *
      * @return the value of property <code>blockSize</code>.
      */
-    private int getBlockSize()
+    public int getBlockSize()
     {
         return this._blockSize;
     }
@@ -230,11 +230,15 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
     public long getLength() throws IOException
     {
+        this.assertNotClosed();
+
         return this.fileOperations.getLength();
     }
 
     public void setLength(final long newLength) throws IOException
     {
+        this.assertNotClosed();
+
         // Update the length of any cache nodes involved in the operation.
         final long oldLength = this.getLength();
         if(newLength > oldLength)
@@ -301,11 +305,15 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
     public long getFilePointer() throws IOException
     {
+        this.assertNotClosed();
+
         return this.filePointer;
     }
 
     public void setFilePointer(final long pos) throws IOException
     {
+        this.assertNotClosed();
+
         this.filePointer = pos;
     }
 
@@ -327,6 +335,8 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         {
             throw new IndexOutOfBoundsException(Integer.toString(off + len));
         }
+
+        this.assertNotClosed();
 
         int read = FileOperations.EOF;
 
@@ -413,6 +423,8 @@ public final class CoalescingFileOperations implements FlushableFileOperations
             throw new IndexOutOfBoundsException(Integer.toString(off + len));
         }
 
+        this.assertNotClosed();
+
         if(this.filePointer + len > this.getLength())
         { // Expand the file of the backing instance.
             this.setLength(this.filePointer + len);
@@ -469,14 +481,36 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
     public void read(final OutputStream out) throws IOException
     {
+        this.assertNotClosed();
+
         this.fileOperations.read(out);
         this.filePointer = this.fileOperations.getFilePointer();
     }
 
     public void write(final InputStream in) throws IOException
     {
+        this.assertNotClosed();
+
         this.fileOperations.write(in);
         this.filePointer = this.fileOperations.getFilePointer();
+    }
+
+    /**
+     * {@inheritDoc}
+     * Flushes the cache and closes the {@code FileOperations} implementation
+     * backing the instance.
+     *
+     * @throws IOException if flushing or closing the {@code FileOperations}
+     * implementation backing the instance fails, or if the instance already
+     * is closed.
+     */
+    public void close() throws IOException
+    {
+        this.assertNotClosed();
+
+        this.flush();
+        this.getFileOperations().close();
+        this.closed = true;
     }
 
     //----------------------------------------------------------FileOperations--
@@ -486,9 +520,14 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      * {@inheritDoc}
      * This method calls the {@code flush()} method of an underlying
      * {@code FlushableFileOperations} implementation, if any.
+     *
+     * @throws IOException if writing any pending changes fails or if the
+     * instance is closed.
      */
     public void flush() throws IOException
     {
+        this.assertNotClosed();
+
         this.defragmentCache();
 
         long startPos = FileOperations.EOF;
@@ -614,6 +653,9 @@ public final class CoalescingFileOperations implements FlushableFileOperations
     private long cachedFilePointerBlockStart = FileOperations.EOF;
     private static final long NO_FILEPOINTERBLOCK = Long.MIN_VALUE;
 
+    /** Flags the instance as beeing closed. */
+    private boolean closed;
+
     /**
      * Creates a new {@code CoalescingFileOperations} instance taking the
      * {@code FileOperations} backing the instance.
@@ -651,12 +693,13 @@ public final class CoalescingFileOperations implements FlushableFileOperations
     /**
      * Creates a new {@code CoalescingFileOperations} instance taking the
      * {@code FileOperations} backing the instance and the number of bytes
-     * occupied by one block.
+     * occupied by one cache block.
      *
      * @param fileOperations the {@code FileOperations} backing the instance.
-     * @param blockSize the number of bytes occupied by one block.
+     * @param blockSize the number of bytes occupied by one cache block.
      *
      * @throws NullPointerException if {@code fileOperations} is {@code null}.
+     * @throws PropertyException if {@code blockSize} is negative or zero.
      * @throws IOException if reading fails.
      */
     public CoalescingFileOperations(final FileOperations fileOperations,
@@ -670,9 +713,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         }
 
         this.initializeProperties(META.getProperties());
-
         this._blockSize = blockSize;
-
         this.assertValidProperties();
 
         this.fileOperations = fileOperations;
@@ -685,6 +726,18 @@ public final class CoalescingFileOperations implements FlushableFileOperations
             this.getBlockSize() * this.getCacheSize());
 
         this.filePointer = fileOperations.getFilePointer();
+    }
+
+    /**
+     * Gets the {@code FileOperations} implementation operations are performed
+     * with.
+     *
+     * @return the {@code FileOperations} implementation operations are
+     * performed with.
+     */
+    public FileOperations getFileOperations()
+    {
+        return this.fileOperations;
     }
 
     /**
@@ -704,6 +757,21 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         {
             throw new PropertyException("cacheSize",
                 Integer.toString(this.getCacheSize()));
+
+        }
+    }
+
+    /**
+     * Checks that the instance is not closed.
+     *
+     * @throws IOException if the instance is closed.
+     */
+    private void assertNotClosed() throws IOException
+    {
+        if(this.closed)
+        {
+            throw new IOException(CoalescingFileOperationsBundle.
+                getAlreadyClosedText(Locale.getDefault()));
 
         }
     }

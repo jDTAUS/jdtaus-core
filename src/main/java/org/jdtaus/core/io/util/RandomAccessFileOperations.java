@@ -23,12 +23,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.util.Locale;
+import org.jdtaus.core.container.ContainerFactory;
+import org.jdtaus.core.container.ContextFactory;
+import org.jdtaus.core.container.ContextInitializer;
 import org.jdtaus.core.container.Implementation;
 import org.jdtaus.core.container.ModelFactory;
 import org.jdtaus.core.container.Properties;
 import org.jdtaus.core.container.Property;
 import org.jdtaus.core.container.PropertyException;
 import org.jdtaus.core.io.FileOperations;
+import org.jdtaus.core.lang.spi.MemoryManager;
 
 /**
  * Adapts a {@link java.io.RandomAccessFile} to {@code FileOperations}.
@@ -78,6 +83,52 @@ public final class RandomAccessFileOperations implements FileOperations
 // </editor-fold>//GEN-END:jdtausConstructors
 
     //------------------------------------------------------------Constructors--
+    //--Dependencies------------------------------------------------------------
+
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
+    // This section is managed by jdtaus-container-mojo.
+
+    /** Configured <code>MemoryManager</code> implementation. */
+    private transient MemoryManager _dependency0;
+
+    /**
+     * Gets the configured <code>MemoryManager</code> implementation.
+     *
+     * @return the configured <code>MemoryManager</code> implementation.
+     */
+    private MemoryManager getMemoryManager()
+    {
+        MemoryManager ret = null;
+        if(this._dependency0 != null)
+        {
+            ret = this._dependency0;
+        }
+        else
+        {
+            ret = (MemoryManager) ContainerFactory.getContainer().
+                getDependency(RandomAccessFileOperations.class,
+                "MemoryManager");
+
+            if(ModelFactory.getModel().getModules().
+                getImplementation(RandomAccessFileOperations.class.getName()).
+                getDependencies().getDependency("MemoryManager").
+                isBound())
+            {
+                this._dependency0 = ret;
+            }
+        }
+
+        if(ret instanceof ContextInitializer && !((ContextInitializer) ret).
+            isInitialized(ContextFactory.getContext()))
+        {
+            ((ContextInitializer) ret).initialize(ContextFactory.getContext());
+        }
+
+        return ret;
+    }
+// </editor-fold>//GEN-END:jdtausDependencies
+
+    //------------------------------------------------------------Dependencies--
     //--Properties--------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausProperties
@@ -110,6 +161,8 @@ public final class RandomAccessFileOperations implements FileOperations
 
     public long getLength() throws IOException
     {
+        this.assertNotClosed();
+
         return this.cachedLength != NO_CACHEDLENGTH ?
             this.cachedLength : (this.cachedLength =
             this.getRandomAccessFile().length());
@@ -123,22 +176,30 @@ public final class RandomAccessFileOperations implements FileOperations
             throw new IllegalArgumentException(Long.toString(newLength));
         }
 
+        this.assertNotClosed();
+
         this.getRandomAccessFile().setLength(newLength);
         this.cachedLength = newLength;
     }
 
     public long getFilePointer() throws IOException
     {
+        this.assertNotClosed();
+
         return this.getRandomAccessFile().getFilePointer();
     }
 
     public void setFilePointer(long pos)  throws IOException
     {
+        this.assertNotClosed();
+
         this.getRandomAccessFile().seek(pos);
     }
 
     public void write(byte[] buf, int off, int len)  throws IOException
     {
+        this.assertNotClosed();
+
         final RandomAccessFile file = this.getRandomAccessFile();
         final long pointer = file.getFilePointer();
 
@@ -153,6 +214,8 @@ public final class RandomAccessFileOperations implements FileOperations
 
     public int read(byte[] buf, int off, int len) throws IOException
     {
+        this.assertNotClosed();
+
         return this.getRandomAccessFile().read(buf, off, len);
     }
 
@@ -162,6 +225,8 @@ public final class RandomAccessFileOperations implements FileOperations
         {
             throw new NullPointerException("out");
         }
+
+        this.assertNotClosed();
 
         int read;
         long toRead = this.getLength();
@@ -189,6 +254,8 @@ public final class RandomAccessFileOperations implements FileOperations
             throw new NullPointerException("in");
         }
 
+        this.assertNotClosed();
+
         int read;
         final byte[] buf = this.getDefaultBuffer();
 
@@ -198,17 +265,32 @@ public final class RandomAccessFileOperations implements FileOperations
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * Closes the {@code RandomAccessFile} backing the instance.
+     *
+     * @throws IOException if closing the {@code RandomAccessFile} backing the
+     * instance fails.
+     */
+    public void close() throws IOException
+    {
+        this.assertNotClosed();
+
+        this.getRandomAccessFile().close();
+        this.closed = true;
+    }
+
     //----------------------------------------------------------FileOperations--
     //--RandomAccessFileOperations----------------------------------------------
 
-    /**
-     * Default temporary buffer.
-     * @serial
-     */
+    /** Default temporary buffer. */
     private byte[] defaultBuffer;
 
+    /** Flags the instance as beeing closed. */
+    private boolean closed;
+
     /** {@code RandomAccessFile} requirement. */
-    private transient RandomAccessFile randomAccessFile;
+    private RandomAccessFile randomAccessFile;
 
     /**
      * Creates a new {@code RandomAccessFileOperations} instance adapting
@@ -262,6 +344,21 @@ public final class RandomAccessFileOperations implements FileOperations
     }
 
     /**
+     * Checks that the instance is not closed.
+     *
+     * @throws IOException if the instance is closed.
+     */
+    private void assertNotClosed() throws IOException
+    {
+        if(this.closed)
+        {
+            throw new IOException(RandomAccessFileOperationsBundle.
+                getAlreadyClosedText(Locale.getDefault()));
+
+        }
+    }
+
+    /**
      * Getter for property {@code defaultBuffer}.
      *
      * @return a buffer for operations which need temporary memory.
@@ -270,7 +367,9 @@ public final class RandomAccessFileOperations implements FileOperations
     {
         if(this.defaultBuffer == null)
         {
-            this.defaultBuffer = new byte[this.getBufferSize()];
+            this.defaultBuffer = this.getMemoryManager().
+                allocateBytes(this.getBufferSize());
+
         }
 
         return this.defaultBuffer;

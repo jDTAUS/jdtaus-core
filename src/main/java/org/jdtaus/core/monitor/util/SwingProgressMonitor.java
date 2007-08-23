@@ -30,6 +30,7 @@ import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
@@ -62,6 +63,8 @@ import org.jdtaus.core.monitor.TaskListener;
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
+ *
+ * @see #onTaskEvent(TaskEvent)
  */
 public final class SwingProgressMonitor implements TaskListener
 {
@@ -171,7 +174,7 @@ public final class SwingProgressMonitor implements TaskListener
      *
      * @return the value of property <code>millisToPopup</code>.
      */
-    private int getMillisToPopup()
+    public int getMillisToPopup()
     {
         return this._millisToPopup;
     }
@@ -187,7 +190,7 @@ public final class SwingProgressMonitor implements TaskListener
      *
      * @return the value of property <code>millisToDecideToPopup</code>.
      */
-    private int getMillisToDecideToPopup()
+    public int getMillisToDecideToPopup()
     {
         return this._millisToDecideToPopup;
     }
@@ -201,14 +204,16 @@ public final class SwingProgressMonitor implements TaskListener
      * {@inheritDoc}
      * <p>This method controls a dialog displaying a panel for each task showing
      * the progress of that task optionally providing a cancel button if the
-     * corresponding task is not indeterminate. The dialog will show up only if
+     * corresponding task is cancelable. The dialog will show up only if
      * the operation performed by at least one task is believed to run longer
      * than specified by property {@code millisToPopup}. Property
      * {@code millisToDecideToPopup} controls the number of milliseconds to pass
      * before all currently running tasks are checked for theire duration.
      * Properties {@code millisToDecideToPopup} and {@code millisToPopup} are
      * used in the same way as specified for Swing's
-     * {@link javax.swing.ProgressMonitor}.</p>
+     * {@link javax.swing.ProgressMonitor}. The default for property
+     * {@code millisToDecideToPopup} is 500ms and the default for property
+     * {@code millisToPopup} is 2000ms.</p>
      *
      * @param event the event send by a {@code Task}.
      */
@@ -293,7 +298,14 @@ public final class SwingProgressMonitor implements TaskListener
 
                     if(tasks.put(state.task, state) != null)
                     {
-                        throw new IllegalStateException();
+                        throw new IllegalStateException(
+                            SwingProgressMonitorBundle.
+                            getTaskAlreadyStartedMessage(Locale.getDefault()).
+                            format(new Object[] {
+                            state.task.getDescription().getText(
+                                Locale.getDefault()),
+                            new Date(state.task.getTimestamp()) }));
+
                     }
                     break;
 
@@ -564,7 +576,7 @@ public final class SwingProgressMonitor implements TaskListener
      *
      * @throws NullPointerException if {@code parent} is {@code null}.
      * @throws PropertyException if either {@code millisToDecideToPopup} or
-     * {@code millisToPopup} is negative.
+     * {@code millisToPopup} is negative or zero.
      * @throws HeadlessException if this class is used in an environment
      * not providing a keyboard, display, or mouse.
      *

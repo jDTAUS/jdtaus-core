@@ -90,9 +90,13 @@
               <bundles>
                 <bundle>org.jdtaus.core.io.util.MemoryFileOperations</bundle>
                 <bundle>org.jdtaus.core.io.util.CoalescingFileOperations</bundle>
+                <bundle>org.jdtaus.core.io.util.RandomAccessFileOperations</bundle>
+                <bundle>org.jdtaus.core.io.util.ReadAheadFileOperations</bundle>
+                <bundle>org.jdtaus.core.io.util.StructuredFileOperations</bundle>
                 <bundle>org.jdtaus.core.monitor.util.SwingProgressMonitor</bundle>
                 <bundle>org.jdtaus.core.monitor.util.TaskDurationLogger</bundle>
                 <bundle>org.jdtaus.core.text.util.SwingMessagePane</bundle>
+                <bundle>org.jdtaus.core.text.util.MessageLogger</bundle>
               </bundles>
               <encoding>UTF-8</encoding>
               <locale>en</locale>

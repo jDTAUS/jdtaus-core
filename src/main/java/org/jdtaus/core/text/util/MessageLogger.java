@@ -17,9 +17,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.core.monitor.util;
+package org.jdtaus.core.text.util;
 
-import java.util.Date;
 import java.util.Locale;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.container.ContextFactory;
@@ -28,19 +27,19 @@ import org.jdtaus.core.container.Implementation;
 import org.jdtaus.core.container.ModelFactory;
 import org.jdtaus.core.container.Properties;
 import org.jdtaus.core.container.Property;
-import org.jdtaus.core.container.PropertyException;
 import org.jdtaus.core.logging.spi.Logger;
-import org.jdtaus.core.monitor.TaskEvent;
-import org.jdtaus.core.monitor.TaskListener;
+import org.jdtaus.core.text.MessageEvent;
+import org.jdtaus.core.text.MessageListener;
 
 /**
- * {@code TaskListener} logging the duration of an operation performed by
- * a {@code Task}.
+ * {@code MessageListener} logging messages to a system logger.
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
+ *
+ * @see #onMessage(MessageEvent)
  */
-public final class TaskDurationLogger implements TaskListener
+public final class MessageLogger implements MessageListener
 {
     //--Implementation----------------------------------------------------------
 
@@ -50,7 +49,7 @@ public final class TaskDurationLogger implements TaskListener
     /** Meta-data describing the implementation. */
     private static final Implementation META =
         ModelFactory.getModel().getModules().
-        getImplementation(TaskDurationLogger.class.getName());
+        getImplementation(MessageLogger.class.getName());
 // </editor-fold>//GEN-END:jdtausImplementation
 
     //----------------------------------------------------------Implementation--
@@ -74,9 +73,6 @@ public final class TaskDurationLogger implements TaskListener
         {
             throw new NullPointerException("meta");
         }
-
-        p = meta.getProperty("loggingThresholdMillis");
-        this._loggingThresholdMillis = ((java.lang.Long) p.getValue()).longValue();
 
     }
 // </editor-fold>//GEN-END:jdtausConstructors
@@ -105,11 +101,11 @@ public final class TaskDurationLogger implements TaskListener
         else
         {
             ret = (Logger) ContainerFactory.getContainer().
-                getDependency(TaskDurationLogger.class,
+                getDependency(MessageLogger.class,
                 "Logger");
 
             if(ModelFactory.getModel().getModules().
-                getImplementation(TaskDurationLogger.class.getName()).
+                getImplementation(MessageLogger.class.getName()).
                 getDependencies().getDependency("Logger").
                 isBound())
             {
@@ -133,102 +129,74 @@ public final class TaskDurationLogger implements TaskListener
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausProperties
     // This section is managed by jdtaus-container-mojo.
 
-    /**
-     * Property {@code loggingThresholdMillis}.
-     * @serial
-     */
-    private long _loggingThresholdMillis;
-
-    /**
-     * Gets the value of property <code>loggingThresholdMillis</code>.
-     *
-     * @return the value of property <code>loggingThresholdMillis</code>.
-     */
-    public long getLoggingThresholdMillis()
-    {
-        return this._loggingThresholdMillis;
-    }
-
 // </editor-fold>//GEN-END:jdtausProperties
 
     //--------------------------------------------------------------Properties--
-    //--TaskListener------------------------------------------------------------
+    //--MessageListener---------------------------------------------------------
 
     /**
      * {@inheritDoc}
-     * <p>This method measures the time a task is running and logs
-     * information for tasks running longer than specified by configuration
-     * property {@code loggingThresholdMillis} (defaults to 60000).</p>
+     * <p>This method logs all messages given by the event using the
+     * corresponding log level.</p>
      *
-     * @param event the event send by a {@code Task}.
+     * @param event the event holding messages.
      */
-    public void onTaskEvent(final TaskEvent event)
+    public void onMessage(final MessageEvent event)
     {
         if(event != null)
         {
-            final long now = System.currentTimeMillis();
-            final long start = event.getTask().getTimestamp();
-
-            if(TaskEvent.ENDED == event.getType() &&
-                now - start > this.getLoggingThresholdMillis())
+            final int numMessages = event.getMessages().length;
+            final StringBuffer messages = new StringBuffer(numMessages * 200);
+            for(int i = 0; i < numMessages; i++)
             {
-                this.getLogger().info(TaskDurationLoggerBundle.
-                    getDurationInfoMessage(Locale.getDefault()).
-                    format(new Object[] {
-                    event.getTask().getDescription().
-                        getText(Locale.getDefault()),
-                    new Date(start),
-                    new Date(now),
-                    new Long(now - start)
-                }));
+                messages.append(event.getMessages()[i].
+                    getText(Locale.getDefault())).append('\n');
+
+            }
+
+            switch(event.getType())
+            {
+                case MessageEvent.ERROR:
+                    this.getLogger().error(messages.toString());
+                    break;
+
+                case MessageEvent.INFORMATION:
+                case MessageEvent.NOTIFICATION:
+                    this.getLogger().info(messages.toString());
+                    break;
+
+                case MessageEvent.WARNING:
+                    this.getLogger().warn(messages.toString());
+                    break;
+
+                default:
+                    this.getLogger().warn(MessageLoggerBundle.
+                        getUnknownMessageTypeMessage(
+                        Locale.getDefault()).format(new Object[] {
+                        new Integer(event.getType()) }));
+
             }
         }
     }
 
-    //------------------------------------------------------------TaskListener--
-    //--TaskDurationLogger------------------------------------------------------
+    //---------------------------------------------------------MessageListener--
+    //--MessageLogger-----------------------------------------------------------
 
-    /** Creates a new {@code TaskDurationLogger} instance. */
-    public TaskDurationLogger()
+    /** Creates a new {@code MessageLogger} instance. */
+    public MessageLogger()
     {
         super();
         this.initializeProperties(META.getProperties());
-        this.assertValidProperties();
-    }
-
-    /**
-     * Creates a new {@code TaskDurationLogger} instance taking the number of
-     * milliseconds a task at least needs to run to trigger a message when
-     * finished.
-     *
-     * @param loggingThresholdMillis the number of milliseconds a task at least
-     * needs to run to trigger a message when finished.
-     *
-     * @throws PropertyException if {@code loggingThresholdMillis} is negative
-     * or zero.
-     */
-    public TaskDurationLogger(final long loggingThresholdMillis)
-    {
-        super();
-        this.initializeProperties(META.getProperties());
-        this._loggingThresholdMillis = loggingThresholdMillis;
         this.assertValidProperties();
     }
 
     /**
      * Checks configured properties.
      *
-     * @throws PropertyException for illegal property value.
+     * @throws PropertyException for illegal property values.
      */
     private void assertValidProperties()
-    {
-        if(this.getLoggingThresholdMillis() < 0L)
-        {
-            throw new PropertyException("loggingThresholdMillis",
-                Long.toString(this.getLoggingThresholdMillis()));
+    {}
 
-        }
-    }
-
-    //------------------------------------------------------TaskDurationLogger--
+    //-----------------------------------------------------------MessageLogger--
 }

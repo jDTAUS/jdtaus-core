@@ -387,6 +387,17 @@ public final class MemoryFileOperations implements
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Since this implementation does not use any system resources to
+     * release, this method does nothing. In contrast to other
+     * {@code FileOperations} implementations the instance can still be used
+     * after calling this method. It would be a mistake to write an application
+     * which relies on this behaviour, however.</p>
+     */
+    public void close()
+    {}
+
     //----------------------------------------------------------FileOperations--
     //--MemoryFileOperations----------------------------------------------------
 
@@ -478,7 +489,9 @@ public final class MemoryFileOperations implements
     {
         if(this.defaultBuffer == null)
         {
-            this.defaultBuffer = new byte[this.getBufferSize()];
+            this.defaultBuffer = this.getMemoryManager().
+                allocateBytes(this.getBufferSize());
+
         }
 
         return this.defaultBuffer;
@@ -495,8 +508,9 @@ public final class MemoryFileOperations implements
 
         while(this.data.length < newSize)
         {
-            final byte[] newData = this.getMemoryManager().
-                allocateBytes(this.data.length * 2);
+            final byte[] newData = this.getMemoryManager().allocateBytes(
+                this.data.length * 2 >= newSize ?
+                    this.data.length * 2 : newSize);
 
             Arrays.fill(newData, (byte) 0);
             System.arraycopy(this.data, 0, newData, 0, this.data.length);
@@ -506,7 +520,6 @@ public final class MemoryFileOperations implements
         if(oldLength != this.data.length &&
             this.getLogger().isDebugEnabled())
         {
-
             final MessageFormat fmt = MemoryFileOperationsBundle.
                 getLogResizeMessage(Locale.getDefault());
 

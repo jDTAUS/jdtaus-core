@@ -22,6 +22,7 @@ package org.jdtaus.core.io.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.container.ContextFactory;
 import org.jdtaus.core.container.ContextInitializer;
@@ -40,7 +41,7 @@ import org.jdtaus.core.lang.spi.MemoryManager;
  * configuration property {@code cacheSize} holding the number of bytes
  * to read-ahead. By default property {@code cacheSize} is initialized to
  * {@code 16384} leading to a cache size of 16 kB. All memory is allocated
- * during instantiation so that a {@code OutOfMemoryError} may be thrown
+ * during instantiation so that an {@code OutOfMemoryError} may be thrown
  * when constructing the cache but not when working with the instance.</p>
  *
  * <p><b>Note:</b><br>
@@ -154,7 +155,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      *
      * @return the value of property <code>cacheSize</code>.
      */
-    private int getCacheSize()
+    public int getCacheSize()
     {
         return this._cacheSize;
     }
@@ -166,11 +167,15 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
 
     public long getLength() throws IOException
     {
+        this.assertNotClosed();
+
         return this.fileOperations.getLength();
     }
 
     public void setLength(final long newLength) throws IOException
     {
+        this.assertNotClosed();
+
         final long oldLength = this.getLength();
         this.fileOperations.setLength(newLength);
         if(this.filePointer > newLength)
@@ -187,11 +192,15 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
 
     public long getFilePointer() throws IOException
     {
+        this.assertNotClosed();
+
         return this.filePointer;
     }
 
     public void setFilePointer(final long pos) throws IOException
     {
+        this.assertNotClosed();
+
         this.filePointer = pos;
     }
 
@@ -214,6 +223,8 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
         {
             throw new IndexOutOfBoundsException(Integer.toString(off + len));
         }
+
+        this.assertNotClosed();
 
         int read = FileOperations.EOF;
 
@@ -272,6 +283,8 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
             throw new IndexOutOfBoundsException(Integer.toString(off + len));
         }
 
+        this.assertNotClosed();
+
         if(this.cachePosition != NO_CACHEPOSITION &&
             this.filePointer >= this.cachePosition &&
             this.filePointer < this.cachePosition + this.cacheLength)
@@ -296,14 +309,35 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
 
     public void read(final OutputStream out) throws IOException
     {
+        this.assertNotClosed();
+
         this.fileOperations.read(out);
         this.filePointer = this.fileOperations.getFilePointer();
     }
 
     public void write(final InputStream in) throws IOException
     {
+        this.assertNotClosed();
+
         this.fileOperations.write(in);
         this.filePointer = this.fileOperations.getFilePointer();
+    }
+
+    /**
+     * {@inheritDoc}
+     * Flushes the cache and closes the {@code FileOperations} implementation
+     * backing the instance.
+     *
+     * @throws IOException if closing the {@code FileOperations} implementation
+     * backing the instance fails or if the instance already is closed.
+     */
+    public void close() throws IOException
+    {
+        this.assertNotClosed();
+
+        this.flush();
+        this.getFileOperations().close();
+        this.closed = true;
     }
 
     //----------------------------------------------------------FileOperations--
@@ -316,6 +350,8 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      */
     public void flush() throws IOException
     {
+        this.assertNotClosed();
+
         if(this.fileOperations instanceof FlushableFileOperations)
         {
             ((FlushableFileOperations) this.fileOperations).flush();
@@ -340,6 +376,9 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
 
     /** File pointer value. */
     private long filePointer;
+
+    /** Flags the instance as beeing closed. */
+    private boolean closed;
 
     /**
      * Creates a new {@code ReadAheadFileOperations} instance taking the
@@ -378,6 +417,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      * @param cacheSize the number of bytes to read-ahead.
      *
      * @throws NullPointerException if {@code fileOperations} is {@code null}.
+     * @throws PropertyException if {@code cacheSize} is negative or zero.
      * @throws IOException if reading fails.
      */
     public ReadAheadFileOperations(final FileOperations fileOperations,
@@ -402,6 +442,18 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     }
 
     /**
+     * Gets the {@code FileOperations} implementation operations are performed
+     * with.
+     *
+     * @return the {@code FileOperations} implementation operations are
+     * performed with.
+     */
+    public FileOperations getFileOperations()
+    {
+        return this.fileOperations;
+    }
+
+    /**
      * Checks configured properties.
      *
      * @throws PropertyException for illegal property values.
@@ -412,6 +464,21 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
         {
             throw new PropertyException("cacheSize",
                 Integer.toString(this.getCacheSize()));
+
+        }
+    }
+
+    /**
+     * Checks that the instance is not closed.
+     *
+     * @throws IOException if the instance is closed.
+     */
+    private void assertNotClosed() throws IOException
+    {
+        if(this.closed)
+        {
+            throw new IOException(ReadAheadFileOperationsBundle.
+                getAlreadyClosedText(Locale.getDefault()));
 
         }
     }

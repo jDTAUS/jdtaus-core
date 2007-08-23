@@ -74,6 +74,13 @@
                            jdtaus:version="${pom.version}"
                            jdtaus:final="true">
       
+      <jdtaus:dependencies>
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
+                           jdtaus:name="MemoryManager"
+                           jdtaus:bound="true"/>
+        
+      </jdtaus:dependencies>
+
       <jdtaus:properties>
         <jdtaus:property jdtaus:name="bufferSize"
                          jdtaus:type="int"
@@ -143,7 +150,8 @@
       <jdtaus:properties>
         <jdtaus:property jdtaus:name="blockSize"
                          jdtaus:type="int"
-                         jdtaus:value="2097152"/>
+                         jdtaus:value="2097152"
+                         jdtaus:api="true"/>
         
         <jdtaus:property jdtaus:name="cacheSize"
                          jdtaus:type="int"
@@ -167,7 +175,8 @@
       <jdtaus:properties>
         <jdtaus:property jdtaus:name="cacheSize"
                          jdtaus:type="int"
-                         jdtaus:value="16384"/>
+                         jdtaus:value="16384"
+                         jdtaus:api="true"/>
         
       </jdtaus:properties>
     </jdtaus:implementation>
@@ -195,11 +204,13 @@
       <jdtaus:properties>
         <jdtaus:property jdtaus:name="millisToDecideToPopup"
                          jdtaus:type="int"
-                         jdtaus:value="500"/>
+                         jdtaus:value="500"
+                         jdtaus:api="true"/>
         
         <jdtaus:property jdtaus:name="millisToPopup"
                          jdtaus:type="int"
-                         jdtaus:value="2000"/>
+                         jdtaus:value="2000"
+                         jdtaus:api="true"/>
         
       </jdtaus:properties>
     </jdtaus:implementation>
@@ -224,6 +235,13 @@
           </jdtaus:properties>
         </jdtaus:dependency>
       </jdtaus:dependencies>
+      <jdtaus:properties>
+        <jdtaus:property jdtaus:name="maximumMessages"
+                         jdtaus:type="int"
+                         jdtaus:value="25"
+                         jdtaus:api="true"/>
+        
+      </jdtaus:properties>
     </jdtaus:implementation>
     
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.monitor.util.TaskDurationLogger"
@@ -253,6 +271,28 @@
                          jdtaus:api="true"/>
         
       </jdtaus:properties>
+    </jdtaus:implementation>
+    
+    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.text.util.MessageLogger"
+                           jdtaus:name="MessageLogger"
+                           jdtaus:vendor="${pom.organization.name}"
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
+      
+      <jdtaus:dependencies>
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
+                           jdtaus:name="Logger"
+                           jdtaus:bound="true">
+          
+          <jdtaus:properties>
+            <jdtaus:property jdtaus:name="name"
+                             jdtaus:type="java.lang.String"
+                             jdtaus:value="org.jdtaus.core.text.util.MessageLogger"
+                             jdtaus:api="true"/>
+            
+          </jdtaus:properties>
+        </jdtaus:dependency>
+      </jdtaus:dependencies>
     </jdtaus:implementation>
   </jdtaus:implementations>
 </jdtaus:module>

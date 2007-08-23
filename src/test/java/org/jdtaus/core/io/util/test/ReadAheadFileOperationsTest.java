@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import junit.framework.Assert;
 import org.jdtaus.core.io.FileOperations;
-import org.jdtaus.core.io.it.FileOperationsTest;
-import org.jdtaus.core.io.util.MemoryFileOperations;
 import org.jdtaus.core.io.util.ReadAheadFileOperations;
 
 /**

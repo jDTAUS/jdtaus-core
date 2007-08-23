@@ -21,6 +21,7 @@ package org.jdtaus.core.io.util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Locale;
 import javax.swing.event.EventListenerList;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.container.ContextFactory;
@@ -47,9 +48,14 @@ import org.jdtaus.core.monitor.spi.TaskMonitor;
  * {@code CoalescingFileOperations} which are generalized replacements for any
  * cacheing formerly performed by this implementation. Since this class does
  * not implement any cacheing anymore, the {@link #flush()} method will write
- * out pending changes of any underlying {@code FlushableFileOperations}
+ * out pending changes of an underlying {@code FlushableFileOperations}
  * implementation, if any, by calling the corresponding {@code flush()} method
  * of that {@code FlushableFileOperations} instance.</p>
+ * <p>This implementation uses task monitoring for the {@code deleteBlocks()}
+ * and {@code insertBlocks()} methods. Task monitoring is controlled by
+ * property {@code monitoringThreshold} holding the number of bytes which
+ * need to minimally be copied to enable any task monitoring during the
+ * copy operation (defaults to 5242880 - 5MB).</p>
  *
  * <p><b>Note:</b><br>
  * This implementation is not thread-safe and concurrent changes to the
@@ -271,6 +277,8 @@ public final class StructuredFileOperations implements StructuredFile
 
     public long getBlockCount() throws IOException
     {
+        this.assertNotClosed();
+
         if(this.cachedBlockCount == NO_CACHED_BLOCKCOUNT)
         {
             this.cachedBlockCount =
@@ -298,6 +306,8 @@ public final class StructuredFileOperations implements StructuredFile
         {
             throw new ArrayIndexOutOfBoundsException((int) count);
         }
+
+        this.assertNotClosed();
 
         this.deleteBlocksImpl(index, count, blockCount);
     }
@@ -415,6 +425,8 @@ public final class StructuredFileOperations implements StructuredFile
             throw new ArrayIndexOutOfBoundsException((int) count);
         }
 
+        this.assertNotClosed();
+
         this.insertBlocksImpl(index, count, blockCount);
     }
 
@@ -524,6 +536,7 @@ public final class StructuredFileOperations implements StructuredFile
         final int index, final int length) throws IOException
     {
         this.assertValidArguments(block, off, buf, index, length);
+        this.assertNotClosed();
 
         int totalRead = 0;
         int toRead = length;
@@ -556,11 +569,29 @@ public final class StructuredFileOperations implements StructuredFile
         final int index, final int length) throws IOException
     {
         this.assertValidArguments(block, off, buf, index, length);
+        this.assertNotClosed();
 
         this.getFileOperations().setFilePointer(
             block * this.getBlockSize() + off);
 
         this.getFileOperations().write(buf, index, length);
+    }
+
+    /**
+     * {@inheritDoc}
+     * Flushes the instance and closes the {@code FileOperations} implementation
+     * backing the instance.
+     *
+     * @throws IOException if closing the {@code FileOperations} implementation
+     * backing the instance fails, or if the instance already is closed.
+     */
+    public void close() throws IOException
+    {
+        this.assertNotClosed();
+
+        this.flush();
+        this.getFileOperations().close();
+        this.closed = true;
     }
 
     public void addStructuredFileListener(
@@ -588,16 +619,22 @@ public final class StructuredFileOperations implements StructuredFile
     /** {@code FileOperations} backing the instance. */
     private FileOperations fileOperations;
 
+    /** Flags the instance as beeing closed. */
+    private boolean closed;
+
     /**
-     * Creates a new {@code StructuredFileOperations} instance.
+     * Creates a new {@code StructuredFileOperations} instance taking the size
+     * of one block in byte and the {@code FileOperations} operations are to be
+     * performed with.
      *
      * @param blockSize Number of bytes per block.
      * @param fileOperations {@code FileOperations} implementation to operate
      * on.
      *
      * @throws NullPointerException if {@code fileOperations} is {@code null}.
-     * @throws IllegalArgumentException if {@code blockSize} cannot be used with
-     * {@code fileOperations}.
+     * @throws PropertyException if {@code blockSize} is negative or zero.
+     * @throws IllegalArgumentException if {@code blockSize} is incompatible
+     * with the length of {@code fileOperations}.
      * @throws IOException if getting the length from the {@code fileOperations}
      * fails.
      */
@@ -607,6 +644,7 @@ public final class StructuredFileOperations implements StructuredFile
         super();
 
         this.initializeProperties(META.getProperties());
+        this._blockSize = blockSize;
         this.assertValidProperties();
 
         if(fileOperations == null)
@@ -614,7 +652,53 @@ public final class StructuredFileOperations implements StructuredFile
             throw new NullPointerException("fileOperations");
         }
 
+        this.fileOperations = fileOperations;
+
+        final int minBufferedBlocks = this.getMinBufferedBlocks();
+
+        this.minimumBuffer = this.getMemoryManager().
+            allocateBytes(minBufferedBlocks * blockSize);
+
+        this.assertValidFileLength();
+
+        this.decimalBlockSize = new BigDecimal(blockSize);
+    }
+
+    /**
+     * Creates a new {@code StructuredFileOperations} instance taking the size
+     * of one block in byte, task monitoring configuration and the
+     * {@code FileOperations} operations are to be performed with.
+     *
+     * @param blockSize Number of bytes per block.
+     * @param monitoringThreshold the mininum number of bytes to copy to start
+     * any task monitoring.
+     * @param fileOperations {@code FileOperations} implementation to operate
+     * on.
+     *
+     * @throws NullPointerException if {@code fileOperations} is {@code null}.
+     * @throws PropertyException if either {@code blockSize} or
+     * {@code monitoringTeshold} is negative or zero.
+     * @throws IllegalArgumentException if {@code blockSize} is incompatible
+     * with the length of {@code fileOperations}.
+     * @throws IOException if getting the length from the {@code fileOperations}
+     * fails.
+     */
+    public StructuredFileOperations(final int blockSize,
+        final int monitoringThreshold, final FileOperations fileOperations)
+        throws IOException
+    {
+        super();
+
+        this.initializeProperties(META.getProperties());
         this._blockSize = blockSize;
+        this._monitoringThreshold = monitoringThreshold;
+        this.assertValidProperties();
+
+        if(fileOperations == null)
+        {
+            throw new NullPointerException("fileOperations");
+        }
+
         this.fileOperations = fileOperations;
 
         final int minBufferedBlocks = this.getMinBufferedBlocks();
@@ -647,6 +731,8 @@ public final class StructuredFileOperations implements StructuredFile
      */
     public void flush() throws IOException
     {
+        this.assertNotClosed();
+
         if(this.getFileOperations() instanceof FlushableFileOperations)
         {
             ((FlushableFileOperations) this.getFileOperations()).flush();
@@ -750,6 +836,21 @@ public final class StructuredFileOperations implements StructuredFile
         {
             throw new PropertyException("monitoringThreshold",
                 Integer.toString(monitoringThreshold));
+
+        }
+    }
+
+    /**
+     * Checks that the instance is not closed.
+     *
+     * @throws IOException if the instance is closed.
+     */
+    private void assertNotClosed() throws IOException
+    {
+        if(this.closed)
+        {
+            throw new IOException(StructuredFileOperationsBundle.
+                getAlreadyClosedText(Locale.getDefault()));
 
         }
     }
