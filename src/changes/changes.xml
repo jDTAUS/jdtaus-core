@@ -17,5 +17,14 @@
       </action>
     </release>
 
+    <release version="1.1.2" date="2007-11-03"
+             description="Maintenance release.">
+
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated the <code>generate-bundles</code> goal adding resource validation
+      code into generated bundle classes.]]>
+      </action>
+    </release>
+
   </body>
 </document>

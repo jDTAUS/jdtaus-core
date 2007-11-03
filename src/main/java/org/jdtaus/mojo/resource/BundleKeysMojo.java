@@ -430,7 +430,20 @@ public final class BundleKeysMojo extends AbstractMojo
                 buf.append("import java.util.ResourceBundle;\n");
                 buf.append("import java.text.MessageFormat;\n");
                 buf.append("\nabstract class ").append(bundleName).
-                    append(this.getNameSuffix()).append("{ \n\n");
+                    append(this.getNameSuffix()).append("{\n\n");
+
+                buf.append("private static final Map cache;\n\n");
+
+                buf.append("static\n{\n    cache = new HashMap();\n");
+                for(Enumeration e = bundle.getKeys(); e.hasMoreElements();)
+                {
+                    key = (String) e.nextElement();
+                    buf.append("    ").
+                        append(BundleKeysMojo.getStringGetterNameForKey(key)).
+                        append("(Locale.getDefault());\n");
+
+                }
+                buf.append("}\n\n");
 
                 for(Enumeration e = bundle.getKeys(); e.hasMoreElements();)
                 {
@@ -470,9 +483,6 @@ public final class BundleKeysMojo extends AbstractMojo
                         append(key).append("\", locale), locale);\n}\n\n");
 
                 }
-
-                buf.append("private static final Map cache = ").
-                    append("new HashMap();\n\n");
 
                 buf.append("private static String getMessage(").
                     append("final String key, Locale locale) {\n");
