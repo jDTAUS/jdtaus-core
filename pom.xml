@@ -3,7 +3,7 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.1</version>
+    <version>1.2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core</groupId>
@@ -14,7 +14,7 @@
   <scm>
     <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x</connection>
     <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x</url>
+    <url>http://jdtaus.svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x</url>
   </scm>
   <build>
     <resources>
