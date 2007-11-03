@@ -1,11 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus</groupId>
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.1</version>
+  <version>1.2-SNAPSHOT</version>
   <description><![CDATA[
   jDTAUS Core provides a common application programming interface for jDTAUS
   integration. This is the parent module for the core artifacts.]]>
@@ -70,7 +72,7 @@
   <scm>
     <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-1.1</connection>
     <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-1.1</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/tags/jdtaus-core-1.1</url>
+    <url>http://jdtaus.svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/tags/jdtaus-core-1.2</url>
   </scm>
   <organization>
     <name>jDTAUS</name>
@@ -94,6 +96,7 @@
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <configuration>
+            <inputEncoding>UTF-8</inputEncoding>
             <outputEncoding>UTF-8</outputEncoding>
             <locales>en</locales>
           </configuration>
@@ -113,7 +116,7 @@
           <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags</tagBase>
         </configuration>
       </plugin>
-
+      
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <executions>
@@ -132,7 +135,7 @@
           </execution>
         </executions>
       </plugin>
-
+      
       <plugin>
         <artifactId>maven-gpg-plugin</artifactId>
         <executions>
@@ -149,7 +152,7 @@
           </execution>
         </executions>
       </plugin>
-
+      
     </plugins>
   </build>
   <modules>
@@ -166,6 +169,7 @@
     <module>jdtaus-core-commons-logging</module>
     <module>jdtaus-core-log4j-logging</module>
     <module>jdtaus-core-task-monitor</module>
+    <module>jdtaus-core-jdk14-executor</module>
     <module>jdtaus-core-messages</module>
     <module>jdtaus-core-utilities</module>
   </modules>
@@ -181,7 +185,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>[3.8, 3.8.1]</version>
+        <version>[3.8, 3.8.2]</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -193,7 +197,7 @@
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
-        <version>1.2.14</version>
+        <version>1.2.15</version>
         <scope>compile</scope>
       </dependency>
       <dependency>

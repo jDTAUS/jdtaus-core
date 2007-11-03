@@ -60,9 +60,14 @@
       </subsection>
       <subsection name="Runtime Environment Adapters">
         <p>
-          Currently only the
-          <a href="jdtaus-core-memory-manager/project-summary.html">reference
-          implementation</a> is available.
+          Currently only the reference implementation is available which is
+          split into two artifacts.
+          The <a href="jdtaus-core-memory-manager/project-summary.html">
+          jdtaus-core-memory-manager</a> artifact provides the
+          <code>MemoryManager</code> reference implementation and the
+          <a href="jdtaus-core-jdk14-executor/project-summary.html">
+          jdtaus-core-jdk14-executor</a> artifact provides the
+          <code>Executor</code> reference implementation.
         </p>
       </subsection>
       <subsection name="Localization Adapters">
