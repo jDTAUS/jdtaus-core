@@ -361,7 +361,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                 }
 
                 if(nodes[i].cacheIndex != Node.NO_CACHEINDEX)
-                { // Nodes is associated with cache memory; cache is used.
+                { // Node is associated with cache memory; cache is used.
 
                     // Use the current file pointer as the starting index.
                     final long delta = nodes[i].cacheIndex + (this.filePointer -
@@ -443,7 +443,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                 "Unexpected cache state.";
 
             if(nodes[i].cacheIndex != Node.NO_CACHEINDEX)
-            { // Nodes is associated with cache memory; cache is used.
+            { // Node is associated with cache memory; cache is used.
 
                 // Use the current file pointer as the starting index.
                 final long delta = nodes[i].cacheIndex + (this.filePointer -

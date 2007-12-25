@@ -32,8 +32,17 @@
                jdtaus:name="${pom.name}"
                jdtaus:description="${pom.description}"
                jdtaus:version="1.1">
-  
-  <jdtaus:implementations>    
+
+  <jdtaus:specifications>
+    <jdtaus:specification jdtaus:identifier="org.jdtaus.core.lang.util.ExceptionMessageResolver"
+                          jdtaus:description="${pom.description}"
+                          jdtaus:vendor="${pom.organization.name}"
+                          jdtaus:version="${pom.version}"
+                          jdtaus:singleton="true"
+                          jdtaus:multiplicity="many"/>
+
+  </jdtaus:specifications>
+  <jdtaus:implementations>
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.io.util.MemoryFileOperations"
                            jdtaus:name="MemoryFileOperations"
                            jdtaus:vendor="${pom.organization.name}"
@@ -294,5 +303,56 @@
         </jdtaus:dependency>
       </jdtaus:dependencies>
     </jdtaus:implementation>
+
+    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.swing.util.BlockingGlassPane"
+                           jdtaus:name="BlockingGlassPane"
+                           jdtaus:vendor="${pom.organization.name}"
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
+
+      <jdtaus:properties>
+        <jdtaus:property jdtaus:name="cursorType"
+                         jdtaus:type="int"
+                         jdtaus:value="3"/> <!-- Cursor.WAIT_CURSOR -->
+
+      </jdtaus:properties>
+    </jdtaus:implementation>
+
+    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.lang.util.ExceptionMessageProducer"
+                           jdtaus:name="ExceptionMessageProducer"
+                           jdtaus:vendor="${pom.organization.name}"
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
+      
+      <jdtaus:dependencies>
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.text.spi.ApplicationLogger"
+                           jdtaus:name="ApplicationLogger"
+                           jdtaus:bound="true"/>
+        
+      </jdtaus:dependencies>
+    </jdtaus:implementation>
+
+    <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.lang.util.ExceptionLogger"
+                           jdtaus:name="ExceptionLogger"
+                           jdtaus:vendor="${pom.organization.name}"
+                           jdtaus:version="${pom.version}"
+                           jdtaus:final="true">
+      
+      <jdtaus:dependencies>
+        <jdtaus:dependency jdtaus:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
+                           jdtaus:name="Logger"
+                           jdtaus:bound="true">
+          
+          <jdtaus:properties>
+            <jdtaus:property jdtaus:name="name"
+                             jdtaus:type="java.lang.String"
+                             jdtaus:value="org.jdtaus.core.lang.util.ExceptionLogger"
+                             jdtaus:api="true"/>
+            
+          </jdtaus:properties>
+        </jdtaus:dependency>
+      </jdtaus:dependencies>
+    </jdtaus:implementation>
+
   </jdtaus:implementations>
 </jdtaus:module>
