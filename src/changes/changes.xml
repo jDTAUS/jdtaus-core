@@ -6,10 +6,10 @@
   <body>
     <release version="1.0" date="2007-06-01"
              description="First stable release."/>
-    
+
     <release version="1.1" date="2007-08-01"
              description="Feature enhancement.">
-      
+
       <action dev="schulte2005" type="update"><![CDATA[
       Added new goal <code>verify-model</code>. Added configuration parameter
       <code>targetEditor</code> to goal <code>generate-container</code>.]]>
@@ -18,7 +18,7 @@
 
     <release version="1.2" date="2007-08-24"
              description="Feature enhancement.">
-      
+
       <action dev="schulte2005" type="update"><![CDATA[
       Added support for test modules. Added mojo configuration parameters
       <code>testModuleName</code> and <code>mode</code> to goal
@@ -27,6 +27,17 @@
       <action dev="schulte2005" type="fix"><![CDATA[
       Added missing test for consistent use of <code>final</code> modifiers
       to goal <code>verify-model</code>.]]>
+      </action>
+    </release>
+
+    <release version="2.0" date="2008-03-10"
+             description="Feature enhancements.">
+
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated to generate fields with names according to the property name or
+      dependency name instead of numbering the various fields according to the
+      order specified in the model. <b>Note:</b> Generated code is not
+      compatible with previous versions of the plugin.]]>
       </action>
     </release>
 

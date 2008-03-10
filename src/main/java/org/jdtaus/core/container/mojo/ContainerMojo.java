@@ -155,8 +155,9 @@ public class ContainerMojo extends AbstractSourceMojo
      */
     protected final Module getModule()
     {
-        return this.moduleName != null ? ModelFactory.newModel().getModules().
-            getModule(this.moduleName) : null;
+        return this.moduleName != null
+            ? ModelFactory.newModel().getModules().getModule( this.moduleName )
+            : null;
 
     }
 
@@ -170,18 +171,19 @@ public class ContainerMojo extends AbstractSourceMojo
     {
         Module module = null;
 
-        if(this.testModuleName != null)
+        if ( this.testModuleName != null )
         {
             try
             {
                 module = ModelFactory.newModel().getModules().
-                    getModule(this.testModuleName);
+                    getModule( this.testModuleName );
 
             }
-            catch(MissingModuleException e)
+            catch ( MissingModuleException e )
             {
-                this.getLog().info(ContainerMojoBundle.
-                    getSkippingTestModuleText(Locale.getDefault()));
+                this.getLog().info( ContainerMojoBundle.getInstance().
+                                    getSkippingTestModuleText(
+                                    Locale.getDefault() ) );
 
             }
         }
@@ -214,60 +216,60 @@ public class ContainerMojo extends AbstractSourceMojo
 
         try
         {
-            if(this.mode.equalsIgnoreCase("main"))
+            if ( this.mode.equalsIgnoreCase( "main" ) )
             {
                 // All runtime dependencies are available so all required
                 // modules should also be available.
                 Thread.currentThread().setContextClassLoader(
-                    this.getRuntimeClassLoader());
+                    this.getRuntimeClassLoader() );
 
                 final Module mod = this.getModule();
 
-                if(mod != null)
+                if ( mod != null )
                 {
                     specs = mod.getSpecifications();
                     impls = mod.getImplementations();
 
-                    for(i = specs.size() - 1; i >= 0; i--)
+                    for ( i = specs.size() - 1; i >= 0; i-- )
                     {
                         this.generateSpecification(
                             this.getMavenProject().getCompileSourceRoots(),
-                            specs.getSpecification(i));
+                            specs.getSpecification( i ) );
                     }
 
-                    for(i = impls.size() - 1; i >= 0; i--)
+                    for ( i = impls.size() - 1; i >= 0; i-- )
                     {
                         this.generateImplementation(
                             this.getMavenProject().getCompileSourceRoots(),
-                            impls.getImplementation(i));
+                            impls.getImplementation( i ) );
 
                     }
                 }
             }
-            else if(this.mode.equalsIgnoreCase("test"))
+            else if ( this.mode.equalsIgnoreCase( "test" ) )
             {
                 Thread.currentThread().setContextClassLoader(
-                    this.getTestClassLoader());
+                    this.getTestClassLoader() );
 
                 final Module testMod = this.getTestModule();
-                if(testMod != null)
+                if ( testMod != null )
                 {
                     specs = testMod.getSpecifications();
                     impls = testMod.getImplementations();
 
-                    for(i = specs.size() - 1; i >= 0; i--)
+                    for ( i = specs.size() - 1; i >= 0; i-- )
                     {
                         this.generateSpecification(
                             this.getMavenProject().getTestCompileSourceRoots(),
-                            specs.getSpecification(i));
+                            specs.getSpecification( i ) );
 
                     }
 
-                    for(i = impls.size() - 1; i >= 0; i--)
+                    for ( i = impls.size() - 1; i >= 0; i-- )
                     {
                         this.generateImplementation(
                             this.getMavenProject().getTestCompileSourceRoots(),
-                            impls.getImplementation(i));
+                            impls.getImplementation( i ) );
 
                     }
                 }
@@ -275,7 +277,7 @@ public class ContainerMojo extends AbstractSourceMojo
         }
         finally
         {
-            Thread.currentThread().setContextClassLoader(mavenLoader);
+            Thread.currentThread().setContextClassLoader( mavenLoader );
         }
     }
 
@@ -286,77 +288,81 @@ public class ContainerMojo extends AbstractSourceMojo
     public class SpecificationEditor implements
         AbstractSourceMojo.SourceEditor
     {
+
         private boolean editing = false;
+
         private boolean modified = false;
+
         private final String fileName;
+
         private final Specification spec;
 
-        public SpecificationEditor(final String fileName,
-            final Specification spec)
+        public SpecificationEditor( final String fileName,
+                                     final Specification spec )
         {
-            if(fileName == null)
+            if ( fileName == null )
             {
-                throw new NullPointerException("fileName");
+                throw new NullPointerException( "fileName" );
             }
-            if(spec == null)
+            if ( spec == null )
             {
-                throw new NullPointerException("spec");
+                throw new NullPointerException( "spec" );
             }
 
             this.fileName = fileName;
             this.spec = spec;
         }
 
-        public String editLine(final String line) throws MojoFailureException
+        public String editLine( final String line ) throws MojoFailureException
         {
             String replacement = null; // Replace with nothing.
 
-            if(line == null && this.editing)
+            if ( line == null && this.editing )
             {
-                final MessageFormat fmt = ContainerMojoBundle.
-                    getUnexpectedEndOfInputMessage(getLocale());
+                final MessageFormat fmt = ContainerMojoBundle.getInstance().
+                    getUnexpectedEndOfInputMessage( getLocale() );
 
                 throw new MojoFailureException(
-                    fmt.format(new Object[] { this.fileName }));
+                    fmt.format( new Object[] { this.fileName } ) );
 
             }
 
-            if(line != null &&
-                specificationsStartingMarker.equals(line.trim()))
+            if ( line != null &&
+                specificationsStartingMarker.equals( line.trim() ) )
             {
-                final StringBuffer buf = new StringBuffer(1024);
+                final StringBuffer buf = new StringBuffer( 1024 );
                 final String specType =
-                    ContainerMojo.getTypeFromClassName(spec.getIdentifier());
+                    ContainerMojo.getTypeFromClassName( spec.getIdentifier() );
 
-                final MessageFormat warning = ContainerMojoBundle.
-                    getGeneratorWarningMessage(getLocale());
+                final MessageFormat warning = ContainerMojoBundle.getInstance().
+                    getGeneratorWarningMessage( getLocale() );
 
                 this.editing = true;
                 this.modified = true;
 
-                buf.append(line).append("\n\n");
-                indent(buf);
-                buf.append(warning.format(null));
+                buf.append( line ).append( "\n\n" );
+                indent( buf );
+                buf.append( warning.format( null ) );
 
-                buf.append("\n\n");
+                buf.append( "\n\n" );
 
                 // Generate specification code.
-                indent(buf);
-                buf.append(ContainerMojoBundle.
-                    getSpecificationMetaDataCommentText(getLocale())).
-                    append('\n');
+                indent( buf );
+                buf.append( ContainerMojoBundle.getInstance().
+                            getSpecificationMetaDataCommentText(
+                            getLocale() ) ).append( '\n' );
 
-                indent(buf);
-                buf.append("public static final String SPEC = ").
-                    append(specType).append(".class.getName();\n");
+                indent( buf );
+                buf.append( "public static final String SPEC = " ).
+                    append( specType ).append( ".class.getName();\n" );
 
                 replacement = buf.toString();
             }
             else
             {
-                if(this.editing)
+                if ( this.editing )
                 {
-                    if(specificationsEndingMarker.equals(line.trim()))
+                    if ( specificationsEndingMarker.equals( line.trim() ) )
                     {
                         this.editing = false;
                         replacement = line;
@@ -375,97 +381,102 @@ public class ContainerMojo extends AbstractSourceMojo
         {
             return this.modified;
         }
+
     }
 
     /** Adds the IMPL constant to implementations. */
     public class ImplementationEditor implements
         AbstractSourceMojo.SourceEditor
     {
+
         private boolean editing = false;
+
         private boolean modified = false;
+
         private final String fileName;
+
         private final Implementation impl;
 
-        public ImplementationEditor(final String fileName,
-            final Implementation impl)
+        public ImplementationEditor( final String fileName,
+                                      final Implementation impl )
         {
-            if(fileName == null)
+            if ( fileName == null )
             {
-                throw new NullPointerException("fileName");
+                throw new NullPointerException( "fileName" );
             }
-            if(impl == null)
+            if ( impl == null )
             {
-                throw new NullPointerException("impl");
+                throw new NullPointerException( "impl" );
             }
 
             this.fileName = fileName;
             this.impl = impl;
         }
 
-        public String editLine(final String line) throws MojoFailureException
+        public String editLine( final String line ) throws MojoFailureException
         {
             String replacement = null; // Replace with nothing.
 
-            if(line == null && this.editing)
+            if ( line == null && this.editing )
             {
-                final MessageFormat fmt = ContainerMojoBundle.
-                    getUnexpectedEndOfInputMessage(getLocale());
+                final MessageFormat fmt = ContainerMojoBundle.getInstance().
+                    getUnexpectedEndOfInputMessage( getLocale() );
 
                 throw new MojoFailureException(
-                    fmt.format(new Object[] { this.fileName }));
+                    fmt.format( new Object[] { this.fileName } ) );
 
             }
 
-            if(line != null &&
-                implementationsStartingMarker.equals(line.trim()))
+            if ( line != null &&
+                implementationsStartingMarker.equals( line.trim() ) )
             {
                 // Skip all input up to the ending marker.
                 this.editing = true;
                 this.modified = true;
-                final StringBuffer buf = new StringBuffer(1024);
+                final StringBuffer buf = new StringBuffer( 1024 );
                 final String implType = ContainerMojo.getTypeFromClassName(
-                    this.impl.getIdentifier());
+                    this.impl.getIdentifier() );
 
-                buf.append(line).append("\n\n");
-                if(!getTargetEditor().equals("none"))
+                buf.append( line ).append( "\n\n" );
+                if ( !getTargetEditor().equals( "none" ) )
                 {
-                    buf.append(getOpeningFoldingMarker("Implementation")).
-                        append('\n');
+                    buf.append( getOpeningFoldingMarker( "Implementation" ) ).
+                        append( '\n' );
 
                 }
 
-                final MessageFormat warning = ContainerMojoBundle.
-                    getGeneratorWarningMessage(getLocale());
+                final MessageFormat warning = ContainerMojoBundle.getInstance().
+                    getGeneratorWarningMessage( getLocale() );
 
-                indent(buf);
-                buf.append(warning.format(null));
-                buf.append("\n\n");
+                indent( buf );
+                buf.append( warning.format( null ) );
+                buf.append( "\n\n" );
 
                 // Generate implementation name constant.
                 //if(this.impl.getProperties().size() > 0) {
-                indent(buf);
-                buf.append(ContainerMojoBundle.
-                    getImplementationMetaDataCommentText(getLocale())).
-                    append('\n');
+                indent( buf );
+                buf.append( ContainerMojoBundle.getInstance().
+                            getImplementationMetaDataCommentText(
+                            getLocale() ) ).append( '\n' );
 
-                indent(buf);
-                buf.append("private static final Implementation META =\n");
+                indent( buf );
+                buf.append( "private static final Implementation META =\n" );
 
-                indent(buf);
-                indent(buf);
-                buf.append("ModelFactory.getModel().getModules().\n");
+                indent( buf );
+                indent( buf );
+                buf.append( "ModelFactory.getModel().getModules().\n" );
 
-                indent(buf);
-                indent(buf);
-                buf.append("getImplementation(").
-                    append(implType).append(".class.getName());\n");
+                indent( buf );
+                indent( buf );
+                buf.append( "getImplementation(" ).
+                    append( implType ).append( ".class.getName());\n" );
 
                 //}
 
-                if(!getTargetEditor().equals("none"))
+                if ( !getTargetEditor().equals( "none" ) )
                 {
-                    buf.append(getClosingFoldingMarker("Implementation")).
-                        append('\n');
+                    buf.append( getClosingFoldingMarker( "Implementation" ) ).
+                        append( '\n' );
 
                 }
 
@@ -473,9 +484,9 @@ public class ContainerMojo extends AbstractSourceMojo
             }
             else
             {
-                if(this.editing)
+                if ( this.editing )
                 {
-                    if(implementationsEndingMarker.equals(line.trim()))
+                    if ( implementationsEndingMarker.equals( line.trim() ) )
                     {
                         this.editing = false;
                         replacement = line;
@@ -494,27 +505,33 @@ public class ContainerMojo extends AbstractSourceMojo
         {
             return this.modified;
         }
+
     }
 
     /** Adds dependency getters to an implementation. */
     public class DependencyEditor implements AbstractSourceMojo.SourceEditor
     {
+
         private boolean editing = false;
+
         private boolean modified = false;
+
         private final String fileName;
+
         private final Implementation impl;
+
         private final boolean markersNeeded;
 
-        public DependencyEditor(final String fileName,
-            final Implementation impl)
+        public DependencyEditor( final String fileName,
+                                  final Implementation impl )
         {
-            if(fileName == null)
+            if ( fileName == null )
             {
-                throw new NullPointerException("fileName");
+                throw new NullPointerException( "fileName" );
             }
-            if(impl == null)
+            if ( impl == null )
             {
-                throw new NullPointerException("impl");
+                throw new NullPointerException( "impl" );
             }
 
             this.fileName = fileName;
@@ -522,7 +539,7 @@ public class ContainerMojo extends AbstractSourceMojo
             this.markersNeeded = impl.getDependencies().size() > 0;
         }
 
-        public String editLine(final String line) throws MojoFailureException
+        public String editLine( final String line ) throws MojoFailureException
         {
             int i;
             Dependency dep;
@@ -532,75 +549,77 @@ public class ContainerMojo extends AbstractSourceMojo
             String str;
             char[] c;
             String replacement = null; // Replace with nothing.
-            if(line == null && this.editing)
+            if ( line == null && this.editing )
             {
-                final MessageFormat fmt = ContainerMojoBundle.
-                    getUnexpectedEndOfInputMessage(getLocale());
+                final MessageFormat fmt = ContainerMojoBundle.getInstance().
+                    getUnexpectedEndOfInputMessage( getLocale() );
 
                 throw new MojoFailureException(
-                    fmt.format(new Object[] { this.fileName }));
+                    fmt.format( new Object[] { this.fileName } ) );
 
             }
 
-            if(line != null && dependenciesStartingMarker.equals(line.trim()))
+            if ( line != null &&
+                dependenciesStartingMarker.equals( line.trim() ) )
             {
                 // Skip all input up to the ending marker.
                 this.editing = true;
-                final StringBuffer buf = new StringBuffer(1024);
-                buf.append(line).append("\n\n");
-                if(!getTargetEditor().equals("none"))
+                final StringBuffer buf = new StringBuffer( 1024 );
+                buf.append( line ).append( "\n\n" );
+                if ( !getTargetEditor().equals( "none" ) )
                 {
-                    buf.append(getOpeningFoldingMarker("Dependencies")).
-                        append('\n');
+                    buf.append( getOpeningFoldingMarker( "Dependencies" ) ).
+                        append( '\n' );
 
                 }
 
-                String getterTemplate = ContainerMojoBundle.
-                    getDependencyGetterText(getLocale());
+                String getterTemplate = ContainerMojoBundle.getInstance().
+                    getDependencyGetterText( getLocale() );
 
-                final String implType = ContainerMojo.
-                    getTypeFromClassName(this.impl.getIdentifier());
+                final String implType =
+                    ContainerMojo.getTypeFromClassName( this.impl.getIdentifier() );
 
-                getterTemplate = getterTemplate.replaceAll("\\{3\\}", implType);
+                getterTemplate =
+                    getterTemplate.replaceAll( "\\{3\\}", implType );
 
-                final MessageFormat warning = ContainerMojoBundle.
-                    getGeneratorWarningMessage(getLocale());
+                final MessageFormat warning = ContainerMojoBundle.getInstance().
+                    getGeneratorWarningMessage( getLocale() );
 
-                indent(buf);
-                buf.append(warning.format(null));
-                buf.append("\n\n");
+                indent( buf );
+                buf.append( warning.format( null ) );
+                buf.append( "\n\n" );
 
                 // Generate dependency getter.
-                if(this.isMarkersNeeded())
+                if ( this.isMarkersNeeded() )
                 {
                     this.modified = true;
                     deps = this.impl.getDependencies();
-                    for(i = deps.size() - 1; i >= 0; i--)
+                    for ( i = deps.size() - 1; i >= 0; i-- )
                     {
-                        dep = deps.getDependency(i);
+                        dep = deps.getDependency( i );
                         depName = dep.getName();
                         c = depName.toCharArray();
-                        if(Character.isLowerCase(c[0]))
+                        if ( Character.isLowerCase( c[0] ) )
                         {
-                            c[0] = Character.toUpperCase(c[0]);
+                            c[0] = Character.toUpperCase( c[0] );
                         }
-                        depName = String.valueOf(c);
+                        depName = String.valueOf( c );
 
                         depType = ContainerMojo.getTypeFromClassName(
-                            dep.getSpecification().getIdentifier());
+                            dep.getSpecification().getIdentifier() );
 
-                        str = getterTemplate.replaceAll("\\{0\\}", depName);
-                        str = str.replaceAll("\\{1\\}", depType);
-                        str = str.replaceAll("\\{2\\}", String.valueOf(i));
-                        indent(buf);
-                        buf.append(str);
+                        str = getterTemplate.replaceAll( "\\{0\\}", depName );
+                        str = str.replaceAll( "\\{1\\}", depType );
+                        str = str.replaceAll( "\\{2\\}", "d" + depName );
+                        indent( buf );
+                        buf.append( str );
                     }
                 }
 
-                if(!getTargetEditor().equals("none"))
+                if ( !getTargetEditor().equals( "none" ) )
                 {
-                    buf.append(getClosingFoldingMarker("Dependencies")).
-                        append('\n');
+                    buf.append( getClosingFoldingMarker( "Dependencies" ) ).
+                        append( '\n' );
 
                 }
 
@@ -608,9 +627,9 @@ public class ContainerMojo extends AbstractSourceMojo
             }
             else
             {
-                if(this.editing)
+                if ( this.editing )
                 {
-                    if(dependenciesEndingMarker.equals(line.trim()))
+                    if ( dependenciesEndingMarker.equals( line.trim() ) )
                     {
                         this.editing = false;
                         replacement = line;
@@ -634,27 +653,33 @@ public class ContainerMojo extends AbstractSourceMojo
         {
             return this.markersNeeded;
         }
+
     }
 
     /** Adds property getters to an implementation. */
     public class PropertyEditor implements AbstractSourceMojo.SourceEditor
     {
+
         private boolean editing = false;
+
         private boolean modified = false;
+
         private final String fileName;
+
         private final Implementation impl;
+
         private final boolean markersNeeded;
 
-        public PropertyEditor(final String fileName,
-            final Implementation impl)
+        public PropertyEditor( final String fileName,
+                                final Implementation impl )
         {
-            if(fileName == null)
+            if ( fileName == null )
             {
-                throw new NullPointerException("fileName");
+                throw new NullPointerException( "fileName" );
             }
-            if(impl == null)
+            if ( impl == null )
             {
-                throw new NullPointerException("impl");
+                throw new NullPointerException( "impl" );
             }
 
             this.fileName = fileName;
@@ -662,116 +687,122 @@ public class ContainerMojo extends AbstractSourceMojo
             this.markersNeeded = impl.getProperties().size() > 0;
         }
 
-        public String editLine(final String line) throws MojoFailureException
+        public String editLine( final String line ) throws MojoFailureException
         {
             Property prop;
             Properties props;
             String replacement = null; // Replace with nothing.
 
-            if(line == null && this.editing)
+            if ( line == null && this.editing )
             {
-                final MessageFormat fmt = ContainerMojoBundle.
-                    getUnexpectedEndOfInputMessage(getLocale());
+                final MessageFormat fmt = ContainerMojoBundle.getInstance().
+                    getUnexpectedEndOfInputMessage( getLocale() );
 
                 throw new MojoFailureException(
-                    fmt.format(new Object[] { this.fileName }));
+                    fmt.format( new Object[] { this.fileName } ) );
 
             }
 
-            if(line != null && propertiesStartingMarker.equals(line.trim()))
+            if ( line != null &&
+                propertiesStartingMarker.equals( line.trim() ) )
             {
                 // Skip all input up to the ending marker.
                 this.editing = true;
-                final StringBuffer buf = new StringBuffer(1024);
-                buf.append(line).append("\n\n");
+                final StringBuffer buf = new StringBuffer( 1024 );
+                buf.append( line ).append( "\n\n" );
 
-                if(!getTargetEditor().equals("none"))
+                if ( !getTargetEditor().equals( "none" ) )
                 {
-                    buf.append(getOpeningFoldingMarker("Properties")).
-                        append('\n');
+                    buf.append( getOpeningFoldingMarker( "Properties" ) ).
+                        append( '\n' );
 
                 }
 
-                final MessageFormat warning = ContainerMojoBundle.
-                    getGeneratorWarningMessage(getLocale());
+                final MessageFormat warning = ContainerMojoBundle.getInstance().
+                    getGeneratorWarningMessage( getLocale() );
 
-                indent(buf);
-                buf.append(warning.format(null));
-                buf.append("\n\n");
+                indent( buf );
+                buf.append( warning.format( null ) );
+                buf.append( "\n\n" );
 
                 // Generate property getters and setters.
-                if(this.isMarkersNeeded())
+                if ( this.isMarkersNeeded() )
                 {
                     this.modified = true;
                     props = this.impl.getProperties();
-                    for(int i = props.size() - 1; i >= 0; i--)
+                    for ( int i = props.size() - 1; i >= 0; i-- )
                     {
                         final char[] c;
                         final String name;
 
-                        prop = props.getProperty(i);
-                        if(ContainerMojo.checkPropertyInheritted(
-                            prop, this.impl))
+                        prop = props.getProperty( i );
+                        if ( ContainerMojo.checkPropertyInheritted(
+                            prop, this.impl ) )
                         {
                             continue;
                         }
 
                         c = prop.getName().toCharArray();
-                        if(Character.isLowerCase(c[0]))
+                        if ( Character.isLowerCase( c[0] ) )
                         {
-                            c[0] = Character.toUpperCase(c[0]);
+                            c[0] = Character.toUpperCase( c[0] );
                         }
-                        name = String.valueOf(c);
+                        name = String.valueOf( c );
 
                         // Field.
-                        indent(buf);
-                        buf.append("/**\n");
-                        indent(buf);
-                        buf.append(" * Property {@code ").
-                            append(prop.getName()).append("}.\n");
-                        indent(buf);
-                        buf.append(" * @serial\n");
-                        indent(buf);
-                        buf.append(" */\n");
+                        indent( buf );
+                        buf.append( "/**\n" );
+                        indent( buf );
+                        buf.append( " * Property {@code " ).
+                            append( prop.getName() ).append( "}.\n" );
+                        indent( buf );
+                        buf.append( " * @serial\n" );
+                        indent( buf );
+                        buf.append( " */\n" );
 
-                        indent(buf);
-                        buf.append("private ").
-                            append(prop.getType().getName()).
-                            append(" _").append(prop.getName()).
-                            append(";\n\n");
+                        indent( buf );
+                        buf.append( "private " ).append( prop.getType().getName() ).
+                            append( " p" ).append( name ).append( ";\n\n" );
 
                         // Getter.
-                        indent(buf);
-                        buf.append(ContainerMojoBundle.
-                            getPropertyGetterCommentMessage(getLocale()).format(
-                            new Object[] { prop.getName() })).append('\n');
+                        indent( buf );
+                        buf.append( ContainerMojoBundle.getInstance().
+                                    getPropertyGetterCommentMessage(
+                                    getLocale() ).format(
+                                    new Object[] { prop.getName() } ) ).
+                            append( '\n' );
 
-                        indent(buf);
-                        buf.append(prop.isApi() ? "public " :
-                            this.impl.isFinal() ? "private " : "protected ");
+                        indent( buf );
+                        buf.append( prop.isApi()
+                                    ? "public "
+                                    : this.impl.isFinal()
+                                    ? "private "
+                                    : "protected " );
 
-                        buf.append(prop.getType().getName()).
-                            append(prop.getType() == Boolean.TYPE ||
-                            prop.getType() == Boolean.class ? " is" : " get").
-                            append(name).append("()\n");
+                        buf.append( prop.getType().getName() ).
+                            append( prop.getType() == Boolean.TYPE ||
+                                    prop.getType() == Boolean.class
+                                    ? " is"
+                                    : " get" ).
+                            append( name ).append( "()\n" );
 
-                        indent(buf);
-                        buf.append("{\n");
+                        indent( buf );
+                        buf.append( "{\n" );
 
-                        indent(buf);
-                        indent(buf);
-                        buf.append("return this._").append(prop.getName()).
-                            append(";\n");
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "return this.p" ).append( name ).
+                            append( ";\n" );
 
-                        indent(buf);
-                        buf.append("}\n\n");
+                        indent( buf );
+                        buf.append( "}\n\n" );
                     }
                 }
 
-                if(!getTargetEditor().equals("none"))
+                if ( !getTargetEditor().equals( "none" ) )
                 {
-                    buf.append(getClosingFoldingMarker("Properties")).
-                        append('\n');
+                    buf.append( getClosingFoldingMarker( "Properties" ) ).
+                        append( '\n' );
 
                 }
 
@@ -779,9 +810,9 @@ public class ContainerMojo extends AbstractSourceMojo
             }
             else
             {
-                if(this.editing)
+                if ( this.editing )
                 {
-                    if(propertiesEndingMarker.equals(line.trim()))
+                    if ( propertiesEndingMarker.equals( line.trim() ) )
                     {
                         this.editing = false;
                         replacement = line;
@@ -805,47 +836,53 @@ public class ContainerMojo extends AbstractSourceMojo
         {
             return this.markersNeeded;
         }
+
     }
 
     /** Adds implementation constructors. */
     public class ConstructorsEditor implements AbstractSourceMojo.SourceEditor
     {
+
         private boolean editing = false;
+
         private boolean modified = false;
+
         private final String fileName;
+
         private final Implementation impl;
 
-        public ConstructorsEditor(final String fileName,
-            final Implementation impl) throws MojoFailureException
+        public ConstructorsEditor(
+            final String fileName, final Implementation impl )
+            throws MojoFailureException
         {
-            if(fileName == null)
+            if ( fileName == null )
             {
-                throw new NullPointerException("fileName");
+                throw new NullPointerException( "fileName" );
             }
-            if(impl == null)
+            if ( impl == null )
             {
-                throw new NullPointerException("impl");
+                throw new NullPointerException( "impl" );
             }
 
             this.fileName = fileName;
             this.impl = impl;
         }
 
-        public String getPropertyInitializer(final Property property,
-            final boolean isLastProperty)
+        public String getPropertyInitializer( final Property property,
+                                               final boolean isLastProperty )
         {
-            if(property == null)
+            if ( property == null )
             {
-                throw new NullPointerException("property");
+                throw new NullPointerException( "property" );
             }
 
-            final StringBuffer buf = new StringBuffer(255);
+            final StringBuffer buf = new StringBuffer( 255 );
             final boolean isPrimitive = property.getType().isPrimitive();
 
-            indent(buf);
-            indent(buf);
-            buf.append("p = meta.getProperty(\"").append(property.getName()).
-                append("\");\n");
+            indent( buf );
+            indent( buf );
+            buf.append( "p = meta.getProperty(\"" ).append( property.getName() ).
+                append( "\");\n" );
 
             /*
             indent(buf);
@@ -855,47 +892,58 @@ public class ContainerMojo extends AbstractSourceMojo
             indent(buf);
             indent(buf);
             buf.append("throw new MissingPropertyException(META, \"").
-                append(property.getName()).append("\");\n");
-
+            append(property.getName()).append("\");\n");
             indent(buf);
             indent(buf);
             buf.append("}\n");
              */
 
-            indent(buf);
-            indent(buf);
-            buf.append("this._").append(property.getName()).append(" = ").
-                append("(").append(isPrimitive ? "(" : "").
-                append(property.getValue().getClass().getName()).
-                append(") p.getValue()");
-
-            buf.append(isPrimitive ? ")." +
-                property.getType().getName() + "Value();\n\n" : ";\n\n");
-
-            if(!isLastProperty)
+            final char[] c = property.getName().toCharArray();
+            if ( Character.isLowerCase( c[0] ) )
             {
-                buf.append('\n');
+                c[0] = Character.toUpperCase( c[0] );
+            }
+
+            final String propName = String.valueOf( c );
+
+            indent( buf );
+            indent( buf );
+            buf.append( "this.p" ).append( propName ).append( " = " ).
+                append( "(" ).append( isPrimitive
+                                      ? "("
+                                      : "" ).
+                append( property.getValue().getClass().getName() ).
+                append( ") p.getValue()" );
+
+            buf.append( isPrimitive
+                        ? ")." +
+                        property.getType().getName() + "Value();\n\n"
+                        : ";\n\n" );
+
+            if ( !isLastProperty )
+            {
+                buf.append( '\n' );
             }
 
             return buf.toString();
         }
 
-        public String editLine(final String line) throws MojoFailureException
+        public String editLine( final String line ) throws MojoFailureException
         {
             String replacement = null; // Replace with nothing.
 
-            if(line == null && this.editing)
+            if ( line == null && this.editing )
             {
-                final MessageFormat fmt = ContainerMojoBundle.
-                    getUnexpectedEndOfInputMessage(getLocale());
+                final MessageFormat fmt = ContainerMojoBundle.getInstance().
+                    getUnexpectedEndOfInputMessage( getLocale() );
 
                 throw new MojoFailureException(
-                    fmt.format(new Object[] { this.fileName }));
+                    fmt.format( new Object[] { this.fileName } ) );
 
             }
 
-            if(line != null &&
-                constructorsStartingMarker.equals(line.trim()))
+            if ( line != null &&
+                constructorsStartingMarker.equals( line.trim() ) )
             {
                 Property property;
                 Properties properties;
@@ -903,184 +951,191 @@ public class ContainerMojo extends AbstractSourceMojo
                 // Skip all input up to the ending marker.
                 this.editing = true;
                 this.modified = true;
-                final StringBuffer buf = new StringBuffer(1024);
+                final StringBuffer buf = new StringBuffer( 1024 );
                 final String implType = ContainerMojo.getTypeFromClassName(
-                    this.impl.getIdentifier());
+                    this.impl.getIdentifier() );
 
                 properties = this.impl.getProperties();
-                buf.append(line).append("\n\n");
-                if(!getTargetEditor().equals("none"))
+                buf.append( line ).append( "\n\n" );
+                if ( !getTargetEditor().equals( "none" ) )
                 {
-                    buf.append(getOpeningFoldingMarker("Constructors")).
-                        append('\n');
+                    buf.append( getOpeningFoldingMarker( "Constructors" ) ).
+                        append( '\n' );
 
                 }
 
-                final MessageFormat warning = ContainerMojoBundle.
-                    getGeneratorWarningMessage(getLocale());
+                final MessageFormat warning = ContainerMojoBundle.getInstance().
+                    getGeneratorWarningMessage( getLocale() );
 
-                indent(buf);
-                buf.append(warning.format(null));
-                buf.append("\n\n");
+                indent( buf );
+                buf.append( warning.format( null ) );
+                buf.append( "\n\n" );
 
-                if(this.impl.getImplementedSpecifications().size() > 0)
+                if ( this.impl.getImplementedSpecifications().size() > 0 )
                 {
-                    indent(buf);
-                    buf.append(ContainerMojoBundle.
-                        getConstructorCommentMessage(getLocale()).format(
-                        new Object[] { implType }));
+                    indent( buf );
+                    buf.append( ContainerMojoBundle.getInstance().
+                                getConstructorCommentMessage( getLocale() ).
+                                format( new Object[] { implType } ) );
 
-                    indent(buf);
-                    buf.append(this.impl.isFinal() ? "private " : "protected ").
-                        append(implType).append("(final Implementation meta)\n");
+                    indent( buf );
+                    buf.append( this.impl.isFinal()
+                                ? "private "
+                                : "protected " ).
+                        append( implType ).append( "(final Implementation meta)\n" );
 
-                    indent(buf);
-                    buf.append("{\n");
+                    indent( buf );
+                    buf.append( "{\n" );
 
-                    if(this.impl.getParent() == null)
+                    if ( this.impl.getParent() == null )
                     {
-                        indent(buf);
-                        indent(buf);
-                        buf.append("super();\n");
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "super();\n" );
 
-                        indent(buf);
-                        indent(buf);
-                        buf.append("if(meta == null)\n");
-                        indent(buf);
-                        indent(buf);
-                        buf.append("{\n");
-                        indent(buf);
-                        indent(buf);
-                        indent(buf);
-                        buf.append("throw new NullPointerException(\"meta\");\n");
-                        indent(buf);
-                        indent(buf);
-                        buf.append("}\n");
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "if(meta == null)\n" );
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "{\n" );
+                        indent( buf );
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "throw new NullPointerException(\"meta\");\n" );
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "}\n" );
 
-                        indent(buf);
-                        indent(buf);
-                        buf.append("this.initializeProperties(").
-                            append("meta.getProperties());\n");
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "this.initializeProperties(" ).
+                            append( "meta.getProperties());\n" );
 
                     }
                     else
                     {
-                        indent(buf);
-                        indent(buf);
-                        buf.append("super(meta);\n");
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "super(meta);\n" );
                     }
 
-                    indent(buf);
-                    buf.append("}\n");
+                    indent( buf );
+                    buf.append( "}\n" );
 
-                    indent(buf);
-                    buf.append(ContainerMojoBundle.
-                        getDependencyConstructorCommentMessage(getLocale()).
-                        format(new Object[] { implType }));
+                    indent( buf );
+                    buf.append( ContainerMojoBundle.getInstance().
+                                getDependencyConstructorCommentMessage(
+                                getLocale() ).format(
+                                new Object[] { implType } ) );
 
-                    indent(buf);
-                    buf.append(this.impl.isFinal() ? "private " : "protected ").
-                        append(implType).append("(final Dependency meta)\n");
+                    indent( buf );
+                    buf.append( this.impl.isFinal()
+                                ? "private "
+                                : "protected " ).
+                        append( implType ).append( "(final Dependency meta)\n" );
 
-                    indent(buf);
-                    buf.append("{\n");
+                    indent( buf );
+                    buf.append( "{\n" );
 
-                    if(this.impl.getParent() == null)
+                    if ( this.impl.getParent() == null )
                     {
-                        indent(buf);
-                        indent(buf);
-                        buf.append("super();\n");
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "super();\n" );
 
-                        indent(buf);
-                        indent(buf);
-                        buf.append("if(meta == null)\n");
-                        indent(buf);
-                        indent(buf);
-                        buf.append("{\n");
-                        indent(buf);
-                        indent(buf);
-                        indent(buf);
-                        buf.append("throw new NullPointerException(\"meta\");\n");
-                        indent(buf);
-                        indent(buf);
-                        buf.append("}\n");
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "if(meta == null)\n" );
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "{\n" );
+                        indent( buf );
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "throw new NullPointerException(\"meta\");\n" );
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "}\n" );
 
-                        indent(buf);
-                        indent(buf);
-                        buf.append("this.initializeProperties(").
-                            append("meta.getProperties());\n");
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "this.initializeProperties(" ).
+                            append( "meta.getProperties());\n" );
 
                     }
                     else
                     {
-                        indent(buf);
-                        indent(buf);
-                        buf.append("super(meta);\n");
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "super(meta);\n" );
                     }
 
-                    indent(buf);
-                    buf.append("}\n\n");
+                    indent( buf );
+                    buf.append( "}\n\n" );
                 }
 
-                indent(buf);
-                buf.append(ContainerMojoBundle.
-                    getPropertyInitializerCommentText(getLocale()));
+                indent( buf );
+                buf.append( ContainerMojoBundle.getInstance().
+                            getPropertyInitializerCommentText( getLocale() ) );
 
-                indent(buf);
-                buf.append(this.impl.isFinal() &&
-                    this.impl.getParent() == null ? "private " : "protected ").
-                    append("void initializeProperties(final Properties meta)\n");
+                indent( buf );
+                buf.append( this.impl.isFinal() &&
+                            this.impl.getParent() == null
+                            ? "private "
+                            : "protected " ).
+                    append( "void initializeProperties(final Properties meta)\n" );
 
-                indent(buf);
-                buf.append("{\n");
+                indent( buf );
+                buf.append( "{\n" );
 
-                indent(buf);
-                indent(buf);
-                buf.append("Property p;\n\n");
-                indent(buf);
-                indent(buf);
-                buf.append("if(meta == null)\n");
-                indent(buf);
-                indent(buf);
-                buf.append("{\n");
-                indent(buf);
-                indent(buf);
-                indent(buf);
-                buf.append("throw new NullPointerException(").
-                    append("\"meta\");\n");
+                indent( buf );
+                indent( buf );
+                buf.append( "Property p;\n\n" );
+                indent( buf );
+                indent( buf );
+                buf.append( "if(meta == null)\n" );
+                indent( buf );
+                indent( buf );
+                buf.append( "{\n" );
+                indent( buf );
+                indent( buf );
+                indent( buf );
+                buf.append( "throw new NullPointerException(" ).
+                    append( "\"meta\");\n" );
 
-                indent(buf);
-                indent(buf);
-                buf.append("}\n\n");
+                indent( buf );
+                indent( buf );
+                buf.append( "}\n\n" );
 
-                if(this.impl.getParent() != null)
+                if ( this.impl.getParent() != null )
                 {
-                    indent(buf);
-                    indent(buf);
-                    buf.append("super.initializeProperties(meta);\n\n");
+                    indent( buf );
+                    indent( buf );
+                    buf.append( "super.initializeProperties(meta);\n\n" );
                 }
 
-                for(int i = properties.size() - 1; i >= 0; i--)
+                for ( int i = properties.size() - 1; i >= 0; i-- )
                 {
-                    property = properties.getProperty(i);
-                    if(ContainerMojo.checkPropertyInheritted(
-                        property, this.impl))
+                    property = properties.getProperty( i );
+                    if ( ContainerMojo.checkPropertyInheritted(
+                        property, this.impl ) )
                     {
                         continue;
                     }
 
-                    buf.append(this.getPropertyInitializer(property,
-                        i - 1 < 0));
+                    buf.append( this.getPropertyInitializer( property,
+                                                             i - 1 < 0 ) );
 
                 }
 
-                indent(buf);
-                buf.append("}\n");
+                indent( buf );
+                buf.append( "}\n" );
 
-                if(!getTargetEditor().equals("none"))
+                if ( !getTargetEditor().equals( "none" ) )
                 {
-                    buf.append(getClosingFoldingMarker("Constructors")).
-                        append('\n');
+                    buf.append( getClosingFoldingMarker( "Constructors" ) ).
+                        append( '\n' );
 
                 }
 
@@ -1088,9 +1143,9 @@ public class ContainerMojo extends AbstractSourceMojo
             }
             else
             {
-                if(this.editing)
+                if ( this.editing )
                 {
-                    if(constructorsEndingMarker.equals(line.trim()))
+                    if ( constructorsEndingMarker.equals( line.trim() ) )
                     {
                         this.editing = false;
                         replacement = line;
@@ -1115,26 +1170,32 @@ public class ContainerMojo extends AbstractSourceMojo
     /** Cleans a section. */
     public class RemovingEditor implements AbstractSourceMojo.SourceEditor
     {
+
         private boolean editing = false;
+
         private boolean modified = false;
+
         private final String fileName;
+
         private final String startingMarker;
+
         private final String endingMarker;
 
-        public RemovingEditor(final String fileName,
-            final String startingMarker, final String endingMarker)
+        public RemovingEditor( final String fileName,
+                                final String startingMarker,
+                                final String endingMarker )
         {
-            if(fileName == null)
+            if ( fileName == null )
             {
-                throw new NullPointerException("fileName");
+                throw new NullPointerException( "fileName" );
             }
-            if(startingMarker == null)
+            if ( startingMarker == null )
             {
-                throw new NullPointerException("startingMarker");
+                throw new NullPointerException( "startingMarker" );
             }
-            if(endingMarker == null)
+            if ( endingMarker == null )
             {
-                throw new NullPointerException("endingMarker");
+                throw new NullPointerException( "endingMarker" );
             }
 
             this.fileName = fileName;
@@ -1142,42 +1203,42 @@ public class ContainerMojo extends AbstractSourceMojo
             this.endingMarker = endingMarker;
         }
 
-        public String editLine(String line) throws MojoFailureException
+        public String editLine( String line ) throws MojoFailureException
         {
-            if(line == null && this.editing)
+            if ( line == null && this.editing )
             {
-                final MessageFormat fmt = ContainerMojoBundle.
-                    getUnexpectedEndOfInputMessage(getLocale());
+                final MessageFormat fmt = ContainerMojoBundle.getInstance().
+                    getUnexpectedEndOfInputMessage( getLocale() );
 
                 throw new MojoFailureException(
-                    fmt.format(new Object[] { this.fileName }));
+                    fmt.format( new Object[] { this.fileName } ) );
 
             }
 
             String replacement = null; // Replace with nothing.
-            if(line != null && this.startingMarker.equals(line.trim()))
+            if ( line != null && this.startingMarker.equals( line.trim() ) )
             {
                 // Skip all input up to the ending marker.
                 this.editing = true;
                 this.modified = true;
                 // Leave the marker.
-                final StringBuffer buf = new StringBuffer(1024);
-                buf.append(line).append("\n\n");
+                final StringBuffer buf = new StringBuffer( 1024 );
+                buf.append( line ).append( "\n\n" );
 
-                final MessageFormat warning = ContainerMojoBundle.
-                    getGeneratorWarningMessage(getLocale());
+                final MessageFormat warning = ContainerMojoBundle.getInstance().
+                    getGeneratorWarningMessage( getLocale() );
 
-                indent(buf);
-                buf.append(warning.format(null));
-                buf.append("\n\n");
+                indent( buf );
+                buf.append( warning.format( null ) );
+                buf.append( "\n\n" );
 
                 replacement = buf.toString();
             }
             else
             {
-                if(this.editing)
+                if ( this.editing )
                 {
-                    if(this.endingMarker.equals(line.trim()))
+                    if ( this.endingMarker.equals( line.trim() ) )
                     {
                         // Stop editing.
                         this.editing = false;
@@ -1199,32 +1260,33 @@ public class ContainerMojo extends AbstractSourceMojo
         {
             return this.modified;
         }
+
     }
 
-    public static boolean checkPropertyInheritted(final Property p,
-        final Implementation impl)
+    public static boolean checkPropertyInheritted( final Property p,
+                                                     final Implementation impl )
     {
 
-        if(p == null)
+        if ( p == null )
         {
-            throw new NullPointerException("p");
+            throw new NullPointerException( "p" );
         }
-        if(impl == null)
+        if ( impl == null )
         {
-            throw new NullPointerException("impl");
+            throw new NullPointerException( "impl" );
         }
 
         boolean inheritted = false;
         final Implementation parent = impl.getParent();
 
-        if(parent != null)
+        if ( parent != null )
         {
             try
             {
-                parent.getProperties().getProperty(p.getName());
+                parent.getProperties().getProperty( p.getName() );
                 inheritted = true;
             }
-            catch(MissingPropertyException e)
+            catch ( MissingPropertyException e )
             {
                 inheritted = false;
             }
@@ -1233,160 +1295,182 @@ public class ContainerMojo extends AbstractSourceMojo
         return inheritted;
     }
 
-    protected static String getTypeFromClassName(final String className)
+    protected static String getTypeFromClassName( final String className )
     {
-        if(className == null)
+        if ( className == null )
         {
-            throw new NullPointerException("className");
+            throw new NullPointerException( "className" );
         }
 
-        return className.substring(className.lastIndexOf('.') + 1);
+        return className.substring( className.lastIndexOf( '.' ) + 1 );
     }
 
-    protected void generateImplementation(final List roots,
-        final Implementation impl) throws MojoExecutionException,
-        MojoFailureException
+    protected void generateImplementation(
+        final List roots, final Implementation impl )
+        throws MojoExecutionException, MojoFailureException
     {
-        if(roots == null)
+        if ( roots == null )
         {
-            throw new NullPointerException("roots");
+            throw new NullPointerException( "roots" );
         }
-        if(impl == null)
+        if ( impl == null )
         {
-            throw new NullPointerException("impl");
+            throw new NullPointerException( "impl" );
         }
 
-        final MessageFormat fmt = ContainerMojoBundle.
-            getMissingMarkersMessage(getLocale());
+        final MessageFormat fmt = ContainerMojoBundle.getInstance().
+            getMissingMarkersMessage( getLocale() );
 
         String edited;
-        final File source = this.getSource(roots, impl.getIdentifier());
+        final File source = this.getSource( roots, impl.getIdentifier() );
 
-        if(source == null)
+        if ( source == null )
         {
-            throw new MojoExecutionException(impl.getIdentifier());
+            throw new MojoExecutionException( impl.getIdentifier() );
         }
 
-        final String content = this.load(source);
+        final String content = this.load( source );
         final String path = source.getAbsolutePath();
         final ImplementationEditor implEditor =
-            new ImplementationEditor(path, impl);
+            new ImplementationEditor( path, impl );
 
         final DependencyEditor depEditor =
-            new DependencyEditor(path, impl);
+            new DependencyEditor( path, impl );
 
         final PropertyEditor propEditor =
-            new PropertyEditor(path, impl);
+            new PropertyEditor( path, impl );
 
         final ConstructorsEditor ctorsEditor =
-            new ConstructorsEditor(path, impl);
+            new ConstructorsEditor( path, impl );
 
-        edited = this.edit(content, new RemovingEditor(path,
-            this.implementationsStartingMarker,
-            this.implementationsEndingMarker));
+        edited =
+            this.edit( content,
+                       new RemovingEditor( path,
+                                           this.implementationsStartingMarker,
+                                           this.implementationsEndingMarker ) );
 
-        edited = this.edit(edited, new RemovingEditor(path,
-            this.dependenciesStartingMarker,
-            this.dependenciesEndingMarker));
+        edited =
+            this.edit( edited,
+                       new RemovingEditor( path,
+                                           this.dependenciesStartingMarker,
+                                           this.dependenciesEndingMarker ) );
 
-        edited = this.edit(edited, new RemovingEditor(path,
-            this.propertiesStartingMarker,
-            this.propertiesEndingMarker));
+        edited = this.edit( edited,
+                            new RemovingEditor( path,
+                                                this.propertiesStartingMarker,
+                                                this.propertiesEndingMarker ) );
 
-        edited = this.edit(edited, new RemovingEditor(path,
-            this.constructorsStartingMarker,
-            this.constructorsEndingMarker));
+        edited =
+            this.edit( edited,
+                       new RemovingEditor( path,
+                                           this.constructorsStartingMarker,
+                                           this.constructorsEndingMarker ) );
 
-        edited = this.edit(edited, implEditor);
-        edited = this.edit(edited, depEditor);
-        edited = this.edit(edited, propEditor);
-        edited = this.edit(edited, ctorsEditor);
+        edited = this.edit( edited, implEditor );
+        edited = this.edit( edited, depEditor );
+        edited = this.edit( edited, propEditor );
+        edited = this.edit( edited, ctorsEditor );
 
-        if(!implEditor.isModified())
+        if ( !implEditor.isModified() )
         {
-            throw new MojoExecutionException(fmt.format(new Object[] {
-                this.implementationsStartingMarker, path
-            }));
+            throw new MojoExecutionException(
+                fmt.format( new Object[] {
+                            this.implementationsStartingMarker,
+                            path
+                        } ) );
+
         }
 
-        if(depEditor.isMarkersNeeded() && !depEditor.isModified())
+        if ( depEditor.isMarkersNeeded() && !depEditor.isModified() )
         {
-            throw new MojoExecutionException(fmt.format(new Object[] {
-                this.dependenciesStartingMarker, path
-            }));
+            throw new MojoExecutionException(
+                fmt.format( new Object[] {
+                            this.dependenciesStartingMarker,
+                            path
+                        } ) );
+
         }
 
-        if(propEditor.isMarkersNeeded() && !propEditor.isModified())
+        if ( propEditor.isMarkersNeeded() && !propEditor.isModified() )
         {
-            throw new MojoExecutionException(fmt.format(new Object[] {
-                this.propertiesStartingMarker, path
-            }));
+            throw new MojoExecutionException(
+                fmt.format( new Object[] {
+                            this.propertiesStartingMarker,
+                            path
+                        } ) );
+
         }
 
-        if(!ctorsEditor.isModified())
+        if ( !ctorsEditor.isModified() )
         {
-            throw new MojoExecutionException(fmt.format(new Object[] {
-                this.constructorsStartingMarker, path
-            }));
+            throw new MojoExecutionException(
+                fmt.format( new Object[] {
+                            this.constructorsStartingMarker,
+                            path
+                        } ) );
+
         }
 
-        if(!content.equals(edited))
+        if ( !content.equals( edited ) )
         {
-            this.save(source, edited);
+            this.save( source, edited );
         }
     }
 
-    protected void generateSpecification(final List roots,
-        final Specification spec) throws MojoExecutionException,
-        MojoFailureException
+    protected void generateSpecification(
+        final List roots, final Specification spec )
+        throws MojoExecutionException, MojoFailureException
     {
-        if(spec == null)
+        if ( spec == null )
         {
-            throw new NullPointerException("spec");
+            throw new NullPointerException( "spec" );
         }
-        if(roots == null)
+        if ( roots == null )
         {
-            throw new NullPointerException("roots");
+            throw new NullPointerException( "roots" );
         }
 
-        final File source = this.getSource(roots, spec.getIdentifier());
-        if(source != null)
+        final File source = this.getSource( roots, spec.getIdentifier() );
+        if ( source != null )
         {
             final String path = source.getAbsolutePath();
-            final String content = this.load(source);
-            String edited = this.edit(content, new RemovingEditor(path,
-                this.specificationsStartingMarker,
-                this.specificationsEndingMarker));
+            final String content = this.load( source );
+            String edited = this.edit( content, new RemovingEditor(
+                                       path,
+                                       this.specificationsStartingMarker,
+                                       this.specificationsEndingMarker ) );
 
-            if(!content.equals(edited))
+            if ( !content.equals( edited ) )
             {
-                this.save(source, edited);
+                this.save( source, edited );
             }
         }
     }
 
-    private String getOpeningFoldingMarker(final String section)
+    private String getOpeningFoldingMarker( final String section )
     {
-        final StringBuffer buf = new StringBuffer(500);
-        if(this.getTargetEditor().equals("netbeans"))
+        final StringBuffer buf = new StringBuffer( 500 );
+        if ( this.getTargetEditor().equals( "netbeans" ) )
         {
-            buf.append(ContainerMojoBundle.
-                getOpeningFoldingMarkerNetbeansMessage(Locale.getDefault()).
-                format(new Object[] { section }));
+            buf.append( ContainerMojoBundle.getInstance().
+                        getOpeningFoldingMarkerNetbeansMessage(
+                        Locale.getDefault() ).
+                        format( new Object[] { section } ) );
 
         }
 
         return buf.toString();
     }
 
-    private String getClosingFoldingMarker(final String section)
+    private String getClosingFoldingMarker( final String section )
     {
-        final StringBuffer buf = new StringBuffer(500);
-        if(this.getTargetEditor().equals("netbeans"))
+        final StringBuffer buf = new StringBuffer( 500 );
+        if ( this.getTargetEditor().equals( "netbeans" ) )
         {
-            buf.append(ContainerMojoBundle.
-                getClosingFoldingMarkerNetbeansMessage(Locale.getDefault()).
-                format(new Object[] { section }));
+            buf.append( ContainerMojoBundle.getInstance().
+                        getClosingFoldingMarkerNetbeansMessage(
+                        Locale.getDefault() ).
+                        format( new Object[] { section } ) );
 
         }
 

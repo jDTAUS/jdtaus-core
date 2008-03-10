@@ -54,135 +54,147 @@ public class VerifyModelMojo extends AbstractSourceMojo
             Thread.currentThread().getContextClassLoader();
 
         Thread.currentThread().
-            setContextClassLoader(this.getRuntimeClassLoader());
+            setContextClassLoader( this.getRuntimeClassLoader() );
 
-        this.assertValidModel(ModelFactory.getModel().getModules());
+        this.assertValidModel( ModelFactory.getModel().getModules() );
 
-        Thread.currentThread().setContextClassLoader(mavenLoader);
+        Thread.currentThread().setContextClassLoader( mavenLoader );
     }
 
     //------------------------------------------------------------AbstractMojo--
     //--VerifyModelMojo---------------------------------------------------------
 
-    private void assertValidModel(final Modules modules)
-    throws MojoExecutionException, MojoFailureException
+    private void assertValidModel( final Modules modules )
+        throws MojoExecutionException, MojoFailureException
     {
         final Specifications specs = modules.getSpecifications();
-        for(int i = specs.size() - 1; i >= 0; i--)
+        for ( int i = specs.size() - 1; i >= 0; i-- )
         {
-            final Specification spec = specs.getSpecification(i);
+            final Specification spec = specs.getSpecification( i );
             final Implementations impls = spec.getImplementations();
 
-            this.assertClassAvailable(spec.getIdentifier());
+            this.assertClassAvailable( spec.getIdentifier() );
 
-            for(int j = impls.size() - 1; j >= 0; j--)
+            for ( int j = impls.size() - 1; j >= 0; j-- )
             {
-                final Implementation impl = impls.getImplementation(j);
+                final Implementation impl = impls.getImplementation( j );
                 final Class clazz = this.assertClassAvailable(
-                    impl.getIdentifier());
+                    impl.getIdentifier() );
 
-                this.assertImplementsAllSpecifications(impl, modules, clazz);
-                this.assertFinalModifier(impl, clazz);
+                this.assertImplementsAllSpecifications( impl, modules, clazz );
+                this.assertFinalModifier( impl, clazz );
             }
 
             // Check mandatory implementations to exist.
-            if(spec.getMultiplicity() == Specification.MULTIPLICITY_ONE &&
-                impls.size() == 0)
+            if ( spec.getMultiplicity() == Specification.MULTIPLICITY_ONE &&
+                impls.size() == 0 )
             {
                 throw new MojoExecutionException(
-                    VerifyModelMojoBundle.getMissingImplementationMessage(
-                    Locale.getDefault()).format(new Object[] {
-                    spec.getIdentifier() }));
+                    VerifyModelMojoBundle.getInstance().
+                    getMissingImplementationMessage( Locale.getDefault() ).
+                    format( new Object[] { spec.getIdentifier() } ) );
 
             }
         }
     }
 
-    private Class assertClassAvailable(final String className)
-    throws MojoExecutionException, MojoFailureException
+    private Class assertClassAvailable( final String className )
+        throws MojoExecutionException, MojoFailureException
     {
         try
         {
-            return this.getContextClassLoader().loadClass(className);
+            return this.getContextClassLoader().loadClass( className );
         }
-        catch(ClassNotFoundException e)
+        catch ( ClassNotFoundException e )
         {
             throw new MojoExecutionException(
-                VerifyModelMojoBundle.getClassNotFoundMessage(
-                Locale.getDefault()).format(new Object[] { className }));
+                VerifyModelMojoBundle.getInstance().
+                getClassNotFoundMessage( Locale.getDefault() ).
+                format( new Object[] { className } ) );
 
         }
     }
 
-    private void assertImplementsAllSpecifications(final Implementation impl,
-        final Modules modules, final Class clazz) throws MojoExecutionException
+    private void assertImplementsAllSpecifications(
+        final Implementation impl, final Modules modules, final Class clazz )
+        throws MojoExecutionException
     {
         final Set allInterfaces = new HashSet();
-        this.getAllImplementedInterfaces(clazz, allInterfaces);
-        final Class[] interfaces = (Class[]) allInterfaces.
-            toArray(new Class[allInterfaces.size()]);
+        this.getAllImplementedInterfaces( clazz, allInterfaces );
+        final Class[] interfaces = ( Class[] ) allInterfaces.toArray(
+            new Class[ allInterfaces.size() ] );
 
-        if(impl.getImplementedSpecifications().size() > 0)
+        if ( impl.getImplementedSpecifications().size() > 0 )
         {
-            for(int i = interfaces.length - 1; i >= 0; i--)
+            for ( int i = interfaces.length - 1; i >= 0; i-- )
             {
                 try
                 {
-                    modules.getSpecification(interfaces[i].getName()).
-                        getImplementation(impl.getName());
+                    modules.getSpecification( interfaces[i].getName() ).
+                        getImplementation( impl.getName() );
 
                 }
-                catch(MissingImplementationException e)
+                catch ( MissingImplementationException e )
                 {
-                    throw new MojoExecutionException(VerifyModelMojoBundle.
+                    throw new MojoExecutionException(
+                        VerifyModelMojoBundle.getInstance().
                         getMissingImplementedSpecificationMessage(
-                        Locale.getDefault()).format(new Object[] {
-                        impl.getIdentifier(), interfaces[i].getName()
-                    }));
+                        Locale.getDefault() ).
+                        format( new Object[] {
+                                impl.getIdentifier(),
+                                interfaces[i].getName()
+                            } ) );
 
                 }
-                catch(MissingSpecificationException e)
-                {}
+                catch ( MissingSpecificationException e )
+                {
+                }
 
             }
         }
 
-        for(int i = impl.getImplementedSpecifications().size() - 1; i >= 0; i--)
+        for ( int i = impl.getImplementedSpecifications().size() - 1; i >= 0;
+            i-- )
         {
             final Specification spec = impl.getImplementedSpecifications().
-                getSpecification(i);
+                getSpecification( i );
 
             boolean isImplemented =
-                spec.getIdentifier().equals(impl.getIdentifier());
+                spec.getIdentifier().equals( impl.getIdentifier() );
 
-            for(int j = interfaces.length - 1; j >= 0; j--)
+            for ( int j = interfaces.length - 1; j >= 0; j-- )
             {
-                if(interfaces[j].getName().equals(spec.getIdentifier()))
+                if ( interfaces[j].getName().equals( spec.getIdentifier() ) )
                 {
                     isImplemented = true;
                     break;
                 }
             }
 
-            if(!isImplemented)
+            if ( !isImplemented )
             {
-                throw new MojoExecutionException(VerifyModelMojoBundle.
-                    getMissingInterfaceMessage(Locale.getDefault()).
-                    format(new Object[] { impl.getIdentifier(),
-                    spec.getIdentifier() }));
+                throw new MojoExecutionException(
+                    VerifyModelMojoBundle.getInstance().
+                    getMissingInterfaceMessage( Locale.getDefault() ).
+                    format( new Object[] {
+                            impl.getIdentifier(),
+                            spec.getIdentifier()
+                        } ) );
 
             }
         }
     }
 
-    private void assertFinalModifier(final Implementation impl,
-        final Class clazz) throws MojoExecutionException, MojoFailureException
+    private void assertFinalModifier(
+        final Implementation impl, final Class clazz )
+        throws MojoExecutionException, MojoFailureException
     {
-        if(Modifier.isFinal(clazz.getModifiers()) != impl.isFinal())
+        if ( Modifier.isFinal( clazz.getModifiers() ) != impl.isFinal() )
         {
-            throw new MojoExecutionException(VerifyModelMojoBundle.
-                getFinalModifierMismatchMessage(Locale.getDefault()).
-                format(new Object[] { impl.getIdentifier() }));
+            throw new MojoExecutionException(
+                VerifyModelMojoBundle.getInstance().
+                getFinalModifierMismatchMessage( Locale.getDefault() ).
+                format( new Object[] { impl.getIdentifier() } ) );
 
         }
     }
@@ -193,21 +205,21 @@ public class VerifyModelMojo extends AbstractSourceMojo
      * @param clazz the class to get all implemented interfaces from.
      * @param interfaces set for collecting interfaces recursively.
      */
-    private void getAllImplementedInterfaces(final Class clazz,
-        final Set interfaces)
+    private void getAllImplementedInterfaces( final Class clazz,
+                                               final Set interfaces )
     {
         final Class[] current = clazz.getInterfaces();
-        for(int i = current.length - 1; i >= 0; i--)
+        for ( int i = current.length - 1; i >= 0; i-- )
         {
             final Class[] parents = current[i].getInterfaces();
 
-            for(int j = parents.length - 1; j >= 0; j--)
+            for ( int j = parents.length - 1; j >= 0; j-- )
             {
-                this.getAllImplementedInterfaces(parents[j], interfaces);
-                interfaces.add(parents[j]);
+                this.getAllImplementedInterfaces( parents[j], interfaces );
+                interfaces.add( parents[j] );
             }
 
-            interfaces.add(current[i]);
+            interfaces.add( current[i] );
         }
     }
 

@@ -46,25 +46,25 @@ public class CleanMojo extends AbstractSourceMojo
         final Collection sources = new LinkedList();
         final SourceEditor editor = new RemoveTrailingSpacesEditor();
 
-        if(new File(this.getMavenProject().getBasedir(),
-            "src/main/java").exists())
+        if ( new File( this.getMavenProject().getBasedir(),
+                       "src/main/java" ).exists() )
         {
-            sources.addAll(this.getAllSources());
+            sources.addAll( this.getAllSources() );
         }
-        if(new File(this.getMavenProject().getBasedir(),
-            "src/test/java").exists())
+        if ( new File( this.getMavenProject().getBasedir(),
+                       "src/test/java" ).exists() )
         {
-            sources.addAll(this.getTestSources());
+            sources.addAll( this.getTestSources() );
         }
 
-        for(Iterator it = sources.iterator(); it.hasNext();)
+        for ( Iterator it = sources.iterator(); it.hasNext();)
         {
-            file = (File) it.next();
-            contents = this.load(file);
-            edited = this.edit(contents, editor);
-            if(!contents.equals(edited))
+            file = ( File ) it.next();
+            contents = this.load( file );
+            edited = this.edit( contents, editor );
+            if ( !contents.equals( edited ) )
             {
-                this.save(file, edited);
+                this.save( file, edited );
             }
         }
     }
@@ -79,45 +79,45 @@ public class CleanMojo extends AbstractSourceMojo
 
         private boolean modified;
 
-        public String editLine(final String line) throws MojoFailureException
+        public String editLine( final String line ) throws MojoFailureException
         {
             String ret = null;
 
-            if(line != null)
+            if ( line != null )
             {
                 StringBuffer spaces = null;
                 boolean sawSpace = false;
                 final StringBuffer replacement =
-                    new StringBuffer(line.length());
+                    new StringBuffer( line.length() );
 
                 final char[] chars = line.toCharArray();
 
-                for(int i = 0; i < chars.length; i++)
+                for ( int i = 0; i < chars.length; i++ )
                 {
-                    if(chars[i] == ' ')
+                    if ( chars[i] == ' ' )
                     {
-                        if(spaces == null)
+                        if ( spaces == null )
                         {
                             spaces = new StringBuffer();
                         }
 
-                        spaces.append(chars[i]);
+                        spaces.append( chars[i] );
                         sawSpace = true;
                     }
                     else
                     {
-                        if(sawSpace)
+                        if ( sawSpace )
                         {
-                            replacement.append(spaces);
+                            replacement.append( spaces );
                             sawSpace = false;
                             spaces = null;
                         }
-                        replacement.append(chars[i]);
+                        replacement.append( chars[i] );
                     }
                 }
 
                 ret = replacement.toString();
-                this.modified = !ret.equals(line);
+                this.modified = !ret.equals( line );
             }
 
             return ret;
