@@ -42,20 +42,20 @@ public class CharsetsTest
      */
     public void testPlatformCharsets() throws Exception
     {
-        final byte[] ascii = Charsets.encode(TEST, "US-ASCII");
-        final byte[] utf8 = Charsets.encode(TEST, "UTF-8");
-        final byte[] utf16 = Charsets.encode(TEST, "UTF-16");
+        final byte[] ascii = Charsets.encode( TEST, "US-ASCII" );
+        final byte[] utf8 = Charsets.encode( TEST, "UTF-8" );
+        final byte[] utf16 = Charsets.encode( TEST, "UTF-16" );
 
-        final String asciiDecoded = Charsets.decode(ascii, "US-ASCII");
-        final String utf8Decoded = Charsets.decode(utf8, "UTF-8");
-        final String utf16Decoded = Charsets.decode(utf16, "UTF-16");
+        final String asciiDecoded = Charsets.decode( ascii, "US-ASCII" );
+        final String utf8Decoded = Charsets.decode( utf8, "UTF-8" );
+        final String utf16Decoded = Charsets.decode( utf16, "UTF-16" );
 
-        Assert.assertEquals(TEST.length(), ascii.length);
-        Assert.assertEquals(TEST.length(), utf8.length);
+        Assert.assertEquals( TEST.length(), ascii.length );
+        Assert.assertEquals( TEST.length(), utf8.length );
 
-        Assert.assertEquals(TEST, asciiDecoded);
-        Assert.assertEquals(TEST, utf8Decoded);
-        Assert.assertEquals(TEST, utf16Decoded);
+        Assert.assertEquals( TEST, asciiDecoded );
+        Assert.assertEquals( TEST, utf8Decoded );
+        Assert.assertEquals( TEST, utf16Decoded );
     }
 
     //-------------------------------------------------------------------Tests--

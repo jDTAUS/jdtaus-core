@@ -44,20 +44,20 @@ public class RandomAccessFileOperationsTest extends FileOperationsTest
     {
         try
         {
-            if(this.tmp != null)
+            if ( this.tmp != null )
             {
                 this.tmp.delete();
             }
 
-            this.tmp = File.createTempFile("jdtaus", "tmp");
+            this.tmp = File.createTempFile( "jdtaus", "tmp" );
             this.tmp.deleteOnExit();
             return new RandomAccessFileOperations(
-                new RandomAccessFile(this.tmp, "rw"));
+                new RandomAccessFile( this.tmp, "rw" ) );
 
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 
@@ -75,16 +75,16 @@ public class RandomAccessFileOperationsTest extends FileOperationsTest
      */
     public void testStreaming() throws Exception
     {
-        final File testFile = File.createTempFile("jdtaus", "tmp");
+        final File testFile = File.createTempFile( "jdtaus", "tmp" );
         final RandomAccessFileOperations ops = new RandomAccessFileOperations(
-            new RandomAccessFile(testFile, "rw"));
+            new RandomAccessFile( testFile, "rw" ) );
 
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        ops.write(this.getTestFile());
-        ops.read(out);
+        ops.write( this.getTestFile() );
+        ops.read( out );
         out.close();
-        this.assertValidTestFile(new String(out.toByteArray(), "UTF-8"));
+        this.assertValidTestFile( new String( out.toByteArray(), "UTF-8" ) );
         testFile.delete();
     }
 
@@ -93,12 +93,11 @@ public class RandomAccessFileOperationsTest extends FileOperationsTest
 
     public void finalize()
     {
-        if(this.tmp != null && this.tmp.exists())
+        if ( this.tmp != null && this.tmp.exists() )
         {
             this.tmp.delete();
         }
     }
 
     //------------------------------------------------------------------Object--
-
 }

@@ -56,13 +56,12 @@ public class MemoryFileOperationsTest extends FileOperationsTest
         final MemoryFileOperations ops = new MemoryFileOperations();
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        ops.write(this.getTestFile());
-        this.assertValidTestFile(new String(ops.getData(), "UTF-8"));
-        ops.read(out);
+        ops.write( this.getTestFile() );
+        this.assertValidTestFile( new String( ops.getData(), "UTF-8" ) );
+        ops.read( out );
         out.close();
-        this.assertValidTestFile(new String(out.toByteArray(), "UTF-8"));
+        this.assertValidTestFile( new String( out.toByteArray(), "UTF-8" ) );
     }
 
     //------------------------------------------------MemoryFileOperationsTest--
-
 }

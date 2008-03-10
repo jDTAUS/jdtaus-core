@@ -87,7 +87,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
         }
 
         p = meta.getProperty("cacheSize");
-        this._cacheSize = ((java.lang.Integer) p.getValue()).intValue();
+        this.pCacheSize = ((java.lang.Integer) p.getValue()).intValue();
 
     }
 // </editor-fold>//GEN-END:jdtausConstructors
@@ -99,7 +99,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>MemoryManager</code> implementation. */
-    private transient MemoryManager _dependency0;
+    private transient MemoryManager dMemoryManager;
 
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
@@ -109,9 +109,9 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     private MemoryManager getMemoryManager()
     {
         MemoryManager ret = null;
-        if(this._dependency0 != null)
+        if(this.dMemoryManager != null)
         {
-            ret = this._dependency0;
+            ret = this.dMemoryManager;
         }
         else
         {
@@ -124,7 +124,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
                 getDependencies().getDependency("MemoryManager").
                 isBound())
             {
-                this._dependency0 = ret;
+                this.dMemoryManager = ret;
             }
         }
 
@@ -148,7 +148,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      * Property {@code cacheSize}.
      * @serial
      */
-    private int _cacheSize;
+    private int pCacheSize;
 
     /**
      * Gets the value of property <code>cacheSize</code>.
@@ -157,7 +157,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      */
     public int getCacheSize()
     {
-        return this._cacheSize;
+        return this.pCacheSize;
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -172,19 +172,19 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
         return this.fileOperations.getLength();
     }
 
-    public void setLength(final long newLength) throws IOException
+    public void setLength( final long newLength ) throws IOException
     {
         this.assertNotClosed();
 
         final long oldLength = this.getLength();
-        this.fileOperations.setLength(newLength);
-        if(this.filePointer > newLength)
+        this.fileOperations.setLength( newLength );
+        if ( this.filePointer > newLength )
         {
             this.filePointer = newLength;
         }
 
-        if(oldLength > newLength && this.cachePosition != NO_CACHEPOSITION &&
-            this.cachePosition + this.cacheLength >= newLength)
+        if ( oldLength > newLength && this.cachePosition != NO_CACHEPOSITION &&
+            this.cachePosition + this.cacheLength >= newLength )
         { // Discard the end of file cache.
             this.cachePosition = NO_CACHEPOSITION;
         }
@@ -197,31 +197,31 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
         return this.filePointer;
     }
 
-    public void setFilePointer(final long pos) throws IOException
+    public void setFilePointer( final long pos ) throws IOException
     {
         this.assertNotClosed();
 
         this.filePointer = pos;
     }
 
-    public int read(final byte[] buf, int off, int len)
-    throws IOException
+    public int read( final byte[] buf, int off, int len )
+        throws IOException
     {
-        if(buf == null)
+        if ( buf == null )
         {
-            throw new NullPointerException("buf");
+            throw new NullPointerException( "buf" );
         }
-        if(off < 0)
+        if ( off < 0 )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(off));
+            throw new IndexOutOfBoundsException( Integer.toString( off ) );
         }
-        if(len < 0)
+        if ( len < 0 )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(len));
+            throw new IndexOutOfBoundsException( Integer.toString( len ) );
         }
-        if(off + len > buf.length)
+        if ( off + len > buf.length )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(off + len));
+            throw new IndexOutOfBoundsException( Integer.toString( off + len ) );
         }
 
         this.assertNotClosed();
@@ -230,15 +230,15 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
 
         final long fileLength = this.getLength();
 
-        if(len == 0)
+        if ( len == 0 )
         {
             read = 0;
         }
-        else if(this.filePointer < fileLength)
+        else if ( this.filePointer < fileLength )
         {
-            if(this.cachePosition == NO_CACHEPOSITION ||
-                !(this.filePointer >= this.cachePosition &&
-                this.filePointer < this.cachePosition + this.cacheLength))
+            if ( this.cachePosition == NO_CACHEPOSITION ||
+                !( this.filePointer >= this.cachePosition &&
+                this.filePointer < this.cachePosition + this.cacheLength ) )
             { // Cache not initialized or file pointer outside the cached area.
                 this.fillCache();
             }
@@ -248,11 +248,13 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
             assert cacheStart <= Integer.MAX_VALUE :
                 "Unexpected implementation limit reached.";
 
-            final int cachedLength = len > this.cacheLength - (int) cacheStart ?
-                this.cacheLength - (int) cacheStart : len;
+            final int cachedLength = len > this.cacheLength -
+                ( int ) cacheStart
+                ? this.cacheLength - ( int ) cacheStart
+                : len;
 
-            System.arraycopy(this.cache, (int) cacheStart, buf, off,
-                cachedLength);
+            System.arraycopy( this.cache, ( int ) cacheStart, buf, off,
+                              cachedLength );
 
             len -= cachedLength;
             off += cachedLength;
@@ -263,63 +265,65 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
         return read;
     }
 
-    public void write(final byte[] buf, final int off, final int len)
-    throws IOException
+    public void write( final byte[] buf, final int off, final int len )
+        throws IOException
     {
-        if(buf == null)
+        if ( buf == null )
         {
-            throw new NullPointerException("buf");
+            throw new NullPointerException( "buf" );
         }
-        if(off < 0)
+        if ( off < 0 )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(off));
+            throw new IndexOutOfBoundsException( Integer.toString( off ) );
         }
-        if(len < 0)
+        if ( len < 0 )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(len));
+            throw new IndexOutOfBoundsException( Integer.toString( len ) );
         }
-        if(off + len > buf.length)
+        if ( off + len > buf.length )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(off + len));
+            throw new IndexOutOfBoundsException( Integer.toString( off + len ) );
         }
 
         this.assertNotClosed();
 
-        if(this.cachePosition != NO_CACHEPOSITION &&
+        if ( this.cachePosition != NO_CACHEPOSITION &&
             this.filePointer >= this.cachePosition &&
-            this.filePointer < this.cachePosition + this.cacheLength)
+            this.filePointer < this.cachePosition + this.cacheLength )
         { // Cache needs updating.
             final long cacheStart = this.filePointer - this.cachePosition;
 
             assert cacheStart <= Integer.MAX_VALUE :
                 "Unexpected implementation limit reached.";
 
-            final int cachedLength = len > this.cacheLength - (int) cacheStart ?
-                this.cacheLength - (int) cacheStart : len;
+            final int cachedLength = len > this.cacheLength -
+                ( int ) cacheStart
+                ? this.cacheLength - ( int ) cacheStart
+                : len;
 
-            System.arraycopy(buf, off, this.cache, (int) cacheStart,
-                cachedLength);
+            System.arraycopy( buf, off, this.cache, ( int ) cacheStart,
+                              cachedLength );
 
         }
 
-        this.fileOperations.setFilePointer(this.filePointer);
-        this.fileOperations.write(buf, off, len);
+        this.fileOperations.setFilePointer( this.filePointer );
+        this.fileOperations.write( buf, off, len );
         this.filePointer += len;
     }
 
-    public void read(final OutputStream out) throws IOException
+    public void read( final OutputStream out ) throws IOException
     {
         this.assertNotClosed();
 
-        this.fileOperations.read(out);
+        this.fileOperations.read( out );
         this.filePointer = this.fileOperations.getFilePointer();
     }
 
-    public void write(final InputStream in) throws IOException
+    public void write( final InputStream in ) throws IOException
     {
         this.assertNotClosed();
 
-        this.fileOperations.write(in);
+        this.fileOperations.write( in );
         this.filePointer = this.fileOperations.getFilePointer();
     }
 
@@ -352,9 +356,9 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     {
         this.assertNotClosed();
 
-        if(this.fileOperations instanceof FlushableFileOperations)
+        if ( this.fileOperations instanceof FlushableFileOperations )
         {
-            ((FlushableFileOperations) this.fileOperations).flush();
+            ( ( FlushableFileOperations ) this.fileOperations ).flush();
         }
     }
 
@@ -369,6 +373,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
 
     /** Position in the file {@code cache} starts. */
     private long cachePosition;
+
     private static final long NO_CACHEPOSITION = Long.MIN_VALUE;
 
     /** Length of the cached data. */
@@ -389,24 +394,25 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      * @throws NullPointerException if {@code fileOperations} is {@code null}.
      * @throws IOException if reading fails.
      */
-    public ReadAheadFileOperations(final FileOperations fileOperations)
-    throws IOException
+    public ReadAheadFileOperations( final FileOperations fileOperations )
+        throws IOException
     {
         super();
 
-        if(fileOperations == null)
+        if ( fileOperations == null )
         {
-            throw new NullPointerException("fileOperations");
+            throw new NullPointerException( "fileOperations" );
         }
 
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
         this.assertValidProperties();
 
         this.fileOperations = fileOperations;
         this.filePointer = fileOperations.getFilePointer();
 
         // Pre-allocate the cache.
-        this.cache = this.getMemoryManager().allocateBytes(this.getCacheSize());
+        this.cache =
+            this.getMemoryManager().allocateBytes( this.getCacheSize() );
     }
 
     /**
@@ -420,25 +426,26 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      * @throws PropertyException if {@code cacheSize} is negative or zero.
      * @throws IOException if reading fails.
      */
-    public ReadAheadFileOperations(final FileOperations fileOperations,
-        final int cacheSize) throws IOException
+    public ReadAheadFileOperations( final FileOperations fileOperations,
+                                     final int cacheSize ) throws IOException
     {
         super();
 
-        if(fileOperations == null)
+        if ( fileOperations == null )
         {
-            throw new NullPointerException("fileOperations");
+            throw new NullPointerException( "fileOperations" );
         }
 
-        this.initializeProperties(META.getProperties());
-        this._cacheSize = cacheSize;
+        this.initializeProperties( META.getProperties() );
+        this.pCacheSize = cacheSize;
         this.assertValidProperties();
 
         this.fileOperations = fileOperations;
         this.filePointer = fileOperations.getFilePointer();
 
         // Pre-allocate the cache.
-        this.cache = this.getMemoryManager().allocateBytes(this.getCacheSize());
+        this.cache =
+            this.getMemoryManager().allocateBytes( this.getCacheSize() );
     }
 
     /**
@@ -460,10 +467,11 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      */
     private void assertValidProperties()
     {
-        if(this.getCacheSize() <= 0)
+        if ( this.getCacheSize() <= 0 )
         {
-            throw new PropertyException("cacheSize",
-                Integer.toString(this.getCacheSize()));
+            throw new PropertyException(
+                "cacheSize",
+                Integer.toString( this.getCacheSize() ) );
 
         }
     }
@@ -475,10 +483,10 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      */
     private void assertNotClosed() throws IOException
     {
-        if(this.closed)
+        if ( this.closed )
         {
-            throw new IOException(ReadAheadFileOperationsBundle.
-                getAlreadyClosedText(Locale.getDefault()));
+            throw new IOException( ReadAheadFileOperationsBundle.getInstance().
+                                   getAlreadyClosedText( Locale.getDefault() ) );
 
         }
     }
@@ -491,8 +499,9 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     private void fillCache() throws IOException
     {
         final long delta = this.getLength() - this.filePointer;
-        final int toRead = delta > this.cache.length ?
-            this.cache.length : (int) delta;
+        final int toRead = delta > this.cache.length
+            ? this.cache.length
+            : ( int ) delta;
 
         this.cachePosition = this.filePointer;
 
@@ -501,16 +510,17 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
 
         do
         {
-            this.fileOperations.setFilePointer(this.filePointer);
+            this.fileOperations.setFilePointer( this.filePointer );
             final int read = this.fileOperations.read(
-                this.cache, totalRead, readLength);
+                this.cache, totalRead, readLength );
 
             assert read != FileOperations.EOF : "Unexpected end of file.";
 
             totalRead += read;
             readLength -= read;
 
-        } while(totalRead < toRead);
+        }
+        while ( totalRead < toRead );
 
         this.cacheLength = toRead;
     }

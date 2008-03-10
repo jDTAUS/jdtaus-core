@@ -87,7 +87,7 @@ public final class SwingMessagePane implements MessageListener
         }
 
         p = meta.getProperty("maximumMessages");
-        this._maximumMessages = ((java.lang.Integer) p.getValue()).intValue();
+        this.pMaximumMessages = ((java.lang.Integer) p.getValue()).intValue();
 
     }
 // </editor-fold>//GEN-END:jdtausConstructors
@@ -99,7 +99,7 @@ public final class SwingMessagePane implements MessageListener
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>Logger</code> implementation. */
-    private transient Logger _dependency0;
+    private transient Logger dLogger;
 
     /**
      * Gets the configured <code>Logger</code> implementation.
@@ -109,9 +109,9 @@ public final class SwingMessagePane implements MessageListener
     private Logger getLogger()
     {
         Logger ret = null;
-        if(this._dependency0 != null)
+        if(this.dLogger != null)
         {
-            ret = this._dependency0;
+            ret = this.dLogger;
         }
         else
         {
@@ -124,7 +124,7 @@ public final class SwingMessagePane implements MessageListener
                 getDependencies().getDependency("Logger").
                 isBound())
             {
-                this._dependency0 = ret;
+                this.dLogger = ret;
             }
         }
 
@@ -148,7 +148,7 @@ public final class SwingMessagePane implements MessageListener
      * Property {@code maximumMessages}.
      * @serial
      */
-    private int _maximumMessages;
+    private int pMaximumMessages;
 
     /**
      * Gets the value of property <code>maximumMessages</code>.
@@ -157,7 +157,7 @@ public final class SwingMessagePane implements MessageListener
      */
     public int getMaximumMessages()
     {
-        return this._maximumMessages;
+        return this.pMaximumMessages;
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -173,71 +173,80 @@ public final class SwingMessagePane implements MessageListener
      *
      * @param event the event holding messages.
      */
-    public void onMessage(final MessageEvent event)
+    public void onMessage( final MessageEvent event )
     {
-        if(event != null)
+        if ( event != null )
         {
-            SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
+            SwingUtilities.invokeLater(
+                new Runnable()
                 {
-                    final Object[] messages =
-                        new Object[event.getMessages().length];
 
-                    for(int i = 0; i < messages.length &&
-                        i < getMaximumMessages(); i++)
+                    public void run()
                     {
-                        messages[i] = event.getMessages()[i].
-                            getText(Locale.getDefault());
+                        final Object[] messages =
+                            new Object[ event.getMessages().length ];
 
+                        for ( int i = 0; i < messages.length &&
+                            i < getMaximumMessages(); i++ )
+                        {
+                            messages[i] =
+                                event.getMessages()[i].getText( Locale.getDefault() );
+
+                        }
+
+                        switch ( event.getType() )
+                        {
+                            case MessageEvent.INFORMATION:
+                                JOptionPane.showMessageDialog(
+                                    getParent(), messages,
+                                    SwingMessagePaneBundle.getInstance().
+                                    getInformationText( Locale.getDefault() ),
+                                    JOptionPane.INFORMATION_MESSAGE );
+
+                                break;
+
+                            case MessageEvent.NOTIFICATION:
+                                JOptionPane.showMessageDialog(
+                                    getParent(), messages,
+                                    SwingMessagePaneBundle.getInstance().
+                                    getNotificationText( Locale.getDefault() ),
+                                    JOptionPane.INFORMATION_MESSAGE );
+
+                                break;
+
+                            case MessageEvent.WARNING:
+                                JOptionPane.showMessageDialog(
+                                    getParent(), messages,
+                                    SwingMessagePaneBundle.getInstance().
+                                    getWarningText( Locale.getDefault() ),
+                                    JOptionPane.WARNING_MESSAGE );
+
+                                break;
+
+                            case MessageEvent.ERROR:
+                                UIManager.getLookAndFeel().
+                                    provideErrorFeedback( getParent() );
+
+                                JOptionPane.showMessageDialog(
+                                    getParent(), messages,
+                                    SwingMessagePaneBundle.getInstance().
+                                    getErrorText( Locale.getDefault() ),
+                                    JOptionPane.ERROR_MESSAGE );
+
+                                break;
+
+                            default:
+                                getLogger().warn(
+                                    SwingMessagePaneBundle.getInstance().
+                                    getUnknownMessageTypeMessage( Locale.getDefault() ).
+                                    format( new Object[] {
+                                            new Integer( event.getType() )
+                                        } ) );
+
+                        }
                     }
 
-                    switch(event.getType())
-                    {
-                        case MessageEvent.INFORMATION:
-                            JOptionPane.showMessageDialog(getParent(),
-                                messages, SwingMessagePaneBundle.
-                                getInformationText(Locale.getDefault()),
-                                JOptionPane.INFORMATION_MESSAGE);
-
-                            break;
-
-                        case MessageEvent.NOTIFICATION:
-                            JOptionPane.showMessageDialog(getParent(),
-                                messages, SwingMessagePaneBundle.
-                                getNotificationText(Locale.getDefault()),
-                                JOptionPane.INFORMATION_MESSAGE);
-
-                            break;
-
-                        case MessageEvent.WARNING:
-                            JOptionPane.showMessageDialog(getParent(),
-                                messages, SwingMessagePaneBundle.
-                                getWarningText(Locale.getDefault()),
-                                JOptionPane.WARNING_MESSAGE);
-
-                            break;
-
-                        case MessageEvent.ERROR:
-                            UIManager.getLookAndFeel().provideErrorFeedback(
-                                getParent());
-
-                            JOptionPane.showMessageDialog(getParent(),
-                                messages, SwingMessagePaneBundle.
-                                getErrorText(Locale.getDefault()),
-                                JOptionPane.ERROR_MESSAGE);
-
-                            break;
-
-                        default:
-                            getLogger().warn(SwingMessagePaneBundle.
-                                getUnknownMessageTypeMessage(
-                                Locale.getDefault()).format(new Object[] {
-                                new Integer(event.getType()) }));
-
-                    }
-                }
-            });
+                } );
         }
     }
 
@@ -257,19 +266,19 @@ public final class SwingMessagePane implements MessageListener
      * @throws HeadlessException if this class is used in an environment
      * not providing a keyboard, display, or mouse.
      */
-    public SwingMessagePane(final Component parent)
+    public SwingMessagePane( final Component parent )
     {
-        if(parent == null)
+        if ( parent == null )
         {
-            throw new NullPointerException("parent");
+            throw new NullPointerException( "parent" );
         }
 
-        if(GraphicsEnvironment.isHeadless())
+        if ( GraphicsEnvironment.isHeadless() )
         {
             throw new HeadlessException();
         }
 
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
         this.assertValidProperties();
 
         this.parent = parent;
@@ -289,20 +298,21 @@ public final class SwingMessagePane implements MessageListener
      * @throws HeadlessException if this class is used in an environment
      * not providing a keyboard, display, or mouse.
      */
-    public SwingMessagePane(final Component parent, final int maximumMessages)
+    public SwingMessagePane( final Component parent,
+                              final int maximumMessages )
     {
-        if(parent == null)
+        if ( parent == null )
         {
-            throw new NullPointerException("parent");
+            throw new NullPointerException( "parent" );
         }
 
-        if(GraphicsEnvironment.isHeadless())
+        if ( GraphicsEnvironment.isHeadless() )
         {
             throw new HeadlessException();
         }
 
-        this.initializeProperties(META.getProperties());
-        this._maximumMessages = maximumMessages;
+        this.initializeProperties( META.getProperties() );
+        this.pMaximumMessages = maximumMessages;
         this.assertValidProperties();
 
         this.parent = parent;
@@ -325,11 +335,11 @@ public final class SwingMessagePane implements MessageListener
      *
      * @throws NullPointerException if {@code parent} is {@code null}.
      */
-    public void setParent(final Component parent)
+    public void setParent( final Component parent )
     {
-        if(parent == null)
+        if ( parent == null )
         {
-            throw new NullPointerException("parent");
+            throw new NullPointerException( "parent" );
         }
 
         this.parent = parent;
@@ -342,10 +352,11 @@ public final class SwingMessagePane implements MessageListener
      */
     private void assertValidProperties()
     {
-        if(this.getMaximumMessages() <= 0)
+        if ( this.getMaximumMessages() <= 0 )
         {
-            throw new PropertyException("maximumMessages",
-                Integer.toString(this.getMaximumMessages()));
+            throw new PropertyException(
+                "maximumMessages",
+                Integer.toString( this.getMaximumMessages() ) );
 
         }
     }

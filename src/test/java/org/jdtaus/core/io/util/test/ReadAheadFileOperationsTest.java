@@ -39,11 +39,11 @@ public class ReadAheadFileOperationsTest extends FlushableFileOperationsTest
     {
         try
         {
-            return new ReadAheadFileOperations(this.getMemoryFileOperations());
+            return new ReadAheadFileOperations( this.getMemoryFileOperations() );
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 
@@ -57,59 +57,61 @@ public class ReadAheadFileOperationsTest extends FlushableFileOperationsTest
     public void testWriteUpdatesCache() throws Exception
     {
         final FileOperations ops = this.getFileOperations();
-        final byte[] testBuf = new byte[101];
-        final byte[] buf = new byte[101];
+        final byte[] testBuf = new byte[ 101 ];
+        final byte[] buf = new byte[ 101 ];
 
         int totalRead = 0;
         int toRead = 100;
         int read = 0;
 
-        Arrays.fill(testBuf, (byte) 100);
-        Arrays.fill(buf, (byte) 0);
-        buf[100] = (byte) 100;
+        Arrays.fill( testBuf, ( byte ) 100 );
+        Arrays.fill( buf, ( byte ) 0 );
+        buf[100] = ( byte ) 100;
 
-        ops.setLength(0L);
-        ops.write(testBuf, 0, 100);
+        ops.setLength( 0L );
+        ops.write( testBuf, 0, 100 );
 
-        Assert.assertEquals(100L, ops.getFilePointer());
+        Assert.assertEquals( 100L, ops.getFilePointer() );
 
-        ops.setFilePointer(0L);
+        ops.setFilePointer( 0L );
 
         do
         {
-            read = ops.read(buf, totalRead, toRead);
+            read = ops.read( buf, totalRead, toRead );
             assert read != -1;
             totalRead += read;
             toRead -= read;
-        } while(totalRead < 100);
+        }
+        while ( totalRead < 100 );
 
-        Assert.assertTrue(Arrays.equals(testBuf, buf));
+        Assert.assertTrue( Arrays.equals( testBuf, buf ) );
 
-        ops.setFilePointer(0L);
-        ops.write(new byte[] { (byte) 1 }, 0, 1);
-        ops.setFilePointer(100L);
-        ops.write(new byte[] { (byte) 1 }, 0, 1);
+        ops.setFilePointer( 0L );
+        ops.write( new byte[] { ( byte ) 1 }, 0, 1 );
+        ops.setFilePointer( 100L );
+        ops.write( new byte[] { ( byte ) 1 }, 0, 1 );
 
-        testBuf[0] = (byte) 1;
-        testBuf[100] = (byte) 1;
+        testBuf[0] = ( byte ) 1;
+        testBuf[100] = ( byte ) 1;
 
-        ops.setFilePointer(0L);
-        Arrays.fill(buf, (byte) 0);
+        ops.setFilePointer( 0L );
+        Arrays.fill( buf, ( byte ) 0 );
 
         toRead = buf.length;
         totalRead = 0;
 
         do
         {
-            read = ops.read(buf, totalRead, toRead);
+            read = ops.read( buf, totalRead, toRead );
             assert read != -1;
             totalRead += read;
             toRead -= read;
-        } while(totalRead < buf.length);
+        }
+        while ( totalRead < buf.length );
 
-        Assert.assertTrue(Arrays.equals(testBuf, buf));
-        Assert.assertEquals(-1, ops.read(buf, 0, buf.length));
-        ops.setLength(0L);
+        Assert.assertTrue( Arrays.equals( testBuf, buf ) );
+        Assert.assertEquals( -1, ops.read( buf, 0, buf.length ) );
+        ops.setLength( 0L );
     }
 
     //---------------------------------------------ReadAheadFileOperationsTest--

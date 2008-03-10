@@ -41,12 +41,12 @@ public class ReadAheadFileOperationsUnevenTest
         try
         {
             return new ReadAheadFileOperations(
-                this.getMemoryFileOperations(), 3);
+                this.getMemoryFileOperations(), 3 );
 
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 
@@ -61,47 +61,49 @@ public class ReadAheadFileOperationsUnevenTest
     public void testReadBeyondCacheEof() throws Exception
     {
         final FileOperations ops = this.getFileOperations();
-        final byte[] buf = new byte[100];
-        final byte[] eofBuf = new byte[200];
+        final byte[] buf = new byte[ 100 ];
+        final byte[] eofBuf = new byte[ 200 ];
 
         int toRead = buf.length;
         int totalRead = 0;
         int read = -1;
 
-        Arrays.fill(buf, (byte) 100);
-        ops.setLength(0L);
-        ops.setFilePointer(0L);
-        ops.write(buf, 0, buf.length);
+        Arrays.fill( buf, ( byte ) 100 );
+        ops.setLength( 0L );
+        ops.setFilePointer( 0L );
+        ops.write( buf, 0, buf.length );
 
-        ops.setFilePointer(0L);
+        ops.setFilePointer( 0L );
 
         do
         {
-            read = ops.read(buf, totalRead, toRead);
+            read = ops.read( buf, totalRead, toRead );
             assert read != -1;
             totalRead += read;
             toRead -= read;
-        } while(totalRead < buf.length);
+        }
+        while ( totalRead < buf.length );
 
-        Assert.assertEquals(buf.length, totalRead);
+        Assert.assertEquals( buf.length, totalRead );
 
-        ops.setFilePointer(0L);
+        ops.setFilePointer( 0L );
 
         totalRead = 0;
         toRead = eofBuf.length;
 
         do
         {
-            read = ops.read(eofBuf, totalRead, toRead);
+            read = ops.read( eofBuf, totalRead, toRead );
 
-            if(read != -1)
+            if ( read != -1 )
             {
                 totalRead += read;
                 toRead -= read;
             }
-        } while(totalRead < toRead && read != -1);
+        }
+        while ( totalRead < toRead && read != -1 );
 
-        Assert.assertEquals(100L, totalRead);
+        Assert.assertEquals( 100L, totalRead );
     }
 
     /**
@@ -112,47 +114,49 @@ public class ReadAheadFileOperationsUnevenTest
     public void testReadBeyondCacheNoEof() throws Exception
     {
         final FileOperations ops = this.getFileOperations();
-        final byte[] buf = new byte[100];
-        final byte[] noEofBuf = new byte[200];
-        Arrays.fill(buf, (byte) 100);
-        ops.setLength(0L);
-        ops.setFilePointer(0L);
-        ops.write(buf, 0, buf.length);
+        final byte[] buf = new byte[ 100 ];
+        final byte[] noEofBuf = new byte[ 200 ];
+        Arrays.fill( buf, ( byte ) 100 );
+        ops.setLength( 0L );
+        ops.setFilePointer( 0L );
+        ops.write( buf, 0, buf.length );
 
         int toRead = buf.length;
         int totalRead = 0;
         int read = -1;
 
-        ops.setFilePointer(0L);
+        ops.setFilePointer( 0L );
         do
         {
-            read = ops.read(buf, totalRead, toRead);
-            if(read != -1)
+            read = ops.read( buf, totalRead, toRead );
+            if ( read != -1 )
             {
                 totalRead += read;
                 toRead -= read;
             }
-        } while(totalRead < buf.length && read != -1);
+        }
+        while ( totalRead < buf.length && read != -1 );
 
-        Assert.assertEquals(buf.length, totalRead);
-        Assert.assertEquals(-1L, ops.read(buf, 0, buf.length));
-        ops.setFilePointer(0L);
-        ops.setLength(10000L);
+        Assert.assertEquals( buf.length, totalRead );
+        Assert.assertEquals( -1L, ops.read( buf, 0, buf.length ) );
+        ops.setFilePointer( 0L );
+        ops.setLength( 10000L );
 
         totalRead = 0;
         toRead = noEofBuf.length;
 
         do
         {
-            read = ops.read(noEofBuf, totalRead, toRead);
-            if(read != -1)
+            read = ops.read( noEofBuf, totalRead, toRead );
+            if ( read != -1 )
             {
                 totalRead += read;
                 toRead -= read;
             }
-        } while(totalRead < noEofBuf.length && read != -1);
+        }
+        while ( totalRead < noEofBuf.length && read != -1 );
 
-        Assert.assertEquals(noEofBuf.length, totalRead);
+        Assert.assertEquals( noEofBuf.length, totalRead );
     }
 
     //---------------------------------------ReadAheadFileOperationsUnevenTest--

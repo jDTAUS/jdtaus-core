@@ -39,12 +39,12 @@ public class CoalescingFileOperationsUnevenTest
         try
         {
             return new CoalescingFileOperations(
-                this.getMemoryFileOperations(), 3);
+                this.getMemoryFileOperations(), 3 );
 
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 

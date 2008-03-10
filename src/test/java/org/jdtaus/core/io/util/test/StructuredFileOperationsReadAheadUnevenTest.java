@@ -50,9 +50,9 @@ public class StructuredFileOperationsReadAheadUnevenTest
             this.structuredFile.flush();
             return this.memOps.getData();
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 
@@ -60,19 +60,19 @@ public class StructuredFileOperationsReadAheadUnevenTest
     {
         try
         {
-            if(this.structuredFile == null)
+            if ( this.structuredFile == null )
             {
                 this.structuredFile = new StructuredFileOperations(
                     StructuredFileTest.BLOCK_SIZE,
-                    new ReadAheadFileOperations(this.memOps, 3));
+                    new ReadAheadFileOperations( this.memOps, 3 ) );
 
             }
 
             return this.structuredFile;
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 

@@ -51,9 +51,9 @@ public class StructuredFileOperationsCoalescingUnevenTest
             return this.memOps.getData();
 
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 
@@ -61,19 +61,19 @@ public class StructuredFileOperationsCoalescingUnevenTest
     {
         try
         {
-            if(this.structuredFile == null)
+            if ( this.structuredFile == null )
             {
                 this.structuredFile = new StructuredFileOperations(
                     StructuredFileTest.BLOCK_SIZE,
-                    new CoalescingFileOperations(this.memOps, 3));
+                    new CoalescingFileOperations( this.memOps, 3 ) );
 
             }
 
             return this.structuredFile;
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 

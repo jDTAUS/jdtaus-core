@@ -44,7 +44,7 @@ public abstract class FlushableFileOperationsTest extends FileOperationsTest
      */
     public final MemoryFileOperations getMemoryFileOperations()
     {
-        if(this.memoryOps == null)
+        if ( this.memoryOps == null )
         {
             this.memoryOps = new MemoryFileOperations();
         }
@@ -61,7 +61,7 @@ public abstract class FlushableFileOperationsTest extends FileOperationsTest
      */
     public final FlushableFileOperations getFlushableFileOperations()
     {
-        return (FlushableFileOperations) this.getFileOperations();
+        return ( FlushableFileOperations ) this.getFileOperations();
     }
 
     //---------------------------------------------FlushableFileOperationsTest--
@@ -76,22 +76,22 @@ public abstract class FlushableFileOperationsTest extends FileOperationsTest
 
         final FlushableFileOperations ops = this.getFlushableFileOperations();
 
-        ops.write(this.getTestFile());
+        ops.write( this.getTestFile() );
         ops.flush();
 
-        final byte[] x = new byte[1];
-        x[0] = "X".getBytes("US-ASCII")[0];
-        ops.setFilePointer(0L);
-        ops.write(x, 0, 1);
-        ops.setFilePointer(ops.getLength() - 1L);
-        ops.write(x, 0, 1);
+        final byte[] x = new byte[ 1 ];
+        x[0] = "X".getBytes( "US-ASCII" )[0];
+        ops.setFilePointer( 0L );
+        ops.write( x, 0, 1 );
+        ops.setFilePointer( ops.getLength() - 1L );
+        ops.write( x, 0, 1 );
         ops.flush();
 
-        final String flushed = new String(this.getMemoryFileOperations().
-            getData(), "US-ASCII");
+        final String flushed = new String( this.getMemoryFileOperations().
+                                            getData(), "US-ASCII" );
 
-        Assert.assertEquals("XBCDEFGHIJKLMNOPQRSTUVWXYX", flushed);
-        ops.setLength(0L);
+        Assert.assertEquals( "XBCDEFGHIJKLMNOPQRSTUVWXYX", flushed );
+        ops.setLength( 0L );
     }
 
     //-------------------------------------------------------------------Tests--

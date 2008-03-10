@@ -38,12 +38,12 @@ public class CoalescingFileOperationsOneTest extends FlushableFileOperationsTest
         try
         {
             return new CoalescingFileOperations(
-                this.getMemoryFileOperations(), 1);
+                this.getMemoryFileOperations(), 1 );
 
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 

@@ -78,7 +78,7 @@ public final class TaskDurationLogger implements TaskListener
         }
 
         p = meta.getProperty("loggingThresholdMillis");
-        this._loggingThresholdMillis = ((java.lang.Long) p.getValue()).longValue();
+        this.pLoggingThresholdMillis = ((java.lang.Long) p.getValue()).longValue();
 
     }
 // </editor-fold>//GEN-END:jdtausConstructors
@@ -90,7 +90,7 @@ public final class TaskDurationLogger implements TaskListener
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>Logger</code> implementation. */
-    private transient Logger _dependency0;
+    private transient Logger dLogger;
 
     /**
      * Gets the configured <code>Logger</code> implementation.
@@ -100,9 +100,9 @@ public final class TaskDurationLogger implements TaskListener
     private Logger getLogger()
     {
         Logger ret = null;
-        if(this._dependency0 != null)
+        if(this.dLogger != null)
         {
-            ret = this._dependency0;
+            ret = this.dLogger;
         }
         else
         {
@@ -115,7 +115,7 @@ public final class TaskDurationLogger implements TaskListener
                 getDependencies().getDependency("Logger").
                 isBound())
             {
-                this._dependency0 = ret;
+                this.dLogger = ret;
             }
         }
 
@@ -139,7 +139,7 @@ public final class TaskDurationLogger implements TaskListener
      * Property {@code loggingThresholdMillis}.
      * @serial
      */
-    private long _loggingThresholdMillis;
+    private long pLoggingThresholdMillis;
 
     /**
      * Gets the value of property <code>loggingThresholdMillis</code>.
@@ -148,7 +148,7 @@ public final class TaskDurationLogger implements TaskListener
      */
     public long getLoggingThresholdMillis()
     {
-        return this._loggingThresholdMillis;
+        return this.pLoggingThresholdMillis;
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -164,25 +164,25 @@ public final class TaskDurationLogger implements TaskListener
      *
      * @param event the event send by a {@code Task}.
      */
-    public void onTaskEvent(final TaskEvent event)
+    public void onTaskEvent( final TaskEvent event )
     {
-        if(event != null)
+        if ( event != null )
         {
             final long now = System.currentTimeMillis();
             final long start = event.getTask().getTimestamp();
 
-            if(TaskEvent.ENDED == event.getType() &&
-                now - start > this.getLoggingThresholdMillis())
+            if ( TaskEvent.ENDED == event.getType() &&
+                now - start > this.getLoggingThresholdMillis() )
             {
-                this.getLogger().info(TaskDurationLoggerBundle.
-                    getDurationInfoMessage(Locale.getDefault()).
-                    format(new Object[] {
-                    event.getTask().getDescription().
-                        getText(Locale.getDefault()),
-                    new Date(start),
-                    new Date(now),
-                    new Long(now - start)
-                }));
+                this.getLogger().info(
+                    TaskDurationLoggerBundle.getInstance().
+                    getDurationInfoMessage( Locale.getDefault() ).
+                    format( new Object[] { event.getTask().getDescription().
+                                           getText( Locale.getDefault() ),
+                                           new Date( start ),
+                                           new Date( now ),
+                                           new Long( now - start )
+                        } ) );
             }
         }
     }
@@ -194,7 +194,7 @@ public final class TaskDurationLogger implements TaskListener
     public TaskDurationLogger()
     {
         super();
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
         this.assertValidProperties();
     }
 
@@ -209,11 +209,11 @@ public final class TaskDurationLogger implements TaskListener
      * @throws PropertyException if {@code loggingThresholdMillis} is negative
      * or zero.
      */
-    public TaskDurationLogger(final long loggingThresholdMillis)
+    public TaskDurationLogger( final long loggingThresholdMillis )
     {
         super();
-        this.initializeProperties(META.getProperties());
-        this._loggingThresholdMillis = loggingThresholdMillis;
+        this.initializeProperties( META.getProperties() );
+        this.pLoggingThresholdMillis = loggingThresholdMillis;
         this.assertValidProperties();
     }
 
@@ -224,10 +224,11 @@ public final class TaskDurationLogger implements TaskListener
      */
     private void assertValidProperties()
     {
-        if(this.getLoggingThresholdMillis() < 0L)
+        if ( this.getLoggingThresholdMillis() < 0L )
         {
-            throw new PropertyException("loggingThresholdMillis",
-                Long.toString(this.getLoggingThresholdMillis()));
+            throw new PropertyException(
+                "loggingThresholdMillis",
+                Long.toString( this.getLoggingThresholdMillis() ) );
 
         }
     }

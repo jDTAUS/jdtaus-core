@@ -88,7 +88,7 @@ public final class BlockingGlassPane extends JComponent
         }
 
         p = meta.getProperty("cursorType");
-        this._cursorType = ((java.lang.Integer) p.getValue()).intValue();
+        this.pCursorType = ((java.lang.Integer) p.getValue()).intValue();
 
     }
 // </editor-fold>//GEN-END:jdtausConstructors
@@ -111,7 +111,7 @@ public final class BlockingGlassPane extends JComponent
      * Property {@code cursorType}.
      * @serial
      */
-    private int _cursorType;
+    private int pCursorType;
 
     /**
      * Gets the value of property <code>cursorType</code>.
@@ -120,7 +120,7 @@ public final class BlockingGlassPane extends JComponent
      */
     private int getCursorType()
     {
-        return this._cursorType;
+        return this.pCursorType;
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -140,35 +140,37 @@ public final class BlockingGlassPane extends JComponent
      * @param visible {@code true} to enable blocking; {@code false} to disable
      * blocking.
      */
-    public void setVisible(final boolean visible)
+    public void setVisible( final boolean visible )
     {
         final Runnable runnable = new Runnable()
         {
+
             public void run()
             {
-                if (visible)
+                if ( visible )
                 {
-                    BlockingGlassPane.super.setVisible(true);
-                    setCursor(cursor);
+                    BlockingGlassPane.super.setVisible( true );
+                    setCursor( cursor );
                     KeyboardFocusManager.getCurrentKeyboardFocusManager().
-                        addKeyEventDispatcher(keyDispatcher);
+                        addKeyEventDispatcher( keyDispatcher );
 
                 }
                 else
                 {
                     KeyboardFocusManager.getCurrentKeyboardFocusManager().
-                        removeKeyEventDispatcher(keyDispatcher);
+                        removeKeyEventDispatcher( keyDispatcher );
 
-                    setCursor(Cursor.getDefaultCursor());
-                    BlockingGlassPane.super.setVisible(false);
+                    setCursor( Cursor.getDefaultCursor() );
+                    BlockingGlassPane.super.setVisible( false );
                     container.getContentPane().validate();
                 }
             }
+
         };
 
-        if(!SwingUtilities.isEventDispatchThread())
+        if ( !SwingUtilities.isEventDispatchThread() )
         {
-            SwingUtilities.invokeLater(runnable);
+            SwingUtilities.invokeLater( runnable );
         }
         else
         {
@@ -180,23 +182,26 @@ public final class BlockingGlassPane extends JComponent
     //--BlockingGlassPane-------------------------------------------------------
 
     /** {@code KeyEventDispatcher} used for blocking. */
-    private class BlockingDispatcher implements Serializable, KeyEventDispatcher
+    private class BlockingDispatcher implements Serializable,
+                                                 KeyEventDispatcher
     {
-        public boolean dispatchKeyEvent(final KeyEvent e)
+
+        public boolean dispatchKeyEvent( final KeyEvent e )
         {
             final Component source = e.getComponent();
 
-            if (source != null &&
-                SwingUtilities.isDescendingFrom(source, getParent()) &&
-                e.getID() == KeyEvent.KEY_TYPED)
+            if ( source != null &&
+                SwingUtilities.isDescendingFrom( source, getParent() ) &&
+                e.getID() == KeyEvent.KEY_TYPED )
             {
-                UIManager.getLookAndFeel().provideErrorFeedback(getParent());
+                UIManager.getLookAndFeel().provideErrorFeedback( getParent() );
                 e.consume();
             }
 
             return e.isConsumed();
         }
-    };
+
+    }
 
     /**
      * Container this component is registered as the glasspane with.
@@ -224,19 +229,19 @@ public final class BlockingGlassPane extends JComponent
      *
      * @throws NullPointerException if {@code container} is {@code null}.
      */
-    public BlockingGlassPane(final RootPaneContainer container)
+    public BlockingGlassPane( final RootPaneContainer container )
     {
         super();
 
-        if(container == null)
+        if ( container == null )
         {
-            throw new NullPointerException("container");
+            throw new NullPointerException( "container" );
         }
 
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
 
         this.container = container;
-        this.cursor = Cursor.getPredefinedCursor(this.getCursorType());
+        this.cursor = Cursor.getPredefinedCursor( this.getCursorType() );
         this.keyDispatcher = new BlockingDispatcher();
 
         this.initialize();
@@ -253,40 +258,44 @@ public final class BlockingGlassPane extends JComponent
      * @throws NullPointerException if either {@code container} or
      * {@code cursor} is {@code null}.
      */
-    public BlockingGlassPane(final RootPaneContainer container,
-        final Cursor cursor)
+    public BlockingGlassPane( final RootPaneContainer container,
+                               final Cursor cursor )
     {
         super();
 
-        if(container == null)
+        if ( container == null )
         {
-            throw new NullPointerException("container");
+            throw new NullPointerException( "container" );
         }
-        if(cursor == null)
+        if ( cursor == null )
         {
-            throw new NullPointerException("cursor");
+            throw new NullPointerException( "cursor" );
         }
 
         this.container = container;
         this.cursor = cursor;
         this.keyDispatcher = new BlockingDispatcher();
 
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
         this.initialize();
     }
 
     /** Initializes the instance. */
     private void initialize()
     {
-        super.setVisible(false);
-        this.setOpaque(false);
-        this.addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(final MouseEvent e)
+        super.setVisible( false );
+        this.setOpaque( false );
+        this.addMouseListener(
+            new MouseAdapter()
             {
-                UIManager.getLookAndFeel().provideErrorFeedback(getParent());
-            }
-        });
+
+                public void mouseClicked( final MouseEvent e )
+                {
+                    UIManager.getLookAndFeel().
+                        provideErrorFeedback( getParent() );
+                }
+
+            } );
     }
 
     //-------------------------------------------------------BlockingGlassPane--

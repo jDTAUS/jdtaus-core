@@ -84,7 +84,7 @@ public final class MessageLogger implements MessageListener
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>Logger</code> implementation. */
-    private transient Logger _dependency0;
+    private transient Logger dLogger;
 
     /**
      * Gets the configured <code>Logger</code> implementation.
@@ -94,9 +94,9 @@ public final class MessageLogger implements MessageListener
     private Logger getLogger()
     {
         Logger ret = null;
-        if(this._dependency0 != null)
+        if(this.dLogger != null)
         {
-            ret = this._dependency0;
+            ret = this.dLogger;
         }
         else
         {
@@ -109,7 +109,7 @@ public final class MessageLogger implements MessageListener
                 getDependencies().getDependency("Logger").
                 isBound())
             {
-                this._dependency0 = ret;
+                this.dLogger = ret;
             }
         }
 
@@ -141,39 +141,41 @@ public final class MessageLogger implements MessageListener
      *
      * @param event the event holding messages.
      */
-    public void onMessage(final MessageEvent event)
+    public void onMessage( final MessageEvent event )
     {
-        if(event != null)
+        if ( event != null )
         {
             final int numMessages = event.getMessages().length;
-            final StringBuffer messages = new StringBuffer(numMessages * 200);
-            for(int i = 0; i < numMessages; i++)
+            final StringBuffer messages = new StringBuffer( numMessages * 200 );
+            for ( int i = 0; i < numMessages; i++ )
             {
-                messages.append(event.getMessages()[i].
-                    getText(Locale.getDefault())).append('\n');
+                messages.append( event.getMessages()[i].getText(
+                                 Locale.getDefault() ) ).append( '\n' );
 
             }
 
-            switch(event.getType())
+            switch ( event.getType() )
             {
                 case MessageEvent.ERROR:
-                    this.getLogger().error(messages.toString());
+                    this.getLogger().error( messages.toString() );
                     break;
 
                 case MessageEvent.INFORMATION:
                 case MessageEvent.NOTIFICATION:
-                    this.getLogger().info(messages.toString());
+                    this.getLogger().info( messages.toString() );
                     break;
 
                 case MessageEvent.WARNING:
-                    this.getLogger().warn(messages.toString());
+                    this.getLogger().warn( messages.toString() );
                     break;
 
                 default:
-                    this.getLogger().warn(MessageLoggerBundle.
-                        getUnknownMessageTypeMessage(
-                        Locale.getDefault()).format(new Object[] {
-                        new Integer(event.getType()) }));
+                    this.getLogger().warn(
+                        MessageLoggerBundle.getInstance().
+                        getUnknownMessageTypeMessage( Locale.getDefault() ).
+                        format( new Object[] {
+                                new Integer( event.getType() )
+                            } ) );
 
             }
         }
@@ -186,7 +188,7 @@ public final class MessageLogger implements MessageListener
     public MessageLogger()
     {
         super();
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
         this.assertValidProperties();
     }
 
@@ -196,7 +198,8 @@ public final class MessageLogger implements MessageListener
      * @throws PropertyException for illegal property values.
      */
     private void assertValidProperties()
-    {}
+    {
+    }
 
     //-----------------------------------------------------------MessageLogger--
 }

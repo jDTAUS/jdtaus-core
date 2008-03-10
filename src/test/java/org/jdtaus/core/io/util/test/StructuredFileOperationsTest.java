@@ -49,9 +49,9 @@ public class StructuredFileOperationsTest extends StructuredFileTest
             return this.memOps.getData();
 
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 
@@ -59,18 +59,18 @@ public class StructuredFileOperationsTest extends StructuredFileTest
     {
         try
         {
-            if(this.structuredFile == null)
+            if ( this.structuredFile == null )
             {
                 this.structuredFile = new StructuredFileOperations(
-                    StructuredFileTest.BLOCK_SIZE, this.memOps);
+                    StructuredFileTest.BLOCK_SIZE, this.memOps );
 
             }
 
             return this.structuredFile;
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 

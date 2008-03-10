@@ -56,7 +56,7 @@ public class Charsets
     private static final List providers = new LinkedList();
 
     /** Cached {@code Charset} instances by name. */
-    private static final Map charsets = new HashMap(100);
+    private static final Map charsets = new HashMap( 100 );
 
     /** Private constructor. */
     private Charsets()
@@ -84,20 +84,21 @@ public class Charsets
      * @throws java.nio.charset.UnsupportedCharsetException if {@code name} is
      * not supported.
      */
-    private static Charset getCharset(final String name) throws IOException,
-        ClassNotFoundException, InstantiationException, IllegalAccessException
+    private static Charset getCharset( final String name )
+        throws IOException, ClassNotFoundException, InstantiationException,
+               IllegalAccessException
     {
         // Populate the provider list with available providers if it is empty.
-        if(providers.size() == 0)
+        if ( providers.size() == 0 )
         {
-            synchronized(Charsets.class)
+            synchronized ( Charsets.class )
             {
                 // Use the current thread's context classloader if available or
                 // fall back to the system classloader.
                 ClassLoader classLoader = Thread.currentThread().
                     getContextClassLoader();
 
-                if(classLoader == null)
+                if ( classLoader == null )
                 {
                     classLoader = ClassLoader.getSystemClassLoader();
                 }
@@ -108,30 +109,30 @@ public class Charsets
                 // Read all service provider files and load all defined
                 // provider classes.
                 final Enumeration providerFiles = classLoader.getResources(
-                    "META-INF/services/java.nio.charset.spi.CharsetProvider");
+                    "META-INF/services/java.nio.charset.spi.CharsetProvider" );
 
-                if(providerFiles != null)
+                if ( providerFiles != null )
                 {
-                    for(;providerFiles.hasMoreElements();)
+                    for (; providerFiles.hasMoreElements();)
                     {
-                        final URL url = (URL) providerFiles.nextElement();
+                        final URL url = ( URL ) providerFiles.nextElement();
                         final InputStream in = url.openStream();
 
                         try
                         {
                             String line;
                             final BufferedReader reader = new BufferedReader(
-                                new InputStreamReader(in, "UTF-8"));
+                                new InputStreamReader( in, "UTF-8" ) );
 
-                            while((line = reader.readLine()) != null)
+                            while ( ( line = reader.readLine() ) != null )
                             {
                                 // Check that the line denotes a valid Java
                                 // classname and load that class using
                                 // reflection.
-                                if(line.indexOf('#') < 0)
+                                if ( line.indexOf( '#' ) < 0 )
                                 {
-                                    providers.add(classLoader.loadClass(line).
-                                        newInstance());
+                                    providers.add( classLoader.loadClass( line ).
+                                                   newInstance() );
 
                                 }
                             }
@@ -146,20 +147,20 @@ public class Charsets
         }
 
         // Search cached charsets.
-        Charset charset = (Charset) charsets.get(name);
-        if(charset == null)
+        Charset charset = ( Charset ) charsets.get( name );
+        if ( charset == null )
         {
-            synchronized(Charsets.class)
+            synchronized ( Charsets.class )
             {
                 // Search all available providers for a charset matching "name".
-                for(Iterator it = providers.iterator(); it.hasNext();)
+                for ( Iterator it = providers.iterator(); it.hasNext();)
                 {
-                    charset = ((CharsetProvider) it.next()).
-                        charsetForName(name);
+                    charset =
+                        ( ( CharsetProvider ) it.next() ).charsetForName( name );
 
-                    if(charset != null)
+                    if ( charset != null )
                     {
-                        charsets.put(name, charset);
+                        charsets.put( name, charset );
                         break;
                     }
                 }
@@ -167,12 +168,12 @@ public class Charsets
         }
 
         // Fall back to platform charsets if nothing is found so far.
-        if(charset == null)
+        if ( charset == null )
         {
-            synchronized(Charsets.class)
+            synchronized ( Charsets.class )
             {
-                charset = Charset.forName(name);
-                charsets.put(name, charset);
+                charset = Charset.forName( name );
+                charsets.put( name, charset );
             }
         }
 
@@ -193,59 +194,59 @@ public class Charsets
      * @throws java.nio.charset.UnsupportedCharsetException if {@code charset}
      * is not supported.
      */
-    public static byte[] encode(final String str, final String charset)
+    public static byte[] encode( final String str, final String charset )
     {
-        if(str == null)
+        if ( str == null )
         {
-            throw new NullPointerException("str");
+            throw new NullPointerException( "str" );
         }
-        if(charset == null)
+        if ( charset == null )
         {
-            throw new NullPointerException("charset");
+            throw new NullPointerException( "charset" );
         }
 
         final byte[] ret;
         try
         {
-            final Charset cset = Charsets.getCharset(charset);
-            final ByteBuffer buf = cset.encode(str);
+            final Charset cset = Charsets.getCharset( charset );
+            final ByteBuffer buf = cset.encode( str );
 
-            if(buf.hasArray())
+            if ( buf.hasArray() )
             {
-                if(buf.array().length == buf.limit())
+                if ( buf.array().length == buf.limit() )
                 {
                     ret = buf.array();
                 }
                 else
                 {
-                    ret = new byte[buf.limit()];
-                    System.arraycopy(buf.array(), buf.arrayOffset(),
-                        ret, 0, ret.length);
+                    ret = new byte[ buf.limit() ];
+                    System.arraycopy( buf.array(), buf.arrayOffset(),
+                                      ret, 0, ret.length );
 
                 }
             }
             else
             {
-                ret = new byte[buf.limit()];
+                ret = new byte[ buf.limit() ];
                 buf.rewind();
-                buf.get(ret);
+                buf.get( ret );
             }
         }
-        catch(ClassNotFoundException e)
+        catch ( ClassNotFoundException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
-        catch(InstantiationException e)
+        catch ( InstantiationException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
-        catch(IllegalAccessException e)
+        catch ( IllegalAccessException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
 
         return ret;
@@ -264,52 +265,52 @@ public class Charsets
      * @throws java.nio.charset.UnsupportedCharsetException if {@code charset}
      * is not supported.
      */
-    public static String decode(final byte[] bytes, final String charset)
+    public static String decode( final byte[] bytes, final String charset )
     {
-        if(bytes == null)
+        if ( bytes == null )
         {
-            throw new NullPointerException("bytes");
+            throw new NullPointerException( "bytes" );
         }
-        if(charset == null)
+        if ( charset == null )
         {
-            throw new NullPointerException("charset");
+            throw new NullPointerException( "charset" );
         }
 
         final String ret;
         try
         {
-            final Charset cset = Charsets.getCharset(charset);
-            final CharBuffer buf = cset.decode(ByteBuffer.wrap(bytes));
+            final Charset cset = Charsets.getCharset( charset );
+            final CharBuffer buf = cset.decode( ByteBuffer.wrap( bytes ) );
 
-            if(buf.hasArray())
+            if ( buf.hasArray() )
             {
-                ret = String.valueOf(buf.array(), buf.arrayOffset(),
-                    buf.length());
+                ret = String.valueOf( buf.array(), buf.arrayOffset(),
+                                      buf.length() );
 
             }
             else
             {
-                final char[] c = new char[buf.length()];
+                final char[] c = new char[ buf.length() ];
                 buf.rewind();
-                buf.get(c);
-                ret = String.valueOf(c);
+                buf.get( c );
+                ret = String.valueOf( c );
             }
         }
-        catch(ClassNotFoundException e)
+        catch ( ClassNotFoundException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
-        catch(InstantiationException e)
+        catch ( InstantiationException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
-        catch(IllegalAccessException e)
+        catch ( IllegalAccessException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
 
         return ret;
@@ -333,62 +334,62 @@ public class Charsets
      * @throws java.nio.charset.UnsupportedCharsetException if {@code charset}
      * is not supported.
      */
-    public static String decode(final byte[] bytes, final int off,
-        final int count, final String charset)
+    public static String decode( final byte[] bytes, final int off,
+                                   final int count, final String charset )
     {
-        if(bytes == null)
+        if ( bytes == null )
         {
-            throw new NullPointerException("bytes");
+            throw new NullPointerException( "bytes" );
         }
-        if(charset == null)
+        if ( charset == null )
         {
-            throw new NullPointerException("charset");
+            throw new NullPointerException( "charset" );
         }
-        if(off < 0 || off >= bytes.length)
+        if ( off < 0 || off >= bytes.length )
         {
-            throw new ArrayIndexOutOfBoundsException(off);
+            throw new ArrayIndexOutOfBoundsException( off );
         }
-        if(count < 0 || off + count >= bytes.length)
+        if ( count < 0 || off + count >= bytes.length )
         {
-            throw new ArrayIndexOutOfBoundsException(count + off);
+            throw new ArrayIndexOutOfBoundsException( count + off );
         }
 
         final String ret;
         try
         {
-            final Charset cset = Charsets.getCharset(charset);
+            final Charset cset = Charsets.getCharset( charset );
             final CharBuffer buf = cset.decode(
-                ByteBuffer.wrap(bytes, off, count));
+                ByteBuffer.wrap( bytes, off, count ) );
 
-            if(buf.hasArray())
+            if ( buf.hasArray() )
             {
-                ret = String.valueOf(buf.array(), buf.arrayOffset(),
-                    buf.length());
+                ret = String.valueOf( buf.array(), buf.arrayOffset(),
+                                      buf.length() );
 
             }
             else
             {
-                final char[] c = new char[buf.length()];
+                final char[] c = new char[ buf.length() ];
                 buf.rewind();
-                buf.get(c);
-                ret = String.valueOf(c);
+                buf.get( c );
+                ret = String.valueOf( c );
             }
         }
-        catch(ClassNotFoundException e)
+        catch ( ClassNotFoundException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
-        catch(InstantiationException e)
+        catch ( InstantiationException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
-        catch(IllegalAccessException e)
+        catch ( IllegalAccessException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
 
         return ret;

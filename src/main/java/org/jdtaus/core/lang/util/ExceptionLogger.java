@@ -83,7 +83,7 @@ public final class ExceptionLogger implements ExceptionListener
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>Logger</code> implementation. */
-    private transient Logger _dependency0;
+    private transient Logger dLogger;
 
     /**
      * Gets the configured <code>Logger</code> implementation.
@@ -93,9 +93,9 @@ public final class ExceptionLogger implements ExceptionListener
     private Logger getLogger()
     {
         Logger ret = null;
-        if(this._dependency0 != null)
+        if(this.dLogger != null)
         {
-            ret = this._dependency0;
+            ret = this.dLogger;
         }
         else
         {
@@ -108,7 +108,7 @@ public final class ExceptionLogger implements ExceptionListener
                 getDependencies().getDependency("Logger").
                 isBound())
             {
-                this._dependency0 = ret;
+                this.dLogger = ret;
             }
         }
 
@@ -139,11 +139,11 @@ public final class ExceptionLogger implements ExceptionListener
      *
      * @param event the event holding the exception.
      */
-    public void onException(final ExceptionEvent event)
+    public void onException( final ExceptionEvent event )
     {
-        if(event != null)
+        if ( event != null )
         {
-            this.getLogger().error(event.getException());
+            this.getLogger().error( event.getException() );
         }
     }
 
@@ -154,7 +154,7 @@ public final class ExceptionLogger implements ExceptionListener
     public ExceptionLogger()
     {
         super();
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
     }
 
     //---------------------------------------------------------ExceptionLogger--

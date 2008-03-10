@@ -49,9 +49,9 @@ public class StructuredFileOperationsReadAheadTest extends StructuredFileTest
             this.structuredFile.flush();
             return this.memOps.getData();
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 
@@ -59,19 +59,19 @@ public class StructuredFileOperationsReadAheadTest extends StructuredFileTest
     {
         try
         {
-            if(this.structuredFile == null)
+            if ( this.structuredFile == null )
             {
                 this.structuredFile = new StructuredFileOperations(
                     StructuredFileTest.BLOCK_SIZE,
-                    new ReadAheadFileOperations(this.memOps));
+                    new ReadAheadFileOperations( this.memOps ) );
 
             }
 
             return this.structuredFile;
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 

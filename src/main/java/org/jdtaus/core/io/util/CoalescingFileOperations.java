@@ -92,11 +92,11 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         }
 
         p = meta.getProperty("cacheSize");
-        this._cacheSize = ((java.lang.Integer) p.getValue()).intValue();
+        this.pCacheSize = ((java.lang.Integer) p.getValue()).intValue();
 
 
         p = meta.getProperty("blockSize");
-        this._blockSize = ((java.lang.Integer) p.getValue()).intValue();
+        this.pBlockSize = ((java.lang.Integer) p.getValue()).intValue();
 
     }
 // </editor-fold>//GEN-END:jdtausConstructors
@@ -108,7 +108,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>Logger</code> implementation. */
-    private transient Logger _dependency1;
+    private transient Logger dLogger;
 
     /**
      * Gets the configured <code>Logger</code> implementation.
@@ -118,9 +118,9 @@ public final class CoalescingFileOperations implements FlushableFileOperations
     private Logger getLogger()
     {
         Logger ret = null;
-        if(this._dependency1 != null)
+        if(this.dLogger != null)
         {
-            ret = this._dependency1;
+            ret = this.dLogger;
         }
         else
         {
@@ -133,7 +133,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                 getDependencies().getDependency("Logger").
                 isBound())
             {
-                this._dependency1 = ret;
+                this.dLogger = ret;
             }
         }
 
@@ -146,7 +146,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         return ret;
     }
     /** Configured <code>MemoryManager</code> implementation. */
-    private transient MemoryManager _dependency0;
+    private transient MemoryManager dMemoryManager;
 
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
@@ -156,9 +156,9 @@ public final class CoalescingFileOperations implements FlushableFileOperations
     private MemoryManager getMemoryManager()
     {
         MemoryManager ret = null;
-        if(this._dependency0 != null)
+        if(this.dMemoryManager != null)
         {
-            ret = this._dependency0;
+            ret = this.dMemoryManager;
         }
         else
         {
@@ -171,7 +171,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                 getDependencies().getDependency("MemoryManager").
                 isBound())
             {
-                this._dependency0 = ret;
+                this.dMemoryManager = ret;
             }
         }
 
@@ -195,7 +195,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      * Property {@code cacheSize}.
      * @serial
      */
-    private int _cacheSize;
+    private int pCacheSize;
 
     /**
      * Gets the value of property <code>cacheSize</code>.
@@ -204,14 +204,14 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      */
     private int getCacheSize()
     {
-        return this._cacheSize;
+        return this.pCacheSize;
     }
 
     /**
      * Property {@code blockSize}.
      * @serial
      */
-    private int _blockSize;
+    private int pBlockSize;
 
     /**
      * Gets the value of property <code>blockSize</code>.
@@ -220,7 +220,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      */
     public int getBlockSize()
     {
-        return this._blockSize;
+        return this.pBlockSize;
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -235,13 +235,13 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         return this.fileOperations.getLength();
     }
 
-    public void setLength(final long newLength) throws IOException
+    public void setLength( final long newLength ) throws IOException
     {
         this.assertNotClosed();
 
         // Update the length of any cache nodes involved in the operation.
         final long oldLength = this.getLength();
-        if(newLength > oldLength)
+        if ( newLength > oldLength )
         {
             final long delta = newLength - oldLength;
 
@@ -249,9 +249,9 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                 "Unexpected implementation limit reached.";
 
             final Node[] nodes =
-                this.getCacheNodesForLength(oldLength, (int) delta);
+                this.getCacheNodesForLength( oldLength, ( int ) delta );
 
-            for(int i = 0; i < nodes.length; i++)
+            for ( int i = 0; i < nodes.length; i++ )
             {
                 final long startPos = nodes[i].block * this.getBlockSize();
                 final long blockDelta = newLength - startPos;
@@ -259,12 +259,13 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                 assert blockDelta <= Integer.MAX_VALUE :
                     "Unexpected implementation limit reached.";
 
-                nodes[i].length = blockDelta >= this.getBlockSize() ?
-                    this.getBlockSize() : (int) blockDelta;
+                nodes[i].length = blockDelta >= this.getBlockSize()
+                    ? this.getBlockSize()
+                    : ( int ) blockDelta;
 
             }
         }
-        else if(newLength < oldLength)
+        else if ( newLength < oldLength )
         {
             final long delta = oldLength - newLength;
 
@@ -272,14 +273,14 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                 "Unexpected implementation limit reached.";
 
             final Node[] nodes =
-                this.getCacheNodesForLength(newLength, (int) delta);
+                this.getCacheNodesForLength( newLength, ( int ) delta );
 
-            for(int i = 0; i < nodes.length; i++)
+            for ( int i = 0; i < nodes.length; i++ )
             {
                 final long startPos = nodes[i].block * this.getBlockSize();
-                if(startPos > newLength)
+                if ( startPos > newLength )
                 { // Discard the block.
-                    this.root.remove(new Long(nodes[i].block));
+                    this.root.remove( new Long( nodes[i].block ) );
                 }
                 else
                 { // Update the blocks length.
@@ -288,16 +289,17 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                     assert blockDelta <= Integer.MAX_VALUE :
                         "Unexpected implementation limit reached.";
 
-                    nodes[i].length = blockDelta >= this.getBlockSize() ?
-                        this.getBlockSize() : (int) blockDelta;
+                    nodes[i].length = blockDelta >= this.getBlockSize()
+                        ? this.getBlockSize()
+                        : ( int ) blockDelta;
 
                 }
             }
         }
 
-        this.fileOperations.setLength(newLength);
+        this.fileOperations.setLength( newLength );
 
-        if(this.filePointer > newLength)
+        if ( this.filePointer > newLength )
         {
             this.filePointer = newLength;
         }
@@ -310,73 +312,76 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         return this.filePointer;
     }
 
-    public void setFilePointer(final long pos) throws IOException
+    public void setFilePointer( final long pos ) throws IOException
     {
         this.assertNotClosed();
 
         this.filePointer = pos;
     }
 
-    public int read(final byte[] buf, int off, int len) throws IOException
+    public int read( final byte[] buf, int off, int len ) throws IOException
     {
-        if(buf == null)
+        if ( buf == null )
         {
-            throw new NullPointerException("buf");
+            throw new NullPointerException( "buf" );
         }
-        if(off < 0)
+        if ( off < 0 )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(off));
+            throw new IndexOutOfBoundsException( Integer.toString( off ) );
         }
-        if(len < 0)
+        if ( len < 0 )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(len));
+            throw new IndexOutOfBoundsException( Integer.toString( len ) );
         }
-        if(off + len > buf.length)
+        if ( off + len > buf.length )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(off + len));
+            throw new IndexOutOfBoundsException( Integer.toString( off + len ) );
         }
 
         this.assertNotClosed();
 
         int read = FileOperations.EOF;
 
-        if(len == 0)
+        if ( len == 0 )
         {
             read = 0;
         }
-        else if(this.filePointer < this.getLength())
+        else if ( this.filePointer < this.getLength() )
         { // End of file not reached.
             final Node[] nodes =
-                this.getCacheNodesForLength(this.filePointer, len);
+                this.getCacheNodesForLength( this.filePointer, len );
 
             // Ensure cache holds the data of the involved blocks.
-            this.fillCache(nodes);
+            this.fillCache( nodes );
 
             int copied = 0;
-            for(int i = 0; i < nodes.length; i++)
+            for ( int i = 0; i < nodes.length; i++ )
             {
-                if(nodes[i].length == FileOperations.EOF)
+                if ( nodes[i].length == FileOperations.EOF )
                 { // Skip any end of file nodes.
                     continue;
                 }
 
-                if(nodes[i].cacheIndex != Node.NO_CACHEINDEX)
+                if ( nodes[i].cacheIndex != Node.NO_CACHEINDEX )
                 { // Node is associated with cache memory; cache is used.
 
                     // Use the current file pointer as the starting index.
-                    final long delta = nodes[i].cacheIndex + (this.filePointer -
-                        nodes[i].block * this.getBlockSize());
+                    final long delta =
+                        nodes[i].cacheIndex + ( this.filePointer -
+                        nodes[i].block * this.getBlockSize() );
 
                     assert delta <= Integer.MAX_VALUE :
                         "Unexpected implementation limit reached.";
 
-                    final int blockOffset = (int) delta;
+                    final int blockOffset = ( int ) delta;
                     final int blockDelta = nodes[i].length -
-                        (blockOffset - nodes[i].cacheIndex);
+                        ( blockOffset - nodes[i].cacheIndex );
 
-                    final int copyLength = len >  blockDelta ? blockDelta : len;
-                    System.arraycopy(this.cache, blockOffset, buf, off,
-                        copyLength);
+                    final int copyLength = len > blockDelta
+                        ? blockDelta
+                        : len;
+                    System.arraycopy( this.cache, blockOffset, buf, off,
+                                      copyLength );
 
                     off += copyLength;
                     len -= copyLength;
@@ -385,14 +390,18 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                 }
                 else
                 { // Node is not associated with cache memory; read directly.
-                    this.fileOperations.setFilePointer(this.filePointer);
-                    copied += this.fileOperations.read(buf, off, len);
+                    this.fileOperations.setFilePointer( this.filePointer );
+                    copied += this.fileOperations.read( buf, off, len );
                     this.filePointer += len;
 
-                    this.getLogger().debug(CoalescingFileOperationsBundle.
-                        getReadBypassesCacheMessage(Locale.getDefault()).
-                        format(new Object[] { new Integer(this.getBlockSize()),
-                        new Integer(this.getCacheSize()), new Integer(len) }));
+                    this.getLogger().debug(
+                        CoalescingFileOperationsBundle.getInstance().
+                        getReadBypassesCacheMessage( Locale.getDefault() ).
+                        format( new Object[] {
+                                new Integer( this.getBlockSize() ),
+                                new Integer( this.getCacheSize() ),
+                                new Integer( len )
+                            } ) );
 
                     break;
                 }
@@ -404,60 +413,62 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         return read;
     }
 
-    public void write(final byte[] buf, int off, int len) throws IOException
+    public void write( final byte[] buf, int off, int len ) throws IOException
     {
-        if(buf == null)
+        if ( buf == null )
         {
-            throw new NullPointerException("buf");
+            throw new NullPointerException( "buf" );
         }
-        if(off < 0)
+        if ( off < 0 )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(off));
+            throw new IndexOutOfBoundsException( Integer.toString( off ) );
         }
-        if(len < 0)
+        if ( len < 0 )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(len));
+            throw new IndexOutOfBoundsException( Integer.toString( len ) );
         }
-        if(off + len > buf.length)
+        if ( off + len > buf.length )
         {
-            throw new IndexOutOfBoundsException(Integer.toString(off + len));
+            throw new IndexOutOfBoundsException( Integer.toString( off + len ) );
         }
 
         this.assertNotClosed();
 
-        if(this.filePointer + len > this.getLength())
+        if ( this.filePointer + len > this.getLength() )
         { // Expand the file of the backing instance.
-            this.setLength(this.filePointer + len);
+            this.setLength( this.filePointer + len );
         }
 
         final Node[] nodes =
-            this.getCacheNodesForLength(this.filePointer, len);
+            this.getCacheNodesForLength( this.filePointer, len );
 
         // Ensure cache holds the data of the involved blocks.
-        this.fillCache(nodes);
+        this.fillCache( nodes );
 
-        for(int i = 0; i < nodes.length; i++)
+        for ( int i = 0; i < nodes.length; i++ )
         {
             // Check for correct file length update.
             assert nodes[i].length != FileOperations.EOF :
                 "Unexpected cache state.";
 
-            if(nodes[i].cacheIndex != Node.NO_CACHEINDEX)
+            if ( nodes[i].cacheIndex != Node.NO_CACHEINDEX )
             { // Node is associated with cache memory; cache is used.
 
                 // Use the current file pointer as the starting index.
-                final long delta = nodes[i].cacheIndex + (this.filePointer -
-                    nodes[i].block * this.getBlockSize());
+                final long delta = nodes[i].cacheIndex + ( this.filePointer -
+                    nodes[i].block * this.getBlockSize() );
 
                 assert delta <= Integer.MAX_VALUE :
                     "Unexpected implementation limit reached.";
 
-                final int blockOffset = (int) delta;
+                final int blockOffset = ( int ) delta;
                 final int blockDelta = nodes[i].length -
-                    (blockOffset - nodes[i].cacheIndex);
+                    ( blockOffset - nodes[i].cacheIndex );
 
-                final int copyLength = len > blockDelta ? blockDelta : len;
-                System.arraycopy(buf, off, this.cache, blockOffset, copyLength);
+                final int copyLength = len > blockDelta
+                    ? blockDelta
+                    : len;
+                System.arraycopy( buf, off, this.cache, blockOffset, copyLength );
                 off += copyLength;
                 len -= copyLength;
                 this.filePointer += copyLength;
@@ -465,33 +476,36 @@ public final class CoalescingFileOperations implements FlushableFileOperations
             }
             else
             { // Node is not associated with cache memory; write out directly.
-                this.fileOperations.setFilePointer(this.filePointer);
-                this.fileOperations.write(buf, off, len);
+                this.fileOperations.setFilePointer( this.filePointer );
+                this.fileOperations.write( buf, off, len );
                 this.filePointer += len;
 
-                this.getLogger().debug(CoalescingFileOperationsBundle.
-                    getWriteBypassesCacheMessage(Locale.getDefault()).
-                    format(new Object[] { new Integer(this.getBlockSize()),
-                    new Integer(this.getCacheSize()), new Integer(len) }));
+                this.getLogger().debug(
+                    CoalescingFileOperationsBundle.getInstance().
+                    getWriteBypassesCacheMessage( Locale.getDefault() ).
+                    format( new Object[] { new Integer( this.getBlockSize() ),
+                                           new Integer( this.getCacheSize() ),
+                                           new Integer( len )
+                        } ) );
 
                 break;
             }
         }
     }
 
-    public void read(final OutputStream out) throws IOException
+    public void read( final OutputStream out ) throws IOException
     {
         this.assertNotClosed();
 
-        this.fileOperations.read(out);
+        this.fileOperations.read( out );
         this.filePointer = this.fileOperations.getFilePointer();
     }
 
-    public void write(final InputStream in) throws IOException
+    public void write( final InputStream in ) throws IOException
     {
         this.assertNotClosed();
 
-        this.fileOperations.write(in);
+        this.fileOperations.write( in );
         this.filePointer = this.fileOperations.getFilePointer();
     }
 
@@ -536,22 +550,22 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         Node previous = null;
         boolean dirty = false;
 
-        for(Iterator it = this.root.entrySet().iterator(); it.hasNext();)
+        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext();)
         {
-            final Map.Entry entry = (Map.Entry) it.next();
-            final long block = ((Long) entry.getKey()).longValue();
-            final Node current = (Node) entry.getValue();
+            final Map.Entry entry = ( Map.Entry ) it.next();
+            final long block = ( ( Long ) entry.getKey() ).longValue();
+            final Node current = ( Node ) entry.getValue();
 
             // Skip any end of file nodes and nodes not associated with memory.
-            if(current.length == FileOperations.EOF ||
-                current.cacheIndex == Node.NO_CACHEINDEX)
+            if ( current.length == FileOperations.EOF ||
+                current.cacheIndex == Node.NO_CACHEINDEX )
             {
                 continue;
             }
 
             assert current.block == block : "Unexpected cache state.";
 
-            if(previous == null)
+            if ( previous == null )
             { // Start the first chunk.
                 previous = current;
                 startPos = current.block * this.getBlockSize();
@@ -559,7 +573,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                 length = current.length;
                 dirty = current.dirty;
             }
-            else if(current.block == previous.block + 1L)
+            else if ( current.block == previous.block + 1L )
             { // Expand the current chunk.
 
                 assert current.cacheIndex == previous.cacheIndex +
@@ -567,18 +581,18 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
                 previous = current;
                 length += current.length;
-                if(!dirty)
+                if ( !dirty )
                 {
                     dirty = current.dirty;
                 }
             }
             else
             { // Write out the current chunk and start a new one.
-                if(dirty)
+                if ( dirty )
                 {
-                    this.fileOperations.setFilePointer(startPos);
+                    this.fileOperations.setFilePointer( startPos );
                     this.fileOperations.write(
-                        this.cache, startIndex, length);
+                        this.cache, startIndex, length );
 
                 }
 
@@ -590,19 +604,19 @@ public final class CoalescingFileOperations implements FlushableFileOperations
             }
         }
 
-        if(dirty)
+        if ( dirty )
         { // Write the remaining chunk.
-            this.fileOperations.setFilePointer(startPos);
+            this.fileOperations.setFilePointer( startPos );
             this.fileOperations.write(
-                this.cache, startIndex, length);
+                this.cache, startIndex, length );
 
         }
 
         // Reset cache state.
-        for(Iterator it = this.root.entrySet().iterator(); it.hasNext();)
+        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext();)
         {
-            final Map.Entry entry = (Map.Entry) it.next();
-            final Node current = (Node) entry.getValue();
+            final Map.Entry entry = ( Map.Entry ) it.next();
+            final Node current = ( Node ) entry.getValue();
 
             current.cacheIndex = Node.NO_CACHEINDEX;
             current.dirty = false;
@@ -610,9 +624,9 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
         this.nextCacheIndex = 0;
 
-        if(this.fileOperations instanceof FlushableFileOperations)
+        if ( this.fileOperations instanceof FlushableFileOperations )
         { // Cache of the backing instance also needs to get flushed.
-            ((FlushableFileOperations) this.fileOperations).flush();
+            ( ( FlushableFileOperations ) this.fileOperations ).flush();
         }
     }
 
@@ -622,12 +636,17 @@ public final class CoalescingFileOperations implements FlushableFileOperations
     /** Node describing a cache block. */
     private static final class Node
     {
+
         private static final int NO_CACHEINDEX = Integer.MIN_VALUE;
 
         long block;
+
         int cacheIndex = NO_CACHEINDEX;
+
         int length;
+
         boolean dirty;
+
     }
 
     /** The {@code FileOperations} backing the instance. */
@@ -650,7 +669,9 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
     /** Caches the value returned by method {@code getFilePointerBlock}. */
     private long cachedFilePointerBlock = NO_FILEPOINTERBLOCK;
+
     private long cachedFilePointerBlockStart = FileOperations.EOF;
+
     private static final long NO_FILEPOINTERBLOCK = Long.MIN_VALUE;
 
     /** Flags the instance as beeing closed. */
@@ -665,27 +686,27 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      * @throws NullPointerException if {@code fileOperations} is {@code null}.
      * @throws IOException if reading fails.
      */
-    public CoalescingFileOperations(final FileOperations fileOperations)
-    throws IOException
+    public CoalescingFileOperations( final FileOperations fileOperations )
+        throws IOException
     {
         super();
 
-        if(fileOperations == null)
+        if ( fileOperations == null )
         {
-            throw new NullPointerException("fileOperations");
+            throw new NullPointerException( "fileOperations" );
         }
 
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
         this.assertValidProperties();
 
         this.fileOperations = fileOperations;
 
         // Pre-allocate the cache memory.
         this.cache = this.getMemoryManager().allocateBytes(
-            this.getBlockSize() * this.getCacheSize());
+            this.getBlockSize() * this.getCacheSize() );
 
         this.defragCache = this.getMemoryManager().allocateBytes(
-            this.getBlockSize() * this.getCacheSize());
+            this.getBlockSize() * this.getCacheSize() );
 
         this.filePointer = fileOperations.getFilePointer();
     }
@@ -702,28 +723,28 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      * @throws PropertyException if {@code blockSize} is negative or zero.
      * @throws IOException if reading fails.
      */
-    public CoalescingFileOperations(final FileOperations fileOperations,
-        final int blockSize) throws IOException
+    public CoalescingFileOperations( final FileOperations fileOperations,
+                                      final int blockSize ) throws IOException
     {
         super();
 
-        if(fileOperations == null)
+        if ( fileOperations == null )
         {
-            throw new NullPointerException("fileOperations");
+            throw new NullPointerException( "fileOperations" );
         }
 
-        this.initializeProperties(META.getProperties());
-        this._blockSize = blockSize;
+        this.initializeProperties( META.getProperties() );
+        this.pBlockSize = blockSize;
         this.assertValidProperties();
 
         this.fileOperations = fileOperations;
 
         // Pre-allocate the cache memory.
         this.cache = this.getMemoryManager().allocateBytes(
-            this.getBlockSize() * this.getCacheSize());
+            this.getBlockSize() * this.getCacheSize() );
 
         this.defragCache = this.getMemoryManager().allocateBytes(
-            this.getBlockSize() * this.getCacheSize());
+            this.getBlockSize() * this.getCacheSize() );
 
         this.filePointer = fileOperations.getFilePointer();
     }
@@ -747,16 +768,18 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      */
     private void assertValidProperties()
     {
-        if(this.getBlockSize() <= 0)
+        if ( this.getBlockSize() <= 0 )
         {
-            throw new PropertyException("blockSize",
-                Integer.toString(this.getBlockSize()));
+            throw new PropertyException(
+                "blockSize",
+                Integer.toString( this.getBlockSize() ) );
 
         }
-        if(this.getCacheSize() <= 0)
+        if ( this.getCacheSize() <= 0 )
         {
-            throw new PropertyException("cacheSize",
-                Integer.toString(this.getCacheSize()));
+            throw new PropertyException(
+                "cacheSize",
+                Integer.toString( this.getCacheSize() ) );
 
         }
     }
@@ -768,10 +791,10 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      */
     private void assertNotClosed() throws IOException
     {
-        if(this.closed)
+        if ( this.closed )
         {
-            throw new IOException(CoalescingFileOperationsBundle.
-                getAlreadyClosedText(Locale.getDefault()));
+            throw new IOException( CoalescingFileOperationsBundle.getInstance().
+                                   getAlreadyClosedText( Locale.getDefault() ) );
 
         }
     }
@@ -784,12 +807,13 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      *
      * @return the block pointed to by {@code filePointer}.
      */
-    private long getFilePointerBlock(final long filePointer)
+    private long getFilePointerBlock( final long filePointer )
     {
-        if(this.cachedFilePointerBlock == NO_FILEPOINTERBLOCK)
+        if ( this.cachedFilePointerBlock == NO_FILEPOINTERBLOCK )
         {
-            this.cachedFilePointerBlock = (filePointer / this.getBlockSize()) -
-                ((filePointer % this.getBlockSize()) / this.getBlockSize());
+            this.cachedFilePointerBlock =
+                ( filePointer / this.getBlockSize() ) -
+                ( ( filePointer % this.getBlockSize() ) / this.getBlockSize() );
 
             this.cachedFilePointerBlockStart =
                 this.cachedFilePointerBlock * this.getBlockSize();
@@ -797,13 +821,14 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         }
         else
         {
-            if(!(filePointer >= this.cachedFilePointerBlockStart &&
+            if ( !( filePointer >= this.cachedFilePointerBlockStart &&
                 filePointer <= this.cachedFilePointerBlockStart +
-                this.getBlockSize()))
+                this.getBlockSize() ) )
             {
                 this.cachedFilePointerBlock =
-                    (filePointer / this.getBlockSize()) -
-                    ((filePointer % this.getBlockSize()) / this.getBlockSize());
+                    ( filePointer / this.getBlockSize() ) -
+                    ( ( filePointer % this.getBlockSize() ) /
+                    this.getBlockSize() );
 
                 this.cachedFilePointerBlockStart =
                     this.cachedFilePointerBlock * this.getBlockSize();
@@ -826,30 +851,32 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      * @return an array of cache nodes for all blocks involved in the
      * operation in the order corresponding to the operation's needs.
      */
-    private Node[] getCacheNodesForLength(final long filePointer,
-        final int length)
+    private Node[] getCacheNodesForLength( final long filePointer,
+                                            final int length )
     {
-        final long startingBlock = this.getFilePointerBlock(filePointer);
-        final long endingBlock = this.getFilePointerBlock(filePointer + length);
+        final long startingBlock = this.getFilePointerBlock( filePointer );
+        final long endingBlock =
+            this.getFilePointerBlock( filePointer + length );
 
         assert endingBlock - startingBlock <= Integer.MAX_VALUE :
             "Unexpected implementation limit reached.";
 
-        final Node[] nodes = new Node[(int) (endingBlock - startingBlock + 1L)];
+        final Node[] nodes = new Node[ ( int ) ( endingBlock - startingBlock +
+            1L ) ];
 
-        if(startingBlock == endingBlock)
+        if ( startingBlock == endingBlock )
         {
-            nodes[0] = this.getCacheNode(startingBlock);
+            nodes[0] = this.getCacheNode( startingBlock );
         }
         else
         {
             int i;
             long block;
 
-            for(block = startingBlock, i = 0; block <= endingBlock;
-            block++, i++)
+            for ( block = startingBlock, i = 0; block <= endingBlock;
+                block++, i++ )
             {
-                nodes[i] = this.getCacheNode(block);
+                nodes[i] = this.getCacheNode( block );
             }
         }
 
@@ -867,53 +894,53 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      * @throws NullPointerException if {@code nodes} is {@code null}.
      * @throws IOException if reading fails.
      */
-    private void fillCache(final Node[] nodes) throws IOException
+    private void fillCache( final Node[] nodes ) throws IOException
     {
-        if(nodes == null)
+        if ( nodes == null )
         {
-            throw new NullPointerException("nodes");
+            throw new NullPointerException( "nodes" );
         }
 
         // Calculate the amount of bytes needed to be available in the cache
         // and flush the cache if nodes would not fit.
         long neededBytes = 0L;
-        for(int i = nodes.length - 1; i >= 0; i--)
+        for ( int i = nodes.length - 1; i >= 0; i-- )
         {
-            if(nodes[i].cacheIndex == Node.NO_CACHEINDEX)
+            if ( nodes[i].cacheIndex == Node.NO_CACHEINDEX )
             { // Node's block needs to be read.
                 neededBytes += this.getBlockSize();
             }
         }
 
-        if(this.nextCacheIndex + neededBytes > this.cache.length)
+        if ( this.nextCacheIndex + neededBytes > this.cache.length )
         { // Cache cannot hold the needed blocks so needs flushing.
             this.flush();
         }
 
         // Associate each node with cache memory for nodes not already
         // associated with cache memory and fill these nodes' cache memory.
-        for(int i = nodes.length - 1; i >= 0; i--)
+        for ( int i = nodes.length - 1; i >= 0; i-- )
         {
-            if(nodes[i].cacheIndex == Node.NO_CACHEINDEX &&
-                this.nextCacheIndex < this.cache.length)
+            if ( nodes[i].cacheIndex == Node.NO_CACHEINDEX &&
+                this.nextCacheIndex < this.cache.length )
             { // Node is not associated with any cache memory and can be read.
 
                 // Update the length field of the node for the block checking
                 // for a possible end of file condition.
                 long pos = nodes[i].block * this.getBlockSize();
-                if(pos > this.getLength())
+                if ( pos > this.getLength() )
                 { // Node is behind the end of the file.
                     nodes[i].length = FileOperations.EOF;
                     continue;
                 }
-                else if(pos + this.getBlockSize() > this.getLength())
+                else if ( pos + this.getBlockSize() > this.getLength() )
                 {
                     final long delta = this.getLength() - pos;
 
                     assert delta <= Integer.MAX_VALUE :
                         "Unexpected implementation limit reached.";
 
-                    nodes[i].length = (int) delta;
+                    nodes[i].length = ( int ) delta;
                 }
                 else
                 {
@@ -928,12 +955,13 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                 int read = FileOperations.EOF;
                 int totalRead = 0;
                 int toRead = nodes[i].length;
-                this.fileOperations.setFilePointer(pos);
+                this.fileOperations.setFilePointer( pos );
 
                 do
                 {
-                    read = this.fileOperations.read(this.cache,
-                        nodes[i].cacheIndex + totalRead, toRead);
+                    read = this.fileOperations.read( this.cache,
+                                                     nodes[i].cacheIndex +
+                                                     totalRead, toRead );
 
                     assert read != FileOperations.EOF :
                         "Unexpected end of file.";
@@ -941,7 +969,8 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                     totalRead += read;
                     toRead -= read;
 
-                } while(totalRead < nodes[i].length);
+                }
+                while ( totalRead < nodes[i].length );
             }
         }
     }
@@ -952,29 +981,29 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         int defragIndex = 0;
 
         // Step through the cached blocks and defragment the cache.
-        for(Iterator it = this.root.entrySet().iterator(); it.hasNext();)
+        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext();)
         {
-            final Map.Entry entry = (Map.Entry) it.next();
-            final long block = ((Long) entry.getKey()).longValue();
-            final Node current = (Node) entry.getValue();
+            final Map.Entry entry = ( Map.Entry ) it.next();
+            final long block = ( ( Long ) entry.getKey() ).longValue();
+            final Node current = ( Node ) entry.getValue();
 
             // Skip any end of file nodes and nodes not associated with memory.
-            if(current.length == FileOperations.EOF ||
-                current.cacheIndex == Node.NO_CACHEINDEX)
+            if ( current.length == FileOperations.EOF ||
+                current.cacheIndex == Node.NO_CACHEINDEX )
             {
                 continue;
             }
 
             assert current.block == block : "Unexpected cache state.";
 
-            System.arraycopy(this.cache, current.cacheIndex, this.defragCache,
-                defragIndex, this.getBlockSize());
+            System.arraycopy( this.cache, current.cacheIndex, this.defragCache,
+                              defragIndex, this.getBlockSize() );
 
             current.cacheIndex = defragIndex;
             defragIndex += this.getBlockSize();
         }
 
-        System.arraycopy(this.defragCache, 0, this.cache, 0, this.cache.length);
+        System.arraycopy( this.defragCache, 0, this.cache, 0, this.cache.length );
     }
 
     /**
@@ -984,15 +1013,15 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      *
      * @return the cache node for {@code block}.
      */
-    private Node getCacheNode(final long block)
+    private Node getCacheNode( final long block )
     {
-        final Long key = new Long(block);
-        Node node = (Node) this.root.get(key);
-        if(node == null)
+        final Long key = new Long( block );
+        Node node = ( Node ) this.root.get( key );
+        if ( node == null )
         {
             node = new Node();
             node.block = block;
-            this.root.put(key, node);
+            this.root.put( key, node );
         }
 
         return node;
@@ -1005,16 +1034,16 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      *
      * @return the cache node for {@code cacheIndex}.
      */
-    private Node getCacheNode(final int cacheIndex)
+    private Node getCacheNode( final int cacheIndex )
     {
         Node node = null;
 
-        for(Iterator it = this.root.entrySet().iterator(); it.hasNext();)
+        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext();)
         {
-            final Map.Entry entry = (Map.Entry) it.next();
-            if(((Node) entry.getValue()).cacheIndex == cacheIndex)
+            final Map.Entry entry = ( Map.Entry ) it.next();
+            if ( ( ( Node ) entry.getValue() ).cacheIndex == cacheIndex )
             {
-                node = (Node) entry.getValue();
+                node = ( Node ) entry.getValue();
                 break;
             }
         }

@@ -95,7 +95,7 @@ public final class ExceptionMessageProducer implements ExceptionListener
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>ApplicationLogger</code> implementation. */
-    private transient ApplicationLogger _dependency0;
+    private transient ApplicationLogger dApplicationLogger;
 
     /**
      * Gets the configured <code>ApplicationLogger</code> implementation.
@@ -105,9 +105,9 @@ public final class ExceptionMessageProducer implements ExceptionListener
     private ApplicationLogger getApplicationLogger()
     {
         ApplicationLogger ret = null;
-        if(this._dependency0 != null)
+        if(this.dApplicationLogger != null)
         {
-            ret = this._dependency0;
+            ret = this.dApplicationLogger;
         }
         else
         {
@@ -120,7 +120,7 @@ public final class ExceptionMessageProducer implements ExceptionListener
                 getDependencies().getDependency("ApplicationLogger").
                 isBound())
             {
-                this._dependency0 = ret;
+                this.dApplicationLogger = ret;
             }
         }
 
@@ -165,40 +165,44 @@ public final class ExceptionMessageProducer implements ExceptionListener
      *
      * @see ExceptionMessageResolver#resolve(Exception)
      */
-    public void onException(final ExceptionEvent event)
+    public void onException( final ExceptionEvent event )
     {
-        if(event != null)
+        if ( event != null )
         {
             final Throwable exception = event.getException();
             final Throwable rootCause = event.getRootCause();
             final Messages messages = new Messages();
 
-            messages.addMessage(new ExceptionMessage(exception));
+            messages.addMessage( new ExceptionMessage( exception ) );
 
-            if(rootCause instanceof RuntimeException)
+            if ( rootCause instanceof RuntimeException )
             {
-                messages.addMessage(new UndefinedApplicationStateMessage());
+                messages.addMessage( new UndefinedApplicationStateMessage() );
 
-                if(this.logDirectory != null)
+                if ( this.logDirectory != null )
                 {
-                    messages.addMessage(new BugReportMessage(this.logDirectory,
-                        this.trackerUrl, this.reportAddress));
+                    messages.addMessage(
+                        new BugReportMessage( this.logDirectory,
+                                              this.trackerUrl,
+                                              this.reportAddress ) );
 
                 }
             }
-            else if(rootCause instanceof Exception)
+            else if ( rootCause instanceof Exception )
             {
                 final Message[] resolved =
-                    this.resolveMessages((Exception) rootCause);
+                    this.resolveMessages( ( Exception ) rootCause );
 
-                if(resolved != null)
+                if ( resolved != null )
                 {
-                    messages.addMessages(resolved);
+                    messages.addMessages( resolved );
                 }
             }
 
-            this.getApplicationLogger().log(new MessageEvent(this,
-                messages.getMessages(), MessageEvent.ERROR));
+            this.getApplicationLogger().log(
+                new MessageEvent( this,
+                                  messages.getMessages(),
+                                  MessageEvent.ERROR ) );
 
         }
     }
@@ -229,7 +233,7 @@ public final class ExceptionMessageProducer implements ExceptionListener
     {
         super();
 
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
 
         this.logDirectory = null;
         this.trackerUrl = null;
@@ -252,28 +256,29 @@ public final class ExceptionMessageProducer implements ExceptionListener
      * @throws IllegalArgumentException if {@code logDirectory} is not a
      * directory.
      */
-    public ExceptionMessageProducer(final File logDirectory,
-        final URL trackerUrl, final String reportAddress)
+    public ExceptionMessageProducer( final File logDirectory,
+                                      final URL trackerUrl,
+                                      final String reportAddress )
     {
         super();
-        if(logDirectory == null)
+        if ( logDirectory == null )
         {
-            throw new NullPointerException("logDirectory");
+            throw new NullPointerException( "logDirectory" );
         }
-        if(!logDirectory.isDirectory())
+        if ( !logDirectory.isDirectory() )
         {
-            throw new IllegalArgumentException(logDirectory.getAbsolutePath());
+            throw new IllegalArgumentException( logDirectory.getAbsolutePath() );
         }
-        if(trackerUrl == null)
+        if ( trackerUrl == null )
         {
-            throw new NullPointerException("trackerUrl");
+            throw new NullPointerException( "trackerUrl" );
         }
-        if(reportAddress == null)
+        if ( reportAddress == null )
         {
-            throw new NullPointerException("reportAddress");
+            throw new NullPointerException( "reportAddress" );
         }
 
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
 
         this.logDirectory = logDirectory;
         this.trackerUrl = trackerUrl;
@@ -289,28 +294,28 @@ public final class ExceptionMessageProducer implements ExceptionListener
      *
      * @throws NullPointerException if {@code exception} is {@code null}.
      */
-    private Message[] resolveMessages(final Exception exception)
+    private Message[] resolveMessages( final Exception exception )
     {
-        if(exception == null)
+        if ( exception == null )
         {
-            throw new NullPointerException("exception");
+            throw new NullPointerException( "exception" );
         }
 
         Message[] messages = null;
         final Specification spec = ModelFactory.getModel().getModules().
-            getSpecification(ExceptionMessageResolver.class.getName());
+            getSpecification( ExceptionMessageResolver.class.getName() );
 
         final Implementation[] resolvers = spec.getImplementations().
             getImplementations();
 
-        for(int i = resolvers.length - 1; i >= 0 && messages == null; i--)
+        for ( int i = resolvers.length - 1; i >= 0 && messages == null; i-- )
         {
             final ExceptionMessageResolver resolver =
-                (ExceptionMessageResolver) ContainerFactory.getContainer().
-                getImplementation(ExceptionMessageResolver.class,
-                resolvers[i].getName());
+                ( ExceptionMessageResolver ) ContainerFactory.getContainer().
+                getImplementation( ExceptionMessageResolver.class,
+                                   resolvers[i].getName() );
 
-            messages = resolver.resolve(exception);
+            messages = resolver.resolve( exception );
         }
 
         return messages;

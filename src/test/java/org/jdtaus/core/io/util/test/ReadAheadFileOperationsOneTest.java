@@ -38,12 +38,12 @@ public class ReadAheadFileOperationsOneTest extends ReadAheadFileOperationsTest
         try
         {
             return new ReadAheadFileOperations(
-                this.getMemoryFileOperations(), 1);
+                this.getMemoryFileOperations(), 1 );
 
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 

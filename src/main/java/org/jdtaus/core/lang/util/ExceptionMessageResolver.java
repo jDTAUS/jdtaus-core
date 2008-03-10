@@ -46,7 +46,7 @@ public interface ExceptionMessageResolver
      *
      * @see ExceptionMessageProducer#onException(ExceptionEvent)
      */
-    Message[] resolve(Exception exception);
+    Message[] resolve( Exception exception );
 
     //------------------------------------------------ExceptionMessageResolver--
 }

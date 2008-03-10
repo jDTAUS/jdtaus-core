@@ -50,9 +50,9 @@ public class StructuredFileOperationsCoalescingTest extends StructuredFileTest
             return this.memOps.getData();
 
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 
@@ -60,19 +60,19 @@ public class StructuredFileOperationsCoalescingTest extends StructuredFileTest
     {
         try
         {
-            if(this.structuredFile == null)
+            if ( this.structuredFile == null )
             {
                 this.structuredFile = new StructuredFileOperations(
                     StructuredFileTest.BLOCK_SIZE,
-                    new CoalescingFileOperations(this.memOps));
+                    new CoalescingFileOperations( this.memOps ) );
 
             }
 
             return this.structuredFile;
         }
-        catch(IOException e)
+        catch ( IOException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 

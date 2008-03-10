@@ -77,7 +77,7 @@ public final class RandomAccessFileOperations implements FileOperations
         }
 
         p = meta.getProperty("bufferSize");
-        this._bufferSize = ((java.lang.Integer) p.getValue()).intValue();
+        this.pBufferSize = ((java.lang.Integer) p.getValue()).intValue();
 
     }
 // </editor-fold>//GEN-END:jdtausConstructors
@@ -89,7 +89,7 @@ public final class RandomAccessFileOperations implements FileOperations
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>MemoryManager</code> implementation. */
-    private transient MemoryManager _dependency0;
+    private transient MemoryManager dMemoryManager;
 
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
@@ -99,9 +99,9 @@ public final class RandomAccessFileOperations implements FileOperations
     private MemoryManager getMemoryManager()
     {
         MemoryManager ret = null;
-        if(this._dependency0 != null)
+        if(this.dMemoryManager != null)
         {
-            ret = this._dependency0;
+            ret = this.dMemoryManager;
         }
         else
         {
@@ -114,7 +114,7 @@ public final class RandomAccessFileOperations implements FileOperations
                 getDependencies().getDependency("MemoryManager").
                 isBound())
             {
-                this._dependency0 = ret;
+                this.dMemoryManager = ret;
             }
         }
 
@@ -138,7 +138,7 @@ public final class RandomAccessFileOperations implements FileOperations
      * Property {@code bufferSize}.
      * @serial
      */
-    private int _bufferSize;
+    private int pBufferSize;
 
     /**
      * Gets the value of property <code>bufferSize</code>.
@@ -147,7 +147,7 @@ public final class RandomAccessFileOperations implements FileOperations
      */
     private int getBufferSize()
     {
-        return this._bufferSize;
+        return this.pBufferSize;
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -157,28 +157,30 @@ public final class RandomAccessFileOperations implements FileOperations
 
     /** Cache for the value of property {@code length}. */
     private transient long cachedLength = NO_CACHEDLENGTH;
+
     private static final long NO_CACHEDLENGTH = Long.MIN_VALUE;
 
     public long getLength() throws IOException
     {
         this.assertNotClosed();
 
-        return this.cachedLength != NO_CACHEDLENGTH ?
-            this.cachedLength : (this.cachedLength =
-            this.getRandomAccessFile().length());
+        return this.cachedLength != NO_CACHEDLENGTH
+            ? this.cachedLength
+            : ( this.cachedLength =
+            this.getRandomAccessFile().length() );
 
     }
 
-    public void setLength(long newLength) throws IOException
+    public void setLength( long newLength ) throws IOException
     {
-        if(newLength < 0L)
+        if ( newLength < 0L )
         {
-            throw new IllegalArgumentException(Long.toString(newLength));
+            throw new IllegalArgumentException( Long.toString( newLength ) );
         }
 
         this.assertNotClosed();
 
-        this.getRandomAccessFile().setLength(newLength);
+        this.getRandomAccessFile().setLength( newLength );
         this.cachedLength = newLength;
     }
 
@@ -189,41 +191,41 @@ public final class RandomAccessFileOperations implements FileOperations
         return this.getRandomAccessFile().getFilePointer();
     }
 
-    public void setFilePointer(long pos)  throws IOException
+    public void setFilePointer( long pos ) throws IOException
     {
         this.assertNotClosed();
 
-        this.getRandomAccessFile().seek(pos);
+        this.getRandomAccessFile().seek( pos );
     }
 
-    public void write(byte[] buf, int off, int len)  throws IOException
+    public void write( byte[] buf, int off, int len ) throws IOException
     {
         this.assertNotClosed();
 
         final RandomAccessFile file = this.getRandomAccessFile();
         final long pointer = file.getFilePointer();
 
-        file.write(buf, off, len);
+        file.write( buf, off, len );
 
-        if(this.cachedLength != NO_CACHEDLENGTH &&
-            pointer + len > this.cachedLength)
+        if ( this.cachedLength != NO_CACHEDLENGTH &&
+            pointer + len > this.cachedLength )
         {
             this.cachedLength = file.length();
         }
     }
 
-    public int read(byte[] buf, int off, int len) throws IOException
+    public int read( byte[] buf, int off, int len ) throws IOException
     {
         this.assertNotClosed();
 
-        return this.getRandomAccessFile().read(buf, off, len);
+        return this.getRandomAccessFile().read( buf, off, len );
     }
 
-    public void read(final OutputStream out) throws IOException
+    public void read( final OutputStream out ) throws IOException
     {
-        if(out == null)
+        if ( out == null )
         {
-            throw new NullPointerException("out");
+            throw new NullPointerException( "out" );
         }
 
         this.assertNotClosed();
@@ -232,26 +234,27 @@ public final class RandomAccessFileOperations implements FileOperations
         long toRead = this.getLength();
         final byte[] buf = this.getDefaultBuffer();
 
-        if(toRead > 0L)
+        if ( toRead > 0L )
         {
-            this.setFilePointer(0L);
+            this.setFilePointer( 0L );
             do
             {
-                read = this.read(buf, 0 , buf.length);
+                read = this.read( buf, 0, buf.length );
 
                 assert read != FileOperations.EOF : "Unexpected end of file.";
 
                 toRead -= read;
-                out.write(buf, 0, read);
-            } while(toRead > 0L);
+                out.write( buf, 0, read );
+            }
+            while ( toRead > 0L );
         }
     }
 
-    public void write(final InputStream in) throws IOException
+    public void write( final InputStream in ) throws IOException
     {
-        if(in == null)
+        if ( in == null )
         {
-            throw new NullPointerException("in");
+            throw new NullPointerException( "in" );
         }
 
         this.assertNotClosed();
@@ -259,9 +262,9 @@ public final class RandomAccessFileOperations implements FileOperations
         int read;
         final byte[] buf = this.getDefaultBuffer();
 
-        while((read = in.read(buf, 0, buf.length)) != FileOperations.EOF)
+        while ( ( read = in.read( buf, 0, buf.length ) ) != FileOperations.EOF )
         {
-            this.write(buf, 0, read);
+            this.write( buf, 0, read );
         }
     }
 
@@ -301,16 +304,16 @@ public final class RandomAccessFileOperations implements FileOperations
      *
      * @throws NullPointerException if {@code file} is {@code null}.
      */
-    public RandomAccessFileOperations(final RandomAccessFile file)
+    public RandomAccessFileOperations( final RandomAccessFile file )
     {
         super();
 
-        if(file == null)
+        if ( file == null )
         {
-            throw new NullPointerException("file");
+            throw new NullPointerException( "file" );
         }
 
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
         this.assertValidProperties();
 
         this.randomAccessFile = file;
@@ -335,10 +338,10 @@ public final class RandomAccessFileOperations implements FileOperations
      */
     private void assertValidProperties()
     {
-        if(this.getBufferSize() <= 0)
+        if ( this.getBufferSize() <= 0 )
         {
-            throw new PropertyException("bufferSize",
-                new Integer(this.getBufferSize()));
+            throw new PropertyException( "bufferSize",
+                                         new Integer( this.getBufferSize() ) );
 
         }
     }
@@ -350,10 +353,10 @@ public final class RandomAccessFileOperations implements FileOperations
      */
     private void assertNotClosed() throws IOException
     {
-        if(this.closed)
+        if ( this.closed )
         {
-            throw new IOException(RandomAccessFileOperationsBundle.
-                getAlreadyClosedText(Locale.getDefault()));
+            throw new IOException( RandomAccessFileOperationsBundle.getInstance().
+                                   getAlreadyClosedText( Locale.getDefault() ) );
 
         }
     }
@@ -365,10 +368,10 @@ public final class RandomAccessFileOperations implements FileOperations
      */
     private byte[] getDefaultBuffer()
     {
-        if(this.defaultBuffer == null)
+        if ( this.defaultBuffer == null )
         {
             this.defaultBuffer = this.getMemoryManager().
-                allocateBytes(this.getBufferSize());
+                allocateBytes( this.getBufferSize() );
 
         }
 

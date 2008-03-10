@@ -56,7 +56,7 @@ public final class MemoryFileOperations implements
      * Data to operate on.
      * @serial
      */
-    private byte[] data = { (byte) 0 };
+    private byte[] data = { ( byte ) 0 };
 
     /**
      * FilePointer.
@@ -111,7 +111,7 @@ public final class MemoryFileOperations implements
         }
 
         p = meta.getProperty("bufferSize");
-        this._bufferSize = ((java.lang.Integer) p.getValue()).intValue();
+        this.pBufferSize = ((java.lang.Integer) p.getValue()).intValue();
 
     }
 // </editor-fold>//GEN-END:jdtausConstructors
@@ -126,7 +126,7 @@ public final class MemoryFileOperations implements
      * Property {@code bufferSize}.
      * @serial
      */
-    private int _bufferSize;
+    private int pBufferSize;
 
     /**
      * Gets the value of property <code>bufferSize</code>.
@@ -135,7 +135,7 @@ public final class MemoryFileOperations implements
      */
     private int getBufferSize()
     {
-        return this._bufferSize;
+        return this.pBufferSize;
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -147,7 +147,7 @@ public final class MemoryFileOperations implements
     // This section is managed by jdtaus-container-mojo.
 
     /** Configured <code>MemoryManager</code> implementation. */
-    private transient MemoryManager _dependency1;
+    private transient MemoryManager dMemoryManager;
 
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
@@ -157,9 +157,9 @@ public final class MemoryFileOperations implements
     private MemoryManager getMemoryManager()
     {
         MemoryManager ret = null;
-        if(this._dependency1 != null)
+        if(this.dMemoryManager != null)
         {
-            ret = this._dependency1;
+            ret = this.dMemoryManager;
         }
         else
         {
@@ -172,7 +172,7 @@ public final class MemoryFileOperations implements
                 getDependencies().getDependency("MemoryManager").
                 isBound())
             {
-                this._dependency1 = ret;
+                this.dMemoryManager = ret;
             }
         }
 
@@ -185,7 +185,7 @@ public final class MemoryFileOperations implements
         return ret;
     }
     /** Configured <code>Logger</code> implementation. */
-    private transient Logger _dependency0;
+    private transient Logger dLogger;
 
     /**
      * Gets the configured <code>Logger</code> implementation.
@@ -195,9 +195,9 @@ public final class MemoryFileOperations implements
     private Logger getLogger()
     {
         Logger ret = null;
-        if(this._dependency0 != null)
+        if(this.dLogger != null)
         {
-            ret = this._dependency0;
+            ret = this.dLogger;
         }
         else
         {
@@ -210,7 +210,7 @@ public final class MemoryFileOperations implements
                 getDependencies().getDependency("Logger").
                 isBound())
             {
-                this._dependency0 = ret;
+                this.dLogger = ret;
             }
         }
 
@@ -238,16 +238,16 @@ public final class MemoryFileOperations implements
      * @throws IllegalArgumentException if {@code newLength} is negative or
      * greater than {@code Integer.MAX_VALUE}.
      */
-    public void setLength(final long newLength)
+    public void setLength( final long newLength )
     {
-        if(newLength < 0L || newLength > Integer.MAX_VALUE)
+        if ( newLength < 0L || newLength > Integer.MAX_VALUE )
         {
-            throw new IllegalArgumentException(Long.toString(newLength));
+            throw new IllegalArgumentException( Long.toString( newLength ) );
         }
 
-        this.resize((int) newLength);
-        this.length = (int) newLength;
-        if(this.filePointer > this.length)
+        this.resize( ( int ) newLength );
+        this.length = ( int ) newLength;
+        if ( this.filePointer > this.length )
         {
             this.filePointer = this.length;
         }
@@ -258,58 +258,58 @@ public final class MemoryFileOperations implements
         return this.filePointer;
     }
 
-    public void setFilePointer(final long pos)
+    public void setFilePointer( final long pos )
     {
         // Preconditions.
-        if(pos < 0L || pos > Integer.MAX_VALUE)
+        if ( pos < 0L || pos > Integer.MAX_VALUE )
         {
-            throw new IllegalArgumentException(Long.toString(pos));
+            throw new IllegalArgumentException( Long.toString( pos ) );
         }
 
         this.filePointer = pos;
     }
 
-    public int read(final byte[] buf, final int off, final int len)
+    public int read( final byte[] buf, final int off, final int len )
     {
         final int ret;
 
         // Preconditions.
-        if(buf == null)
+        if ( buf == null )
         {
-            throw new NullPointerException("buf");
+            throw new NullPointerException( "buf" );
         }
-        if(off < 0)
+        if ( off < 0 )
         {
-            throw new ArrayIndexOutOfBoundsException(off);
+            throw new ArrayIndexOutOfBoundsException( off );
         }
-        if(len < 0)
+        if ( len < 0 )
         {
-            throw new ArrayIndexOutOfBoundsException(len);
+            throw new ArrayIndexOutOfBoundsException( len );
         }
-        if(off + len > buf.length)
+        if ( off + len > buf.length )
         {
-            throw new ArrayIndexOutOfBoundsException(off + len);
+            throw new ArrayIndexOutOfBoundsException( off + len );
         }
-        if(this.filePointer + len > Integer.MAX_VALUE)
+        if ( this.filePointer + len > Integer.MAX_VALUE )
         {
-            throw new ArrayIndexOutOfBoundsException(Integer.MAX_VALUE);
+            throw new ArrayIndexOutOfBoundsException( Integer.MAX_VALUE );
         }
 
-        if(len == 0)
+        if ( len == 0 )
         {
             ret = 0;
         }
-        else if(this.filePointer >= this.length)
+        else if ( this.filePointer >= this.length )
         {
             // EOF
             ret = FileOperations.EOF;
         }
-        else if(this.filePointer + len > this.length)
+        else if ( this.filePointer + len > this.length )
         {
             // less than len byte before EOF
-            final int remaining = (int) (this.length - this.filePointer);
-            System.arraycopy(this.data, (int) this.filePointer, buf, off,
-                remaining);
+            final int remaining = ( int ) ( this.length - this.filePointer );
+            System.arraycopy( this.data, ( int ) this.filePointer, buf, off,
+                              remaining );
 
             this.filePointer += remaining;
             ret = remaining;
@@ -317,7 +317,9 @@ public final class MemoryFileOperations implements
         else
         {
             // copy len byte into buf.
-            System.arraycopy(this.data, (int) this.filePointer, buf, off, len);
+            System.arraycopy(
+                this.data, ( int ) this.filePointer, buf, off, len );
+
             this.filePointer += len;
             ret = len;
         }
@@ -325,65 +327,65 @@ public final class MemoryFileOperations implements
         return ret;
     }
 
-    public void write(final byte[] buf, final int off, final int len)
+    public void write( final byte[] buf, final int off, final int len )
     {
         // Preconditions.
-        if(buf == null)
+        if ( buf == null )
         {
-            throw new NullPointerException("buf");
+            throw new NullPointerException( "buf" );
         }
-        if(off < 0)
+        if ( off < 0 )
         {
-            throw new ArrayIndexOutOfBoundsException(off);
+            throw new ArrayIndexOutOfBoundsException( off );
         }
-        if(len < 0)
+        if ( len < 0 )
         {
-            throw new ArrayIndexOutOfBoundsException(len);
+            throw new ArrayIndexOutOfBoundsException( len );
         }
-        if(off + len > buf.length)
+        if ( off + len > buf.length )
         {
-            throw new ArrayIndexOutOfBoundsException(off + len);
+            throw new ArrayIndexOutOfBoundsException( off + len );
         }
 
         final long newLen = this.filePointer + len;
-        if(newLen > Integer.MAX_VALUE)
+        if ( newLen > Integer.MAX_VALUE )
         {
-            throw new ArrayIndexOutOfBoundsException(Integer.MAX_VALUE);
+            throw new ArrayIndexOutOfBoundsException( Integer.MAX_VALUE );
         }
 
-        if(newLen > this.length)
+        if ( newLen > this.length )
         {
-            this.setLength(newLen);
+            this.setLength( newLen );
         }
 
-        System.arraycopy(buf, off, this.data, (int) this.filePointer, len);
+        System.arraycopy( buf, off, this.data, ( int ) this.filePointer, len );
         this.filePointer += len;
     }
 
-    public void read(final OutputStream out) throws IOException
+    public void read( final OutputStream out ) throws IOException
     {
-        if(out == null)
+        if ( out == null )
         {
-            throw new NullPointerException("out");
+            throw new NullPointerException( "out" );
         }
 
-        out.write(this.data, 0, this.length);
+        out.write( this.data, 0, this.length );
         this.filePointer = this.length;
     }
 
-    public void write(final InputStream in) throws IOException
+    public void write( final InputStream in ) throws IOException
     {
-        if(in == null)
+        if ( in == null )
         {
-            throw new NullPointerException("in");
+            throw new NullPointerException( "in" );
         }
 
         int read;
         final byte[] buf = this.getDefaultBuffer();
 
-        while((read = in.read(buf, 0, buf.length)) != FileOperations.EOF)
+        while ( ( read = in.read( buf, 0, buf.length ) ) != FileOperations.EOF )
         {
-            this.write(buf, 0, read);
+            this.write( buf, 0, read );
         }
     }
 
@@ -396,7 +398,8 @@ public final class MemoryFileOperations implements
      * which relies on this behaviour, however.</p>
      */
     public void close()
-    {}
+    {
+    }
 
     //----------------------------------------------------------FileOperations--
     //--MemoryFileOperations----------------------------------------------------
@@ -404,7 +407,7 @@ public final class MemoryFileOperations implements
     /** Creates a new {@code MemoryFileOperations} instance of no length. */
     public MemoryFileOperations()
     {
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
         this.assertValidProperties();
     }
 
@@ -418,12 +421,12 @@ public final class MemoryFileOperations implements
      * @throws OutOfMemoryError if not enough memory is available to create a
      * buffer with a length of {@code initialCapacity}.
      */
-    public MemoryFileOperations(final int initialCapacity)
+    public MemoryFileOperations( final int initialCapacity )
     {
-        this.initializeProperties(META.getProperties());
+        this.initializeProperties( META.getProperties() );
         this.assertValidProperties();
 
-        this.data = this.getMemoryManager().allocateBytes(initialCapacity);
+        this.data = this.getMemoryManager().allocateBytes( initialCapacity );
     }
 
     /**
@@ -433,13 +436,13 @@ public final class MemoryFileOperations implements
      *
      * @throws NullPointerException if {@code buf} is {@code null}.
      */
-    public MemoryFileOperations(final byte[] buf)
+    public MemoryFileOperations( final byte[] buf )
     {
         this();
 
-        if(buf == null)
+        if ( buf == null )
         {
-            throw new NullPointerException("buf");
+            throw new NullPointerException( "buf" );
         }
 
         this.data = buf;
@@ -456,10 +459,10 @@ public final class MemoryFileOperations implements
      */
     public byte[] getData()
     {
-        final int length = (int) this.getLength();
-        final byte[] ret = this.getMemoryManager().allocateBytes(length);
+        final int length = ( int ) this.getLength();
+        final byte[] ret = this.getMemoryManager().allocateBytes( length );
 
-        System.arraycopy(this.data, 0, ret, 0, length);
+        System.arraycopy( this.data, 0, ret, 0, length );
 
         return ret;
     }
@@ -472,10 +475,10 @@ public final class MemoryFileOperations implements
      */
     private void assertValidProperties()
     {
-        if(this.getBufferSize() <= 0)
+        if ( this.getBufferSize() <= 0 )
         {
-            throw new PropertyException("bufferSize",
-                new Integer(this.getBufferSize()));
+            throw new PropertyException( "bufferSize",
+                                         new Integer( this.getBufferSize() ) );
 
         }
     }
@@ -487,10 +490,10 @@ public final class MemoryFileOperations implements
      */
     private byte[] getDefaultBuffer()
     {
-        if(this.defaultBuffer == null)
+        if ( this.defaultBuffer == null )
         {
             this.defaultBuffer = this.getMemoryManager().
-                allocateBytes(this.getBufferSize());
+                allocateBytes( this.getBufferSize() );
 
         }
 
@@ -502,29 +505,30 @@ public final class MemoryFileOperations implements
      *
      * @param newSize maximum size the internal buffer needs to hold.
      */
-    private void resize(int newSize)
+    private void resize( int newSize )
     {
         final int oldLength = this.data.length;
 
-        while(this.data.length < newSize)
+        while ( this.data.length < newSize )
         {
             final byte[] newData = this.getMemoryManager().allocateBytes(
-                this.data.length * 2 >= newSize ?
-                    this.data.length * 2 : newSize);
+                this.data.length * 2 >= newSize
+                ? this.data.length * 2
+                : newSize );
 
-            Arrays.fill(newData, (byte) 0);
-            System.arraycopy(this.data, 0, newData, 0, this.data.length);
+            Arrays.fill( newData, ( byte ) 0 );
+            System.arraycopy( this.data, 0, newData, 0, this.data.length );
             this.data = newData;
         }
 
-        if(oldLength != this.data.length &&
-            this.getLogger().isDebugEnabled())
+        if ( oldLength != this.data.length &&
+            this.getLogger().isDebugEnabled() )
         {
-            final MessageFormat fmt = MemoryFileOperationsBundle.
-                getLogResizeMessage(Locale.getDefault());
+            final MessageFormat fmt = MemoryFileOperationsBundle.getInstance().
+                getLogResizeMessage( Locale.getDefault() );
 
-            this.getLogger().debug(fmt.format(new Object[] {
-                new Long(this.data.length) }));
+            this.getLogger().debug(
+                fmt.format( new Object[] { new Long( this.data.length ) } ) );
 
         }
     }
@@ -541,15 +545,15 @@ public final class MemoryFileOperations implements
      * @return {@code true} if this object is the same as {@code o};
      * {@code false} otherwise.
      */
-    public boolean equals(final Object o)
+    public boolean equals( final Object o )
     {
         boolean ret = o == this;
         final MemoryFileOperations that;
 
-        if(!ret && o instanceof MemoryFileOperations)
+        if ( !ret && o instanceof MemoryFileOperations )
         {
-            that = (MemoryFileOperations) o;
-            ret = Arrays.equals(this.getData(), that.getData());
+            that = ( MemoryFileOperations ) o;
+            ret = Arrays.equals( this.getData(), that.getData() );
         }
 
         return ret;
@@ -576,9 +580,9 @@ public final class MemoryFileOperations implements
         {
             return super.clone();
         }
-        catch(CloneNotSupportedException e)
+        catch ( CloneNotSupportedException e )
         {
-            throw new AssertionError(e);
+            throw new AssertionError( e );
         }
     }
 
