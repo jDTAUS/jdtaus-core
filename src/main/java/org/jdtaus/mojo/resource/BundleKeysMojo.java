@@ -40,11 +40,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.jdtaus.mojo.resource.model.Artifact;
+import org.jdtaus.mojo.resource.model.Bundle;
 
 /**
  * Mojo to generate accessor classes for <code>ResourceBundle</code>s.
@@ -140,10 +145,11 @@ public final class BundleKeysMojo extends AbstractMojo
      *
      * @return the locale to use for javadoc comments.
      */
-    protected final Locale getLocale()
+    protected Locale getLocale()
     {
-        return this.locale == null ?
-            Locale.getDefault() : new Locale(this.locale);
+        return this.locale == null
+            ? Locale.getDefault()
+            : new Locale( this.locale );
 
     }
 
@@ -154,17 +160,17 @@ public final class BundleKeysMojo extends AbstractMojo
 
     private File getGenDirectory()
     {
-        return new File(this.genDirectory);
+        return new File( this.genDirectory );
     }
 
     private File getOutputDirectory()
     {
-        return new File(this.outputDirectory);
+        return new File( this.outputDirectory );
     }
 
     private File getHashDirectory()
     {
-        return new File(this.hashDirectory);
+        return new File( this.hashDirectory );
     }
 
     private String getNameSuffix()
@@ -172,7 +178,7 @@ public final class BundleKeysMojo extends AbstractMojo
         return this.nameSuffix;
     }
 
-    private boolean isJavadoc()
+    public boolean isJavadoc()
     {
         return this.javadoc.booleanValue();
     }
@@ -185,31 +191,87 @@ public final class BundleKeysMojo extends AbstractMojo
         final ClassLoader mavenLoader =
             Thread.currentThread().getContextClassLoader();
 
-        Thread.currentThread().setContextClassLoader(
-            this.getClasspathClassLoader());
-
-        if(!this.getGenDirectory().exists())
+        try
         {
-            this.getGenDirectory().mkdirs();
+            Thread.currentThread().setContextClassLoader(
+                this.getClasspathClassLoader() );
+
+            if ( !this.getGenDirectory().exists() &&
+                !this.getGenDirectory().mkdirs() )
+            {
+                throw new MojoExecutionException(
+                    this.getMessage( "cannotCreateDirectory" ).
+                    format( new Object[] { this.getGenDirectory().
+                                           getAbsolutePath()
+                        } ) );
+
+            }
+
+            this.getProject().addCompileSourceRoot(
+                this.getGenDirectory().getAbsolutePath() );
+
+            for ( Iterator it = this.getBundles().entrySet().iterator();
+                it.hasNext();)
+            {
+                final Map.Entry e = ( Map.Entry ) it.next();
+                this.generatePackage( e.getKey().toString(),
+                                      ( Map ) e.getValue() );
+
+            }
+
         }
-
-        this.getProject().addCompileSourceRoot(
-            this.getGenDirectory().getAbsolutePath());
-
-        String pkg;
-        final Iterator it;
-        final Map bundles = this.getBundles();
-        for(it = bundles.keySet().iterator(); it.hasNext();)
+        finally
         {
-            pkg = (String) it.next();
-            this.generatePackage(pkg, (Map) bundles.get(pkg));
+            Thread.currentThread().setContextClassLoader( mavenLoader );
         }
-
-        Thread.currentThread().setContextClassLoader(mavenLoader);
     }
 
     //------------------------------------------------------------AbstractMojo--
     //--BundleKeysMojo----------------------------------------------------------
+
+    /** Location of the {@code Bundle.java.vm} template. */
+    private static final String TEMPLATE_LOCATION =
+        "META-INF/templates/Bundle.java.vm";
+
+    /** Name of the classpath resource loader implementation. */
+    private static final String VELOCITY_RESOURCE_LOADER =
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader";
+
+    /** Velocity engine. */
+    private VelocityEngine velocity;
+
+    /**
+     * Gets the {@code VelocityEngine} used for generating source code.
+     *
+     * @return the {@code VelocityEngine} used for generating source code.
+     *
+     * @throws MojoFailureException if creating a new {@code VelocityEngine}
+     * instance fails.
+     */
+    private VelocityEngine getVelocity() throws MojoFailureException
+    {
+        try
+        {
+            if ( this.velocity == null )
+            {
+                final Properties props = new Properties();
+                props.put( "resource.loader", "class" );
+                props.put( "class.resource.loader.class",
+                           VELOCITY_RESOURCE_LOADER );
+
+                final VelocityEngine engine = new VelocityEngine();
+                engine.init( props );
+
+                this.velocity = engine;
+            }
+
+            return this.velocity;
+        }
+        catch ( Exception e )
+        {
+            throw new MojoFailureException( e.getMessage() );
+        }
+    }
 
     /**
      * Accessor to the compile classpath elements.
@@ -239,29 +301,29 @@ public final class BundleKeysMojo extends AbstractMojo
 
         try
         {
-            for(it = this.getClasspathElements().iterator(); it.hasNext();)
+            for ( it = this.getClasspathElements().iterator(); it.hasNext();)
             {
-                element = (String) it.next();
-                if(!urls.contains(element))
+                element = ( String ) it.next();
+                if ( !urls.contains( element ) )
                 {
-                    file = new File(element);
-                    urls.add(file.toURI().toURL());
+                    file = new File( element );
+                    urls.add( file.toURI().toURL() );
                 }
             }
 
-            if(!urls.contains(this.getOutputDirectory().toURI().toURL()))
+            if ( !urls.contains( this.getOutputDirectory().toURI().toURL() ) )
             {
-                urls.add(this.getOutputDirectory().toURI().toURL());
+                urls.add( this.getOutputDirectory().toURI().toURL() );
             }
 
             return new URLClassLoader(
-                (URL[]) urls.toArray(new URL[urls.size()]),
-                Thread.currentThread().getContextClassLoader());
+                ( URL[] ) urls.toArray( new URL[ urls.size() ] ),
+                Thread.currentThread().getContextClassLoader() );
 
         }
-        catch(MalformedURLException e)
+        catch ( MalformedURLException e )
         {
-            throw new MojoFailureException(e.getMessage());
+            throw new MojoFailureException( e.getMessage() );
         }
     }
 
@@ -275,33 +337,35 @@ public final class BundleKeysMojo extends AbstractMojo
         String bundlePackage;
         String bundleLocation;
 
-        if(this.bundles != null)
+        if ( this.bundles != null )
         {
-            for(i = this.bundles.length - 1; i >= 0; i--)
+            for ( i = this.bundles.length - 1; i >= 0; i-- )
             {
                 bundle = this.bundles[i];
-                bundleName = BundleKeysMojo.getNameForBundle(bundle);
-                bundlePackage = BundleKeysMojo.getPackageForBundle(bundle);
-                bundleLocation = bundle.replaceAll("\\.", "/");
+                bundleName = BundleKeysMojo.getNameForBundle( bundle );
+                bundlePackage = BundleKeysMojo.getPackageForBundle( bundle );
+                bundleLocation = bundle.replaceAll( "\\.", "/" );
 
-                map = (Map) ret.get(bundlePackage);
-                if(map == null)
+                map = ( Map ) ret.get( bundlePackage );
+                if ( map == null )
                 {
                     map = new HashMap();
-                    ret.put(bundlePackage, map);
+                    ret.put( bundlePackage, map );
                 }
 
                 try
                 {
-                    map.put(bundleName,
-                        ResourceBundle.getBundle(bundleLocation,
-                        this.getLocale(),
-                        Thread.currentThread().getContextClassLoader()));
+                    final ResourceBundle resourceBundle =
+                        ResourceBundle.getBundle( bundleLocation,
+                                                  this.getLocale(),
+                                                  Thread.currentThread().
+                                                  getContextClassLoader() );
 
+                    map.put( bundleName, resourceBundle );
                 }
-                catch(MissingResourceException e)
+                catch ( MissingResourceException e )
                 {
-                    this.getLog().warn(e.getMessage());
+                    this.getLog().warn( e.getMessage() );
                 }
             }
         }
@@ -309,296 +373,233 @@ public final class BundleKeysMojo extends AbstractMojo
         return ret;
     }
 
-    private static String getPackageForBundle(final String bundleName)
+    private static String getPackageForBundle( final String bundleName )
     {
-        if(bundleName == null)
+        if ( bundleName == null )
         {
-            throw new NullPointerException("bundleName");
+            throw new NullPointerException( "bundleName" );
         }
 
-        return bundleName.substring(0, bundleName.lastIndexOf('.'));
+        return bundleName.substring( 0, bundleName.lastIndexOf( '.' ) );
     }
 
-    private static String getNameForBundle(final String bundleName)
+    private static String getNameForBundle( final String bundleName )
     {
-        if(bundleName == null)
+        if ( bundleName == null )
         {
-            throw new NullPointerException("bundleName");
+            throw new NullPointerException( "bundleName" );
         }
 
-        return bundleName.substring(bundleName.lastIndexOf('.') + 1);
+        return bundleName.substring( bundleName.lastIndexOf( '.' ) + 1 );
     }
 
-    private MessageFormat getMessage(final String key)
+    private MessageFormat getMessage( final String key )
     {
-        if(key == null)
+        if ( key == null )
         {
-            throw new NullPointerException("key");
+            throw new NullPointerException( "key" );
         }
 
-        return new MessageFormat(ResourceBundle.
-            getBundle(BundleKeysMojo.class.getName()).getString(key));
+        return new MessageFormat(
+            ResourceBundle.getBundle( BundleKeysMojo.class.getName() ).
+            getString( key ) );
 
     }
 
-    private void generatePackage(final String pkg, final Map bundles) throws
+    private void generatePackage( final String pkg, final Map bundles )
+        throws
         MojoFailureException
     {
-        if(pkg == null)
+        if ( pkg == null )
         {
-            throw new NullPointerException("pkg");
+            throw new NullPointerException( "pkg" );
         }
-        if(bundles == null)
+        if ( bundles == null )
         {
-            throw new NullPointerException("bundles");
+            throw new NullPointerException( "bundles" );
         }
 
-        final String pkgPath = pkg.replaceAll("\\.", "/");
-        final File hashDir = new File(this.getHashDirectory(), pkgPath);
-        final File pkgDir = new File(this.getGenDirectory(), pkgPath);
+        final String pkgPath = pkg.replaceAll( "\\.", "/" );
+        final File hashDir = new File( this.getHashDirectory(), pkgPath );
+        final File pkgDir = new File( this.getGenDirectory(), pkgPath );
 
-        if(!pkgDir.exists())
+        if ( !pkgDir.exists() )
         {
             pkgDir.mkdirs();
         }
-        if(!hashDir.exists())
+        if ( !hashDir.exists() )
         {
             hashDir.mkdirs();
         }
 
-        for(Iterator it = bundles.keySet().iterator(); it.hasNext();)
+        for ( Iterator it = bundles.keySet().iterator(); it.hasNext();)
         {
-            final String bundleName = (String) it.next();
+            final String bundleName = ( String ) it.next();
             final String bundlePath =
                 bundleName + this.getNameSuffix() + ".java";
 
             final String hashPath =
                 bundleName + this.getNameSuffix() + ".hash";
 
-            this.generateBundle(bundleName, pkg,
-                new File(pkgDir, bundlePath), new File(hashDir, hashPath),
-                (ResourceBundle) bundles.get(bundleName));
+            final Artifact artifact = new Artifact();
+            final Bundle bundle = new Bundle();
+
+            artifact.setClassName( bundleName + this.getNameSuffix() );
+            artifact.setPackageName( pkg );
+
+            bundle.setPackageName( pkg );
+            bundle.setClassName( bundleName );
+            bundle.setResourceBundle(
+                ( ResourceBundle ) bundles.get( bundleName ) );
+
+            this.generateBundle( artifact, bundle,
+                                 new File( pkgDir, bundlePath ),
+                                 new File( hashDir, hashPath ) );
 
         }
     }
 
-    private void generateBundle(final String bundleName,
-        final String packageName, final File outputFile,
-        final File hashFile, final ResourceBundle bundle)
+    private void generateBundle( final Artifact artifact,
+                                  final Bundle bundle,
+                                  final File outputFile,
+                                  final File hashFile )
         throws MojoFailureException
     {
-        String key;
-
-        if(bundleName == null)
+        if ( artifact == null )
         {
-            throw new NullPointerException("bundleName");
+            throw new NullPointerException( "artifact" );
         }
-        if(outputFile == null)
+        if ( outputFile == null )
         {
-            throw new NullPointerException("outputFile");
+            throw new NullPointerException( "outputFile" );
         }
-        if(hashFile == null)
+        if ( hashFile == null )
         {
-            throw new NullPointerException("hashFile");
+            throw new NullPointerException( "hashFile" );
         }
-        if(bundle == null)
+        if ( bundle == null )
         {
-            throw new NullPointerException("bundle");
-        }
-        if(packageName == null)
-        {
-            throw new NullPointerException("packageName");
+            throw new NullPointerException( "bundle" );
         }
 
         try
         {
-            if(!this.checkHashFile(hashFile, bundle))
+            if ( !this.checkHashFile( hashFile, bundle.getResourceBundle() ) )
             {
-                this.getLog().info(this.getMessage("writingBundle").
-                    format(new Object[] { outputFile.getName() }));
+                this.getLog().info( this.getMessage( "writingBundle" ).
+                                    format( new Object[] {
+                                            outputFile.getName()
+                                        } ) );
 
-                final FileOutputStream out = new FileOutputStream(outputFile);
-                final Writer writer = this.encoding == null ?
-                    new OutputStreamWriter(out) :
-                    new OutputStreamWriter(out, this.encoding);
+                final VelocityContext ctx = new VelocityContext();
+                ctx.put( "artifact", artifact );
+                ctx.put( "bundle", bundle );
+                ctx.put( "builder", this );
 
-                final StringBuffer buf = new StringBuffer(4096);
-                buf.append("package ").append(packageName).append(";\n\n");
-                buf.append("import java.util.HashMap;\n");
-                buf.append("import java.util.Map;\n");
-                buf.append("import java.util.Locale;\n");
-                buf.append("import java.util.ResourceBundle;\n");
-                buf.append("import java.text.MessageFormat;\n");
-                buf.append("\nabstract class ").append(bundleName).
-                    append(this.getNameSuffix()).append("{\n\n");
+                final FileOutputStream out =
+                    new FileOutputStream( outputFile );
 
-                buf.append("private static final Map cache;\n\n");
+                final Writer writer = this.encoding == null
+                    ? new OutputStreamWriter( out )
+                    : new OutputStreamWriter( out, this.encoding );
 
-                buf.append("static\n{\n    cache = new HashMap();\n");
-                for(Enumeration e = bundle.getKeys(); e.hasMoreElements();)
-                {
-                    key = (String) e.nextElement();
-                    buf.append("    ").
-                        append(BundleKeysMojo.getStringGetterNameForKey(key)).
-                        append("(Locale.getDefault());\n");
+                this.getVelocity().mergeTemplate( TEMPLATE_LOCATION,
+                                                  ctx, writer );
 
-                }
-                buf.append("}\n\n");
-
-                for(Enumeration e = bundle.getKeys(); e.hasMoreElements();)
-                {
-                    key = (String) e.nextElement();
-
-                    if(this.isJavadoc())
-                    {
-                        buf.append("/** <pre> ").append(bundle.getObject(key)).
-                            append("</pre>. */\n");
-
-                    }
-
-                    buf.append("public static String ").
-                        append(BundleKeysMojo.getStringGetterNameForKey(key));
-
-                    buf.append("(final Locale locale) {\n");
-                    buf.append("    ");
-                    buf.append("return getMessage(\"").
-                        append(key).append("\", locale);\n}\n\n");
-
-                    if(this.isJavadoc())
-                    {
-                        buf.append("/** <pre> ").append(bundle.getObject(key)).
-                            append("</pre>. */\n");
-
-                    }
-
-                    buf.append("public static MessageFormat ").
-                        append(BundleKeysMojo.getMessageGetterNameForKey(key));
-
-                    buf.append("(Locale locale) {\n");
-                    buf.append("    ");
-                    buf.append("if(locale == null) { ").
-                        append("locale = Locale.getDefault(); }\n");
-
-                    buf.append("return new MessageFormat(getMessage(\"").
-                        append(key).append("\", locale), locale);\n}\n\n");
-
-                }
-
-                buf.append("private static String getMessage(").
-                    append("final String key, Locale locale) {\n");
-                buf.append("    ");
-                buf.append("if(locale == null) {").
-                    append("locale = Locale.getDefault(); }\n");
-
-                buf.append("    ");
-                buf.append("Map msgCache = (Map) cache.get(locale);\n");
-                buf.append("    ");
-                buf.append("if(msgCache == null)\n    {\n");
-                buf.append("        ");
-                buf.append("msgCache = new HashMap();\n");
-                buf.append("        ");
-                buf.append("cache.put(locale, msgCache);\n    }\n\n");
-                buf.append("    ");
-                buf.append("String msg = (String) msgCache.get(key);\n");
-                buf.append("    ");
-                buf.append("if(msg == null)\n    {\n");
-                buf.append("        ");
-                buf.append("msg = ResourceBundle.getBundle(\n");
-                buf.append("        ");
-                buf.append('"').append(packageName).append('.').
-                    append(bundleName);
-
-                buf.append('"').append(", locale).getString(key);\n");
-                buf.append("        ");
-                buf.append("msgCache.put(key, msg);\n");
-                buf.append("    };\n");
-                buf.append("    return msg;\n");
-
-                buf.append("}\n\n");
-
-                buf.append("}\n");
-                writer.write(buf.toString());
                 writer.close();
             }
         }
-        catch(IOException e)
+        catch ( Exception e )
         {
-            throw new MojoFailureException(e.getMessage());
+            throw new MojoFailureException( e.getMessage() );
         }
     }
 
-    private static String getMessageGetterNameForKey(String key)
+    public String getMessageGetterNameForKey( String key )
     {
-        if(key == null)
+        if ( key == null )
         {
-            throw new NullPointerException("key");
+            throw new NullPointerException( "key" );
         }
 
         final char[] c = key.toCharArray();
-        if(Character.isLowerCase(c[0]))
+        if ( Character.isLowerCase( c[0] ) )
         {
-            c[0] = Character.toUpperCase(c[0]);
+            c[0] = Character.toUpperCase( c[0] );
         }
 
-        key = String.valueOf(c);
+        key = String.valueOf( c );
 
-        return new StringBuffer(255).append("get").append(key).
-            append("Message").toString();
+        return new StringBuffer( 255 ).append( "get" ).append( key ).
+            append( "Message" ).toString();
 
     }
 
-    private static String getStringGetterNameForKey(String key)
+    public String getStringGetterNameForKey( String key )
     {
-        if(key == null)
+        if ( key == null )
         {
-            throw new NullPointerException("key");
+            throw new NullPointerException( "key" );
         }
 
         final char[] c = key.toCharArray();
-        if(Character.isLowerCase(c[0]))
+        if ( Character.isLowerCase( c[0] ) )
         {
-            c[0] = Character.toUpperCase(c[0]);
+            c[0] = Character.toUpperCase( c[0] );
         }
 
-        key = String.valueOf(c);
+        key = String.valueOf( c );
 
-        return new StringBuffer(255).append("get").append(key).
-            append("Text").toString();
+        return new StringBuffer( 255 ).append( "get" ).append( key ).
+            append( "Text" ).toString();
 
     }
 
-    private boolean checkHashFile(final File hashFile,
-        final ResourceBundle bundle) throws IOException
+    private boolean checkHashFile( final File hashFile,
+                                    final ResourceBundle bundle )
+        throws IOException
     {
         boolean hashEqual = false;
         boolean writeHashFile = true;
         int bundleHash = 23;
 
-        for(Enumeration en = bundle.getKeys(); en.hasMoreElements();)
+        for ( Enumeration en = bundle.getKeys(); en.hasMoreElements();)
         {
             bundleHash = 37 * bundleHash + en.nextElement().hashCode();
         }
 
-        if(hashFile.exists())
+        if ( hashFile.exists() )
         {
             final DataInputStream in =
-                new DataInputStream(new FileInputStream(hashFile));
+                new DataInputStream( new FileInputStream( hashFile ) );
 
             hashEqual = bundleHash == in.readInt();
             writeHashFile = !hashEqual;
             in.close();
         }
 
-        if(writeHashFile)
+        if ( writeHashFile )
         {
             final DataOutputStream out =
-                new DataOutputStream(new FileOutputStream(hashFile));
+                new DataOutputStream( new FileOutputStream( hashFile ) );
 
-            out.writeInt(bundleHash);
+            out.writeInt( bundleHash );
             out.close();
         }
 
         return hashEqual;
+    }
+
+    public String normalizeMessage( final String message )
+    {
+        String normalized = message == null
+            ? ""
+            : message;
+
+        normalized = normalized.replaceAll( "\\/\\*\\*", "/*" );
+        normalized = normalized.replaceAll( "\\*/", "/" );
+
+        return normalized;
     }
 
     //----------------------------------------------------------BundleKeysMojo--

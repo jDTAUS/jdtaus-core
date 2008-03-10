@@ -30,13 +30,13 @@ import java.text.MessageFormat;
  * @goal test-messageformat
  * @phase process-resources
  */
-public class MessagesTestMojo extends AbstractPropertyFileProcessorMojo
+public final class MessagesTestMojo extends AbstractPropertyFileProcessorMojo
 {
     //--AbstractPropertyFileProcessorMojo---------------------------------------
 
-    protected final void processProperty(String key, String value)
+    protected final void processProperty( String key, String value )
     {
-        new MessageFormat(value);
+        new MessageFormat( value );
     }
 
     //---------------------------------------AbstractPropertyFileProcessorMojo--

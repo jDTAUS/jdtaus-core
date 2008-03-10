@@ -1,0 +1,103 @@
+/*
+ *  jDTAUS - DTAUS fileformat.
+ *  Copyright (c) 2005 Christian Schulte <cs@schulte.it>
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+package $artifact.getPackageName();
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.text.MessageFormat;
+
+class $artifact.getClassName()
+{
+
+  /** Singleton instance. */
+  private static final $artifact.getClassName() instance =
+    new ${artifact.getClassName()}();
+
+  /** Creates a new {@code $artifact.getClassName()} instance. */
+  ${artifact.getClassName()}()
+  {
+#foreach($key in $bundle.getResourceBundle().getKeys())
+    this.getMessage ( "$key", Locale.getDefault() );
+#end
+  }
+
+  /**
+   * Gets the {@code $artifact.getClassName()} singleton.
+   *
+   * @return the {@code $artifact.getClassName()} singleton.
+   */
+  static $artifact.getClassName() getInstance()
+  {
+    return instance;
+  }
+
+#foreach($key in $bundle.getResourceBundle().getKeys())
+#if($builder.isJavadoc())
+  /**
+   * Gets the text of the message with key {@code "$key"}.
+   *
+   * @return <pre>
+   * $builder.normalizeMessage($bundle.getResourceBundle().getString($key))</pre>
+   */
+#end
+  String $builder.getStringGetterNameForKey($key) ( final Locale locale )
+  {
+    return this.getMessage ( "$key", locale );
+  }
+
+#if($builder.isJavadoc())
+  /**
+   * Gets the message with key {@code "$key"}.
+   *
+   * @return <pre>
+   * $builder.normalizeMessage($bundle.getResourceBundle().getString($key))</pre>
+   */
+#end
+  MessageFormat $builder.getMessageGetterNameForKey($key) ( Locale locale )
+  {
+    if ( locale == null )
+    {
+      locale = Locale.getDefault();
+    }
+
+    return new MessageFormat ( this.getMessage ( "$key", locale ), locale );
+  }
+#end
+
+  /**
+   * Gets a message for a given key and locale.
+   *
+   * @param key the key of the message to return.
+   * @param locale the locale of the message.
+   *
+   * @return message for {@code key} using {@code locale}.
+   */
+  private String getMessage( final String key, Locale locale )
+  {
+    if ( locale == null )
+    {
+      locale = Locale.getDefault();
+    }
+
+    return ResourceBundle.getBundle( "$bundle.getResourceLocation()",
+                                     locale ).getString( key );
+
+  }
+}

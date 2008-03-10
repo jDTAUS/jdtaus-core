@@ -35,7 +35,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.codehaus.plexus.util.DirectoryScanner;
 
-
 /**
  * Base class to process properties of property files found in the project
  * resources.
@@ -81,16 +80,17 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
      *
      * @throws NullPointerException {@code if(key == null)}
      */
-    private MessageFormat i18n(final String key)
+    private MessageFormat getMessage( final String key )
     {
-        if(key == null)
+        if ( key == null )
         {
-            throw new NullPointerException("key");
+            throw new NullPointerException( "key" );
         }
 
         return new MessageFormat(
             ResourceBundle.getBundle(
-            AbstractPropertyFileProcessorMojo.class.getName()).getString(key));
+            AbstractPropertyFileProcessorMojo.class.getName() ).
+            getString( key ) );
 
     }
 
@@ -113,42 +113,42 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
      * @see #processProperty(String, String)
      */
     public final void execute() throws MojoExecutionException,
-        MojoFailureException
+                                         MojoFailureException
     {
-
         Resource rsrc;
         Properties props;
         DirectoryScanner scanner;
-        final String[] msgArgs = new String[2];
-        final Pattern fileExcludePat = this.fileExcludeRegexp != null ?
-            Pattern.compile(this.fileExcludeRegexp) : null;
+        final String[] msgArgs = new String[ 2 ];
+        final Pattern fileExcludePat = this.fileExcludeRegexp != null
+            ? Pattern.compile( this.fileExcludeRegexp )
+            : null;
 
-        for (Iterator i = this.resources.iterator(); i.hasNext();)
+        for ( Iterator i = this.resources.iterator(); i.hasNext();)
         {
-            rsrc = (Resource) i.next();
-            if (!new File(rsrc.getDirectory()).exists())
+            rsrc = ( Resource ) i.next();
+            if ( !new File( rsrc.getDirectory() ).exists() )
             {
                 continue;
             }
 
             scanner = new DirectoryScanner();
-            scanner.setBasedir(rsrc.getDirectory());
+            scanner.setBasedir( rsrc.getDirectory() );
             scanner.setIncludes(
-                AbstractPropertyFileProcessorMojo.DEFAULT_INCLUDES);
+                AbstractPropertyFileProcessorMojo.DEFAULT_INCLUDES );
 
             scanner.addDefaultExcludes();
             scanner.scan();
 
-            for (Iterator j = Arrays.asList(scanner.getIncludedFiles()).
+            for ( Iterator j = Arrays.asList( scanner.getIncludedFiles() ).
                 iterator(); j.hasNext();)
             {
-                msgArgs[0] = (String) j.next();
-                if(fileExcludePat != null &&
-                    fileExcludePat.matcher(msgArgs[0]).matches())
+                msgArgs[0] = ( String ) j.next();
+                if ( fileExcludePat != null &&
+                    fileExcludePat.matcher( msgArgs[0] ).matches() )
                 {
                     msgArgs[1] = this.fileExcludeRegexp;
-                    this.getLog().info(this.i18n("ignoringFile").
-                        format(msgArgs));
+                    this.getLog().info( this.getMessage( "ignoringFile" ).
+                                        format( msgArgs ) );
 
                 }
                 else
@@ -156,18 +156,20 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
                     props = new Properties();
                     try
                     {
-                        this.getLog().debug(this.i18n("testingFile").
-                            format(msgArgs));
+                        this.getLog().debug( this.getMessage( "testingFile" ).
+                                             format( msgArgs ) );
 
-                        props.load(new FileInputStream(
-                            new File(rsrc.getDirectory(), msgArgs[0])));
+                        props.load( new FileInputStream(
+                                    new File( rsrc.getDirectory(),
+                                              msgArgs[0] ) ) );
 
-                        this.processProperties(props);
+                        this.processProperties( props );
                     }
-                    catch (IOException e)
+                    catch ( IOException e )
                     {
                         throw new MojoExecutionException(
-                            this.i18n("technicalError").format(null), e);
+                            this.getMessage( "technicalError" ).
+                            format( null ), e );
 
                     }
                 }
@@ -175,24 +177,26 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
         }
     }
 
-    private void processProperties(final Properties properties)
+    private void processProperties( final Properties properties )
     {
-        final String[] args = new String[2];
-        final Pattern pat = Pattern.compile(this.keyMatchRegexp);
+        final String[] args = new String[ 2 ];
+        final Pattern pat = Pattern.compile( this.keyMatchRegexp );
         args[1] = this.keyMatchRegexp;
 
-        for(Iterator i = properties.keySet().iterator(); i.hasNext();)
+        for ( Iterator i = properties.keySet().iterator(); i.hasNext();)
         {
-            args[0] = (String) i.next();
-            if(pat.matcher(args[0]).matches())
+            args[0] = ( String ) i.next();
+            if ( pat.matcher( args[0] ).matches() )
             {
-                this.processProperty(args[0],
-                    properties.getProperty(args[0]));
+                this.processProperty( args[0],
+                                      properties.getProperty( args[0] ) );
 
             }
             else
             {
-                this.getLog().info(this.i18n("notMatchingKey").format(args));
+                this.getLog().info( this.getMessage( "notMatchingKey" ).
+                                    format( args ) );
+
             }
         }
     }
@@ -206,8 +210,7 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
      * @param key the properties key.
      * @param value the properties value.
      */
-    protected abstract void processProperty(String key, String value);
+    protected abstract void processProperty( String key, String value );
 
     //-------------------------------------------AbstractPropertyFileProcessor--
-
 }
