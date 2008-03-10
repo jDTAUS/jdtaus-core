@@ -96,6 +96,7 @@
           <configuration>
             <inputEncoding>UTF-8</inputEncoding>
             <outputEncoding>UTF-8</outputEncoding>
+            <inputEncoding>UTF-8</inputEncoding>
             <locales>en</locales>
           </configuration>
         </plugin>
@@ -227,6 +228,18 @@
         <artifactId>maven-project</artifactId>
         <scope>compile</scope>
         <version>[2.0, 2.1)</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-embedder</artifactId>
+        <scope>compile</scope>
+        <version>[2.0, 2.1)</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.velocity</groupId>
+        <artifactId>velocity</artifactId>
+        <scope>compile</scope>
+        <version>1.5</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
