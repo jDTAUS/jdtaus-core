@@ -103,12 +103,12 @@ public class BundleGenerator
   /**
    * Gets the name of a getter method returning an instance of
    * {@code MessageFormat} for a given bundle key.
-   * 
+   *
    * @param key a key from a bundle to get the name of the corresponding getter
    * method for.
-   * 
+   *
    * @return the name of the getter method for a given bundle key.
-   * 
+   *
    * @throws NullPointerException if {@code key} is {@code null}.
    */
   public String getMessageGetterNameForKey( String key )
@@ -134,12 +134,12 @@ public class BundleGenerator
   /**
    * Gets the name of a getter method returning an instance of {@code String}
    * for a given bundle key.
-   * 
+   *
    * @param key a key from a bundle to get the name of the corresponding getter
    * method for.
-   * 
+   *
    * @return the name of the getter method for a given bundle key.
-   * 
+   *
    * @throws NullPointerException if {@code key} is {@code null}.
    */
   public String getStringGetterNameForKey( String key )
@@ -164,9 +164,9 @@ public class BundleGenerator
 
   /**
    * Removes any opening or closing java comment markers from a given string.
-   * 
+   *
    * @param str the string to normalize.
-   * 
+   *
    * @return {@code str} with any opening or closing java comment marker
    * removed.
    */
