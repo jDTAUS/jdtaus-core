@@ -30,6 +30,7 @@ import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -221,295 +222,33 @@ public final class SwingProgressMonitor implements TaskListener
     {
         if ( event != null )
         {
-            final MonitorState state;
-
             switch ( event.getType() )
             {
                 case TaskEvent.STARTED:
-                    final ActionListener cancelListener =
-                        new ActionListener()
-                        {
-
-                            public void actionPerformed(
-                                final ActionEvent e )
-                            {
-                                if ( !event.getTask().isCancelled() )
-                                {
-                                    event.getTask().setCancelled( true );
-                                }
-                            }
-
-                        };
-
-                    state = new MonitorState( event.getTask(),
-                                              new ProgressPanel(),
-                                              cancelListener,
-                                              System.currentTimeMillis() );
-
-                    final TitledBorder border =
-                        BorderFactory.createTitledBorder(
-                        state.task.getDescription().getText(
-                        Locale.getDefault() ) );
-
-                    state.panel.setBorder( border );
-
-                    if ( state.task.getProgressDescription() != null )
-                    {
-                        state.panel.getProgressDescriptionLabel().
-                            setText(
-                            state.task.getProgressDescription().
-                            getText( Locale.getDefault() ) );
-
-                    }
-                    else
-                    {
-                        state.panel.getProgressDescriptionLabel().
-                            setVisible( false );
-
-                    }
-
-                    state.panel.getProgressBar().setIndeterminate(
-                        state.task.isIndeterminate() );
-
-                    if ( !state.task.isIndeterminate() )
-                    {
-                        state.panel.getProgressBar().setMinimum(
-                            state.task.getMinimum() );
-
-                        state.panel.getProgressBar().setMaximum(
-                            state.task.getMaximum() );
-
-                        state.panel.getProgressBar().setValue(
-                            state.task.getProgress() );
-
-                    }
-
-                    state.panel.getCancelButton().setVisible(
-                        state.task.isCancelable() );
-
-                    state.panel.getCancelButton().addActionListener(
-                        state.cancelListener );
-
-                    SwingUtilities.invokeLater(
-                        new Runnable()
-                        {
-
-                            public void run()
-                            {
-                                state.panel.setVisible( false );
-                                getDialog().add( state.panel );
-                            }
-
-                        } );
-
-                    if ( tasks.put( state.task, state ) != null )
-                    {
-                        throw new IllegalStateException(
-                            SwingProgressMonitorBundle.getInstance().
-                            getTaskAlreadyStartedMessage( Locale.getDefault() ).
-                            format( new Object[] {
-                                    state.task.getDescription().getText(
-                                    Locale.getDefault() ),
-                                    new Date( state.task.getTimestamp() )
-                                } ) );
-
-                    }
+                    this.onTaskStarted( event );
                     break;
 
                 case TaskEvent.CHANGED_STATE:
-                    state = ( MonitorState ) tasks.get( event.getTask() );
-
-                    assert state != null :
-                        "Expected a started task.";
-
-                    SwingUtilities.invokeLater(
-                        new Runnable()
-                        {
-
-                            public void run()
-                            {
-                                if ( !state.task.isIndeterminate() )
-                                {
-                                    state.panel.getProgressBar().
-                                        setValue(
-                                        state.task.getProgress() );
-
-                                }
-
-                                if ( state.task.getProgressDescription() !=
-                                    null )
-                                {
-                                    final String oldText =
-                                        state.panel.getProgressDescriptionLabel().
-                                        getText();
-
-                                    final String newText =
-                                        state.task.getProgressDescription().
-                                        getText( Locale.getDefault() );
-
-                                    if ( oldText == null ||
-                                        !oldText.equals( newText ) )
-                                    {
-                                        state.panel.getProgressDescriptionLabel().
-                                            setText( newText );
-                                    }
-
-                                    if ( !state.panel.getProgressDescriptionLabel().
-                                        isVisible() )
-                                    {
-                                        state.panel.getProgressDescriptionLabel().
-                                            setVisible( true );
-
-                                    }
-                                }
-                                else
-                                {
-                                    if ( state.panel.getProgressDescriptionLabel().
-                                        isVisible() )
-                                    {
-                                        state.panel.getProgressDescriptionLabel().
-                                            setVisible( false );
-
-                                    }
-                                }
-                            }
-
-                        } );
+                    this.onTaskChangedState( event );
                     break;
 
                 case TaskEvent.ENDED:
-                    state = ( MonitorState ) tasks.remove( event.getTask() );
-
-                    assert state != null :
-                        "Expected a started task.";
-
-                    SwingUtilities.invokeLater(
-                        new Runnable()
-                        {
-
-                            public void run()
-                            {
-                                state.panel.getCancelButton().
-                                    removeActionListener( state.cancelListener );
-
-                                getDialog().remove( state.panel );
-                            }
-
-                        } );
+                    this.onTaskEnded( event );
                     break;
 
                 default:
-                    getLogger().warn( SwingProgressMonitorBundle.getInstance().
-                                      getUnknownEventTypeMessage( Locale.getDefault() ).
-                                      format( new Object[] {
-                                              new Integer( event.getType() )
-                                          } ) );
+                    getLogger().warn(
+                      SwingProgressMonitorBundle.getInstance().
+                      getUnknownEventTypeMessage( Locale.getDefault() ).
+                      format( new Object[]
+                              {
+                                  new Integer( event.getType() )
+                              } ) );
 
             }
         }
 
-        if ( this.tasks.size() > 0 )
-        {
-            final long now = System.currentTimeMillis();
-            if ( this.popupDecisionMillis == NO_POPUPDECISION )
-            {
-                this.popupDecisionMillis = now;
-            }
-            else if ( now - this.popupDecisionMillis >
-                this.getMillisToDecideToPopup() )
-            {
-                // If any task's operation runs longer than millisToPopup
-                // show the dialog.
-                for ( Iterator it = this.tasks.entrySet().iterator();
-                    it.hasNext();)
-                {
-                    final Map.Entry entry = ( Map.Entry ) it.next();
-                    final MonitorState state =
-                        ( MonitorState ) entry.getValue();
-
-                    if ( !state.task.isIndeterminate() )
-                    {
-                        if ( state.task.getProgress() > state.task.getMinimum() )
-                        {
-                            final long predicted = ( now - state.startMillis ) *
-                                ( state.task.getMaximum() -
-                                state.task.getMinimum() ) /
-                                ( state.task.getProgress() -
-                                state.task.getMinimum() );
-
-                            if ( predicted > getMillisToPopup() &&
-                                !state.panel.isVisible() )
-                            {
-                                // If the task is believed to last longer than
-                                // millisToPopup add the panel to the dialog.
-                                SwingUtilities.invokeLater(
-                                    new Runnable()
-                                    {
-
-                                        public void run()
-                                        {
-                                            state.panel.setVisible( true );
-                                            getDialog().pack();
-                                            if ( !getDialog().
-                                                isVisible() )
-                                            {
-                                                getDialog().
-                                                    setLocationRelativeTo(
-                                                    getParent() );
-
-                                                getDialog().
-                                                    setVisible( true );
-                                            }
-                                        }
-
-                                    } );
-                            }
-                        }
-                    }
-                    else if ( !state.panel.isVisible() &&
-                        now - state.task.getTimestamp() >
-                        this.getMillisToPopup() )
-                    { // Only show long running indeterminate tasks.
-                        SwingUtilities.invokeLater(
-                            new Runnable()
-                            {
-
-                                public void run()
-                                {
-                                    state.panel.setVisible( true );
-                                    getDialog().pack();
-                                    if ( !getDialog().
-                                        isVisible() )
-                                    {
-                                        getDialog().
-                                            setLocationRelativeTo(
-                                            getParent() );
-
-                                        getDialog().
-                                            setVisible( true );
-                                    }
-                                }
-
-                            } );
-                    }
-                }
-            }
-        }
-        else
-        {
-            SwingUtilities.invokeLater(
-                new Runnable()
-                {
-
-                    public void run()
-                    {
-                        closeDialog();
-                    }
-
-                } );
-
-            this.popupDecisionMillis = NO_POPUPDECISION;
-        }
+        this.updateProgressDialog();
     }
 
     //------------------------------------------------------------TaskListener--
@@ -567,7 +306,6 @@ public final class SwingProgressMonitor implements TaskListener
      * {@code millisToPopup}.
      */
     private long popupDecisionMillis = NO_POPUPDECISION;
-
     private static final long NO_POPUPDECISION = Long.MIN_VALUE;
 
     /**
@@ -620,8 +358,8 @@ public final class SwingProgressMonitor implements TaskListener
      * @see #onTaskEvent(TaskEvent)
      */
     public SwingProgressMonitor( final Component parent,
-                                  final int millisToDecideToPopup,
-                                  final int millisToPopup )
+                                 final int millisToDecideToPopup,
+                                 final int millisToPopup )
     {
         if ( parent == null )
         {
@@ -678,15 +416,15 @@ public final class SwingProgressMonitor implements TaskListener
         if ( this.getMillisToDecideToPopup() < 0 )
         {
             throw new PropertyException(
-                "millisToDecideToPopup",
-                Integer.toString( this.getMillisToDecideToPopup() ) );
+              "millisToDecideToPopup",
+              Integer.toString( this.getMillisToDecideToPopup() ) );
 
         }
         if ( this.getMillisToPopup() < 0 )
         {
             throw new PropertyException(
-                "millisToPopup",
-                Integer.toString( this.getMillisToPopup() ) );
+              "millisToPopup",
+              Integer.toString( this.getMillisToPopup() ) );
 
         }
     }
@@ -701,7 +439,8 @@ public final class SwingProgressMonitor implements TaskListener
         if ( this.dialog == null )
         {
             final Window window =
-                this.getWindowForComponent( this.getParent() );
+              this.getWindowForComponent( this.getParent() );
+
             if ( window instanceof Frame )
             {
                 this.dialog = new ProgressDialog( ( Frame ) window );
@@ -744,13 +483,14 @@ public final class SwingProgressMonitor implements TaskListener
      * @see java.awt.GraphicsEnvironment#isHeadless
      */
     private Window getWindowForComponent( final Component parentComponent )
-        throws HeadlessException
+      throws HeadlessException
     {
         Window window = JOptionPane.getRootFrame();
+
         if ( parentComponent != null )
         {
             if ( parentComponent instanceof Frame ||
-                parentComponent instanceof Dialog )
+              parentComponent instanceof Dialog )
             {
                 window = ( Window ) parentComponent;
             }
@@ -761,6 +501,362 @@ public final class SwingProgressMonitor implements TaskListener
         }
 
         return window;
+    }
+
+    /**
+     * Starts monitoring a task.
+     *
+     * @param event the {@code TaskEvent} indicating the start of a {@code Task}.
+     *
+     * @throws NullPointerException if {@code event} is {@code null}.
+     * @throws IllegalArgumentException if {@code event.getType()} is not equal
+     * to {@link TaskEvent#STARTED}.
+     */
+    private void onTaskStarted( final TaskEvent event )
+    {
+        if ( event == null )
+        {
+            throw new NullPointerException( "event" );
+        }
+        if ( event.getType() != TaskEvent.STARTED )
+        {
+            throw new IllegalArgumentException(
+              Integer.toString( event.getType() ) );
+
+        }
+
+        final ActionListener cancelListener =
+          new ActionListener()
+          {
+
+              public void actionPerformed( final ActionEvent e )
+              {
+                  if ( !event.getTask().isCancelled() )
+                  {
+                      event.getTask().setCancelled( true );
+                  }
+              }
+
+          };
+
+        final MonitorState state =
+          new MonitorState( event.getTask(), new ProgressPanel(),
+                            cancelListener, System.currentTimeMillis() );
+
+        final TitledBorder border =
+          BorderFactory.createTitledBorder( state.task.getDescription().
+                                            getText( Locale.getDefault() ) );
+
+        state.panel.setBorder( border );
+
+        if ( state.task.getProgressDescription() != null )
+        {
+            state.panel.getProgressDescriptionLabel().
+              setText( state.task.getProgressDescription().
+                       getText( Locale.getDefault() ) );
+
+        }
+        else
+        {
+            state.panel.getProgressDescriptionLabel().
+              setVisible( false );
+
+        }
+
+        state.panel.getProgressBar().
+          setIndeterminate( state.task.isIndeterminate() );
+
+        if ( !state.task.isIndeterminate() )
+        {
+            state.panel.getProgressBar().
+              setMinimum( state.task.getMinimum() );
+
+            state.panel.getProgressBar().
+              setMaximum( state.task.getMaximum() );
+
+            state.panel.getProgressBar().
+              setValue( state.task.getProgress() );
+
+        }
+
+        state.panel.getCancelButton().
+          setVisible( state.task.isCancelable() );
+
+        state.panel.getCancelButton().
+          addActionListener( state.cancelListener );
+
+        if ( this.tasks.put( state.task, state ) != null )
+        {
+            throw new IllegalStateException(
+              SwingProgressMonitorBundle.getInstance().
+              getTaskAlreadyStartedMessage( Locale.getDefault() ).
+              format( new Object[]
+                      {
+                          state.task.getDescription().
+                          getText( Locale.getDefault() ),
+                          new Date( state.task.getTimestamp() )
+                      } ) );
+
+        }
+
+        SwingUtilities.invokeLater(
+          new Runnable()
+          {
+
+              public void run()
+              {
+                  state.panel.setVisible( false );
+                  getDialog().add( state.panel );
+              }
+
+          } );
+    }
+
+    /**
+     * Finishes monitoring a task.
+     *
+     * @param event the {@code TaskEvent} indicating the end of a {@code Task}.
+     *
+     * @throws NullPointerException if {@code event} is {@code null}.
+     * @throws IllegalArgumentException if {@code event.getType()} is not equal
+     * to {@link TaskEvent#ENDED}.
+     */
+    private void onTaskEnded( final TaskEvent event )
+    {
+        if ( event == null )
+        {
+            throw new NullPointerException( "event" );
+        }
+        if ( event.getType() != TaskEvent.ENDED )
+        {
+            throw new IllegalArgumentException(
+              Integer.toString( event.getType() ) );
+
+        }
+
+        final MonitorState state =
+          ( MonitorState ) this.tasks.remove( event.getTask() );
+
+        assert state != null : "Expected a started task.";
+
+        SwingUtilities.invokeLater(
+          new Runnable()
+          {
+
+              public void run()
+              {
+                  state.panel.getCancelButton().
+                    removeActionListener( state.cancelListener );
+
+                  getDialog().remove( state.panel );
+              }
+
+          } );
+
+    }
+
+    /**
+     * Monitors a {@code Task}'s state.
+     *
+     * @param event the {@code TaskEvent} indicating a state change of a
+     * {@code Task}.
+     *
+     * @throws NullPointerException if {@code event} is {@code null}.
+     * @throws IllegalArgumentException if {@code event.getType()} is not equal
+     * to {@link TaskEvent#CHANGED_STATE}.
+     */
+    private void onTaskChangedState( final TaskEvent event )
+    {
+        if ( event == null )
+        {
+            throw new NullPointerException( "event" );
+        }
+        if ( event.getType() != TaskEvent.CHANGED_STATE )
+        {
+            throw new IllegalArgumentException(
+              Integer.toString( event.getType() ) );
+
+        }
+
+        final MonitorState state =
+          ( MonitorState ) this.tasks.get( event.getTask() );
+
+        assert state != null : "Expected a started task.";
+
+        SwingUtilities.invokeLater(
+          new Runnable()
+          {
+
+              public void run()
+              {
+                  if ( !state.task.isIndeterminate() )
+                  {
+                      state.panel.getProgressBar().
+                        setValue( state.task.getProgress() );
+
+                  }
+
+                  if ( state.task.getProgressDescription() != null )
+                  {
+                      final String oldText =
+                        state.panel.getProgressDescriptionLabel().
+                        getText();
+
+                      final String newText =
+                        state.task.getProgressDescription().
+                        getText( Locale.getDefault() );
+
+                      if ( oldText == null ||
+                        !oldText.equals( newText ) )
+                      {
+                          state.panel.getProgressDescriptionLabel().
+                            setText( newText );
+
+                      }
+
+                      if ( !state.panel.getProgressDescriptionLabel().
+                        isVisible() )
+                      {
+                          state.panel.getProgressDescriptionLabel().
+                            setVisible( true );
+
+                      }
+                  }
+                  else
+                  {
+                      if ( state.panel.getProgressDescriptionLabel().
+                        isVisible() )
+                      {
+                          state.panel.getProgressDescriptionLabel().
+                            setVisible( false );
+
+                      }
+                  }
+              }
+
+          } );
+
+    }
+
+    /**
+     * Updates the {@code ProgressDialog}.
+     */
+    private void updateProgressDialog()
+    {
+        if ( this.tasks.size() > 0 )
+        {
+            final long now = System.currentTimeMillis();
+            if ( this.popupDecisionMillis == NO_POPUPDECISION )
+            {
+                this.popupDecisionMillis = now;
+            }
+            else if ( now - this.popupDecisionMillis >
+              this.getMillisToDecideToPopup() )
+            {
+                // If any task's operation runs longer than millisToPopup,
+                // show the dialog.
+                for ( Iterator it = this.tasks.entrySet().iterator();
+                  it.hasNext();)
+                {
+                    final Map.Entry entry = ( Map.Entry ) it.next();
+                    final MonitorState state =
+                      ( MonitorState ) entry.getValue();
+
+                    if ( !state.task.isIndeterminate() )
+                    {
+                        if ( state.task.getProgress() > state.task.getMinimum() )
+                        {
+                            final long predicted = ( now - state.startMillis ) *
+                              ( state.task.getMaximum() -
+                              state.task.getMinimum() ) /
+                              ( state.task.getProgress() -
+                              state.task.getMinimum() );
+
+                            final Calendar cal = Calendar.getInstance();
+                            cal.setTimeInMillis( now + predicted );
+
+                            state.panel.getTimeLabel().setText(
+                              SwingProgressMonitorBundle.getInstance().
+                              getExpectedEndMessage( Locale.getDefault() ).
+                              format( new Object[]
+                                      {
+                                          cal.getTime()
+                                      } ) );
+
+                            if ( predicted > getMillisToPopup() &&
+                              !state.panel.isVisible() )
+                            {
+                                // If the task is believed to last longer than
+                                // millisToPopup add the panel to the dialog.
+                                SwingUtilities.invokeLater(
+                                  new Runnable()
+                                  {
+
+                                      public void run()
+                                      {
+                                          state.panel.setVisible( true );
+                                          getDialog().pack();
+                                          if ( !getDialog().isVisible() )
+                                          {
+                                              getDialog().
+                                                setLocationRelativeTo(
+                                                getParent() );
+
+                                              getDialog().
+                                                setVisible( true );
+
+                                          }
+                                      }
+
+                                  } );
+                            }
+                        }
+                    }
+                    else if ( !state.panel.isVisible() &&
+                      now - state.task.getTimestamp() >
+                      this.getMillisToPopup() )
+                    { // Only show long running indeterminate tasks.
+
+                        SwingUtilities.invokeLater(
+                          new Runnable()
+                          {
+
+                              public void run()
+                              {
+                                  state.panel.setVisible( true );
+                                  getDialog().pack();
+                                  if ( !getDialog().isVisible() )
+                                  {
+                                      getDialog().
+                                        setLocationRelativeTo(
+                                        getParent() );
+
+                                      getDialog().
+                                        setVisible( true );
+
+                                  }
+                              }
+
+                          } );
+                    }
+                }
+            }
+        }
+        else
+        {
+            SwingUtilities.invokeLater(
+              new Runnable()
+              {
+
+                  public void run()
+                  {
+                      closeDialog();
+                  }
+
+              } );
+
+            this.popupDecisionMillis = NO_POPUPDECISION;
+        }
     }
 
     //----------------------------------------------------SwingProgressMonitor--
@@ -776,8 +872,14 @@ class ProgressPanel extends JPanel
 {
     //--ProgressPanel-----------------------------------------------------------
 
+    /** Serial version UID for backwards compatibility with 1.1.x classes. */
+    private static final long serialVersionUID = 7471966908616369847L;
+
     /** {@code JLabel} for displaying a {@code Task}s progress description. */
     private final JLabel progressDescriptionLabel;
+
+    /** {@code JLabel} for displaying the time to run. */
+    private final JLabel timeLabel;
 
     /** {@code JProgressBar} for displaying a {@code Task}s progress. */
     private final JProgressBar progressBar;
@@ -789,10 +891,14 @@ class ProgressPanel extends JPanel
     ProgressPanel()
     {
         this.progressDescriptionLabel = new JLabel();
+        this.timeLabel = new JLabel();
         this.progressBar = new JProgressBar();
         this.cancelButton = new JButton();
         this.cancelButton.setText(
-            UIManager.getString( "OptionPane.cancelButtonText" ) );
+          UIManager.getString( "OptionPane.cancelButtonText" ) );
+
+        this.timeLabel.setFont( this.timeLabel.getFont().deriveFont(
+                                this.timeLabel.getFont().getSize2D() - 2.0F ) );
 
         this.setLayout( new GridBagLayout() );
 
@@ -800,6 +906,7 @@ class ProgressPanel extends JPanel
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.NORTHWEST;
         c.weightx = 1.0D;
+        c.weighty = 1.0D;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets( 10, 25, 10, 25 );
         this.add( this.getProgressBar(), c );
@@ -809,20 +916,34 @@ class ProgressPanel extends JPanel
         c.anchor = GridBagConstraints.NORTHWEST;
         c.weightx = 1.0D;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets( 2, 25, 2, 25 );
+        c.insets = new Insets( 0, 25, 10, 25 );
         this.add( this.getProgressDescriptionLabel(), c );
 
         c = new GridBagConstraints();
-        c.gridheight = GridBagConstraints.REMAINDER;
+        c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.SOUTHEAST;
+        c.weightx = 1.0D;
         c.weighty = 1.0D;
-        c.insets = new Insets( 2, 5, 2, 5 );
+        c.insets = new Insets( 10, 25, 10, 25 );
         this.add( this.getCancelButton(), c );
+
+        c = new GridBagConstraints();
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.weightx = 1.0D;
+        c.anchor = GridBagConstraints.SOUTHWEST;
+        c.insets = new Insets( 10, 25, 0, 25 );
+        c.fill = GridBagConstraints.HORIZONTAL;
+        this.add( this.getTimeLabel(), c );
     }
 
     JLabel getProgressDescriptionLabel()
     {
         return this.progressDescriptionLabel;
+    }
+
+    JLabel getTimeLabel()
+    {
+        return this.timeLabel;
     }
 
     JProgressBar getProgressBar()
@@ -847,6 +968,10 @@ class ProgressPanel extends JPanel
 class ProgressDialog extends JDialog
 {
     //--ProgressDialog----------------------------------------------------------
+
+    /** Serial version UID for backwards compatibility with 1.1.x classes. */
+    private static final long serialVersionUID = -8959350486356163001L;
+
     /**
      * Creates a new {@code ProgressDialog} taking the owning frame.
      *
