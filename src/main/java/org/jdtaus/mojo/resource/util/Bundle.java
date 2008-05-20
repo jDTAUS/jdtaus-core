@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.jdtaus.mojo.resource.model;
+package org.jdtaus.mojo.resource.util;
 
 import java.util.ResourceBundle;
 
@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Generated {@code ResourceBundle}.
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
- * @version $Id: AbstractPropertyFileProcessorMojo.java 3553 2007-05-25 22:37:09Z schulte2005 $
+ * @version $Id$
  */
 public class Bundle extends Artifact
 {

@@ -1,3 +1,4 @@
+#if($includeLicense)
 /*
  *  jDTAUS - DTAUS fileformat.
  *  Copyright (c) 2005 Christian Schulte <cs@schulte.it>
@@ -17,6 +18,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
+#end
 package $artifact.getPackageName();
 
 import java.util.Locale;
@@ -26,11 +28,15 @@ import java.text.MessageFormat;
 class $artifact.getClassName()
 {
 
+#if($includeComments)
   /** Singleton instance. */
+#end
   private static final $artifact.getClassName() instance =
     new ${artifact.getClassName()}();
 
+#if($includeComments)
   /** Creates a new {@code $artifact.getClassName()} instance. */
+#end
   ${artifact.getClassName()}()
   {
 #foreach($key in $bundle.getResourceBundle().getKeys())
@@ -38,39 +44,41 @@ class $artifact.getClassName()
 #end
   }
 
+#if($includeComments)
   /**
    * Gets the {@code $artifact.getClassName()} singleton.
    *
    * @return the {@code $artifact.getClassName()} singleton.
    */
+#end
   static $artifact.getClassName() getInstance()
   {
     return instance;
   }
 
 #foreach($key in $bundle.getResourceBundle().getKeys())
-#if($builder.isJavadoc())
+#if($includeComments)
   /**
    * Gets the text of the message with key {@code "$key"}.
    *
    * @return <pre>
-   * $builder.normalizeMessage($bundle.getResourceBundle().getString($key))</pre>
+   * $generator.normalizeComment($bundle.getResourceBundle().getString($key))</pre>
    */
 #end
-  String $builder.getStringGetterNameForKey($key) ( final Locale locale )
+  String $generator.getStringGetterNameForKey($key) ( final Locale locale )
   {
     return this.getMessage ( "$key", locale );
   }
 
-#if($builder.isJavadoc())
+#if($includeComments)
   /**
    * Gets the message with key {@code "$key"}.
    *
    * @return <pre>
-   * $builder.normalizeMessage($bundle.getResourceBundle().getString($key))</pre>
+   * $generator.normalizeComment($bundle.getResourceBundle().getString($key))</pre>
    */
 #end
-  MessageFormat $builder.getMessageGetterNameForKey($key) ( Locale locale )
+  MessageFormat $generator.getMessageGetterNameForKey($key) ( Locale locale )
   {
     if ( locale == null )
     {
@@ -80,6 +88,7 @@ class $artifact.getClassName()
     return new MessageFormat ( this.getMessage ( "$key", locale ), locale );
   }
 #end
+#if($includeComments)
 
   /**
    * Gets a message for a given key and locale.
@@ -89,6 +98,7 @@ class $artifact.getClassName()
    *
    * @return message for {@code key} using {@code locale}.
    */
+#end
   private String getMessage( final String key, Locale locale )
   {
     if ( locale == null )
