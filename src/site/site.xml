@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="jDTAUS Core">
-  <bannerLeft />
-  <bannerRight />
+  <bannerLeft>
+    <name>${pom.name}</name>
+  </bannerLeft>
+  <bannerRight>
+    <name></name>
+  </bannerRight>
   <skin>
     <groupId>org.apache.maven.skins</groupId>
     <artifactId>maven-classic-skin</artifactId>
