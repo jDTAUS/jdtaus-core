@@ -17,6 +17,7 @@
     <menu name="jDTAUS Core">
       <item name="Home" href="http://www.jdtaus.org/"/>
       <item name="About" href="http://sites.jdtaus.org/jdtaus-core/1.0.x/index.html"/>
+      <item name="Maven Plugins" href="http://sites.jdtaus.org/jdtaus-core/1.0.x/maven-plugins.html"/>
     </menu>
 
     <menu ref="reports"/>

@@ -1,0 +1,20 @@
+  -----
+jDTAUS Maven Plugins
+  -----
+Christian Schulte
+  -----
+July 2008
+  -----
+
+Maven Plugins
+
+  The following table lists all available Maven 2 plugins used for building
+  the jDTAUS artifacts.
+
+*-------------------+----------------------------------------------------------+
+|| <<Plugin>>       || <<Description>>                                        ||
+*-------------------+----------------------------------------------------------+
+| {{{/jdtaus-resource-mojo/} <<<resource>>>}} | Source generator for resource bundles. |
+*-------------------+----------------------------------------------------------+
+| {{{/jdtaus-container-mojo/} <<<container>>>}} | Source generator for the container model. |
+*-------------------+-----------------------------------------------------------+
