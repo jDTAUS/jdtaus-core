@@ -6,19 +6,15 @@
   <body>
     <release version="1.0" date="2007-06-01"
              description="First stable release."/>
-
     <release version="1.1" date="2007-08-01"
              description="Feature enhancement.">
-
       <action dev="schulte2005" type="update"><![CDATA[
       Added new goal <code>verify-model</code>. Added configuration parameter
       <code>targetEditor</code> to goal <code>generate-container</code>.]]>
       </action>
     </release>
-
     <release version="1.2" date="2007-08-24"
              description="Feature enhancement.">
-
       <action dev="schulte2005" type="update"><![CDATA[
       Added support for test modules. Added mojo configuration parameters
       <code>testModuleName</code> and <code>mode</code> to goal
@@ -29,10 +25,8 @@
       to goal <code>verify-model</code>.]]>
       </action>
     </release>
-
     <release version="2.0" date="2008-03-10"
              description="Feature enhancements.">
-
       <action dev="schulte2005" type="update"><![CDATA[
       Updated to generate fields with names according to the property name or
       dependency name instead of numbering the various fields according to the
@@ -40,6 +34,17 @@
       compatible with previous versions of the plugin.]]>
       </action>
     </release>
-
+    <release version="2.1" date="2008-07-04"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Deprecated the <code>mode</code> parameter.]]>
+      </action>
+    </release>
+    <action dev="schulte2005" type="fix"><![CDATA[
+      Corrected various classloader issues to support processing of any
+      available module regardless of the <code>mode</code> parameter. The
+      plugin can now be configured in a parent pom and reused in any
+      child-pom regardless of the artifact defining jDTAUS modules or not.]]>
+    </action>
   </body>
 </document>

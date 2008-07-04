@@ -1,6 +1,9 @@
 /*
- *  jDTAUS - DTAUS fileformat.
- *  Copyright (c) 2005 Christian Schulte <cs@schulte.it>
+ *  jDTAUS Core Container Mojo
+ *  Copyright (c) 2005 Christian Schulte
+ *
+ *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+ *  <cs@jdtaus.org> (+49 2331 3543887)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -53,19 +56,21 @@ public class ContainerMojo extends AbstractSourceMojo
 
     /**
      * The name of the module to process.
-     * @parameter expression="${moduleName}" default-value="${pom.name}"
+     * @parameter expression="${moduleName}"
      */
     private String moduleName;
 
     /**
      * The name of the test module to process.
-     * @parameter expression="${testModuleName}" default-value="${pom.name} Tests"
+     * @parameter expression="${testModuleName}"
      */
     private String testModuleName;
 
     /**
      * The operation mode to use (one of main or test).
      * @parameter expression="${mode}" default-value="main"
+     * @deprecated Since version 2.1 the mojo processes any available module
+     * regardless of the value of this parameter.
      */
     private String mode;
 
@@ -146,19 +151,36 @@ public class ContainerMojo extends AbstractSourceMojo
      *
      * @parameter expression="${targetEditor}" default-value="netbeans"
      */
-    protected String targetEditor;
+    protected String targetIde;
 
     /**
      * Accessor to the currently executed jDTAUS module.
      *
-     * @return the currently executed jDTAUS module.
+     * @return the currently executed jDTAUS module or {@code null} if no module
+     * is defined for the currently executed jDTAUS module.
      */
     protected final Module getModule()
     {
-        return this.moduleName != null
-            ? ModelFactory.newModel().getModules().getModule( this.moduleName )
-            : null;
+        Module module = null;
 
+        if ( this.moduleName != null )
+        {
+            try
+            {
+                module = ModelFactory.newModel().getModules().
+                    getModule( this.moduleName );
+
+            }
+            catch ( MissingModuleException e )
+            {
+                this.getLog().info( ContainerMojoBundle.getInstance().
+                                    getSkippingMainModuleText(
+                                    Locale.getDefault() ) );
+
+            }
+        }
+
+        return module;
     }
 
     /**
@@ -198,7 +220,7 @@ public class ContainerMojo extends AbstractSourceMojo
      */
     protected final String getTargetEditor()
     {
-        return this.targetEditor.toLowerCase();
+        return this.targetIde.toLowerCase();
     }
 
     //-----------------------------------------------------------Configuration--
@@ -216,62 +238,71 @@ public class ContainerMojo extends AbstractSourceMojo
 
         try
         {
-            if ( this.mode.equalsIgnoreCase( "main" ) )
+            // All runtime dependencies are available so all required
+            // modules should also be available.
+
+            // Try the main-module using a corresonding classpath.
+            Thread.currentThread().setContextClassLoader(
+                this.getRuntimeClassLoader( mavenLoader ) );
+
+            final Module mod = this.getModule();
+
+            if ( mod != null )
             {
-                // All runtime dependencies are available so all required
-                // modules should also be available.
-                Thread.currentThread().setContextClassLoader(
-                    this.getRuntimeClassLoader() );
+                this.getLog().info( ContainerMojoBundle.getInstance().
+                                    getProcessingModuleMessage(
+                                    Locale.getDefault() ).
+                                    format( new Object[] { mod.getName() } ) );
 
-                final Module mod = this.getModule();
+                specs = mod.getSpecifications();
+                impls = mod.getImplementations();
 
-                if ( mod != null )
+                for ( i = specs.size() - 1; i >= 0; i-- )
                 {
-                    specs = mod.getSpecifications();
-                    impls = mod.getImplementations();
+                    this.generateSpecification(
+                        this.getMavenProject().getCompileSourceRoots(),
+                        specs.getSpecification( i ) );
 
-                    for ( i = specs.size() - 1; i >= 0; i-- )
-                    {
-                        this.generateSpecification(
-                            this.getMavenProject().getCompileSourceRoots(),
-                            specs.getSpecification( i ) );
-                    }
+                }
 
-                    for ( i = impls.size() - 1; i >= 0; i-- )
-                    {
-                        this.generateImplementation(
-                            this.getMavenProject().getCompileSourceRoots(),
-                            impls.getImplementation( i ) );
+                for ( i = impls.size() - 1; i >= 0; i-- )
+                {
+                    this.generateImplementation(
+                        this.getMavenProject().getCompileSourceRoots(),
+                        impls.getImplementation( i ) );
 
-                    }
                 }
             }
-            else if ( this.mode.equalsIgnoreCase( "test" ) )
+
+            // Try the test-module using a corresonding classpath.
+            Thread.currentThread().setContextClassLoader(
+                this.getTestClassLoader( mavenLoader ) );
+
+            final Module testMod = this.getTestModule();
+            if ( testMod != null )
             {
-                Thread.currentThread().setContextClassLoader(
-                    this.getTestClassLoader() );
+                this.getLog().info( ContainerMojoBundle.getInstance().
+                                    getProcessingModuleMessage(
+                                    Locale.getDefault() ).
+                                    format( new Object[] { mod.getName() } ) );
 
-                final Module testMod = this.getTestModule();
-                if ( testMod != null )
+                specs = testMod.getSpecifications();
+                impls = testMod.getImplementations();
+
+                for ( i = specs.size() - 1; i >= 0; i-- )
                 {
-                    specs = testMod.getSpecifications();
-                    impls = testMod.getImplementations();
+                    this.generateSpecification(
+                        this.getMavenProject().getTestCompileSourceRoots(),
+                        specs.getSpecification( i ) );
 
-                    for ( i = specs.size() - 1; i >= 0; i-- )
-                    {
-                        this.generateSpecification(
-                            this.getMavenProject().getTestCompileSourceRoots(),
-                            specs.getSpecification( i ) );
+                }
 
-                    }
+                for ( i = impls.size() - 1; i >= 0; i-- )
+                {
+                    this.generateImplementation(
+                        this.getMavenProject().getTestCompileSourceRoots(),
+                        impls.getImplementation( i ) );
 
-                    for ( i = impls.size() - 1; i >= 0; i-- )
-                    {
-                        this.generateImplementation(
-                            this.getMavenProject().getTestCompileSourceRoots(),
-                            impls.getImplementation( i ) );
-
-                    }
                 }
             }
         }
@@ -1435,10 +1466,10 @@ public class ContainerMojo extends AbstractSourceMojo
         {
             final String path = source.getAbsolutePath();
             final String content = this.load( source );
-            String edited = this.edit( content, new RemovingEditor(
-                                       path,
-                                       this.specificationsStartingMarker,
-                                       this.specificationsEndingMarker ) );
+            String edited =
+                this.edit( content, new RemovingEditor(
+                           path, this.specificationsStartingMarker,
+                           this.specificationsEndingMarker ) );
 
             if ( !content.equals( edited ) )
             {

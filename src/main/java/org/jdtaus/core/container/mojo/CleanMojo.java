@@ -1,6 +1,9 @@
 /*
- *  jDTAUS - DTAUS fileformat.
- *  Copyright (c) 2005 Christian Schulte <cs@schulte.it>
+ *  jDTAUS Core Container Mojo
+ *  Copyright (c) 2005 Christian Schulte
+ *
+ *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+ *  <cs@jdtaus.org> (+49 2331 3543887)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -46,16 +49,8 @@ public class CleanMojo extends AbstractSourceMojo
         final Collection sources = new LinkedList();
         final SourceEditor editor = new RemoveTrailingSpacesEditor();
 
-        if ( new File( this.getMavenProject().getBasedir(),
-                       "src/main/java" ).exists() )
-        {
-            sources.addAll( this.getAllSources() );
-        }
-        if ( new File( this.getMavenProject().getBasedir(),
-                       "src/test/java" ).exists() )
-        {
-            sources.addAll( this.getTestSources() );
-        }
+        sources.addAll( this.getAllSources() );
+        sources.addAll( this.getTestSources() );
 
         for ( Iterator it = sources.iterator(); it.hasNext();)
         {

@@ -1,6 +1,9 @@
 /*
- *  jDTAUS - DTAUS fileformat.
- *  Copyright (c) 2005 Christian Schulte <cs@schulte.it>
+ *  jDTAUS Core Container Mojo
+ *  Copyright (c) 2005 Christian Schulte
+ *
+ *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+ *  <cs@jdtaus.org> (+49 2331 3543887)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -193,14 +196,14 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      */
     protected boolean isClasspathElementIncluded( final String element )
     {
-        boolean ret = true;
-
         if ( element == null )
         {
             throw new NullPointerException( "element" );
         }
 
-        if ( this.classPathElementsExcludeRegexp != null )
+        boolean ret = !this.isClasspathElementDefaultExlude( element );
+
+        if ( ret && this.classPathElementsExcludeRegexp != null )
         {
             ret = !element.matches( this.classPathElementsExcludeRegexp );
         }
@@ -221,20 +224,49 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      */
     protected boolean isTestClasspathElementIncluded( final String element )
     {
-        boolean ret = true;
-
         if ( element == null )
         {
             throw new NullPointerException( "element" );
         }
 
-        if ( this.testClassPathElementsExcludeRegexp != null )
+        boolean ret = !this.isClasspathElementDefaultExlude( element );
+
+        if ( ret && this.testClassPathElementsExcludeRegexp != null )
         {
             ret = !element.matches( this.testClassPathElementsExcludeRegexp );
         }
 
         return ret;
     }
+
+    /**
+     * Indicates whether a class path element is on the list of default class
+     * path element excludes.
+     *
+     * @param element the element to check for default classpath exclusion.
+     *
+     * @return {@code true} if {@code element} should be excluded by default;
+     * {@code false} if not.
+     *
+     * @throws NullPointerException if {@code element} is {@code null}.
+     */
+    protected boolean isClasspathElementDefaultExlude( final String element )
+    {
+        if ( element == null )
+        {
+            throw new NullPointerException( "element" );
+        }
+
+        return element.matches( ".*jdtaus-core-api.*jar" );
+    }
+
+    /** Default source include patterns. */
+    private static final String[] DEFAULT_SOURCE_INCLUDES = {
+        "**/*.java",
+        "**/*.xml",
+        "**/*.xsd",
+        "**/*.html"
+    };
 
     //-----------------------------------------------------------Configuration--
     //--AbstractSourceMojo------------------------------------------------------
@@ -259,7 +291,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         /**
          * Flag indicating that the editor changed a line.
          *
-         * @return {@code true} if the editor did change a line of input;
+         * @return {@code true} if the editor changed a line of input;
          * {@code false} if not.
          */
         boolean isModified();
@@ -338,9 +370,15 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         {
             sourceRoot = ( String ) i.next();
             parentRoot = new File( sourceRoot );
+
+            if ( !parentRoot.exists() || !parentRoot.isDirectory() )
+            {
+                continue;
+            }
+
             scanner = new DirectoryScanner();
             scanner.setBasedir( sourceRoot );
-            scanner.setIncludes( new String[] { "**/*.java" } );
+            scanner.setIncludes( DEFAULT_SOURCE_INCLUDES );
             scanner.addDefaultExcludes();
             scanner.scan();
 
@@ -377,9 +415,15 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         {
             sourceRoot = ( String ) i.next();
             parentRoot = new File( sourceRoot );
+
+            if ( !parentRoot.exists() || !parentRoot.isDirectory() )
+            {
+                continue;
+            }
+
             scanner = new DirectoryScanner();
             scanner.setBasedir( sourceRoot );
-            scanner.setIncludes( new String[] { "**/*.java" } );
+            scanner.setIncludes( DEFAULT_SOURCE_INCLUDES );
             scanner.addDefaultExcludes();
             scanner.scan();
 
@@ -609,6 +653,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      * @return the callee's context classloader.
      *
      * @throws MojoFailureException if no class loader is available.
+     * @deprecated Use is discouraged.
      */
     protected ClassLoader getContextClassLoader() throws MojoFailureException
     {
@@ -635,12 +680,33 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      * classpath.
      *
      * @throws MojoFailureException for unrecoverable technical errors.
+     * @deprecated Replaced with {@link #getRuntimeClasseLoader ( ClassLoader )}.
      */
     protected final ClassLoader getRuntimeClassLoader()
         throws MojoFailureException
     {
-        String element;
-        File file;
+        return this.getRuntimeClassLoader( this.getContextClassLoader() );
+    }
+
+    /**
+     * Provides access to the project's runtime classpath.
+     *
+     * @param parent the parent classloader to use for the runtime classloader.
+     *
+     * @return a {@code ClassLoader} initialized with the project's runtime
+     * classpath.
+     *
+     * @throws NullPointerException if {@code parent} is {@code null}.
+     * @throws MojoFailureException for unrecoverable technical errors.
+     */
+    protected final ClassLoader getRuntimeClassLoader( final ClassLoader parent )
+        throws MojoFailureException
+    {
+        if ( parent == null )
+        {
+            throw new NullPointerException( "parent" );
+        }
+
         final Iterator it;
         final Collection urls = new LinkedList();
 
@@ -648,18 +714,17 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         {
             for ( it = this.getClasspathElements().iterator(); it.hasNext();)
             {
-                element = ( String ) it.next();
-                if ( !urls.contains( element ) &&
+                final String element = ( String ) it.next();
+                final URL url = new File( element ).toURI().toURL();
+                if ( !urls.contains( url ) &&
                     this.isClasspathElementIncluded( element ) )
                 {
-                    file = new File( element );
-                    urls.add( file.toURI().toURL() );
+                    urls.add( url );
                 }
             }
 
             return new URLClassLoader(
-                ( URL[] ) urls.toArray( new URL[ urls.size() ] ),
-                this.getContextClassLoader() );
+                ( URL[] ) urls.toArray( new URL[ urls.size() ] ), parent );
 
         }
         catch ( MalformedURLException e )
@@ -675,12 +740,33 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      * classpath.
      *
      * @throws MojoFailureException for unrecoverable technical errors.
+     * @deprecated Replaced with {@link #getTestClassLoader ( ClassLoader )}.
      */
     protected final ClassLoader getTestClassLoader()
         throws MojoFailureException
     {
-        String element;
-        File file;
+        return this.getTestClassLoader( this.getContextClassLoader() );
+    }
+
+    /**
+     * Provides access to the project's test classpath.
+     *
+     * @param parent the parent classloader to use for the test classloader.
+     *
+     * @return a {@code ClassLoader} initialized with the project's test
+     * classpath.
+     *
+     * @throws NullPointerException if {@code parent} is {@code null}.
+     * @throws MojoFailureException for unrecoverable technical errors.
+     */
+    protected final ClassLoader getTestClassLoader( final ClassLoader parent )
+        throws MojoFailureException
+    {
+        if ( parent == null )
+        {
+            throw new NullPointerException( "parent" );
+        }
+
         final Iterator it;
         final Collection urls = new LinkedList();
 
@@ -689,18 +775,17 @@ public abstract class AbstractSourceMojo extends AbstractMojo
             for ( it = this.getMavenProject().
                     getTestClasspathElements().iterator(); it.hasNext();)
             {
-                element = ( String ) it.next();
-                if ( !urls.contains( element ) &&
+                final String element = ( String ) it.next();
+                final URL url = new File( element ).toURI().toURL();
+                if ( !urls.contains( url ) &&
                     this.isTestClasspathElementIncluded( element ) )
                 {
-                    file = new File( element );
-                    urls.add( file.toURI().toURL() );
+                    urls.add( url );
                 }
             }
 
             return new URLClassLoader(
-                ( URL[] ) urls.toArray( new URL[ urls.size() ] ),
-                this.getContextClassLoader() );
+                ( URL[] ) urls.toArray( new URL[ urls.size() ] ), parent );
 
         }
         catch ( MalformedURLException e )

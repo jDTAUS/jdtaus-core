@@ -1,6 +1,9 @@
 /*
- *  jDTAUS - DTAUS fileformat.
- *  Copyright (c) 2005 Christian Schulte <cs@schulte.it>
+ *  jDTAUS Core Container Mojo
+ *  Copyright (c) 2005 Christian Schulte
+ *
+ *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+ *  <cs@jdtaus.org> (+49 2331 3543887)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -53,12 +56,17 @@ public class VerifyModelMojo extends AbstractSourceMojo
         final ClassLoader mavenLoader =
             Thread.currentThread().getContextClassLoader();
 
-        Thread.currentThread().
-            setContextClassLoader( this.getRuntimeClassLoader() );
+        try
+        {
+            Thread.currentThread().setContextClassLoader(
+                this.getRuntimeClassLoader( mavenLoader ) );
 
-        this.assertValidModel( ModelFactory.getModel().getModules() );
-
-        Thread.currentThread().setContextClassLoader( mavenLoader );
+            this.assertValidModel( ModelFactory.getModel().getModules() );
+        }
+        finally
+        {
+            Thread.currentThread().setContextClassLoader( mavenLoader );
+        }
     }
 
     //------------------------------------------------------------AbstractMojo--
@@ -103,7 +111,9 @@ public class VerifyModelMojo extends AbstractSourceMojo
     {
         try
         {
-            return this.getContextClassLoader().loadClass( className );
+            return Thread.currentThread().getContextClassLoader().
+                loadClass( className );
+
         }
         catch ( ClassNotFoundException e )
         {
