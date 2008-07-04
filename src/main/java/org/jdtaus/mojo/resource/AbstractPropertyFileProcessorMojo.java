@@ -1,6 +1,9 @@
 /*
- *  jDTAUS - DTAUS fileformat.
- *  Copyright (c) 2005 Christian Schulte <cs@schulte.it>
+ *  jDTAUS Core Resource Mojo
+ *  Copyright (c) 2005 Christian Schulte
+ *
+ *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+ *  <cs@jdtaus.org> (+49 2331 3543887)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -22,6 +25,7 @@ package org.jdtaus.mojo.resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -154,14 +158,19 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
                 else
                 {
                     props = new Properties();
+                    InputStream in = null;
+
                     try
                     {
                         this.getLog().debug( this.getMessage( "testingFile" ).
                                              format( msgArgs ) );
 
-                        props.load( new FileInputStream(
-                                    new File( rsrc.getDirectory(),
-                                              msgArgs[0] ) ) );
+
+                        in = new FileInputStream( new File( rsrc.getDirectory(),
+                                                            msgArgs[0] ) );
+
+                        props.load( in );
+                        in.close();
 
                         this.processProperties( props );
                     }
