@@ -1,6 +1,9 @@
 /*
- *  jDTAUS - DTAUS fileformat.
- *  Copyright (c) 2005 Christian Schulte <cs@schulte.it>
+ *  jDTAUS Core Utilities
+ *  Copyright (c) 2005 Christian Schulte
+ *
+ *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+ *  <cs@jdtaus.org> (+49 2331 3543887)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -56,7 +59,7 @@ public abstract class FlushableFileOperationsTest extends FileOperationsTest
      * Gets the {@code FlushableFileOperations} implementation tests are
      * performed with.
      *
-     * @return the {@code FlushableFileOperations implementation tests are
+     * @return the {@code FlushableFileOperations} implementation tests are
      * performed with.
      */
     public final FlushableFileOperations getFlushableFileOperations()

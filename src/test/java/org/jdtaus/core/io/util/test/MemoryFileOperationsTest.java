@@ -1,6 +1,9 @@
 /*
- *  jDTAUS - DTAUS fileformat.
- *  Copyright (c) 2005 Christian Schulte <cs@schulte.it>
+ *  jDTAUS Core Utilities
+ *  Copyright (c) 2005 Christian Schulte
+ *
+ *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+ *  <cs@jdtaus.org> (+49 2331 3543887)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -43,7 +46,7 @@ public class MemoryFileOperationsTest extends FileOperationsTest
     //--MemoryFileOperationsTest------------------------------------------------
 
     /**
-     * Tests the {@link FileOperations#read(OutputStream}} and
+     * Tests the {@link FileOperations#read(OutputStream)} and
      * {@link FileOperations#write(InputStream)} methods.
      * <p><ol>
      * <li>Writes a testfile from an {@code InputStream} to the file, then reads

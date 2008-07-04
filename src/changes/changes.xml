@@ -122,5 +122,13 @@
 
     </release>
 
+    <release version="1.3.3" date="2008-07-04"
+             description="Maintenance release.">
+
+      <action dev="schulte2005" type="update"><![CDATA[
+      Maven POM updates.]]>
+      </action>
+    </release>
+
   </body>
 </document>
