@@ -14,7 +14,7 @@ Maven Plugins
 *-------------------+----------------------------------------------------------+
 || <<Plugin>>       || <<Description>>                                        ||
 *-------------------+----------------------------------------------------------+
-| {{{/jdtaus-resource-mojo/} <<<resource>>>}} | Source generator for resource bundles. |
+| {{{jdtaus-resource-mojo/} <<<resource>>>}} | Source generator for resource bundles. |
 *-------------------+----------------------------------------------------------+
-| {{{/jdtaus-container-mojo/} <<<container>>>}} | Source generator for the container model. |
+| {{{jdtaus-container-mojo/} <<<container>>>}} | Source generator for the container model. |
 *-------------------+-----------------------------------------------------------+
