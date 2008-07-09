@@ -17,8 +17,8 @@ Exluding properties from getting checked.
   checked.
 
   To exclude all properties files whose name end with "Test" and additionally
-  only check property value whose key start with "message" one would need to add
-  the following configuration to the mojo:
+  only check property values whose key start with "message" one would need to
+  add the following configuration to the mojo:
 
 +---
 ...
