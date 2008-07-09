@@ -51,5 +51,15 @@
       ]]>
       </action>
     </release>
+    <release version="2.2" date="2008-07-09"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Updated to correctly fail the build for invalid messages.]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated to use the project name, inception year and developers when
+      generating a license header.]]>
+      </action>
+    </release>
   </body>
 </document>

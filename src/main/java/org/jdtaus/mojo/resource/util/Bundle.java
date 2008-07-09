@@ -33,8 +33,77 @@ import java.util.ResourceBundle;
 public class Bundle extends Artifact
 {
 
+    /** The name of the project of the bundle. */
+    private String projectName;
+
+    /** The inception year of the project of the bundle. */
+    private String inceptionYear;
+
+    /** The developers of the project of the bundle. */
+    private String[] developers;
+
     /** The {@code ResourceBundle} of the artifact. */
     private ResourceBundle resourceBundle;
+
+    /**
+     * Gets the name of the project of the bundle.
+     *
+     * @return the name of the project of the bundle.
+     */
+    public String getProjectName()
+    {
+        return projectName;
+    }
+
+    /**
+     * Sets the name of the project of the bundle.
+     *
+     * @param projectName the name of the project of the bundle.
+     */
+    public void setProjectName( String projectName )
+    {
+        this.projectName = projectName;
+    }
+
+    /**
+     * Gets the inception year of the project of the bundle.
+     *
+     * @return the inception year of the project of the bundle.
+     */
+    public String getInceptionYear()
+    {
+        return inceptionYear;
+    }
+
+    /**
+     * Sets the inception year of the project of the bundle.
+     *
+     * @param inceptionYear the inception year of the project of the bundle.
+     */
+    public void setInceptionYear( String inceptionYear )
+    {
+        this.inceptionYear = inceptionYear;
+    }
+
+    /**
+     * Gets the developers of the project of the bundle.
+     *
+     * @return the developers of the project of the bundle.
+     */
+    public String[] getDevelopers()
+    {
+        return developers;
+    }
+
+    /**
+     * Sets the developers of the project of the bundle.
+     *
+     * @param developers the developers of the project of the bundle.
+     */
+    public void setDevelopers( String[] developers )
+    {
+        this.developers = developers;
+    }
 
     /**
      * Gets the {@code ResourceBundle} of the artifact.

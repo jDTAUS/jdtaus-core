@@ -1,0 +1,43 @@
+  -----
+jDTAUS Resource Mojo
+  -----
+Christian Schulte
+  -----
+July 2008
+  -----
+
+jDTAUS Resource Mojo
+
+  The jDTAUS Resource Mojo is a collection of tools dealing with a projects'
+  resources. Its main use is to generate java classes for accessing texts
+  stored in ResourceBundle properties files.
+
+* Goals Overview
+
+  Currently the Resource Mojo has two goals. Both are already bound to their
+  proper phases within the Maven Lifecycle and are therefore automatically
+  executed during their respective phases if the plugin is configured for a
+  project.
+
+  * {{{test-messageformat-mojo.html}jdtaus-resource-mojo:test-messageformat}} is
+    bound to the process-resources phase and is used to fail the build if
+    any available properties file resource contains invalid texts, that is,
+    texts for which the constructor of class java.text.MessageFormat throws
+    an IllegalArgumentException.
+
+  * {{{generate-bundles-mojo.html}jdtaus-resource-mojo:generate-bundles}} is
+    bound to the process-resources phase and is used to generate java classes
+    with accessor methods to texts stored in properties file ResourceBundles.
+
+* Usage
+
+  Instructions on how to use the Resource Mojo can be found
+  {{{usage.html}here}}.
+
+* Examples
+
+  To provide you with better understanding on some usages of the Resource
+  Mojo, you can take a look into the following examples:
+
+  * {{{examples/test-messageformat-exclude-example.html}Exluding properties from
+    getting checked.}}

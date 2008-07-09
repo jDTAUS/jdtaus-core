@@ -187,6 +187,7 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
     }
 
     private void processProperties( final Properties properties )
+        throws MojoExecutionException
     {
         final String[] args = new String[ 2 ];
         final Pattern pat = Pattern.compile( this.keyMatchRegexp );
@@ -218,8 +219,11 @@ public abstract class AbstractPropertyFileProcessorMojo extends AbstractMojo
      *
      * @param key the properties key.
      * @param value the properties value.
+     *
+     * @throws MojoExecutionException if processing the property fails.
      */
-    protected abstract void processProperty( String key, String value );
+    protected abstract void processProperty( String key, String value )
+        throws MojoExecutionException;
 
     //-------------------------------------------AbstractPropertyFileProcessor--
 }

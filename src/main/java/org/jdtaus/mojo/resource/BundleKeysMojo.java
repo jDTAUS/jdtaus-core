@@ -37,6 +37,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +45,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
+import org.apache.maven.model.Developer;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -64,7 +67,6 @@ import org.jdtaus.mojo.resource.util.BundleGenerator;
 public final class BundleKeysMojo extends AbstractMojo
 {
     //--Configuration-----------------------------------------------------------
-
     /**
      * The project's output directory.
      *
@@ -157,8 +159,8 @@ public final class BundleKeysMojo extends AbstractMojo
     protected Locale getLocale()
     {
         return this.locale == null
-          ? Locale.getDefault()
-          : new Locale( this.locale );
+            ? Locale.getDefault()
+            : new Locale( this.locale );
 
     }
 
@@ -199,35 +201,33 @@ public final class BundleKeysMojo extends AbstractMojo
 
     //-----------------------------------------------------------Configuration--
     //--AbstractMojo------------------------------------------------------------
-
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         final ClassLoader mavenLoader =
-          Thread.currentThread().getContextClassLoader();
+            Thread.currentThread().getContextClassLoader();
 
         try
         {
             Thread.currentThread().setContextClassLoader(
-              this.getClasspathClassLoader() );
+                this.getClasspathClassLoader() );
 
             if ( !this.getGenDirectory().exists() &&
-              !this.getGenDirectory().mkdirs() )
+                !this.getGenDirectory().mkdirs() )
             {
                 throw new MojoExecutionException(
-                  this.getMessage( "cannotCreateDirectory" ).
-                  format( new Object[]
-                          {
-                              this.getGenDirectory().
-                              getAbsolutePath()
-                          } ) );
+                    this.getMessage( "cannotCreateDirectory" ).
+                    format( new Object[] {
+                            this.getGenDirectory().
+                            getAbsolutePath()
+                        } ) );
 
             }
 
             this.getProject().addCompileSourceRoot(
-              this.getGenDirectory().getAbsolutePath() );
+                this.getGenDirectory().getAbsolutePath() );
 
             for ( Iterator it = this.getBundles().entrySet().iterator();
-              it.hasNext();)
+                it.hasNext();)
             {
                 final Map.Entry e = ( Map.Entry ) it.next();
                 this.generatePackage( e.getKey().toString(),
@@ -244,7 +244,6 @@ public final class BundleKeysMojo extends AbstractMojo
 
     //------------------------------------------------------------AbstractMojo--
     //--BundleKeysMojo----------------------------------------------------------
-
     /**
      * Accessor to the compile classpath elements.
      *
@@ -264,7 +263,7 @@ public final class BundleKeysMojo extends AbstractMojo
      * @throws MojoFailureException for unrecoverable technical errors.
      */
     private ClassLoader getClasspathClassLoader() throws
-      MojoFailureException
+        MojoFailureException
     {
         String element;
         File file;
@@ -289,8 +288,8 @@ public final class BundleKeysMojo extends AbstractMojo
             }
 
             return new URLClassLoader(
-              ( URL[] ) urls.toArray( new URL[ urls.size() ] ),
-              Thread.currentThread().getContextClassLoader() );
+                ( URL[] ) urls.toArray( new URL[ urls.size() ] ),
+                Thread.currentThread().getContextClassLoader() );
 
         }
         catch ( MalformedURLException e )
@@ -328,10 +327,10 @@ public final class BundleKeysMojo extends AbstractMojo
                 try
                 {
                     final ResourceBundle resourceBundle =
-                      ResourceBundle.getBundle( bundleLocation,
-                                                this.getLocale(),
-                                                Thread.currentThread().
-                                                getContextClassLoader() );
+                        ResourceBundle.getBundle( bundleLocation,
+                                                  this.getLocale(),
+                                                  Thread.currentThread().
+                                                  getContextClassLoader() );
 
                     map.put( bundleName, resourceBundle );
                 }
@@ -373,14 +372,14 @@ public final class BundleKeysMojo extends AbstractMojo
         }
 
         return new MessageFormat(
-          ResourceBundle.getBundle( BundleKeysMojo.class.getName() ).
-          getString( key ) );
+            ResourceBundle.getBundle( BundleKeysMojo.class.getName() ).
+            getString( key ) );
 
     }
 
     private void generatePackage( final String pkg, final Map bundles )
-      throws
-      MojoFailureException
+        throws
+        MojoFailureException
     {
         if ( pkg == null )
         {
@@ -408,10 +407,10 @@ public final class BundleKeysMojo extends AbstractMojo
         {
             final String bundleName = ( String ) it.next();
             final String bundlePath =
-              bundleName + this.getNameSuffix() + ".java";
+                bundleName + this.getNameSuffix() + ".java";
 
             final String hashPath =
-              bundleName + this.getNameSuffix() + ".hash";
+                bundleName + this.getNameSuffix() + ".hash";
 
             final Artifact artifact = new Artifact();
             final Bundle bundle = new Bundle();
@@ -421,8 +420,31 @@ public final class BundleKeysMojo extends AbstractMojo
 
             bundle.setPackageName( pkg );
             bundle.setClassName( bundleName );
+            bundle.setProjectName( this.getProject().getName() );
+            bundle.setInceptionYear( this.getProject().getInceptionYear() );
+
+            final Set developers =
+                new HashSet( this.getProject().getDevelopers().size() );
+
+            for ( Iterator devIt = this.getProject().getDevelopers().iterator();
+                devIt.hasNext();)
+            {
+                final Developer developer = ( Developer ) devIt.next();
+                String str = developer.getName();
+
+                if ( developer.getEmail() != null )
+                {
+                    str += " (" + developer.getEmail() + ")";
+                }
+
+                developers.add( str );
+            }
+
+            bundle.setDevelopers( ( String[] ) developers.toArray(
+                                  new String[ developers.size() ] ) );
+
             bundle.setResourceBundle(
-              ( ResourceBundle ) bundles.get( bundleName ) );
+                ( ResourceBundle ) bundles.get( bundleName ) );
 
             this.generateBundle( artifact, bundle,
                                  new File( pkgDir, bundlePath ),
@@ -432,10 +454,10 @@ public final class BundleKeysMojo extends AbstractMojo
     }
 
     private void generateBundle( final Artifact artifact,
-                                 final Bundle bundle,
-                                 final File outputFile,
-                                 final File hashFile )
-      throws MojoFailureException
+                                  final Bundle bundle,
+                                  final File outputFile,
+                                  final File hashFile )
+        throws MojoFailureException
     {
         if ( artifact == null )
         {
@@ -459,20 +481,19 @@ public final class BundleKeysMojo extends AbstractMojo
             if ( !this.checkHashFile( hashFile, bundle.getResourceBundle() ) )
             {
                 this.getLog().info( this.getMessage( "writingBundle" ).
-                                    format( new Object[]
-                                            {
-                                                outputFile.getName()
-                                            } ) );
+                                    format( new Object[] {
+                                            outputFile.getName()
+                                        } ) );
 
                 final FileOutputStream out =
-                  new FileOutputStream( outputFile );
+                    new FileOutputStream( outputFile );
 
                 final Writer writer = this.encoding == null
-                  ? new OutputStreamWriter( out )
-                  : new OutputStreamWriter( out, this.encoding );
+                    ? new OutputStreamWriter( out )
+                    : new OutputStreamWriter( out, this.encoding );
 
                 BundleGenerator.getInstance().generate(
-                  artifact, bundle, this.isJavadoc(), this.isLicense(), writer );
+                    artifact, bundle, this.isJavadoc(), this.isLicense(), writer );
 
                 writer.close();
             }
@@ -484,8 +505,8 @@ public final class BundleKeysMojo extends AbstractMojo
     }
 
     private boolean checkHashFile( final File hashFile,
-                                   final ResourceBundle bundle )
-      throws IOException
+                                    final ResourceBundle bundle )
+        throws IOException
     {
         boolean hashEqual = false;
         boolean writeHashFile = true;
@@ -499,7 +520,7 @@ public final class BundleKeysMojo extends AbstractMojo
         if ( hashFile.exists() )
         {
             final DataInputStream in =
-              new DataInputStream( new FileInputStream( hashFile ) );
+                new DataInputStream( new FileInputStream( hashFile ) );
 
             hashEqual = bundleHash == in.readInt();
             writeHashFile = !hashEqual;
@@ -509,7 +530,7 @@ public final class BundleKeysMojo extends AbstractMojo
         if ( writeHashFile )
         {
             final DataOutputStream out =
-              new DataOutputStream( new FileOutputStream( hashFile ) );
+                new DataOutputStream( new FileOutputStream( hashFile ) );
 
             out.writeInt( bundleHash );
             out.close();

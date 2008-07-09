@@ -22,33 +22,28 @@
  */
 package org.jdtaus.mojo.resource;
 
-import java.text.MessageFormat;
+import org.apache.maven.plugin.MojoExecutionException;
 
 /**
- * Mojo for testing property files to contain <code>MessageFormat</code>
- * parseable values.
+ * Gets thrown for any invalid message.
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
- * @goal test-messageformat
- * @phase process-resources
  */
-public final class MessagesTestMojo extends AbstractPropertyFileProcessorMojo
+public class InvalidMessageException extends MojoExecutionException
 {
-    //--AbstractPropertyFileProcessorMojo---------------------------------------
 
-    protected final void processProperty( String key, String value )
-        throws InvalidMessageException
+    /**
+     * Creates a new {@code InvalidMessageException} taking the invalid message
+     * and a cause.
+     *
+     * @param invalidMessage the invalid message.
+     * @param cause the cause of this excepion.
+     */
+    public InvalidMessageException( final String invalidMessage,
+                                     final Throwable cause )
     {
-        try
-        {
-            new MessageFormat( value );
-        }
-        catch ( IllegalArgumentException e )
-        {
-            throw new InvalidMessageException( value, e );
-        }
+        super( cause.getMessage() + " (" + invalidMessage + ")", cause );
     }
 
-    //---------------------------------------AbstractPropertyFileProcessorMojo--
 }
