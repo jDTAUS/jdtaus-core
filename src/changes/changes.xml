@@ -1,7 +1,9 @@
+
 <document>
   <properties>
     <title>Changelog</title>
-    <author email="cs@jdtaus.org">Christian Schulte</author>
+    <author email="cs@jdtaus.org">Christian Schulte
+    </author>
   </properties>
   <body>
     <release version="1.0" date="2007-06-01"
@@ -39,12 +41,18 @@
       <action dev="schulte2005" type="update"><![CDATA[
       Deprecated the <code>mode</code> parameter.]]>
       </action>
-    </release>
-    <action dev="schulte2005" type="fix"><![CDATA[
+      <action dev="schulte2005" type="fix"><![CDATA[
       Corrected various classloader issues to support processing of any
       available module regardless of the <code>mode</code> parameter. The
       plugin can now be configured in a parent pom and reused in any
       child-pom regardless of the artifact defining jDTAUS modules or not.]]>
-    </action>
+      </action>
+    </release>
+    <release version="2.1.1" date="2008-07-13"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added site documentation.]]>
+      </action>
+    </release>
   </body>
 </document>
