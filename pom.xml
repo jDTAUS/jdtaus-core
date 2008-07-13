@@ -89,6 +89,9 @@
           <archive>
             <index>true</index>
           </archive>
+          <manifest>
+            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+          </manifest>
         </configuration>
       </plugin>
       <plugin>
