@@ -1,0 +1,35 @@
+  -----
+jDTAUS Container Mojo
+  -----
+Christian Schulte
+  -----
+July 2008
+  -----
+
+jDTAUS Container Mojo
+
+  The jDTAUS Container Mojo is a collection of tools dealing with the jDTAUS
+  Container model. Its main use is to generate source code sections into java
+  classes from information supplied by the container model.
+
+* Goals Overview
+
+  Currently the Resource Mojo has three goals.
+
+  * {{{clean-source-mojo.html}jdtaus-container-mojo:clean-sources}} is
+    not bound to any particular lifecycle phase and is used to cleanup all
+    source files of a project (e.g. remove trailing spaces).
+
+  * {{{generate-container-mojo.html}jdtaus-container-mojo:generate-container}}
+    is bound to the process-resources phase and is used to generate source code
+    sections into java classes from information supplied by a project's
+    container module descriptor.
+
+  * {{{verify-model-mojo.html}jdtaus-container-mojo:verify-model}}
+    is bound to the verify phase and is used to verify the container model of
+    all runtime dependencies to form a working set.
+
+* Usage
+
+  Instructions on how to use the Container Mojo can be found
+  {{{usage.html}here}}.

@@ -1,0 +1,108 @@
+  -----
+Usage
+  -----
+Christian Schulte
+  -----
+July 2008
+  -----
+
+jDTAUS Container Mojo: Usage
+
+* Removing trailing spaces from a projects' source files.
+
+  The jdtaus-container-mojo:clean-sources goal of the Container Mojo is not
+  bound to any lifecycle phase and is intended to be invoked on its own or
+  to be added to a multi-module parent project.
+
+  To remove any trailing spaces from a projects' source files simply execute
+  the following command in that project's base directory.
+
++---
+  mvn org.jdtaus.mojo:jdtaus-container-mojo:clean-sources
++---
+
+* Generating source code sections into java classes
+
+  The jdtaus-container-mojo:generate-container goal of the Container Mojo is
+  bound to the process-resources lifecycle phase. It is used by adding the
+  following plugin definition to a project.
+
++---
+...
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>org.jdtaus.mojo</groupId>
+      <artifactId>jdtaus-container-mojo</artifactId>
+      <version>RELEASE</version>
+      <executions>
+        <execution>
+          <id>generate</id>
+          <goals>
+            <goal>generate-container</goal>
+          </goals>
+          <configuration>
+              <moduleName>${pom.name}</moduleName>
+              <testModuleName>${pom.name} Tests</testModuleName>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+  <plugins>
+</build>
+...
++---
+
+  Doing this the mojo will have full control of various source code sections
+  of classes defined in the container module descriptor located at
+  META-INF/jdtaus/module.xml.
+
+  <<Note:>> The default plugin configuration expects the following section
+  markers to be present in an implementation class defined in a project's
+  module descriptor.
+
++---
+    //--Implementation----------------------------------------------------------
+    //----------------------------------------------------------Implementation--
+    //--Constructors------------------------------------------------------------
+    //------------------------------------------------------------Constructors--
+    //--Dependencies------------------------------------------------------------
+    //------------------------------------------------------------Dependencies--
+    //--Properties--------------------------------------------------------------
+    //--------------------------------------------------------------Properties--
++---
+
+* Validating a set of runtime artifacts to form a valid container model.
+
+  The jdtaus-container-mojo:verify-model goal of the Container Mojo is
+  bound to the verify lifecycle phase. It is intended to be used on projects
+  used to create the final distribution artifact of an application and will fail
+  the build for any problems leading to an invalid jDTAUS container runtime.
+
+  To use the plugin add the following to the final distribution project.
+
++---
+...
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>org.jdtaus.mojo</groupId>
+      <artifactId>jdtaus-container-mojo</artifactId>
+      <version>RELEASE</version>
+      <executions>
+        <execution>
+          <id>verify</id>
+          <goals>
+            <goal>verify-model</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+  <plugins>
+</build>
+...
++---
