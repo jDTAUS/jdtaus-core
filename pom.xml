@@ -86,11 +86,9 @@
           </execution>
         </executions>
         <configuration>
-          <configuration>
-            <archive>
-              <index>true</index>
-            </archive>
-          </configuration>
+          <archive>
+            <index>true</index>
+          </archive>
         </configuration>
       </plugin>
       <plugin>
@@ -234,3 +232,4 @@
     </site>
   </distributionManagement>
 </project>
+s
