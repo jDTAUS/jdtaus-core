@@ -19,6 +19,9 @@ $SVN diff $BASE/jdtaus-core-application-logger/trunk \
 $SVN diff $BASE/jdtaus-core-client-container/trunk \
         $BASE/jdtaus-core-client-container/branches/jdtaus-core-client-container-1.x
 
+$SVN diff $BASE/jdtaus-core-servlet-container/trunk \
+	$BASE/jdtaus-core-servlet-container/branches/jdtaus-core-servlet-container-1.x
+
 $SVN diff $BASE/jdtaus-core-task-monitor/trunk \
         $BASE/jdtaus-core-task-monitor/branches/jdtaus-core-task-monitor-1.x
 
@@ -39,4 +42,16 @@ $SVN diff $BASE/jdtaus-core-utilities/trunk \
 
 $SVN diff $BASE/jdtaus-core-messages/trunk \
 	$BASE/jdtaus-core-messages/branches/jdtaus-core-messages-1.x
+
+$SVN diff $BASE/jdtaus-core-commons-logging/trunk \
+        $BASE/jdtaus-core-commons-logging/branches/jdtaus-core-commons-logging-1.x
+
+$SVN diff $BASE/jdtaus-core-log4j-logging/trunk \
+        $BASE/jdtaus-core-log4j-logging/branches/jdtaus-core-log4j-logging-1.x
+
+$SVN diff $BASE/jdtaus-core-jdk14-executor/trunk \
+        $BASE/jdtaus-core-jdk14-executor/branches/jdtaus-core-jdk14-executor-1.x
+
+$SVN diff $BASE/jdtaus-core-entity-resolver/trunk \
+        $BASE/jdtaus-core-entity-resolver/branches/jdtaus-core-entity-resolver-1.x
 

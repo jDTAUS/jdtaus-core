@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <artifactId>jdtaus-site</artifactId>
@@ -72,7 +73,6 @@
         <executions>
           <execution>
             <id>sign</id>
-            <phase>package</phase>
             <goals>
               <goal>sign</goal>
             </goals>
@@ -85,6 +85,13 @@
             </configuration>
           </execution>
         </executions>
+        <configuration>
+          <configuration>
+            <archive>
+              <index>true</index>
+            </archive>
+          </configuration>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-gpg-plugin</artifactId>
@@ -135,6 +142,7 @@
     <module>jdtaus-core-log4j-logging</module>
     <module>jdtaus-core-task-monitor</module>
     <module>jdtaus-core-jdk14-executor</module>
+    <module>jdtaus-core-entity-resolver</module>
     <module>jdtaus-core-messages</module>
     <module>jdtaus-core-utilities</module>
   </modules>
