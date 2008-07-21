@@ -45,43 +45,43 @@
     <dependency>
       <artifactId>jdtaus-core-client-container</artifactId>
       <groupId>org.jdtaus.core.container</groupId>
-      <version>RELEASE</version>
+      <version>SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-memory-manager</artifactId>
       <groupId>org.jdtaus.core.lang</groupId>
-      <version>RELEASE</version>
+      <version>SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-jdk-logging</artifactId>
       <groupId>org.jdtaus.core.logging</groupId>
-      <version>RELEASE</version>
+      <version>SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-application-logger</artifactId>
       <groupId>org.jdtaus.core.text</groupId>
-      <version>RELEASE</version>
+      <version>SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-task-monitor</artifactId>
       <groupId>org.jdtaus.core.monitor</groupId>
-      <version>RELEASE</version>
+      <version>SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-jdk14-executor</artifactId>
       <groupId>org.jdtaus.core.lang</groupId>
-      <version>RELEASE</version>
+      <version>SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-entity-resolver</artifactId>
       <groupId>org.jdtaus.core.sax</groupId>
-      <version>RELEASE</version>
+      <version>SNAPSHOT</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
