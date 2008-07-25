@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -12,7 +13,7 @@
   <name>jDTAUS Core Reference Implementation</name>
   <version>SNAPSHOT</version>
   <description>jDTAUS core reference implementation meta-artifact.</description>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
   <scm>
     <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</connection>
     <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</developerConnection>
@@ -29,6 +30,14 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
+        <dependencies>
+          <dependency>
+            <artifactId>jdtaus-core-client-container</artifactId>
+            <groupId>org.jdtaus.core.container</groupId>
+            <version>SNAPSHOT</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
         <executions>
           <execution>
             <id>verify</id>
@@ -36,6 +45,39 @@
             <goals>
               <goal>verify-model</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <artifactId>jdtaus-container-mojo</artifactId>
+            <groupId>org.jdtaus.mojo</groupId>
+            <version>SNAPSHOT</version>
+            <scope>runtime</scope>
+          </dependency>
+          <dependency>
+            <artifactId>jdtaus-core-client-container</artifactId>
+            <groupId>org.jdtaus.core.container</groupId>
+            <version>SNAPSHOT</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>MANIFEST.MF</resource>>
+                </transformer>
+                <transformer implementation="org.jdtaus.core.container.mojo.ContainerResourceTransformer"/>
+              </transformers>
+            </configuration>
           </execution>
         </executions>
       </plugin>
