@@ -43,7 +43,14 @@
             <id>verify</id>
             <phase>verify</phase>
             <goals>
-              <goal>verify-model</goal>
+              <goal>verify-jar</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>descriptors</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>spring-descriptor</goal>
             </goals>
           </execution>
         </executions>
@@ -73,7 +80,13 @@
             <configuration>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
-                  <resource>MANIFEST.MF</resource>>
+                  <resource>META-INF/MANIFEST.MF</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>META-INF/*.SF</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>META-INF/*.DSA</resource>
                 </transformer>
                 <transformer implementation="org.jdtaus.core.container.mojo.ContainerResourceTransformer"/>
               </transformers>
@@ -86,6 +99,18 @@
   <dependencies>
     <dependency>
       <artifactId>jdtaus-core-client-container</artifactId>
+      <groupId>org.jdtaus.core.container</groupId>
+      <version>SNAPSHOT</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <artifactId>jdtaus-core-servlet-container</artifactId>
+      <groupId>org.jdtaus.core.container</groupId>
+      <version>SNAPSHOT</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <artifactId>jdtaus-core-spring-container</artifactId>
       <groupId>org.jdtaus.core.container</groupId>
       <version>SNAPSHOT</version>
       <scope>runtime</scope>
@@ -125,6 +150,18 @@
       <groupId>org.jdtaus.core.sax</groupId>
       <version>SNAPSHOT</version>
       <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <artifactId>jdtaus-core-utilities</artifactId>
+      <groupId>org.jdtaus.core</groupId>
+      <version>SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <artifactId>jdtaus-core-messages</artifactId>
+      <groupId>org.jdtaus.core</groupId>
+      <version>SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
   <reporting>
