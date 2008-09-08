@@ -155,13 +155,13 @@
       <artifactId>jdtaus-core-utilities</artifactId>
       <groupId>org.jdtaus.core</groupId>
       <version>SNAPSHOT</version>
-      <scope>compile</scope>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-messages</artifactId>
       <groupId>org.jdtaus.core</groupId>
       <version>SNAPSHOT</version>
-      <scope>compile</scope>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
   <reporting>
