@@ -20,11 +20,33 @@
     <url>http://jdtaus.svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</url>
   </scm>
   <build>
+    <resources>
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
           <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/tags</tagBase>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.jdtaus.core.container</groupId>
+            <artifactId>jdtaus-core-client-container</artifactId>
+            <version>SNAPSHOT</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <outputEncoding>UTF-8</outputEncoding>
+          <inputEncoding>UTF-8</inputEncoding>
+          <locales>en</locales>
         </configuration>
       </plugin>
       <plugin>
@@ -51,7 +73,13 @@
             <phase>process-sources</phase>
             <goals>
               <goal>spring-descriptor</goal>
+              <goal>generate-container</goal>
             </goals>
+            <configuration>
+              <moduleName>${pom.name}</moduleName>
+              <encoding>UTF-8</encoding>
+              <locale>en</locale>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -88,7 +116,9 @@
                 <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
                   <resource>META-INF/*.DSA</resource>
                 </transformer>
-                <transformer implementation="org.jdtaus.core.container.mojo.ContainerResourceTransformer"/>
+                <transformer implementation="org.jdtaus.core.container.mojo.ContainerResourceTransformer">
+                  <mergeModule>${pom.name}</mergeModule>
+                </transformer>
               </transformers>
             </configuration>
           </execution>
@@ -180,6 +210,13 @@
               </reports>
             </reportSet>
           </reportSets>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>jdtaus-container-mojo</artifactId>
+        <groupId>org.jdtaus.mojo</groupId>
+        <configuration>
+          <moduleName>${pom.name}</moduleName>
         </configuration>
       </plugin>
     </plugins>
