@@ -63,17 +63,15 @@
         <executions>
           <execution>
             <id>verify</id>
-            <phase>verify</phase>
             <goals>
               <goal>verify-jar</goal>
             </goals>
           </execution>
           <execution>
             <id>descriptors</id>
-            <phase>process-sources</phase>
             <goals>
               <goal>spring-descriptor</goal>
-              <goal>generate-container</goal>
+              <goal>java-container</goal>
             </goals>
             <configuration>
               <moduleName>${pom.name}</moduleName>
@@ -118,7 +116,6 @@
                   <resource>META-INF/*.DSA</resource>
                 </transformer>
                 <transformer implementation="org.jdtaus.core.container.mojo.ContainerResourceTransformer">
-                  <mergeModule>${pom.name}</mergeModule>
                 </transformer>
               </transformers>
             </configuration>

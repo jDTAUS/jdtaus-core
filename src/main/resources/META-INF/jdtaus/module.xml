@@ -28,20 +28,15 @@
 
   $Id$
 -->
-<container:module xmlns:core="http://jdtaus.org/core/model"
-                  xmlns:text="http://jdtaus.org/core/model/text"
-                  xmlns:container="http://jdtaus.org/core/model/container"
+<container:module xmlns:container="http://jdtaus.org/core/model/container"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xsi:schemaLocation="http://jdtaus.org/core/model http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/xsd/jdtaus-core-1.1.xsd
-                                      http://jdtaus.org/core/model/text http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/xsd/jdtaus-text-1.1.xsd
-                                      http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/xsd/jdtaus-container-1.1.xsd"
+                  xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/xsd/jdtaus-container-1.1.xsd"
                   container:name="${pom.name}"
                   container:version="${pom.version}"
-                  core:modelVersion="1.3">
+                  container:modelVersion="1.3">
 
-  <container:description text:defaultLanguage="en">
-    <text:text text:language="en"><![CDATA[
-    ${pom.description}]]></text:text>
-  </container:description>
+  <container:documentation container:defaultLanguage="en">
+    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+  </container:documentation>
 
 </container:module>
