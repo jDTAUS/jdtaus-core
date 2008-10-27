@@ -40,7 +40,7 @@
           <dependency>
             <groupId>org.jdtaus.core.container</groupId>
             <artifactId>jdtaus-core-client-container</artifactId>
-            <version>RELEASE</version>
+            <version>[1.5,)</version>
             <scope>runtime</scope>
           </dependency>
         </dependencies>
@@ -67,7 +67,7 @@
           <dependency>
             <groupId>org.jdtaus.core.container</groupId>
             <artifactId>jdtaus-core-client-container</artifactId>
-            <version>RELEASE</version>
+            <version>[1.5,)</version>
             <scope>runtime</scope>
           </dependency>
         </dependencies>
@@ -91,43 +91,43 @@
     <dependency>
       <groupId>org.jdtaus.core</groupId>
       <artifactId>jdtaus-core-messages</artifactId>
-      <version>RELEASE</version>
+      <version>[1.2,)</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jdtaus.core</groupId>
       <artifactId>jdtaus-core-spi</artifactId>
-      <version>RELEASE</version>
+      <version>[1.5,)</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.jdtaus.core</groupId>
       <artifactId>jdtaus-core-it</artifactId>
-      <version>RELEASE</version>
+      <version>[1.3,)</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jdtaus.core.logging</groupId>
       <artifactId>jdtaus-core-jdk-logging</artifactId>
-      <version>RELEASE</version>
+      <version>[1.2,)</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jdtaus.core.monitor</groupId>
       <artifactId>jdtaus-core-task-monitor</artifactId>
-      <version>RELEASE</version>
+      <version>[1.2,)</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jdtaus.core.lang</groupId>
       <artifactId>jdtaus-core-memory-manager</artifactId>
-      <version>RELEASE</version>
+      <version>[1.2,)</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jdtaus.core.text</groupId>
       <artifactId>jdtaus-core-application-logger</artifactId>
-      <version>RELEASE</version>
+      <version>[1.3,)</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
