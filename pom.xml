@@ -17,7 +17,7 @@
   <scm>
     <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</connection>
     <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</developerConnection>
-    <url>http://jdtaus.svn.sourceforge.net/viewcvs.cgi/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</url>
+    <url>http://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/jdtaus-core-runtime/trunk</url>
   </scm>
   <build>
     <resources>
