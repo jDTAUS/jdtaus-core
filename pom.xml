@@ -300,7 +300,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>[3.8, 3.8.2]</version>
+        <version>3.8.2</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -312,14 +312,14 @@
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
-        <version>1.2.15</version>
+        <version>1.2.14</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>servlet-api</artifactId>
         <scope>provided</scope>
-        <version>2.5</version>
+        <version>2.3</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven</groupId>
