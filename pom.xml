@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
@@ -11,12 +8,12 @@
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-utilities</artifactId>
   <name>jDTAUS Core Utilities</name>
-  <version>1.4-SNAPSHOT</version>
+  <version>1.4</version>
   <description>jDTAUS core utility components.</description>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x</developerConnection>
-    <url>http://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/jdtaus-core-utilities/branches/jdtaus-core-utilities-1.x</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/jdtaus-core-utilities-1.4</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/jdtaus-core-utilities-1.4</developerConnection>
+    <url>http://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/jdtaus-core-utilities/tags/jdtaus-core-utilities-1.4</url>
   </scm>
   <build>
     <resources>
