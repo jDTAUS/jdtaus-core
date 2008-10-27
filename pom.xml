@@ -41,7 +41,7 @@
           <dependency>
             <groupId>org.jdtaus.core.container</groupId>
             <artifactId>jdtaus-core-client-container</artifactId>
-            <version>RELEASE</version>
+            <version>[1.5,)</version>
             <scope>runtime</scope>
           </dependency>
         </dependencies>
@@ -59,7 +59,7 @@
           <dependency>
             <artifactId>jdtaus-core-client-container</artifactId>
             <groupId>org.jdtaus.core.container</groupId>
-            <version>RELEASE</version>
+            <version>[1.5,)</version>
             <scope>runtime</scope>
           </dependency>
         </dependencies>
@@ -98,7 +98,7 @@
           <dependency>
             <artifactId>jdtaus-core-client-container</artifactId>
             <groupId>org.jdtaus.core.container</groupId>
-            <version>RELEASE</version>
+            <version>[1.5,)</version>
             <scope>runtime</scope>
           </dependency>
         </dependencies>
@@ -132,67 +132,67 @@
     <dependency>
       <artifactId>jdtaus-core-api</artifactId>
       <groupId>org.jdtaus.common</groupId>
-      <version>RELEASE</version>
+      <version>1.5</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-client-container</artifactId>
       <groupId>org.jdtaus.core.container</groupId>
-      <version>RELEASE</version>
+      <version>1.5</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-servlet-container</artifactId>
       <groupId>org.jdtaus.core.container</groupId>
-      <version>RELEASE</version>
+      <version>1.1</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-memory-manager</artifactId>
       <groupId>org.jdtaus.core.lang</groupId>
-      <version>RELEASE</version>
+      <version>1.2</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-jdk-logging</artifactId>
       <groupId>org.jdtaus.core.logging</groupId>
-      <version>RELEASE</version>
+      <version>1.2</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-application-logger</artifactId>
       <groupId>org.jdtaus.core.text</groupId>
-      <version>RELEASE</version>
+      <version>1.3</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-task-monitor</artifactId>
       <groupId>org.jdtaus.core.monitor</groupId>
-      <version>RELEASE</version>
+      <version>1.2</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-jdk14-executor</artifactId>
       <groupId>org.jdtaus.core.lang</groupId>
-      <version>RELEASE</version>
+      <version>1.2</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-entity-resolver</artifactId>
       <groupId>org.jdtaus.core.sax</groupId>
-      <version>RELEASE</version>
+      <version>1.1</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-utilities</artifactId>
       <groupId>org.jdtaus.core</groupId>
-      <version>RELEASE</version>
+      <version>1.4</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-messages</artifactId>
       <groupId>org.jdtaus.core</groupId>
-      <version>RELEASE</version>
+      <version>1.2</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
