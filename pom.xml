@@ -8,13 +8,13 @@
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-runtime</artifactId>
   <name>jDTAUS Core Reference Implementation</name>
-  <version>1.5</version>
+  <version>1.6-SNAPSHOT</version>
   <description>jDTAUS core reference implementation.</description>
   <packaging>jar</packaging>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/tags/jdtaus-core-runtime-1.5</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/tags/jdtaus-core-runtime-1.5</developerConnection>
-    <url>http://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/jdtaus-core-runtime/tags/jdtaus-core-runtime-1.5</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/branches/jdtaus-core-runtime-1.x</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/branches/jdtaus-core-runtime-1.x</developerConnection>
+    <url>http://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/jdtaus-core-runtime/branches/jdtaus-core-runtime-1.x</url>
   </scm>
   <build>
     <resources>
