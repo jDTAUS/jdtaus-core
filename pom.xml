@@ -5,13 +5,13 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.5</version>
+    <version>1.6-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-runtime</artifactId>
   <name>jDTAUS Core Reference Implementation</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.5-SNAPSHOT</version>
   <description>jDTAUS core reference implementation.</description>
   <packaging>jar</packaging>
   <scm>
@@ -28,12 +28,14 @@
     </resources>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
           <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-runtime/tags</tagBase>
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <dependencies>
           <dependency>
@@ -52,6 +54,7 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
+        <version>3.0</version>
         <dependencies>
           <dependency>
             <artifactId>jdtaus-core-client-container</artifactId>
@@ -83,12 +86,13 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <dependencies>
           <dependency>
             <artifactId>jdtaus-container-mojo</artifactId>
             <groupId>org.jdtaus.mojo</groupId>
-            <version>RELEASE</version>
+            <version>3.0</version>
             <scope>runtime</scope>
           </dependency>
           <dependency>
@@ -199,24 +203,17 @@
   <reporting>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
-        <configuration>
-          <issueLinkTemplate>http://bugzilla.jdtaus.org/cgi-bin/bugzilla/show_bug.cgi?id=%ISSUE%</issueLinkTemplate>
-          <reportSets>
-            <reportSet>
-              <reports>
-                <report>changes-report</report>
-              </reports>
-            </reportSet>
-          </reportSets>
-        </configuration>
       </plugin>
       <plugin>
-        <artifactId>jdtaus-container-mojo</artifactId>
         <groupId>org.jdtaus.mojo</groupId>
+        <artifactId>jdtaus-container-mojo</artifactId>
+        <version>3.0</version>
         <configuration>
           <moduleName>${pom.name}</moduleName>
         </configuration>
