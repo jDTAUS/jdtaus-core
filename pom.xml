@@ -5,7 +5,7 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.5</version>
+    <version>1.6-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
@@ -108,6 +108,7 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-resource-mojo</artifactId>
+        <version>3.0</version>
         <executions>
           <execution>
             <id>generate</id>
@@ -127,12 +128,6 @@
             <goals>
               <goal>generate</goal>
             </goals>
-            <configuration>
-              <extension>true</extension>
-              <strict>true</strict>
-              <bindingDirectory>src/main/jaxb</bindingDirectory>
-              <schemaDirectory>src/main/jaxb</schemaDirectory>
-            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -190,6 +185,7 @@
   <reporting>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <aggregate>false</aggregate>
@@ -211,41 +207,32 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <configuration>
-          <sourceEncoding>UTF-8</sourceEncoding>
-        </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <encoding>UTF-8</encoding>
-        </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-changes-plugin</artifactId>
-        <configuration>
-          <issueLinkTemplate>http://bugzilla.jdtaus.org/cgi-bin/bugzilla/show_bug.cgi?id=%ISSUE%</issueLinkTemplate>
-          <reportSets>
-            <reportSet>
-              <reports>
-                <report>changes-report</report>
-              </reports>
-            </reportSet>
-          </reportSets>
-        </configuration>
       </plugin>
     </plugins>
   </reporting>
