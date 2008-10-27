@@ -60,7 +60,7 @@
         <plugin>
           <groupId>org.jdtaus.mojo</groupId>
           <artifactId>jdtaus-resource-mojo</artifactId>
-          <version>2.3</version>
+          <version>3.0</version>
         </plugin>
         <plugin>
           <groupId>org.jdtaus.mojo</groupId>
