@@ -65,7 +65,7 @@
         <plugin>
           <groupId>org.jdtaus.mojo</groupId>
           <artifactId>jdtaus-container-mojo</artifactId>
-          <version>2.2</version>
+          <version>3.0</version>
         </plugin>
         <plugin>
           <groupId>org.jvnet.jaxb1.maven2</groupId>
