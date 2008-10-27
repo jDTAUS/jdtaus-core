@@ -9,25 +9,32 @@ July 2008
 jDTAUS Container Mojo
 
   The jDTAUS Container Mojo is a collection of tools dealing with the jDTAUS
-  Container model. Its main use is to generate source code sections into java
-  classes from information supplied by the container model.
+  Container model. Its main use is to generate source code sections from
+  information supplied by the container model.
 
 * Goals Overview
 
-  Currently the Resource Mojo has three goals.
+  Currently the Container Mojo has five goals.
 
-  * {{{clean-source-mojo.html}jdtaus-container-mojo:clean-sources}} is
-    not bound to any particular lifecycle phase and is used to cleanup all
-    source files of a project (e.g. remove trailing spaces).
+  * {{{clean-sources-mojo.html}jdtaus-container-mojo:clean-sources}} is
+    not bound to any particular lifecycle phase and is used to cleanup a
+    projects' source files (currently only removes any trailing spaces).
 
-  * {{{generate-container-mojo.html}jdtaus-container-mojo:generate-container}}
-    is bound to the process-resources phase and is used to generate source code
-    sections into java classes from information supplied by a project's
-    container module descriptor.
+  * {{{java-container-mojo.html}jdtaus-container-mojo:java-container}}
+    is bound to the process-resources phase and is used to manage source code
+    sections in java class files backed by a project's container model.
 
   * {{{verify-model-mojo.html}jdtaus-container-mojo:verify-model}}
-    is bound to the verify phase and is used to verify the container model of
-    all runtime dependencies to form a working set.
+    is bound to the verify phase and is used to verify a project's container
+    model.
+
+  * {{{verify-jar-mojo.html}jdtaus-container-mojo:verify-jar}}
+    is bound to the verify phase and is used to verify a container model stored
+    in a jar file.
+
+  * {{{spring-descriptor-mojo.html}jdtaus-container-mojo:spring-descriptor}}
+    is bound to the process-resources phase and is used to generate a spring
+    beans XML document from a project's container model.
 
 * Usage
 

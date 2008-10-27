@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  ${pom.name}
+  Copyright (c) 2005 Christian Schulte
+
+  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+  <cs@jdtaus.org> (+49 2331 3543887)
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Document   : module.xml
+  Author     : Christian Schulte <cs@jdtaus.org>
+  Version    : $Id$
+  Description: Runtime configuration for the ${pom.name} module.
+
+  $Id$
+-->
+<container:module xmlns:container="http://jdtaus.org/core/model/container"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+                  container:name="${pom.name}"
+                  container:version="${pom.version}"
+                  container:modelVersion="1.3">
+
+  <container:documentation container:defaultLanguage="en">
+    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+  </container:documentation>
+  <container:implementations>
+    <container:implementation container:identifier="org.jdtaus.core.container.mojo.AbstractContainerMojo"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="false">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[jDTAUS Container Mojo base implementation.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="cannotReadOrWriteFile"/>
+        <container:reference container:name="sourceNotFound"/>
+        <container:reference container:name="skippingProject"/>
+        <container:reference container:name="fileInfo"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.mojo.JavaContainerMojo"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:parent="org.jdtaus.core.container.mojo.AbstractContainerMojo"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Mojo to generate infrastructure code.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="unexpectedEndOfInput"/>
+        <container:reference container:name="missingMarkers"/>
+        <container:reference container:name="dependencyGetterComment"/>
+        <container:reference container:name="generatorWarning"/>
+        <container:reference container:name="standardConstructor"/>
+        <container:reference container:name="propertyGetterComment"/>
+        <container:reference container:name="openingFoldingMarkerNetbeans"/>
+        <container:reference container:name="closingFoldingMarkerNetbeans"/>
+        <container:reference container:name="skippingTestModule"/>
+        <container:reference container:name="skippingMainModule"/>
+        <container:reference container:name="processingModule"/>
+        <container:reference container:name="defaultPropertyDescription"/>
+        <container:reference container:name="defaultMessageDescription"/>
+        <container:reference container:name="messageGetterComment"/>
+        <container:reference container:name="defaultArgumentDescription"/>
+        <container:reference container:name="createdFile"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.mojo.ContainerReport"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Generates a report for the artifact's container metadata.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="anyAvailable"/>
+        <container:reference container:name="dependenciesTableDescription"/>
+        <container:reference container:name="dependencyImplementationHeader"/>
+        <container:reference container:name="dependencyNameHeader"/>
+        <container:reference container:name="dependencyRequiredVersionHeader"/>
+        <container:reference container:name="dependencySpecificationHeader"/>
+        <container:reference container:name="detailsTitle"/>
+        <container:reference container:name="implementationDetailTitle"/>
+        <container:reference container:name="implementationPropertiesTableDescription"/>
+        <container:reference container:name="minimumVersionTitle"/>
+        <container:reference container:name="moduleDescription"/>
+        <container:reference container:name="moduleDescriptionHeader"/>
+        <container:reference container:name="moduleImplementationDescription"/>
+        <container:reference container:name="moduleImplFinalHeader"/>
+        <container:reference container:name="moduleImplIdentifierHeader"/>
+        <container:reference container:name="moduleImplNameHeader"/>
+        <container:reference container:name="moduleImplSpecificationsHeader"/>
+        <container:reference container:name="moduleImplTitle"/>
+        <container:reference container:name="moduleImplVendorHeader"/>
+        <container:reference container:name="moduleImplVersionHeader"/>
+        <container:reference container:name="moduleNameHeader"/>
+        <container:reference container:name="moduleNameTitle"/>
+        <container:reference container:name="moduleSpecIdentifierHeader"/>
+        <container:reference container:name="moduleSpecificationDescription"/>
+        <container:reference container:name="moduleSpecMultiplicityHeader"/>
+        <container:reference container:name="moduleSpecScopeHeader"/>
+        <container:reference container:name="moduleSpecTitle"/>
+        <container:reference container:name="moduleSpecVendorHeader"/>
+        <container:reference container:name="moduleSpecVersionHeader"/>
+        <container:reference container:name="modulesTableDescription"/>
+        <container:reference container:name="moduleTitle"/>
+        <container:reference container:name="moduleVersionHeader"/>
+        <container:reference container:name="multiplicity"/>
+        <container:reference container:name="noDependencies"/>
+        <container:reference container:name="noImplementationProperties"/>
+        <container:reference container:name="noImplementations"/>
+        <container:reference container:name="noSpecificationProperties"/>
+        <container:reference container:name="noSpecifications"/>
+        <container:reference container:name="notAModule"/>
+        <container:reference container:name="noUnresolvedDependencies"/>
+        <container:reference container:name="overviewTitle"/>
+        <container:reference container:name="propertyApiFlagHeader"/>
+        <container:reference container:name="propertyNameHeader"/>
+        <container:reference container:name="propertyTypeHeader"/>
+        <container:reference container:name="propertyValueHeader"/>
+        <container:reference container:name="reportDescription"/>
+        <container:reference container:name="reportName"/>
+        <container:reference container:name="scope"/>
+        <container:reference container:name="seeJavadocLink"/>
+        <container:reference container:name="specificationDetailTitle"/>
+        <container:reference container:name="specificationIdentifierTitle"/>
+        <container:reference container:name="specificationPropertiesTableDescription"/>
+        <container:reference container:name="unresolvedDependenciesDescription"/>
+        <container:reference container:name="unresolvedDependenciesTitle"/>
+        <container:reference container:name="yesNo"/>
+        <container:reference container:name="messageNameHeader"/>
+        <container:reference container:name="messageTemplatesHeader"/>
+        <container:reference container:name="noMessages"/>
+        <container:reference container:name="messagesTableDescription"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.mojo.SpringDescriptorMojo"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Mojo to generate a spring beans descriptor with corresponding support classes from a project.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="generatedDescriptor"/>
+        <container:reference container:name="emptyDescriptor"/>
+        <container:reference container:name="generatedFactoryBean"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.mojo.VerifyJarMojo"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:parent="org.jdtaus.core.container.mojo.VerifyModelMojo"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Mojo to validate a set of modules from a single jar file.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="jarFile"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.mojo.VerifyModelMojo"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Mojo to validate set of modules.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="classNotFound"/>
+        <container:reference container:name="missingImplementedSpecification"/>
+        <container:reference container:name="missingInterface"/>
+        <container:reference container:name="modelViolations"/>
+        <container:reference container:name="unresolvedDependencies"/>
+        <container:reference container:name="unresolvedDependency"/>
+        <container:reference container:name="validModel"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.mojo.model.ModelManager"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Manages the {@code http://jdtaus.org/core/model/container} model.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="nullDependency"/>
+        <container:reference container:name="noDefaultConstructor"/>
+        <container:reference container:name="finalModifier"/>
+        <container:reference container:name="abstractModifier"/>
+        <container:reference container:name="finalizeMethod"/>
+      </container:messages>
+    </container:implementation>
+  </container:implementations>
+  <container:messages>
+    <container:message container:name="cannotReadOrWriteFile">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Cannot read from or write to file {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Datei {0} kann weder gelesen noch geschrieben werden.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="fileName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="sourceNotFound">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[No sourcefile found for class {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Keine Quelltextdatei für Klasse {0} gefunden.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="className" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="skippingProject">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[No module descriptor - skipping project.]]></container:text>
+        <container:text container:language="de"><![CDATA[Kein Modul-Deskriptor vorhanden - Projekt wird nicht bearbeitet.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="fileInfo">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Editing {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Bearbeitet {0}.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="fileName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="unexpectedEndOfInput">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unexpected end of input editing {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Unerwartetes Dateiende bei der Bearbeitung von {0}.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="fileName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingMarkers">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[{0} is missing in {1}.]]></container:text>
+        <container:text container:language="de"><![CDATA[{0} ist nicht in {1} vorhanden.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="marker" container:type="text"/>
+        <container:argument container:index="1" container:name="fileName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="dependencyGetterComment">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[/**
+     * Gets the configured <code>{0}</code> implementation.
+     *
+     * @return the configured <code>{0}</code> implementation.
+     */
+]]></container:text>
+        <container:text container:language="de"><![CDATA[/**
+     * Ermittelt die Implementierung der <code>{0}</code> Dependency.
+     *
+     * @return die Implementierung der <code>{0}</code> Dependency.
+     */
+]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="dependencyTypeName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="generatorWarning">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[// This section is managed by jdtaus-container-mojo.]]></container:text>
+        <container:text container:language="de"><![CDATA[// Dieser Abschnitt wird von jdtaus-container-mojo verwaltet.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="standardConstructor">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[/** Standard implementation constructor <code>{0}</code>. */
+    public {1}()
+    '{
+        super();
+    }'
+]]></container:text>
+        <container:text container:language="de"><![CDATA[/** Standard Konstruktor Implementierung <code>{0}</code>. */
+    public {1}()
+    '{
+        super();
+    }'
+]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="1" container:name="implementationType" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="propertyGetterComment">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[/**
+     * Gets the value of property <code>{0}</code>.
+     *
+     * @return {1}
+     */]]></container:text>
+        <container:text container:language="de"><![CDATA[/**
+     * Ermittelt den Wert der <code>{0}</code> Eigenschaft.
+     *
+     * @return {1}
+     */]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="propertyName" container:type="text"/>
+        <container:argument container:index="1" container:name="propertyDescription" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="openingFoldingMarkerNetbeans">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtaus{0}]]></container:text>
+        <container:text container:language="de"><![CDATA[// <editor-fold defaultstate="collapsed" desc=" Generierter Quelltext ">//GEN-BEGIN:jdtaus{0}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="foldName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="closingFoldingMarkerNetbeans">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[// </editor-fold>//GEN-END:jdtaus{0}]]></container:text>
+        <container:text container:language="de"><![CDATA[// </editor-fold>//GEN-END:jdtaus{0}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="foldName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="skippingTestModule">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Skipping testmodule processing - no testmodule defined.]]></container:text>
+        <container:text container:language="de"><![CDATA[Überspringt Testmodulverarbeitung - kein Testmodul vorhanden.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="skippingMainModule">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Skipping module processing - no module defined.]]></container:text>
+        <container:text container:language="de"><![CDATA[Überspringt Modulverarbeitung - kein Modul vorhanden.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="processingModule">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Module "{0}" successfully processed.]]></container:text>
+        <container:text container:language="de"><![CDATA[Modul "{0}" erfolgreich verarbeitet.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="moduleName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="defaultPropertyDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[the value of property <code>{0}</code>.]]></container:text>
+        <container:text container:language="de"><![CDATA[Wert der <code>{0}</code> Eigenschaft.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="propertyName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="defaultMessageDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[the text of message <code>{0}</code>.]]></container:text>
+        <container:text container:language="de"><![CDATA[Text der <code>{0}</code> Meldung.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="messageName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="messageGetterComment">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets the text of message <code>{0}</code>.]]></container:text>
+        <container:text container:language="de"><![CDATA[Ermittelt den Text der <code>{0}</code> Meldung.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="messageName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="defaultArgumentDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[format argument.]]></container:text>
+        <container:text container:language="de"><![CDATA[Formatierungs-Argument.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="anyAvailable">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[any available]]></container:text>
+        <container:text container:language="de"><![CDATA[jede verfügbare]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="dependenciesTableDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The following table lists all dependencies of the implementation.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet alle Abnängigkeiten der Implementierung.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="dependencyImplementationHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="dependencyNameHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Name]]></container:text>
+        <container:text container:language="de"><![CDATA[Name]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="dependencyRequiredVersionHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Required specification level]]></container:text>
+        <container:text container:language="de"><![CDATA[Benötigte Spezifikationsstufe]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="dependencySpecificationHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Specification]]></container:text>
+        <container:text container:language="de"><![CDATA[Spezifikation]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="detailsTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Details]]></container:text>
+        <container:text container:language="de"><![CDATA[Details]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="implementationDetailTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation {0}]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung {0}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="implementationPropertiesTableDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The following table lists all properties of the implementation.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet alle Eigenschaften der Implementierung.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="minimumVersionTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Required specification level]]></container:text>
+        <container:text container:language="de"><![CDATA[Benötigte Spezifikationsstufe]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The following table contains global module information.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet globale Modul-Informationen.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleDescriptionHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Description:]]></container:text>
+        <container:text container:language="de"><![CDATA[Beschreibung:]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleImplementationDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The following table lists all implementations provided by the module.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet alle bereitgestellten Implementierungen des Moduls.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleImplFinalHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Final]]></container:text>
+        <container:text container:language="de"><![CDATA[Final]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleImplIdentifierHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Identifier]]></container:text>
+        <container:text container:language="de"><![CDATA[Bezeichner]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleImplNameHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Name]]></container:text>
+        <container:text container:language="de"><![CDATA[Name]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleImplSpecificationsHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implemented specifications]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierte Spezifikationen]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleImplTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementations]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierungen]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleImplVendorHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Vendor]]></container:text>
+        <container:text container:language="de"><![CDATA[Hersteller]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleImplVersionHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Version]]></container:text>
+        <container:text container:language="de"><![CDATA[Version]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleNameHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Name:]]></container:text>
+        <container:text container:language="de"><![CDATA[Name:]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleNameTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Module]]></container:text>
+        <container:text container:language="de"><![CDATA[Modul]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleSpecIdentifierHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Identifier]]></container:text>
+        <container:text container:language="de"><![CDATA[Bezeichner]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleSpecificationDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The following table lists all specifications defined by the module.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet alle definierten Spezifikationen des Moduls.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleSpecMultiplicityHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Multiplicity]]></container:text>
+        <container:text container:language="de"><![CDATA[Kardinalität]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleSpecScopeHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Scope]]></container:text>
+        <container:text container:language="de"><![CDATA[Gültigkeitsbereich]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleSpecTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Specifications]]></container:text>
+        <container:text container:language="de"><![CDATA[Spezifikationen]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleSpecVendorHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Vendor]]></container:text>
+        <container:text container:language="de"><![CDATA[Hersteller]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleSpecVersionHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Version]]></container:text>
+        <container:text container:language="de"><![CDATA[Version]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="modulesTableDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The following table lists all modules the artifact provides.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet alle von diesem Artefakt bereitgestellten Module.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Module]]></container:text>
+        <container:text container:language="de"><![CDATA[Modul]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="moduleVersionHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Version:]]></container:text>
+        <container:text container:language="de"><![CDATA[Version:]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="multiplicity">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[{0,choice,25000#1|25001#*}]]></container:text>
+        <container:text container:language="de"><![CDATA[{0,choice,25000#1|25001#*}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="multiplicity" container:type="number"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="noDependencies">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The implementation does not have any dependencies.]]></container:text>
+        <container:text container:language="de"><![CDATA[Diese Implementierung hat keine Abhängigkeiten.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="noImplementationProperties">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The implementation does not have any properties defined.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die Implementierung verfügt über keine Eigenschaften.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="noImplementations">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The module does not provide any implementation.]]></container:text>
+        <container:text container:language="de"><![CDATA[Dieses Modul stellt keine Implementierungen bereit.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="noSpecificationProperties">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The specification does not have any properties defined.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die Spezifikation verfügt über keine Eigenschaften.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="noSpecifications">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[This module does not define any specification.]]></container:text>
+        <container:text container:language="de"><![CDATA[Dieses Modul definiert keine Spezifikationen.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="notAModule">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[No module information available.]]></container:text>
+        <container:text container:language="de"><![CDATA[Keine Modulinformationen vorhanden.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="noUnresolvedDependencies">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[This module does not have any dependencies to resolve.]]></container:text>
+        <container:text container:language="de"><![CDATA[Dieses Modul beinhaltet keine aufzulösenden Abhängigkeiten.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="overviewTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Overview]]></container:text>
+        <container:text container:language="de"><![CDATA[Übersicht]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="propertyApiFlagHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[API]]></container:text>
+        <container:text container:language="de"><![CDATA[API]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="propertyNameHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Name]]></container:text>
+        <container:text container:language="de"><![CDATA[Name]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="propertyTypeHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Type]]></container:text>
+        <container:text container:language="de"><![CDATA[Typ]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="propertyValueHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Value]]></container:text>
+        <container:text container:language="de"><![CDATA[Wert]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="reportDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about this module's container configuration.]]></container:text>
+        <container:text container:language="de"><![CDATA[Informationen über die Container-Konfiguration dieses Moduls.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="reportName">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Container Report]]></container:text>
+        <container:text container:language="de"><![CDATA[Containerbericht]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="scope">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[{0,choice,26000#multiton|26001#context|26002#singleton}]]></container:text>
+        <container:text container:language="de"><![CDATA[{0,choice,26000#Multiton|26001#Context|26002#Singleton}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="scope" container:type="number"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="seeJavadocLink">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[See the javadoc documentation for further information.]]></container:text>
+        <container:text container:language="de"><![CDATA[Siehe Javadoc-Dokumentation für weitere Informationen.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="specificationDetailTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Specification {0}]]></container:text>
+        <container:text container:language="de"><![CDATA[Spezifikation {0}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="specificationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="specificationIdentifierTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Specification]]></container:text>
+        <container:text container:language="de"><![CDATA[Spezifikation]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="specificationPropertiesTableDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The following table lists all properties of the specification.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet alle Eigenschaften der Spezifikation.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="unresolvedDependenciesDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The following table lists all dependencies to provide when assembling an application.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet alle aufzulösenden Abhängigkeiten des Moduls.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="unresolvedDependenciesTitle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Dependencies]]></container:text>
+        <container:text container:language="de"><![CDATA[Abhängigkeiten]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="yesNo">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[{0,choice,0#no|1#yes}]]></container:text>
+        <container:text container:language="de"><![CDATA[{0,choice,0#Nein|1#Ja}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="flag" container:type="number"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="generatedDescriptor">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA["{0}" created successfully.]]></container:text>
+        <container:text container:language="de"><![CDATA["{0}" erfolgreich erstellt.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="fileName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="emptyDescriptor">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Skipped generating empty "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Erstellung leerer Datei "{0}" übersprungen.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="fileName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="generatedFactoryBean">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA["{0}" created successfully.]]></container:text>
+        <container:text container:language="de"><![CDATA["{0}" erfolgreich erstellt.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="fileName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="jarFile">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Verifying "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Überprüft "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="fileName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="classNotFound">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Cannot load class {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Kann Klasse {0} nicht laden.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="className" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingImplementedSpecification">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation {0} implements {1} but does not define it as an implemented specification.]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung {0} implementiert {1} ohne entsprechenden Modell-Eintrag.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="1" container:name="specificationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingInterface">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation {0} does not implement specification {1} as defined in the model.]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung {0} implementiert Spezifikation {1} nicht, obwohl im Modell angegeben.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="1" container:name="specificationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="modelViolations">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Invalid model.]]></container:text>
+        <container:text container:language="de"><![CDATA[Ungültiges Modell.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="unresolvedDependencies">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Model has unresolved dependencies.]]></container:text>
+        <container:text container:language="de"><![CDATA[Modell enthält nicht aufgelöste Abhängigkeiten.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="unresolvedDependency">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[* {0}<{1}> {2}]]></container:text>
+        <container:text container:language="de"><![CDATA[* {0}<{1}> {2}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="specificationIdentifier" container:type="text"/>
+        <container:argument container:index="1" container:name="moduleName" container:type="text"/>
+        <container:argument container:index="2" container:name="version" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="validModel">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Model processed successfully.]]></container:text>
+        <container:text container:language="de"><![CDATA[Modell erfolgreich verarbeitet.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="nullDependency">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unresolved dependency on "{0}" not created. Implementation depends on default container.]]></container:text>
+        <container:text container:language="de"><![CDATA[Nicht erfüllte Abhängigkeit von "{0}" nicht erstellt - verwendet Standard-Container.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="specificationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="noDefaultConstructor">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation "{0}" does not define a public no-arg constructor. Implementation depends on default container.]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung "{0}" hat keinen öffentlichen Standard-Konstruktor - verwendet Standard-Container.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="finalModifier">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation "{0}" is declared final. Implementation depends on default container.]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung "{0}" ist final - verwendet Standard-Container.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="abstractModifier">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation "{0}" is declared abstract. Implementation depends on default container.]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung "{0}" ist abstrakt - verwendet Standard-Container.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="finalizeMethod">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation "{0}" declareds a finalize() method. Implementation depends on default container.]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung "{0}" hat eine finalize() Methode - verwendet Standard-Container.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="messageNameHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message]]></container:text>
+        <container:text container:language="de"><![CDATA[Meldung]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="messageTemplatesHeader">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Templates]]></container:text>
+        <container:text container:language="de"><![CDATA[Schablonen]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="noMessages">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[This implementation does not use any messages.]]></container:text>
+        <container:text container:language="de"><![CDATA[Diese Implementierung verwendet keine Meldungen.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="messagesTableDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The following table lists all messages the implementation uses.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet alle von der Implementierung verwendeten Meldungen.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="createdFile">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Creates {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Erstellt {0}.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="fileName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+  </container:messages>
+</container:module>

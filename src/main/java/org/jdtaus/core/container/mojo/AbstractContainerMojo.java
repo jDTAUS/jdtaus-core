@@ -36,26 +36,30 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
+import org.apache.velocity.app.VelocityEngine;
 import org.codehaus.plexus.util.DirectoryScanner;
+import org.jdtaus.core.container.mojo.model.ModelManager;
 
 /**
- * Base Mojo for manipulating source files.
+ * jDTAUS Container Mojo base implementation.
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
  */
-public abstract class AbstractSourceMojo extends AbstractMojo
+public abstract class AbstractContainerMojo extends AbstractMojo
 {
     //--Configuration-----------------------------------------------------------
 
@@ -69,6 +73,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     /**
      * Number of spaces to use per indentation level.
      * @parameter expression="${spacesPerIndentationLevel}" default-value="4"
+     * @optional
      */
     private Integer spacesPerIndentationLevel;
 
@@ -84,6 +89,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      * Flag indicating test mode. In test mode generated sources will be
      * printed to the console and no files will be written.
      * @parameter expression="${testMode}" default-value="false"
+     * @optional
      */
     private Boolean testMode;
 
@@ -94,24 +100,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      * @optional
      */
     private String locale;
-
-    /**
-     * Project runtime classpath.
-     *
-     * @parameter expression="${project.runtimeClasspathElements}"
-     * @required
-     * @readonly
-     */
-    private List classpathElements;
-
-    /**
-     * Project test classpath.
-     *
-     * @parameter expression="${project.testClasspathElements}"
-     * @required
-     * @readonly
-     */
-    private List testClasspathElements;
 
     /**
      * A regular expression used for excluding elements from the runtime
@@ -128,6 +116,20 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      * @optional
      */
     private String testClassPathElementsExcludeRegexp;
+
+    /** @component */
+    private ModelManager modelManager;
+
+    /**
+     * Getter for property {@code encoding}.
+     *
+     * @return the encoding to use for reading and writing sources or
+     * {@code null} to use the system's default encoding.
+     */
+    protected final String getEncoding()
+    {
+        return this.encoding;
+    }
 
     /**
      * Accessor to the currently executed {@code MavenProject}.
@@ -164,23 +166,114 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     }
 
     /**
-     * Accessor to the runtime classpath elements.
+     * Accessor to the project's classpath elements including runtime
+     * dependencies.
      *
-     * @return a list holding strings for each runtime class path element.
+     * @return a set of class path element strings.
+     *
+     * @throws DependencyResolutionRequiredException for any unresolved
+     * dependency scopes.
      */
-    protected final List getClasspathElements()
+    protected final Set getClasspathElements()
+        throws DependencyResolutionRequiredException
     {
-        return this.classpathElements;
+        final Set elements = new HashSet();
+
+        elements.add( this.getMavenProject().getBuild().getOutputDirectory() );
+
+        int i = 0;
+        for ( Iterator it = this.getMavenProject().getRuntimeArtifacts().
+            iterator(); it.hasNext();)
+        {
+            final Artifact a = (Artifact) it.next();
+
+            if ( a.getFile() == null )
+            {
+                this.getLog().warn( a.toString() + " ignored." );
+                continue;
+            }
+
+            final String element = a.getFile().getAbsolutePath();
+
+            if ( this.getLog().isDebugEnabled() )
+            {
+                this.getLog().debug( "Runtime classpath element[" + i++ +
+                                     "]: " + element );
+
+            }
+
+            elements.add( element );
+        }
+
+        i = 0;
+        for ( Iterator it = this.getMavenProject().getCompileArtifacts().
+            iterator(); it.hasNext();)
+        {
+            final Artifact a = (Artifact) it.next();
+
+            if ( a.getFile() == null )
+            {
+                this.getLog().warn( a.toString() + " ignored." );
+                continue;
+            }
+
+            final String element = a.getFile().getAbsolutePath();
+
+            if ( this.getLog().isDebugEnabled() )
+            {
+                this.getLog().debug( "Compile classpath element[" + i++ +
+                                     "]: " + element );
+
+            }
+
+            elements.add( element );
+        }
+
+        return elements;
     }
 
     /**
      * Accessor to the test classpath elements.
      *
-     * @return a list holding strings for each test class path element.
+     * @return a set of class path element strings.
+     *
+     * @throws DependencyResolutionRequiredException for any unresolved
+     * dependency scopes.
      */
-    protected final List getTestClasspathElements()
+    protected final Set getTestClasspathElements()
+        throws DependencyResolutionRequiredException
     {
-        return this.testClasspathElements;
+        final Set elements = new HashSet();
+
+        elements.add( this.getMavenProject().getBuild().getOutputDirectory() );
+        elements.add( this.getMavenProject().getBuild().
+                      getTestOutputDirectory() );
+
+        int i = 0;
+        for ( Iterator it = this.getMavenProject().getTestArtifacts().
+            iterator(); it.hasNext();)
+        {
+            final Artifact a = (Artifact) it.next();
+
+            if ( a.getFile() == null )
+            {
+                this.getLog().warn( a.toString() + " ignored." );
+                continue;
+            }
+
+            final String element = a.getFile().getAbsolutePath();
+
+            if ( this.getLog().isDebugEnabled() )
+            {
+                this.getLog().debug( "Test classpath element[" + i++ +
+                                     "]: " + element );
+
+            }
+
+            elements.add( element );
+        }
+
+        return elements;
     }
 
     /**
@@ -252,24 +345,38 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      */
     protected boolean isClasspathElementDefaultExlude( final String element )
     {
-        if ( element == null )
-        {
-            throw new NullPointerException( "element" );
-        }
-
-        return element.matches( ".*jdtaus-core-api.*jar" );
+        return false;
     }
-
     /** Default source include patterns. */
-    private static final String[] DEFAULT_SOURCE_INCLUDES = {
+    protected static final String[] DEFAULT_SOURCE_INCLUDES =
+    {
         "**/*.java",
         "**/*.xml",
         "**/*.xsd",
-        "**/*.html"
+        "**/*.html",
+        "**/*.vm",
+        "**/*.apt"
     };
 
+    /**
+     * Gets the {@code ModelManager} instance.
+     *
+     * @return the {@code ModelManager} instance.
+     */
+    protected ModelManager getModelManager()
+    {
+        return this.modelManager;
+    }
+
     //-----------------------------------------------------------Configuration--
-    //--AbstractSourceMojo------------------------------------------------------
+    //--AbstractContainerMojo---------------------------------------------------
+
+    /** Name of the velocity classpath resource loader implementation. */
+    private static final String VELOCITY_RESOURCE_LOADER =
+        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader";
+
+    /** {@code VelocityEngine}. */
+    private VelocityEngine velocityEngine;
 
     /** Interface to manipulate source files. */
     public interface SourceEditor
@@ -295,7 +402,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo
          * {@code false} if not.
          */
         boolean isModified();
-
     }
 
     /**
@@ -332,7 +438,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
 
         for ( it = roots.iterator(); it.hasNext();)
         {
-            source = ( String ) it.next();
+            source = (String) it.next();
             file =
                 new File( source.concat( File.separator ).concat( fileName ) );
             if ( file.canRead() && file.canWrite() )
@@ -350,10 +456,10 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     }
 
     /**
-     * Gets all {@code *.java} files from the project's compile source roots.
+     * Gets all source files from the project's compile source roots.
      *
      * @return a {@code Collection} holding {@code File} instances for all
-     * {@code *.java} files found in all compile source roots.
+     * source files found in all compile source roots.
      */
     protected final Collection getAllSources()
     {
@@ -368,7 +474,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         for ( i = this.getMavenProject().getCompileSourceRoots().
                 iterator(); i.hasNext();)
         {
-            sourceRoot = ( String ) i.next();
+            sourceRoot = (String) i.next();
             parentRoot = new File( sourceRoot );
 
             if ( !parentRoot.exists() || !parentRoot.isDirectory() )
@@ -385,7 +491,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
             for ( j = Arrays.asList( scanner.getIncludedFiles() ).
                     iterator(); j.hasNext();)
             {
-                file = new File( parentRoot, ( String ) j.next() );
+                file = new File( parentRoot, (String) j.next() );
                 files.add( file );
             }
         }
@@ -394,11 +500,10 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     }
 
     /**
-     * Gets all {@code *.java} files from the project's test compile source
-     * roots.
+     * Gets all source files from the project's test compile source roots.
      *
      * @return a {@code Collection} holding {@code File} instances for all
-     * {@code *.java} files found in all test compile source roots.
+     * source files found in all test compile source roots.
      */
     protected final Collection getTestSources()
     {
@@ -413,7 +518,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         for ( i = this.getMavenProject().getTestCompileSourceRoots().
                 iterator(); i.hasNext();)
         {
-            sourceRoot = ( String ) i.next();
+            sourceRoot = (String) i.next();
             parentRoot = new File( sourceRoot );
 
             if ( !parentRoot.exists() || !parentRoot.isDirectory() )
@@ -430,7 +535,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
             for ( j = Arrays.asList( scanner.getIncludedFiles() ).
                     iterator(); j.hasNext();)
             {
-                file = new File( parentRoot, ( String ) j.next() );
+                file = new File( parentRoot, (String) j.next() );
                 files.add( file );
             }
         }
@@ -451,7 +556,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      * @throws MojoFailureException for unrecoverable errors.
      */
     protected final String edit(
-        final String str, final AbstractSourceMojo.SourceEditor editor )
+        final String str, final AbstractContainerMojo.SourceEditor editor )
         throws MojoFailureException
     {
         if ( str == null )
@@ -510,7 +615,11 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         }
         catch ( IOException e )
         {
-            throw new MojoFailureException( e.getMessage() );
+            final MojoFailureException mfe =
+                new MojoFailureException( e.getMessage() );
+
+            mfe.initCause( e );
+            throw mfe;
         }
     }
 
@@ -538,7 +647,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
 
         try
         {
-            if ( this.encoding == null )
+            if ( this.getEncoding() == null )
             {
                 reader = new BufferedReader( new FileReader( file ) );
             }
@@ -546,7 +655,7 @@ public abstract class AbstractSourceMojo extends AbstractMojo
             {
                 reader = new BufferedReader( new InputStreamReader(
                                              new FileInputStream( file ),
-                                             this.encoding ) );
+                                             this.getEncoding() ) );
 
             }
 
@@ -562,7 +671,11 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         }
         catch ( IOException e )
         {
-            throw new MojoFailureException( e.getMessage() );
+            final MojoFailureException mfe =
+                new MojoFailureException( e.getMessage() );
+
+            mfe.initCause( e );
+            throw mfe;
         }
     }
 
@@ -598,22 +711,20 @@ public abstract class AbstractSourceMojo extends AbstractMojo
             }
             else
             {
-                if ( this.encoding == null )
+                if ( this.getEncoding() == null )
                 {
                     fileWriter = new FileWriter( file );
                 }
                 else
                 {
                     fileWriter = new OutputStreamWriter(
-                        new FileOutputStream( file ), this.encoding );
+                        new FileOutputStream( file ), this.getEncoding() );
 
                 }
 
-                this.getLog().info( AbstractSourceMojoBundle.getInstance().
-                                    getFileInfoMessage( this.getLocale() ).
-                                    format( new Object[] {
-                                            file.getName()
-                                        } ) );
+                this.getLog().info( AbstractContainerMojoBundle.getInstance().
+                                    getFileInfoMessage( Locale.getDefault(),
+                                                        file.getName() ) );
 
                 fileWriter.write( str );
                 fileWriter.close();
@@ -621,7 +732,11 @@ public abstract class AbstractSourceMojo extends AbstractMojo
         }
         catch ( IOException e )
         {
-            throw new MojoFailureException( e.getMessage() );
+            final MojoFailureException mfe =
+                new MojoFailureException( e.getMessage() );
+
+            mfe.initCause( e );
+            throw mfe;
         }
     }
 
@@ -648,47 +763,6 @@ public abstract class AbstractSourceMojo extends AbstractMojo
     }
 
     /**
-     * Getter for the current context's class loader.
-     *
-     * @return the callee's context classloader.
-     *
-     * @throws MojoFailureException if no class loader is available.
-     * @deprecated Use is discouraged.
-     */
-    protected ClassLoader getContextClassLoader() throws MojoFailureException
-    {
-        ClassLoader classLoader = Thread.currentThread().
-            getContextClassLoader();
-
-        if ( classLoader == null )
-        {
-            classLoader = ClassLoader.getSystemClassLoader();
-        }
-
-        if ( classLoader == null )
-        {
-            throw new MojoFailureException( "classLoader" );
-        }
-
-        return classLoader;
-    }
-
-    /**
-     * Provides access to the project's runtime classpath.
-     *
-     * @return a {@code ClassLoader} initialized with the project's runtime
-     * classpath.
-     *
-     * @throws MojoFailureException for unrecoverable technical errors.
-     * @deprecated Replaced with {@link #getRuntimeClasseLoader ( ClassLoader )}.
-     */
-    protected final ClassLoader getRuntimeClassLoader()
-        throws MojoFailureException
-    {
-        return this.getRuntimeClassLoader( this.getContextClassLoader() );
-    }
-
-    /**
      * Provides access to the project's runtime classpath.
      *
      * @param parent the parent classloader to use for the runtime classloader.
@@ -696,56 +770,55 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      * @return a {@code ClassLoader} initialized with the project's runtime
      * classpath.
      *
-     * @throws NullPointerException if {@code parent} is {@code null}.
      * @throws MojoFailureException for unrecoverable technical errors.
      */
-    protected final ClassLoader getRuntimeClassLoader( final ClassLoader parent )
-        throws MojoFailureException
+    protected final ClassLoader getRuntimeClassLoader(
+        final ClassLoader parent ) throws MojoFailureException
     {
-        if ( parent == null )
-        {
-            throw new NullPointerException( "parent" );
-        }
-
         final Iterator it;
         final Collection urls = new LinkedList();
 
         try
         {
+            int i = 0;
             for ( it = this.getClasspathElements().iterator(); it.hasNext();)
             {
-                final String element = ( String ) it.next();
+                final String element = (String) it.next();
                 final URL url = new File( element ).toURI().toURL();
                 if ( !urls.contains( url ) &&
                     this.isClasspathElementIncluded( element ) )
                 {
                     urls.add( url );
+
+                    if ( this.getLog().isDebugEnabled() )
+                    {
+                        this.getLog().debug( "runtime[" + i++ + "]=" +
+                                             url.toExternalForm() );
+
+                    }
                 }
             }
 
-            return new URLClassLoader(
-                ( URL[] ) urls.toArray( new URL[ urls.size() ] ), parent );
+            return new ResourceLoader(
+                (URL[]) urls.toArray( new URL[ urls.size() ] ), parent );
 
+        }
+        catch ( DependencyResolutionRequiredException e )
+        {
+            final MojoFailureException mfe =
+                new MojoFailureException( e.getMessage() );
+
+            mfe.initCause( e );
+            throw mfe;
         }
         catch ( MalformedURLException e )
         {
-            throw new MojoFailureException( e.getMessage() );
-        }
-    }
+            final MojoFailureException mfe =
+                new MojoFailureException( e.getMessage() );
 
-    /**
-     * Provides access to the project's test classpath.
-     *
-     * @return a {@code ClassLoader} initialized with the project's test
-     * classpath.
-     *
-     * @throws MojoFailureException for unrecoverable technical errors.
-     * @deprecated Replaced with {@link #getTestClassLoader ( ClassLoader )}.
-     */
-    protected final ClassLoader getTestClassLoader()
-        throws MojoFailureException
-    {
-        return this.getTestClassLoader( this.getContextClassLoader() );
+            mfe.initCause( e );
+            throw mfe;
+        }
     }
 
     /**
@@ -756,47 +829,111 @@ public abstract class AbstractSourceMojo extends AbstractMojo
      * @return a {@code ClassLoader} initialized with the project's test
      * classpath.
      *
-     * @throws NullPointerException if {@code parent} is {@code null}.
      * @throws MojoFailureException for unrecoverable technical errors.
      */
     protected final ClassLoader getTestClassLoader( final ClassLoader parent )
         throws MojoFailureException
     {
-        if ( parent == null )
-        {
-            throw new NullPointerException( "parent" );
-        }
-
         final Iterator it;
         final Collection urls = new LinkedList();
 
         try
         {
-            for ( it = this.getMavenProject().
-                    getTestClasspathElements().iterator(); it.hasNext();)
+            int i = 0;
+            for ( it = this.getTestClasspathElements().iterator();
+                it.hasNext();)
             {
-                final String element = ( String ) it.next();
+                final String element = (String) it.next();
                 final URL url = new File( element ).toURI().toURL();
                 if ( !urls.contains( url ) &&
                     this.isTestClasspathElementIncluded( element ) )
                 {
                     urls.add( url );
+
+                    if ( this.getLog().isDebugEnabled() )
+                    {
+                        this.getLog().debug( "test[" + i++ + "]=" +
+                                             url.toExternalForm() );
+
+                    }
                 }
             }
 
-            return new URLClassLoader(
-                ( URL[] ) urls.toArray( new URL[ urls.size() ] ), parent );
+            return new ResourceLoader(
+                (URL[]) urls.toArray( new URL[ urls.size() ] ), parent );
 
         }
         catch ( MalformedURLException e )
         {
-            throw new MojoFailureException( e.getMessage() );
+            final MojoFailureException mfe =
+                new MojoFailureException( e.getMessage() );
+
+            mfe.initCause( e );
+            throw mfe;
         }
         catch ( DependencyResolutionRequiredException e )
         {
-            throw new MojoFailureException( e.getMessage() );
+            final MojoFailureException mfe =
+                new MojoFailureException( e.getMessage() );
+
+            mfe.initCause( e );
+            throw mfe;
         }
     }
 
-    //------------------------------------------------------AbstractSourceMojo--
+    /**
+     * Gets the {@code VelocityEngine} used for generating source code.
+     *
+     * @return the {@code VelocityEngine} used for generating source code.
+     *
+     * @throws Exception if initializing a new velocity engine fails.
+     */
+    protected final VelocityEngine getVelocity() throws Exception
+    {
+        if ( this.velocityEngine == null )
+        {
+            final VelocityEngine engine = new VelocityEngine();
+            final java.util.Properties props = new java.util.Properties();
+            props.put( "resource.loader", "class" );
+            props.put( "class.resource.loader.class",
+                       VELOCITY_RESOURCE_LOADER );
+
+            engine.init( props );
+            this.velocityEngine = engine;
+        }
+
+        return this.velocityEngine;
+    }
+
+    /**
+     * Formats a given text to a javadoc comment.
+     *
+     * @param text The text to format.
+     *
+     * @return {@code text} as a javadoc comment.
+     *
+     * @throws NullPointerException if {@code text} is {@code null}.
+     */
+    protected String formatComment( final String text )
+    {
+        if ( text == null )
+        {
+            throw new NullPointerException( "text" );
+        }
+
+        String normalized = text.replaceAll( "\\/\\*\\*", "/*" );
+        normalized = normalized.replaceAll( "\\*/", "/" );
+
+        final StringBuffer commentLinebreak = new StringBuffer();
+        commentLinebreak.append( '\n' );
+        this.indent( commentLinebreak );
+        commentLinebreak.append( " *" );
+
+        normalized =
+            normalized.replaceAll( "\n", commentLinebreak.toString() );
+
+        return normalized;
+    }
+
+    //---------------------------------------------------AbstractContainerMojo--
 }

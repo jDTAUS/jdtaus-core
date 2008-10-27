@@ -54,5 +54,18 @@
       Added site documentation.]]>
       </action>
     </release>
+    <release version="3.0" date="2008-10-27"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Corrected support for dependencies with scope "provided".]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated to support the jDTAUS Core API 1.5 features. As such, this version
+      is incompatible to previous versions.]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added a report for the container model.]]>
+      </action>
+    </release>
   </body>
 </document>

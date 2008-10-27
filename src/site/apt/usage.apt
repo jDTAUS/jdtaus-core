@@ -14,18 +14,19 @@ jDTAUS Container Mojo: Usage
   bound to any lifecycle phase and is intended to be invoked on its own or
   to be added to a multi-module parent project.
 
-  To remove any trailing spaces from a projects' source files simply execute
-  the following command in that project's base directory.
+  To remove any trailing spaces from a projects' source files execute the
+  following command in that project's base directory.
 
 +---
   mvn org.jdtaus.mojo:jdtaus-container-mojo:clean-sources
 +---
 
-* Generating source code sections into java classes
+* Managing source code sections in java source files
 
-  The jdtaus-container-mojo:generate-container goal of the Container Mojo is
+  The jdtaus-container-mojo:java-container goal of the Container Mojo is
   bound to the process-resources lifecycle phase. It is used by adding the
-  following plugin definition to a project.
+  following plugin definition to a project. Doing this, the mojo will manage the
+  contents of various source code sections.
 
 +---
 ...
@@ -38,9 +39,9 @@ jDTAUS Container Mojo: Usage
       <version>RELEASE</version>
       <executions>
         <execution>
-          <id>generate</id>
+          <id>jdtaus-generate</id>
           <goals>
-            <goal>generate-container</goal>
+            <goal>java-container</goal>
           </goals>
           <configuration>
               <moduleName>${pom.name}</moduleName>
@@ -55,13 +56,10 @@ jDTAUS Container Mojo: Usage
 ...
 +---
 
-  Doing this the mojo will have full control of various source code sections
-  of classes defined in the container module descriptor located at
-  META-INF/jdtaus/module.xml.
-
   <<Note:>> The default plugin configuration expects the following section
   markers to be present in an implementation class defined in a project's
-  module descriptor.
+  container model. Any non-existent source file will be created in the
+  source root configured via the sourceRoot mojo parameter.
 
 +---
     //--Implementation----------------------------------------------------------
@@ -72,14 +70,16 @@ jDTAUS Container Mojo: Usage
     //------------------------------------------------------------Dependencies--
     //--Properties--------------------------------------------------------------
     //--------------------------------------------------------------Properties--
+    //--Messages----------------------------------------------------------------
+    //----------------------------------------------------------------Messages--
 +---
 
 * Validating a set of runtime artifacts to form a valid container model.
 
   The jdtaus-container-mojo:verify-model goal of the Container Mojo is
   bound to the verify lifecycle phase. It is intended to be used on projects
-  used to create the final distribution artifact of an application and will fail
-  the build for any problems leading to an invalid jDTAUS container runtime.
+  creating a final distribution artifact of an application and will fail
+  a build for any problems leading to an invalid container runtime.
 
   To use the plugin add the following to the final distribution project.
 
@@ -94,7 +94,7 @@ jDTAUS Container Mojo: Usage
       <version>RELEASE</version>
       <executions>
         <execution>
-          <id>verify</id>
+          <id>jdtaus-verify</id>
           <goals>
             <goal>verify-model</goal>
           </goals>
@@ -106,3 +106,76 @@ jDTAUS Container Mojo: Usage
 </build>
 ...
 +---
+
+* Validating a single jar file to contain valid container model data.
+
+  The jdtaus-container-mojo:verify-jar goal of the Container Mojo is bound to
+  the verify lifecycle phase. It is intended to be used for validating a single
+  jar file to contain valid container model data and will fail a build for any
+  problems.
+
+  To use the plugin add the following to the project and adjust the value of the
+  jarFile attribute accordingly.
+
++---
+...
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>org.jdtaus.mojo</groupId>
+      <artifactId>jdtaus-container-mojo</artifactId>
+      <version>RELEASE</version>
+      <executions>
+        <execution>
+          <id>jdtaus-verify</id>
+          <goals>
+            <goal>verify-jar</goal>
+          </goals>
+          <configuration>
+            <jarFile>${project.build.directory}/${project.build.finalName}.jar</jarFile>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+  <plugins>
+</build>
+...
++---
+
+* Creating a spring beans document from a project's container model.
+
+  The jdtaus-container-mojo:spring-descriptor goal of the Container Mojo is
+  bound to the process-resources lifecycle phase. It is intended to be used for
+  creating a spring beans document with information compatible with the
+  project's container model.
+
+  To use the plugin add the following to the project.
+
++---
+...
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <groupId>org.jdtaus.mojo</groupId>
+      <artifactId>jdtaus-container-mojo</artifactId>
+      <version>RELEASE</version>
+      <executions>
+        <execution>
+          <id>jdtaus-spring</id>
+          <goals>
+            <goal>spring-descriptor</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+  <plugins>
+</build>
+...
++---
+
+  <<Note:>> Mapping a jDTAUS Container model to a Spring beans model does not
+  decouple from the jDTAUS Container.

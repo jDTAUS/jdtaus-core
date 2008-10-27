@@ -23,12 +23,13 @@
 package org.jdtaus.core.container.mojo;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.jdtaus.core.container.mojo.AbstractSourceMojo.SourceEditor;
+import org.codehaus.plexus.util.DirectoryScanner;
 
 /**
  * Mojo to cleanup source files (e.g. remove trailing spaces).
@@ -37,27 +38,58 @@ import org.jdtaus.core.container.mojo.AbstractSourceMojo.SourceEditor;
  * @version $Id$
  * @goal clean-sources
  */
-public class CleanMojo extends AbstractSourceMojo
+public class CleanMojo extends AbstractContainerMojo
 {
+
+    /**
+     * Scans a project's source directory for files to clean.
+     *
+     * @return a {@code Collection} holding {@code File} instances for all
+     * files to clean found in the project's source directory.
+     */
+    protected final Collection getCleanSources()
+    {
+        final Collection files = new LinkedList();
+        final File sourceDirectory =
+            new File( this.getMavenProject().getBasedir(), "src" );
+
+        if ( sourceDirectory.exists() && sourceDirectory.isDirectory() )
+        {
+            final DirectoryScanner scanner = new DirectoryScanner();
+            scanner.setBasedir( sourceDirectory );
+            scanner.setIncludes( DEFAULT_SOURCE_INCLUDES );
+            scanner.addDefaultExcludes();
+            scanner.scan();
+
+            for ( Iterator it = Arrays.asList( scanner.getIncludedFiles() ).
+                iterator(); it.hasNext();)
+            {
+                files.add( new File( sourceDirectory, (String) it.next() ) );
+            }
+        }
+
+        return files;
+    }
+
     //--AbstractMojo------------------------------------------------------------
 
     public void execute() throws MojoExecutionException, MojoFailureException
     {
-        File file;
-        String contents;
-        String edited;
-        final Collection sources = new LinkedList();
+        final Collection sources = this.getCleanSources();
         final SourceEditor editor = new RemoveTrailingSpacesEditor();
-
-        sources.addAll( this.getAllSources() );
-        sources.addAll( this.getTestSources() );
 
         for ( Iterator it = sources.iterator(); it.hasNext();)
         {
-            file = ( File ) it.next();
-            contents = this.load( file );
-            edited = this.edit( contents, editor );
-            if ( !contents.equals( edited ) )
+            final File file = (File) it.next();
+            final String content = this.load( file );
+
+            if ( this.getLog().isDebugEnabled() )
+            {
+                this.getLog().debug( file.getAbsolutePath() );
+            }
+
+            final String edited = this.edit( content, editor );
+            if ( !content.equals( edited ) )
             {
                 this.save( file, edited );
             }
@@ -69,7 +101,7 @@ public class CleanMojo extends AbstractSourceMojo
 
     /** Removes trailing spaces. */
     public static class RemoveTrailingSpacesEditor
-        implements AbstractSourceMojo.SourceEditor
+        implements AbstractContainerMojo.SourceEditor
     {
 
         private boolean modified;
@@ -122,7 +154,6 @@ public class CleanMojo extends AbstractSourceMojo
         {
             return this.modified;
         }
-
     }
 
     //---------------------------------------------------------------CleanMojo--
