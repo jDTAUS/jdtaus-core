@@ -1,97 +1,62 @@
-#if($includeLicense)
+## @param module The module containing implementation.
+## @param implementation The implementation of the bundle.
+## @param modelManager The model manager.
 /*
- *  ${bundle.projectName}
-#foreach ($developer in $bundle.developers)
- *  Copyright (c) $bundle.inceptionYear $developer
-#end
+ * WARNING: Generated code. All changes will be lost upon re-generation.
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 2.1 of the License, or any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
+ * Generator $generatorName $generatorVersion
+ * Template $templateLocation
+ * Generated $now
  */
-#end
-package $artifact.getPackageName();
+package ${modelManager.getJavaPackageName( $implementation )};
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.text.MessageFormat;
 
-class $artifact.getClassName()
+class ${modelManager.getJavaTypeName( $implementation )}
 {
 
-#if($includeComments)
+#if($comment)
   /** Singleton instance. */
 #end
-  private static final $artifact.getClassName() instance =
-    new ${artifact.getClassName()}();
+  private static final ${modelManager.getJavaTypeName( $implementation )} instance =
+    new ${modelManager.getJavaTypeName( $implementation )}();
 
-#if($includeComments)
-  /** Creates a new {@code $artifact.getClassName()} instance. */
+#if($comment)
+  /** Creates a new ${modelManager.getJavaTypeName( $implementation )} instance. */
 #end
-  ${artifact.getClassName()}()
+  ${modelManager.getJavaTypeName( $implementation )}()
   {
-#foreach($key in $bundle.getResourceBundle().getKeys())
-    this.getMessage ( "$key", Locale.getDefault() );
+#foreach($message in $implementation.getMessages().getMessage())
+    this.getMessage ( "$message.getName()", Locale.getDefault() );
+#end
+#foreach($messageReference in $implementation.getMessages().getReference())
+    this.getMessage ( "$messageReference.getName()", Locale.getDefault() );
 #end
   }
 
-#if($includeComments)
+#if($comment)
   /**
-   * Gets the {@code $artifact.getClassName()} singleton.
+   * Gets the ${modelManager.getJavaTypeName( $implementation )} singleton.
    *
-   * @return the {@code $artifact.getClassName()} singleton.
+   * @return the ${modelManager.getJavaTypeName( $implementation )} singleton.
    */
 #end
-  static $artifact.getClassName() getInstance()
+  static ${modelManager.getJavaTypeName( $implementation )} getInstance()
   {
     return instance;
   }
 
-#foreach($key in $bundle.getResourceBundle().getKeys())
-#if($includeComments)
-  /**
-   * Gets the text of the message with key {@code "$key"}.
-   *
-   * @return <pre>
-   * $generator.normalizeComment($bundle.getResourceBundle().getString($key))</pre>
-   */
+#foreach($message in $implementation.getMessages().getMessage())
+#parse("META-INF/templates/Bundle.java-getter.vm")
 #end
-  String $generator.getStringGetterNameForKey($key) ( final Locale locale )
-  {
-    return this.getMessage ( "$key", locale );
-  }
-
-#if($includeComments)
-  /**
-   * Gets the message with key {@code "$key"}.
-   *
-   * @return <pre>
-   * $generator.normalizeComment($bundle.getResourceBundle().getString($key))</pre>
-   */
+#foreach($messageReference in $implementation.getMessages().getReference())
+#set($message = $modelManager.getMessage( $module, $messageReference.getName() ) )
+#parse("META-INF/templates/Bundle.java-getter.vm")
 #end
-  MessageFormat $generator.getMessageGetterNameForKey($key) ( Locale locale )
-  {
-    if ( locale == null )
-    {
-      locale = Locale.getDefault();
-    }
 
-    return new MessageFormat ( this.getMessage ( "$key", locale ), locale );
-  }
-#end
-#if($includeComments)
-
+#if($comment)
   /**
    * Gets a message for a given key and locale.
    *
@@ -108,8 +73,9 @@ class $artifact.getClassName()
       locale = Locale.getDefault();
     }
 
-    return ResourceBundle.getBundle( "$bundle.getResourceLocation()",
-                                     locale ).getString( key );
+    return ResourceBundle.getBundle(
+        "$modelManager.getJavaClasspathLocation( $implementation )", locale ).
+        getString( key );
 
   }
 }

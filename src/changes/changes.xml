@@ -66,5 +66,12 @@
       Maven POM updates.]]>
       </action>
     </release>
+    <release version="3.0" date="2008-10-27"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Complete rewrite of the plugin. As such, this version of the plugin
+      is incompatible to previous versions.]]>
+      </action>
+    </release>
   </body>
 </document>

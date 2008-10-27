@@ -8,45 +8,14 @@ July 2008
 
 jDTAUS Resource Mojo: Usage
 
-* Testing properties files.
+* Generating ResourceBundle bundles together with corresponding accessor
+  classes.
 
-  The jdtaus-resource-mojo:test-messageformat goal of the Resource Mojo is bound
-  to the process-resources phase in the build lifecycle but the mojo needs to be
-  setup manually in a project to get executed. To test all projects' properties
-  file resources to contain valid message texts add the following to the
-  project's pom.xml:
-
-+---
-...
-<build>
-  <plugins>
-    ...
-    <plugin>
-      <groupId>org.jdtaus.mojo</groupId>
-      <artifactId>jdtaus-resource-mojo</artifactId>
-      <version>RELEASE</version>
-      <executions>
-        <execution>
-          <id>test</id>
-          <goals>
-            <goal>test-messageformat</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-    ...
-  <plugins>
-</build>
-...
-+---
-
-* Generating ResourceBundle accessor classes.
-
-  The jdtaus-resource-mojo:generate-bundles goal of the Resource Mojo is bound
-  to the process-resources phase in the build lifecycle but the mojo needs to be
+  The jdtaus-resource-mojo:java-resources goal of the Resource Mojo is bound
+  to the process-resources phase in the build lifecycle. The mojo needs to be
   setup manually in a project to get executed. To generate an accessor class for
   a ResourceBundle which is backed by properties file resources of your project
-  add the following to the project's pom.xml:
+  add the following to the project's pom.xml
 
 +---
 ...
@@ -59,12 +28,9 @@ jDTAUS Resource Mojo: Usage
       <version>RELEASE</version>
       <executions>
         <execution>
-          <id>generate</id>
+          <id>jdtaus-generate</id>
           <goals>
-            <goal>generate-bundles</goal>
-            <bundles>
-              <bundle>com.yourpackage.YourMessages</bundle>
-            </bundles>
+            <goal>java-resources</goal>
           </goals>
         </execution>
       </executions>
@@ -75,7 +41,46 @@ jDTAUS Resource Mojo: Usage
 ...
 +---
 
-  This will load a ResourceBundle for a properties file resource named
-  com.yourpackage.YourMessages.properties stored with the projects' resources
-  and will generate an accessor class named YourMessagesBundle in package
-  com.yourpackage.YourMessagesBundle.
+  and add a module descriptor to the project (searched for at
+  src/main/resources/META-INF/jdtaus/module.xml by default) like so
+
++---
+<?xml version="1.0" encoding="UTF-8"?>
+<container:module xmlns:container="http://jdtaus.org/core/model/container"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd">
+
+  <container:implementations>
+    <container:implementation container:identifier="com.yourcompany.YourClass"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}">
+
+      <container:messages>
+        <container:reference container:name="yourMessage"/>
+      </container:messages>
+    </container:implementation>
+  </container:implementations>
+
+  <container:messages>
+    <container:message container:name="yourMessage">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[English message text with {0} argument]]></container:text>
+        <container:text container:language="de"><![CDATA[Deutscher Meldungs-Text mit Argument {0}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="argumentName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+  </container:messages>
+
+  ...
+</container:module>
++---
+
+  The mojo processes the specified messages and generates accessor classes
+  together with corresponding properties files for all messages from the
+  module descriptor.
+
+  See {{{/../jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
+  XML schema regarding the document structured.
