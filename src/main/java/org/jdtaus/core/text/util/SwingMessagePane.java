@@ -30,13 +30,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import org.jdtaus.core.container.ContainerFactory;
-import org.jdtaus.core.container.ContextFactory;
-import org.jdtaus.core.container.ContextInitializer;
-import org.jdtaus.core.container.Implementation;
-import org.jdtaus.core.container.ModelFactory;
-import org.jdtaus.core.container.Properties;
-import org.jdtaus.core.container.Property;
-import org.jdtaus.core.container.PropertyException;
 import org.jdtaus.core.logging.spi.Logger;
 import org.jdtaus.core.text.MessageEvent;
 import org.jdtaus.core.text.MessageListener;
@@ -56,53 +49,10 @@ import org.jdtaus.core.text.MessageListener;
  */
 public final class SwingMessagePane implements MessageListener
 {
-    //--Implementation----------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausImplementation
-    // This section is managed by jdtaus-container-mojo.
-
-    /** Meta-data describing the implementation. */
-    private static final Implementation META =
-        ModelFactory.getModel().getModules().
-        getImplementation(SwingMessagePane.class.getName());
-// </editor-fold>//GEN-END:jdtausImplementation
-
-    //----------------------------------------------------------Implementation--
-    //--Constructors------------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
-    // This section is managed by jdtaus-container-mojo.
-
-    /**
-     * Initializes the properties of the instance.
-     *
-     * @param meta the property values to initialize the instance with.
-     *
-     * @throws NullPointerException if {@code meta} is {@code null}.
-     */
-    private void initializeProperties(final Properties meta)
-    {
-        Property p;
-
-        if(meta == null)
-        {
-            throw new NullPointerException("meta");
-        }
-
-        p = meta.getProperty("maximumMessages");
-        this.pMaximumMessages = ((java.lang.Integer) p.getValue()).intValue();
-
-    }
-// </editor-fold>//GEN-END:jdtausConstructors
-
-    //------------------------------------------------------------Constructors--
     //--Dependencies------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
     // This section is managed by jdtaus-container-mojo.
-
-    /** Configured <code>Logger</code> implementation. */
-    private transient Logger dLogger;
 
     /**
      * Gets the configured <code>Logger</code> implementation.
@@ -111,34 +61,11 @@ public final class SwingMessagePane implements MessageListener
      */
     private Logger getLogger()
     {
-        Logger ret = null;
-        if(this.dLogger != null)
-        {
-            ret = this.dLogger;
-        }
-        else
-        {
-            ret = (Logger) ContainerFactory.getContainer().
-                getDependency(SwingMessagePane.class,
-                "Logger");
+        return (Logger) ContainerFactory.getContainer().
+            getDependency( this, "Logger" );
 
-            if(ModelFactory.getModel().getModules().
-                getImplementation(SwingMessagePane.class.getName()).
-                getDependencies().getDependency("Logger").
-                isBound())
-            {
-                this.dLogger = ret;
-            }
-        }
-
-        if(ret instanceof ContextInitializer && !((ContextInitializer) ret).
-            isInitialized(ContextFactory.getContext()))
-        {
-            ((ContextInitializer) ret).initialize(ContextFactory.getContext());
-        }
-
-        return ret;
     }
+
 // </editor-fold>//GEN-END:jdtausDependencies
 
     //------------------------------------------------------------Dependencies--
@@ -148,19 +75,15 @@ public final class SwingMessagePane implements MessageListener
     // This section is managed by jdtaus-container-mojo.
 
     /**
-     * Property {@code maximumMessages}.
-     * @serial
-     */
-    private int pMaximumMessages;
-
-    /**
-     * Gets the value of property <code>maximumMessages</code>.
+     * Gets the value of property <code>defaultMaximumMessages</code>.
      *
-     * @return the value of property <code>maximumMessages</code>.
+     * @return Default maximum number of messages displayed per event.
      */
-    public int getMaximumMessages()
+    private java.lang.Integer getDefaultMaximumMessages()
     {
-        return this.pMaximumMessages;
+        return (java.lang.Integer) ContainerFactory.getContainer().
+            getProperty( this, "defaultMaximumMessages" );
+
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -192,8 +115,8 @@ public final class SwingMessagePane implements MessageListener
                         for ( int i = 0; i < messages.length &&
                             i < getMaximumMessages(); i++ )
                         {
-                            messages[i] =
-                                event.getMessages()[i].getText( Locale.getDefault() );
+                            messages[i] = event.getMessages()[i].getText(
+                                Locale.getDefault() );
 
                         }
 
@@ -202,8 +125,7 @@ public final class SwingMessagePane implements MessageListener
                             case MessageEvent.INFORMATION:
                                 JOptionPane.showMessageDialog(
                                     getParent(), messages,
-                                    SwingMessagePaneBundle.getInstance().
-                                    getInformationText( Locale.getDefault() ),
+                                    getInformationMessage(),
                                     JOptionPane.INFORMATION_MESSAGE );
 
                                 break;
@@ -211,8 +133,7 @@ public final class SwingMessagePane implements MessageListener
                             case MessageEvent.NOTIFICATION:
                                 JOptionPane.showMessageDialog(
                                     getParent(), messages,
-                                    SwingMessagePaneBundle.getInstance().
-                                    getNotificationText( Locale.getDefault() ),
+                                    getNotificationMessage(),
                                     JOptionPane.INFORMATION_MESSAGE );
 
                                 break;
@@ -220,8 +141,7 @@ public final class SwingMessagePane implements MessageListener
                             case MessageEvent.WARNING:
                                 JOptionPane.showMessageDialog(
                                     getParent(), messages,
-                                    SwingMessagePaneBundle.getInstance().
-                                    getWarningText( Locale.getDefault() ),
+                                    getWarningMessage(),
                                     JOptionPane.WARNING_MESSAGE );
 
                                 break;
@@ -232,23 +152,18 @@ public final class SwingMessagePane implements MessageListener
 
                                 JOptionPane.showMessageDialog(
                                     getParent(), messages,
-                                    SwingMessagePaneBundle.getInstance().
-                                    getErrorText( Locale.getDefault() ),
+                                    getErrorMessage(),
                                     JOptionPane.ERROR_MESSAGE );
 
                                 break;
 
                             default:
                                 getLogger().warn(
-                                    SwingMessagePaneBundle.getInstance().
-                                    getUnknownMessageTypeMessage( Locale.getDefault() ).
-                                    format( new Object[] {
-                                            new Integer( event.getType() )
-                                        } ) );
+                                    getUnknownMessageEventTypeMessage(
+                                    new Integer( event.getType() ) ) );
 
                         }
                     }
-
                 } );
         }
     }
@@ -258,6 +173,9 @@ public final class SwingMessagePane implements MessageListener
 
     /** The current parent component to use when displaying messages. */
     private Component parent;
+
+    /** Maximum number of messages displayed per event. */
+    private Integer maximumMessages;
 
     /**
      * Creates a new {@code SwingMessagePane} instance taking the parent
@@ -281,28 +199,24 @@ public final class SwingMessagePane implements MessageListener
             throw new HeadlessException();
         }
 
-        this.initializeProperties( META.getProperties() );
-        this.assertValidProperties();
-
         this.parent = parent;
     }
 
     /**
      * Creates a new {@code SwingMessagePane} instance taking the parent
      * component to use when displaying messages and the maximum number of
-     * messages to be displayed per event.
+     * messages displayed per event.
      *
      * @param parent the parent component to use when displaying messages.
-     * @param maximumMessages maximum number of messages to be displayed per
+     * @param maximumMessages maximum number of messages displayed per
      * event.
      *
      * @throws NullPointerException if {@code parent} is {@code null}.
-     * @throws PropertyException if {@code maximumMessages} is not positive.
      * @throws HeadlessException if this class is used in an environment
      * not providing a keyboard, display, or mouse.
      */
     public SwingMessagePane( final Component parent,
-                              final int maximumMessages )
+                             final int maximumMessages )
     {
         if ( parent == null )
         {
@@ -314,11 +228,12 @@ public final class SwingMessagePane implements MessageListener
             throw new HeadlessException();
         }
 
-        this.initializeProperties( META.getProperties() );
-        this.pMaximumMessages = maximumMessages;
-        this.assertValidProperties();
-
         this.parent = parent;
+
+        if ( maximumMessages > 0 )
+        {
+            this.maximumMessages = new Integer( maximumMessages );
+        }
     }
 
     /**
@@ -332,9 +247,9 @@ public final class SwingMessagePane implements MessageListener
     }
 
     /**
-     * Sets the parent component to be used by any message displays.
+     * Sets the parent component used by any message displays.
      *
-     * @param parent the parent component to be used by any message displays.
+     * @param parent the parent component used by any message displays.
      *
      * @throws NullPointerException if {@code parent} is {@code null}.
      */
@@ -349,20 +264,104 @@ public final class SwingMessagePane implements MessageListener
     }
 
     /**
-     * Checks configured properties.
+     * Gets the maximum number of messages displayed per event.
      *
-     * @throws PropertyException for illegal property values.
+     * @return the maximum number of messages displayed per event.
      */
-    private void assertValidProperties()
+    public int getMaximumMessages()
     {
-        if ( this.getMaximumMessages() <= 0 )
+        if ( this.maximumMessages == null )
         {
-            throw new PropertyException(
-                "maximumMessages",
-                Integer.toString( this.getMaximumMessages() ) );
-
+            this.maximumMessages = this.getDefaultMaximumMessages();
         }
+
+        return this.maximumMessages.intValue();
     }
 
     //--------------------------------------------------------SwingMessagePane--
+    //--Messages----------------------------------------------------------------
+
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages
+    // This section is managed by jdtaus-container-mojo.
+
+    /**
+     * Gets the text of message <code>unknownMessageEventType</code>.
+     * <blockquote><pre>Meldung unbekannten Typs {0,number} ignoriert.</pre></blockquote>
+     * <blockquote><pre>Ignored message event of unknown type {0,number}.</pre></blockquote>
+     *
+     * @param unknownEventType The unknown event type.
+     *
+     * @return Message stating that an unknown message event got ignored.
+     */
+    private String getUnknownMessageEventTypeMessage(
+            java.lang.Number unknownEventType )
+    {
+        return ContainerFactory.getContainer().
+            getMessage( this, "unknownMessageEventType",
+                new Object[]
+                {
+                    unknownEventType
+                });
+
+    }
+
+    /**
+     * Gets the text of message <code>information</code>.
+     * <blockquote><pre>Information</pre></blockquote>
+     * <blockquote><pre>Information</pre></blockquote>
+     *
+     * @return Information title.
+     */
+    private String getInformationMessage()
+    {
+        return ContainerFactory.getContainer().
+            getMessage( this, "information", null );
+
+    }
+
+    /**
+     * Gets the text of message <code>notification</code>.
+     * <blockquote><pre>Hinweis</pre></blockquote>
+     * <blockquote><pre>Notification</pre></blockquote>
+     *
+     * @return Notification title.
+     */
+    private String getNotificationMessage()
+    {
+        return ContainerFactory.getContainer().
+            getMessage( this, "notification", null );
+
+    }
+
+    /**
+     * Gets the text of message <code>warning</code>.
+     * <blockquote><pre>Warnung</pre></blockquote>
+     * <blockquote><pre>Warning</pre></blockquote>
+     *
+     * @return Warning title.
+     */
+    private String getWarningMessage()
+    {
+        return ContainerFactory.getContainer().
+            getMessage( this, "warning", null );
+
+    }
+
+    /**
+     * Gets the text of message <code>error</code>.
+     * <blockquote><pre>Fehler</pre></blockquote>
+     * <blockquote><pre>Error</pre></blockquote>
+     *
+     * @return Error title.
+     */
+    private String getErrorMessage()
+    {
+        return ContainerFactory.getContainer().
+            getMessage( this, "error", null );
+
+    }
+
+// </editor-fold>//GEN-END:jdtausMessages
+
+    //----------------------------------------------------------------Messages--
 }

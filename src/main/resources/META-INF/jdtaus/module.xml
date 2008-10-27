@@ -27,25 +27,28 @@
   Description: Runtime configuration for the ${pom.name} module.
 
 -->
+<container:module xmlns:container="http://jdtaus.org/core/model/container"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+                  container:name="${pom.name}"
+                  container:version="${pom.version}"
+                  container:modelVersion="1.3">
 
-<module:module xmlns:container="http://jdtaus.org/core/model/container"
-               xmlns:module="http://jdtaus.org/core/model/container/module"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xsi:schemaLocation="http://jdtaus.org/core/model/container/module http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd
-                                   http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/xsd/jdtaus-container-1.0.xsd"
-               container:name="${pom.name}"
-               container:description="${pom.description}"
-               container:version="${pom.version}"
-               module:modelVersion="1.2">
+  <container:documentation container:defaultLanguage="en">
+    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+  </container:documentation>
 
   <container:specifications>
     <container:specification container:identifier="org.jdtaus.core.lang.util.ExceptionMessageResolver"
-                             container:description="${pom.description}"
                              container:vendor="${pom.organization.name}"
-                             container:version="${pom.version}"
-                             container:singleton="true"
-                             container:multiplicity="many"/>
+                             container:version="1.0"
+                             container:scope="singleton"
+                             container:multiplicity="many">
 
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Resolves messages for given exceptions.]]></container:text>
+      </container:documentation>
+    </container:specification>
   </container:specifications>
   <container:implementations>
     <container:implementation container:identifier="org.jdtaus.core.io.util.MemoryFileOperations"
@@ -54,32 +57,45 @@
                               container:version="${pom.version}"
                               container:final="true">
 
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation of elementary I/O operations in heap memory.]]></container:text>
+      </container:documentation>
+
       <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
-                              container:name="Logger"
-                              container:bound="true">
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
 
           <container:properties>
             <container:property container:name="name"
                                 container:type="java.lang.String"
-                                container:value="org.jdtaus.core.io.util.MemoryFileOperations"
-                                container:api="true"/>
+                                container:value="org.jdtaus.core.io.util.MemoryFileOperations"/>
 
           </container:properties>
         </container:dependency>
 
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
-                              container:name="MemoryManager"
-                              container:bound="true"/>
+        <container:dependency container:name="MemoryManager"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.lang.spi.MemoryManager"
+                              container:version="1.0">
 
+        </container:dependency>
       </container:dependencies>
 
       <container:properties>
-        <container:property container:name="bufferSize"
+        <container:property container:name="streamBufferSize"
                             container:type="int"
-                            container:value="65535"/>
+                            container:value="65536">
 
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Size of the buffer for buffering streams.]]></container:text>
+          </container:documentation>
+        </container:property>
       </container:properties>
+      <container:messages>
+        <container:reference container:name="logResize"/>
+      </container:messages>
     </container:implementation>
 
     <container:implementation container:identifier="org.jdtaus.core.io.util.RandomAccessFileOperations"
@@ -88,19 +104,32 @@
                               container:version="${pom.version}"
                               container:final="true">
 
-      <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
-                              container:name="MemoryManager"
-                              container:bound="true"/>
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Adapts a java.io.RandomAccessFile to FileOperations.]]></container:text>
+      </container:documentation>
 
+      <container:dependencies>
+        <container:dependency container:name="MemoryManager"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.lang.spi.MemoryManager"
+                              container:version="1.0">
+
+        </container:dependency>
       </container:dependencies>
 
       <container:properties>
-        <container:property container:name="bufferSize"
+        <container:property container:name="streamBufferSize"
                             container:type="int"
-                            container:value="65535"/>
+                            container:value="65536">
 
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Size of the buffer for buffering streams.]]></container:text>
+          </container:documentation>
+        </container:property>
       </container:properties>
+      <container:messages>
+        <container:reference container:name="alreadyClosed"/>
+      </container:messages>
     </container:implementation>
 
     <container:implementation container:identifier="org.jdtaus.core.io.util.StructuredFileOperations"
@@ -109,32 +138,47 @@
                               container:version="${pom.version}"
                               container:final="true">
 
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[StructuredFile implementation based on FileOperations.]]></container:text>
+      </container:documentation>
+
       <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
-                              container:name="MemoryManager"
-                              container:bound="true"/>
+        <container:dependency container:name="MemoryManager"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.lang.spi.MemoryManager"
+                              container:version="1.0">
 
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.monitor.spi.TaskMonitor"
-                              container:name="TaskMonitor"
-                              container:bound="true"/>
+        </container:dependency>
 
+        <container:dependency container:name="TaskMonitor"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.monitor.spi.TaskMonitor"
+                              container:version="1.3">
+
+        </container:dependency>
       </container:dependencies>
       <container:properties>
-        <container:property container:name="blockSize"
+        <container:property container:name="defaultBufferSize"
                             container:type="int"
-                            container:value="1"
-                            container:api="true"/>
+                            container:value="65536">
 
-        <container:property container:name="minBufferedBlocks"
-                            container:type="int"
-                            container:value="1024"/>
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Size of the pre-alocated default buffer in byte.]]></container:text>
+          </container:documentation>
+        </container:property>
 
-        <container:property container:name="monitoringThreshold"
-                            container:type="int"
-                            container:value="5242880"
-                            container:api="true"/>
+        <container:property container:name="defaultMonitoringThreshold"
+                            container:type="java.lang.Integer"
+                            container:value="5242880">
 
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Number of bytes which need to minimally be copied to enable any task monitoring during copy operations.]]></container:text>
+          </container:documentation>
+        </container:property>
       </container:properties>
+      <container:messages>
+        <container:reference container:name="alreadyClosed"/>
+      </container:messages>
     </container:implementation>
 
     <container:implementation container:identifier="org.jdtaus.core.io.util.CoalescingFileOperations"
@@ -143,35 +187,54 @@
                               container:version="${pom.version}"
                               container:final="true">
 
-      <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
-                              container:name="MemoryManager"
-                              container:bound="true"/>
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Coalescing FileOperations cache.]]></container:text>
+      </container:documentation>
 
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
-                              container:name="Logger"
-                              container:bound="true">
+      <container:dependencies>
+        <container:dependency container:name="MemoryManager"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.lang.spi.MemoryManager"
+                              container:version="1.0">
+
+        </container:dependency>
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
 
           <container:properties>
             <container:property container:name="name"
                                 container:type="java.lang.String"
-                                container:value="org.jdtaus.core.io.util.CoalescingFileOperations"
-                                container:api="true"/>
+                                container:value="org.jdtaus.core.io.util.CoalescingFileOperations"/>
 
           </container:properties>
         </container:dependency>
       </container:dependencies>
       <container:properties>
-        <container:property container:name="blockSize"
-                            container:type="int"
-                            container:value="2097152"
-                            container:api="true"/>
+        <container:property container:name="defaultBlockSize"
+                            container:type="java.lang.Integer"
+                            container:value="2097152">
 
-        <container:property container:name="cacheSize"
-                            container:type="int"
-                            container:value="5"/>
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default size of one cache block in byte.]]></container:text>
+          </container:documentation>
+        </container:property>
 
+        <container:property container:name="defaultCacheBlocks"
+                            container:type="java.lang.Integer"
+                            container:value="5">
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default number of cache blocks.]]></container:text>
+          </container:documentation>
+        </container:property>
       </container:properties>
+      <container:messages>
+        <container:reference container:name="readBypassesCache"/>
+        <container:reference container:name="writeBypassesCache"/>
+        <container:reference container:name="alreadyClosed"/>
+      </container:messages>
     </container:implementation>
 
     <container:implementation container:identifier="org.jdtaus.core.io.util.ReadAheadFileOperations"
@@ -180,19 +243,31 @@
                               container:version="${pom.version}"
                               container:final="true">
 
-      <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.lang.spi.MemoryManager"
-                              container:name="MemoryManager"
-                              container:bound="true"/>
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Read-ahead FileOperations cache.]]></container:text>
+      </container:documentation>
 
+      <container:dependencies>
+        <container:dependency container:name="MemoryManager"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.lang.spi.MemoryManager"
+                              container:version="1.0">
+
+        </container:dependency>
       </container:dependencies>
       <container:properties>
-        <container:property container:name="cacheSize"
-                            container:type="int"
-                            container:value="16384"
-                            container:api="true"/>
+        <container:property container:name="defaultCacheSize"
+                            container:type="java.lang.Integer"
+                            container:value="16384">
 
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default cache size in byte.]]></container:text>
+          </container:documentation>
+        </container:property>
       </container:properties>
+      <container:messages>
+        <container:reference container:name="alreadyClosed"/>
+      </container:messages>
     </container:implementation>
 
     <container:implementation container:identifier="org.jdtaus.core.monitor.util.SwingProgressMonitor"
@@ -201,32 +276,48 @@
                               container:version="${pom.version}"
                               container:final="true">
 
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[TaskListener displaying progress using a Swing dialog.]]></container:text>
+      </container:documentation>
+
       <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
-                              container:name="Logger"
-                              container:bound="true">
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
 
           <container:properties>
             <container:property container:name="name"
                                 container:type="java.lang.String"
-                                container:value="org.jdtaus.core.monitor.util.SwingProgressMonitor"
-                                container:api="true"/>
+                                container:value="org.jdtaus.core.monitor.util.SwingProgressMonitor"/>
 
           </container:properties>
         </container:dependency>
       </container:dependencies>
       <container:properties>
-        <container:property container:name="millisToDecideToPopup"
-                            container:type="int"
-                            container:value="500"
-                            container:api="true"/>
+        <container:property container:name="defaultMillisToDecideToPopup"
+                            container:type="java.lang.Integer"
+                            container:value="500">
 
-        <container:property container:name="millisToPopup"
-                            container:type="int"
-                            container:value="2000"
-                            container:api="true"/>
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default number of milliseconds to pass before all running tasks are checked for theire duration.]]></container:text>
+          </container:documentation>
+        </container:property>
 
+        <container:property container:name="defaultMillisToPopup"
+                            container:type="java.lang.Integer"
+                            container:value="2000">
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default number of milliseconds visibility of the dialog is delayed.]]></container:text>
+          </container:documentation>
+        </container:property>
       </container:properties>
+      <container:messages>
+        <container:reference container:name="unknownTaskEventType"/>
+        <container:reference container:name="taskAlreadyStarted"/>
+        <container:reference container:name="expectedEnd"/>
+      </container:messages>
     </container:implementation>
 
     <container:implementation container:identifier="org.jdtaus.core.text.util.SwingMessagePane"
@@ -235,27 +326,41 @@
                               container:version="${pom.version}"
                               container:final="true">
 
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[MessageListener displaying messages using Swing's JOptionPane.]]></container:text>
+      </container:documentation>
+
       <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
-                              container:name="Logger"
-                              container:bound="true">
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
 
           <container:properties>
             <container:property container:name="name"
                                 container:type="java.lang.String"
-                                container:value="org.jdtaus.core.text.util.SwingMessagePane"
-                                container:api="true"/>
+                                container:value="org.jdtaus.core.text.util.SwingMessagePane"/>
 
           </container:properties>
         </container:dependency>
       </container:dependencies>
       <container:properties>
-        <container:property container:name="maximumMessages"
-                            container:type="int"
-                            container:value="25"
-                            container:api="true"/>
+        <container:property container:name="defaultMaximumMessages"
+                            container:type="java.lang.Integer"
+                            container:value="25">
 
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default maximum number of messages displayed per event.]]></container:text>
+          </container:documentation>
+        </container:property>
       </container:properties>
+      <container:messages>
+        <container:reference container:name="unknownMessageEventType"/>
+        <container:reference container:name="information"/>
+        <container:reference container:name="notification"/>
+        <container:reference container:name="warning"/>
+        <container:reference container:name="error"/>
+      </container:messages>
     </container:implementation>
 
     <container:implementation container:identifier="org.jdtaus.core.monitor.util.TaskDurationLogger"
@@ -264,27 +369,37 @@
                               container:version="${pom.version}"
                               container:final="true">
 
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[TaskListener logging the duration of an operation performed by a Task.]]></container:text>
+      </container:documentation>
+
       <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
-                              container:name="Logger"
-                              container:bound="true">
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
 
           <container:properties>
             <container:property container:name="name"
                                 container:type="java.lang.String"
-                                container:value="org.jdtaus.core.monitor.util.TaskDurationLogger"
-                                container:api="true"/>
+                                container:value="org.jdtaus.core.monitor.util.TaskDurationLogger"/>
 
           </container:properties>
         </container:dependency>
       </container:dependencies>
       <container:properties>
-        <container:property container:name="loggingThresholdMillis"
-                            container:type="long"
-                            container:value="60000"
-                            container:api="true"/>
+        <container:property container:name="defaultLoggingThresholdMillis"
+                            container:type="java.lang.Long"
+                            container:value="60000">
 
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default number of milliseconds a task at least needs to run to trigger a message when finished.]]></container:text>
+          </container:documentation>
+        </container:property>
       </container:properties>
+      <container:messages>
+        <container:reference container:name="durationInfo"/>
+      </container:messages>
     </container:implementation>
 
     <container:implementation container:identifier="org.jdtaus.core.text.util.MessageLogger"
@@ -293,20 +408,27 @@
                               container:version="${pom.version}"
                               container:final="true">
 
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[MessageListener logging messages to a system logger.]]></container:text>
+      </container:documentation>
+
       <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
-                              container:name="Logger"
-                              container:bound="true">
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
 
           <container:properties>
             <container:property container:name="name"
                                 container:type="java.lang.String"
-                                container:value="org.jdtaus.core.text.util.MessageLogger"
-                                container:api="true"/>
+                                container:value="org.jdtaus.core.text.util.MessageLogger"/>
 
           </container:properties>
         </container:dependency>
       </container:dependencies>
+      <container:messages>
+        <container:reference container:name="unknownMessageEventType"/>
+      </container:messages>
     </container:implementation>
 
     <container:implementation container:identifier="org.jdtaus.core.swing.util.BlockingGlassPane"
@@ -315,10 +437,19 @@
                               container:version="${pom.version}"
                               container:final="true">
 
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[JComponent for use as a blocking glasspane.]]></container:text>
+      </container:documentation>
+
       <container:properties>
-        <container:property container:name="cursorType"
-                            container:type="int"
-                            container:value="3"/> <!-- Cursor.WAIT_CURSOR -->
+        <container:property container:name="defaultCursorType"
+                            container:type="java.lang.Integer"
+                            container:value="3"> <!-- Cursor.WAIT_CURSOR -->
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default cursor used when blocking is in effect.]]></container:text>
+          </container:documentation>
+        </container:property>
 
       </container:properties>
     </container:implementation>
@@ -329,10 +460,17 @@
                               container:version="${pom.version}"
                               container:final="true">
 
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[ExceptionListener resolving exceptions to corresponding application messages.]]></container:text>
+      </container:documentation>
+
       <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.text.spi.ApplicationLogger"
-                              container:name="ApplicationLogger"
-                              container:bound="true"/>
+        <container:dependency container:name="ApplicationLogger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.text.spi.ApplicationLogger"
+                              container:version="1.3">
+
+        </container:dependency>
 
       </container:dependencies>
     </container:implementation>
@@ -343,21 +481,265 @@
                               container:version="${pom.version}"
                               container:final="true">
 
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[ExceptionListener logging exceptions.]]></container:text>
+      </container:documentation>
+
       <container:dependencies>
-        <container:dependency container:specificationIdentifier="org.jdtaus.core.logging.spi.Logger"
-                              container:name="Logger"
-                              container:bound="true">
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
 
           <container:properties>
             <container:property container:name="name"
                                 container:type="java.lang.String"
-                                container:value="org.jdtaus.core.lang.util.ExceptionLogger"
-                                container:api="true"/>
+                                container:value="org.jdtaus.core.lang.util.ExceptionLogger"/>
 
           </container:properties>
         </container:dependency>
       </container:dependencies>
     </container:implementation>
 
+    <container:implementation container:identifier="org.jdtaus.core.sax.util.EntityResolverChain"
+                              container:name="EntityResolverChain"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[EntityResolver implementation backed by a chain of resolver implementations.]]></container:text>
+      </container:documentation>
+
+      <container:dependencies>
+        <container:dependency container:name="DefaultResolvers"
+                              container:bound="true"
+                              container:identifier="org.xml.sax.EntityResolver"/>
+
+      </container:dependencies>
+    </container:implementation>
   </container:implementations>
-</module:module>
+  <container:messages>
+    <container:message container:name="logResize">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about the size of the internal buffer.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[current buffer size: {0, number} byte]]></container:text>
+        <container:text container:language="de"><![CDATA[aktuelle Puffergröße: {0, number} Byte]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="bufferSize" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The current size of the internal buffer.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="readBypassesCache">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about a misconfigured cache.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[A read operation bypassed the cache. Consider increasing the cache. Current block size is {0,number} and current number of cache blocks is {1,number}. {2,number} bytes could not be cached.]]></container:text>
+        <container:text container:language="de"><![CDATA[Eine Lese-Operation umging den Cache. Cache zu klein dimensioniert. Aktuelle Blockgröße ist {0,number} und Cache umfaßt {1,number} Blöcke. {2,number} Bytes konnten nicht zwischengespeichert werden.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="blockSize" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The current block size in use.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="cacheBlocks" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The current number of blocks in use.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="2" container:name="uncachedBytes" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The number of bytes bypassing caching.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="writeBypassesCache">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about a misconfigured cache.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[A write operation bypassed the cache. Consider increasing the cache. Current block size is {0,number} and current number of cache blocks is {1,number}. {2,number} bytes could not be cached.]]></container:text>
+        <container:text container:language="de"><![CDATA[Eine Schreib-Operation umging den Cache. Cache zu klein dimensioniert. Aktuelle Blockgröße ist {0,number} und Cache umfaßt {1,number} Blöcke. {2,number} Bytes konnten nicht zwischengespeichert werden.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="blockSize" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The current block size in use.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="cacheBlocks" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The current number of blocks in use.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="2" container:name="uncachedBytes" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The number of bytes bypassing caching.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="alreadyClosed">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that an instance is already closed.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Instance closed - cannot perform I/O.]]></container:text>
+        <container:text container:language="de"><![CDATA[Instanz geschlossen - keine E/A-Operationen möglich.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="unknownTaskEventType">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that an unknown task event got ignored.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Ignored task event of unknown type {0,number}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Verarbeitungsereignis unbekannten Typs {0,number} ignoriert.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="unknownEventType" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The unknown type of the event.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="taskAlreadyStarted">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that a task already has been started.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Task "{0}" has already been started at {1,time,long}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Verarbeitung "{0}" wurde um {1,time,long} bereits gestartet.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="taskDescription" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The description of the task.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="startDate" container:type="date">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The time the task started.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="expectedEnd">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating the expected end of a task.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Expected end approximately at {0,date,full} {0,time,medium}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Vorraussichtliches Ende am {0,date,full} um {0,time,medium} Uhr.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="expectedEnd" container:type="date">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The expected end of the task.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="durationInfo">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about a task.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Taskinformation:
+    Description ... : {0}
+    Start ......... : {1,date,long} at {1,time,long}
+    End ........... : {2,date,long} at {2,time,long}
+    Duration ...... : {3}ms]]></container:text>
+        <container:text container:language="de"><![CDATA[Taskinformation:
+    Beschreibung ... : {0}
+    Start .......... : {1,date,long} um {1,time,long}
+    Ende ........... : {2,date,long} um {2,time,long}
+    Laufzeit ....... : {3,long}ms]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="taskDescription" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The description of the task.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="startDate" container:type="date">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The start date of the task.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="2" container:name="endDate" container:type="date">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The end date of the task.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="3" container:name="durationMillis" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The number of milliseconds the task ran.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="information">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information title.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information]]></container:text>
+        <container:text container:language="de"><![CDATA[Information]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="notification">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Notification title.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Notification]]></container:text>
+        <container:text container:language="de"><![CDATA[Hinweis]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="warning">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Warning title.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Warning]]></container:text>
+        <container:text container:language="de"><![CDATA[Warnung]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="error">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Error title.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Error]]></container:text>
+        <container:text container:language="de"><![CDATA[Fehler]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="unknownMessageEventType">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that an unknown message event got ignored.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Ignored message event of unknown type {0,number}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Meldung unbekannten Typs {0,number} ignoriert.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="unknownEventType" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The unknown event type.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+  </container:messages>
+</container:module>

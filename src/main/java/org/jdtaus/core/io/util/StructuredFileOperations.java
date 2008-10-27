@@ -24,16 +24,8 @@ package org.jdtaus.core.io.util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Locale;
 import javax.swing.event.EventListenerList;
 import org.jdtaus.core.container.ContainerFactory;
-import org.jdtaus.core.container.ContextFactory;
-import org.jdtaus.core.container.ContextInitializer;
-import org.jdtaus.core.container.Implementation;
-import org.jdtaus.core.container.ModelFactory;
-import org.jdtaus.core.container.Properties;
-import org.jdtaus.core.container.Property;
-import org.jdtaus.core.container.PropertyException;
 import org.jdtaus.core.messages.DeletesBlocksMessage;
 import org.jdtaus.core.messages.InsertsBlocksMessage;
 import org.jdtaus.core.io.FileOperations;
@@ -75,7 +67,7 @@ public final class StructuredFileOperations implements StructuredFile
     //--Fields------------------------------------------------------------------
 
     /** Pre-allocated temporary buffer. */
-    private byte[] minimumBuffer;
+    private byte[] defaultBuffer;
 
     /** Caches the value of property blockCount. */
     private long cachedBlockCount = NO_CACHED_BLOCKCOUNT;
@@ -89,99 +81,10 @@ public final class StructuredFileOperations implements StructuredFile
     private final BigDecimal decimalBlockSize;
 
     //------------------------------------------------------------------Fields--
-    //--Implementation----------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausImplementation
-    // This section is managed by jdtaus-container-mojo.
-
-    /** Meta-data describing the implementation. */
-    private static final Implementation META =
-        ModelFactory.getModel().getModules().
-        getImplementation(StructuredFileOperations.class.getName());
-// </editor-fold>//GEN-END:jdtausImplementation
-
-    //----------------------------------------------------------Implementation--
-    //--Constructors------------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
-    // This section is managed by jdtaus-container-mojo.
-
-    /**
-     * Initializes the properties of the instance.
-     *
-     * @param meta the property values to initialize the instance with.
-     *
-     * @throws NullPointerException if {@code meta} is {@code null}.
-     */
-    private void initializeProperties(final Properties meta)
-    {
-        Property p;
-
-        if(meta == null)
-        {
-            throw new NullPointerException("meta");
-        }
-
-        p = meta.getProperty("monitoringThreshold");
-        this.pMonitoringThreshold = ((java.lang.Integer) p.getValue()).intValue();
-
-
-        p = meta.getProperty("minBufferedBlocks");
-        this.pMinBufferedBlocks = ((java.lang.Integer) p.getValue()).intValue();
-
-
-        p = meta.getProperty("blockSize");
-        this.pBlockSize = ((java.lang.Integer) p.getValue()).intValue();
-
-    }
-// </editor-fold>//GEN-END:jdtausConstructors
-
-    //------------------------------------------------------------Constructors--
     //--Dependencies------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
     // This section is managed by jdtaus-container-mojo.
-
-    /** Configured <code>TaskMonitor</code> implementation. */
-    private transient TaskMonitor dTaskMonitor;
-
-    /**
-     * Gets the configured <code>TaskMonitor</code> implementation.
-     *
-     * @return the configured <code>TaskMonitor</code> implementation.
-     */
-    private TaskMonitor getTaskMonitor()
-    {
-        TaskMonitor ret = null;
-        if(this.dTaskMonitor != null)
-        {
-            ret = this.dTaskMonitor;
-        }
-        else
-        {
-            ret = (TaskMonitor) ContainerFactory.getContainer().
-                getDependency(StructuredFileOperations.class,
-                "TaskMonitor");
-
-            if(ModelFactory.getModel().getModules().
-                getImplementation(StructuredFileOperations.class.getName()).
-                getDependencies().getDependency("TaskMonitor").
-                isBound())
-            {
-                this.dTaskMonitor = ret;
-            }
-        }
-
-        if(ret instanceof ContextInitializer && !((ContextInitializer) ret).
-            isInitialized(ContextFactory.getContext()))
-        {
-            ((ContextInitializer) ret).initialize(ContextFactory.getContext());
-        }
-
-        return ret;
-    }
-    /** Configured <code>MemoryManager</code> implementation. */
-    private transient MemoryManager dMemoryManager;
 
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
@@ -190,34 +93,23 @@ public final class StructuredFileOperations implements StructuredFile
      */
     private MemoryManager getMemoryManager()
     {
-        MemoryManager ret = null;
-        if(this.dMemoryManager != null)
-        {
-            ret = this.dMemoryManager;
-        }
-        else
-        {
-            ret = (MemoryManager) ContainerFactory.getContainer().
-                getDependency(StructuredFileOperations.class,
-                "MemoryManager");
+        return (MemoryManager) ContainerFactory.getContainer().
+            getDependency( this, "MemoryManager" );
 
-            if(ModelFactory.getModel().getModules().
-                getImplementation(StructuredFileOperations.class.getName()).
-                getDependencies().getDependency("MemoryManager").
-                isBound())
-            {
-                this.dMemoryManager = ret;
-            }
-        }
-
-        if(ret instanceof ContextInitializer && !((ContextInitializer) ret).
-            isInitialized(ContextFactory.getContext()))
-        {
-            ((ContextInitializer) ret).initialize(ContextFactory.getContext());
-        }
-
-        return ret;
     }
+
+    /**
+     * Gets the configured <code>TaskMonitor</code> implementation.
+     *
+     * @return the configured <code>TaskMonitor</code> implementation.
+     */
+    private TaskMonitor getTaskMonitor()
+    {
+        return (TaskMonitor) ContainerFactory.getContainer().
+            getDependency( this, "TaskMonitor" );
+
+    }
+
 // </editor-fold>//GEN-END:jdtausDependencies
 
     //------------------------------------------------------------Dependencies--
@@ -227,57 +119,38 @@ public final class StructuredFileOperations implements StructuredFile
     // This section is managed by jdtaus-container-mojo.
 
     /**
-     * Property {@code monitoringThreshold}.
-     * @serial
-     */
-    private int pMonitoringThreshold;
-
-    /**
-     * Gets the value of property <code>monitoringThreshold</code>.
+     * Gets the value of property <code>defaultMonitoringThreshold</code>.
      *
-     * @return the value of property <code>monitoringThreshold</code>.
+     * @return Number of bytes which need to minimally be copied to enable any task monitoring during copy operations.
      */
-    public int getMonitoringThreshold()
+    private java.lang.Integer getDefaultMonitoringThreshold()
     {
-        return this.pMonitoringThreshold;
+        return (java.lang.Integer) ContainerFactory.getContainer().
+            getProperty( this, "defaultMonitoringThreshold" );
+
     }
 
     /**
-     * Property {@code minBufferedBlocks}.
-     * @serial
-     */
-    private int pMinBufferedBlocks;
-
-    /**
-     * Gets the value of property <code>minBufferedBlocks</code>.
+     * Gets the value of property <code>defaultBufferSize</code>.
      *
-     * @return the value of property <code>minBufferedBlocks</code>.
+     * @return Size of the pre-alocated default buffer in byte.
      */
-    private int getMinBufferedBlocks()
+    private int getDefaultBufferSize()
     {
-        return this.pMinBufferedBlocks;
-    }
+        return ( (java.lang.Integer) ContainerFactory.getContainer().
+            getProperty( this, "defaultBufferSize" ) ).intValue();
 
-    /**
-     * Property {@code blockSize}.
-     * @serial
-     */
-    private int pBlockSize;
-
-    /**
-     * Gets the value of property <code>blockSize</code>.
-     *
-     * @return the value of property <code>blockSize</code>.
-     */
-    public int getBlockSize()
-    {
-        return this.pBlockSize;
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
 
     //--------------------------------------------------------------Properties--
     //--StructuredFile----------------------------------------------------------
+
+    public int getBlockSize()
+    {
+        return this.blockSize;
+    }
 
     public long getBlockCount() throws IOException
     {
@@ -297,18 +170,18 @@ public final class StructuredFileOperations implements StructuredFile
     }
 
     public void deleteBlocks( final long index,
-                               final long count ) throws IOException
+                              final long count ) throws IOException
     {
         final long blockCount = this.getBlockCount();
 
         // Preconditions.
         if ( index < 0L || index > blockCount - count )
         {
-            throw new ArrayIndexOutOfBoundsException( ( int ) index );
+            throw new ArrayIndexOutOfBoundsException( (int) index );
         }
         if ( count <= 0 || count > blockCount - index )
         {
-            throw new ArrayIndexOutOfBoundsException( ( int ) count );
+            throw new ArrayIndexOutOfBoundsException( (int) count );
         }
 
         this.assertNotClosed();
@@ -317,7 +190,7 @@ public final class StructuredFileOperations implements StructuredFile
     }
 
     private void deleteBlocksImpl( final long index, final long count,
-                                    final long blockCount ) throws IOException
+                                   final long blockCount ) throws IOException
     {
         final long block = index + count;
         final Task task = new Task();
@@ -334,18 +207,17 @@ public final class StructuredFileOperations implements StructuredFile
         // No blocks are following the ones to remove.
         if ( toMoveByte == 0L )
         {
-            this.getFileOperations().setLength( this.getFileOperations().
-                                                getLength() - count *
-                                                this.getBlockSize() );
+            this.getFileOperations().setLength(
+                this.getFileOperations().getLength() - count *
+                this.getBlockSize() );
 
             this.fireBlocksDeleted( index, count );
             return;
         }
 
-        final byte[] buf = this.newTemporaryBuffer(
-            toMoveByte > Integer.MAX_VALUE
-            ? Integer.MAX_VALUE
-            : ( int ) toMoveByte );
+        final byte[] buf = this.getBuffer( toMoveByte > Integer.MAX_VALUE
+                                           ? Integer.MAX_VALUE
+                                           : (int) toMoveByte );
 
         while ( maxProgress > Integer.MAX_VALUE )
         {
@@ -356,8 +228,8 @@ public final class StructuredFileOperations implements StructuredFile
         task.setIndeterminate( false );
         task.setCancelable( false );
         task.setMinimum( 0 );
-        task.setMaximum( ( int ) maxProgress );
-        task.setProgress( ( int ) progress );
+        task.setMaximum( (int) maxProgress );
+        task.setProgress( (int) progress );
         task.setDescription( new DeletesBlocksMessage() );
 
         final boolean monitoring = toMoveByte > this.getMonitoringThreshold();
@@ -374,7 +246,7 @@ public final class StructuredFileOperations implements StructuredFile
             {
                 this.getFileOperations().setFilePointer( readPos );
                 final int len = toMoveByte <= buf.length
-                    ? ( int ) toMoveByte
+                    ? (int) toMoveByte
                     : buf.length;
 
                 int read = 0;
@@ -401,7 +273,7 @@ public final class StructuredFileOperations implements StructuredFile
                 toMoveByte -= len;
                 progress += len;
 
-                task.setProgress( ( int ) ( progress / progressDivisor ) );
+                task.setProgress( (int) ( progress / progressDivisor ) );
             }
 
             // Truncate the file.
@@ -421,18 +293,18 @@ public final class StructuredFileOperations implements StructuredFile
     }
 
     public void insertBlocks( final long index,
-                               final long count ) throws IOException
+                              final long count ) throws IOException
     {
         final long blockCount = this.getBlockCount();
 
         // Preconditions.
         if ( index < 0L || index > blockCount )
         {
-            throw new ArrayIndexOutOfBoundsException( ( int ) index );
+            throw new ArrayIndexOutOfBoundsException( (int) index );
         }
         if ( count <= 0L || count > Long.MAX_VALUE - blockCount )
         {
-            throw new ArrayIndexOutOfBoundsException( ( int ) count );
+            throw new ArrayIndexOutOfBoundsException( (int) count );
         }
 
         this.assertNotClosed();
@@ -441,7 +313,7 @@ public final class StructuredFileOperations implements StructuredFile
     }
 
     private void insertBlocksImpl( final long index, final long count,
-                                    final long blockCount ) throws IOException
+                                   final long blockCount ) throws IOException
     {
         final Task task = new Task();
         long toMoveByte = ( blockCount - index ) * this.getBlockSize();
@@ -466,10 +338,9 @@ public final class StructuredFileOperations implements StructuredFile
             return;
         }
 
-        final byte[] buf = this.newTemporaryBuffer(
-            toMoveByte > Integer.MAX_VALUE
-            ? Integer.MAX_VALUE
-            : ( int ) toMoveByte );
+        final byte[] buf = this.getBuffer( toMoveByte > Integer.MAX_VALUE
+                                           ? Integer.MAX_VALUE
+                                           : (int) toMoveByte );
 
         while ( maxProgress > Integer.MAX_VALUE )
         {
@@ -480,8 +351,8 @@ public final class StructuredFileOperations implements StructuredFile
         task.setIndeterminate( false );
         task.setCancelable( false );
         task.setMinimum( 0 );
-        task.setMaximum( ( int ) maxProgress );
-        task.setProgress( ( int ) progress );
+        task.setMaximum( (int) maxProgress );
+        task.setProgress( (int) progress );
         task.setDescription( new InsertsBlocksMessage() );
 
         final boolean monitoring = toMoveByte > this.getMonitoringThreshold();
@@ -497,7 +368,7 @@ public final class StructuredFileOperations implements StructuredFile
             while ( toMoveByte > 0L )
             {
                 final int moveLen = buf.length >= toMoveByte
-                    ? ( int ) toMoveByte
+                    ? (int) toMoveByte
                     : buf.length;
 
                 readPos -= moveLen;
@@ -526,7 +397,7 @@ public final class StructuredFileOperations implements StructuredFile
                 toMoveByte -= moveLen;
                 progress += moveLen;
 
-                task.setProgress( ( int ) ( progress / progressDivisor ) );
+                task.setProgress( (int) ( progress / progressDivisor ) );
             }
 
             this.fireBlocksInserted( index, count );
@@ -541,13 +412,13 @@ public final class StructuredFileOperations implements StructuredFile
     }
 
     public void readBlock( final long block, final int off,
-                            final byte[] buf ) throws IOException
+                           final byte[] buf ) throws IOException
     {
         this.readBlock( block, off, buf, 0, buf.length );
     }
 
     public void readBlock( final long block, final int off, final byte[] buf,
-                            final int index, final int length )
+                           final int index, final int length )
         throws IOException
     {
         this.assertValidArguments( block, off, buf, index, length );
@@ -575,14 +446,14 @@ public final class StructuredFileOperations implements StructuredFile
     }
 
     public void writeBlock( final long block, final int off,
-                             final byte[] buf ) throws IOException
+                            final byte[] buf ) throws IOException
     {
         this.writeBlock( block, off, buf, 0, buf.length );
     }
 
     public void writeBlock( final long block, final int off,
-                             final byte[] buf,
-                             final int index, final int length )
+                            final byte[] buf,
+                            final int index, final int length )
         throws IOException
     {
         this.assertValidArguments( block, off, buf, index, length );
@@ -625,13 +496,19 @@ public final class StructuredFileOperations implements StructuredFile
 
     public StructuredFileListener[] getStructuredFileListeners()
     {
-        return ( StructuredFileListener[] ) this.fileListeners.getListeners(
+        return (StructuredFileListener[]) this.fileListeners.getListeners(
             StructuredFileListener.class );
 
     }
 
     //----------------------------------------------------------StructuredFile--
     //--StructuredFileOperations------------------------------------------------
+
+    /** Number of bytes per block. */
+    private int blockSize;
+
+    /** Mininum number of bytes to copy to start any task monitoring. */
+    private Integer monitoringThreshold;
 
     /** {@code FileOperations} backing the instance. */
     private FileOperations fileOperations;
@@ -649,37 +526,30 @@ public final class StructuredFileOperations implements StructuredFile
      * on.
      *
      * @throws NullPointerException if {@code fileOperations} is {@code null}.
-     * @throws PropertyException if {@code blockSize} is negative or zero.
      * @throws IllegalArgumentException if {@code blockSize} is incompatible
      * with the length of {@code fileOperations}.
      * @throws IOException if getting the length from the {@code fileOperations}
      * fails.
      */
     public StructuredFileOperations( final int blockSize,
-                                      final FileOperations fileOperations )
+                                     final FileOperations fileOperations )
         throws IOException
     {
         super();
-
-        this.initializeProperties( META.getProperties() );
-        this.pBlockSize = blockSize;
-        this.assertValidProperties();
 
         if ( fileOperations == null )
         {
             throw new NullPointerException( "fileOperations" );
         }
+        if ( blockSize <= 0 )
+        {
+            throw new IllegalArgumentException( Integer.toString( blockSize ) );
+        }
 
-        this.fileOperations = fileOperations;
-
-        final int minBufferedBlocks = this.getMinBufferedBlocks();
-
-        this.minimumBuffer = this.getMemoryManager().
-            allocateBytes( minBufferedBlocks * blockSize );
-
-        this.assertValidFileLength();
-
+        this.blockSize = blockSize;
         this.decimalBlockSize = new BigDecimal( blockSize );
+        this.fileOperations = fileOperations;
+        this.assertValidFileLength();
     }
 
     /**
@@ -694,40 +564,37 @@ public final class StructuredFileOperations implements StructuredFile
      * on.
      *
      * @throws NullPointerException if {@code fileOperations} is {@code null}.
-     * @throws PropertyException if either {@code blockSize} or
-     * {@code monitoringTeshold} is negative or zero.
      * @throws IllegalArgumentException if {@code blockSize} is incompatible
      * with the length of {@code fileOperations}.
      * @throws IOException if getting the length from the {@code fileOperations}
      * fails.
      */
     public StructuredFileOperations( final int blockSize,
-                                      final int monitoringThreshold,
-                                      final FileOperations fileOperations )
+                                     final int monitoringThreshold,
+                                     final FileOperations fileOperations )
         throws IOException
     {
         super();
-
-        this.initializeProperties( META.getProperties() );
-        this.pBlockSize = blockSize;
-        this.pMonitoringThreshold = monitoringThreshold;
-        this.assertValidProperties();
 
         if ( fileOperations == null )
         {
             throw new NullPointerException( "fileOperations" );
         }
+        if ( blockSize <= 0 )
+        {
+            throw new IllegalArgumentException( Integer.toString( blockSize ) );
+        }
 
+        this.blockSize = blockSize;
+        this.decimalBlockSize = new BigDecimal( blockSize );
         this.fileOperations = fileOperations;
 
-        final int minBufferedBlocks = this.getMinBufferedBlocks();
-
-        this.minimumBuffer = this.getMemoryManager().
-            allocateBytes( minBufferedBlocks * blockSize );
+        if ( monitoringThreshold > 0 )
+        {
+            this.monitoringThreshold = new Integer( monitoringThreshold );
+        }
 
         this.assertValidFileLength();
-
-        this.decimalBlockSize = new BigDecimal( blockSize );
     }
 
     /**
@@ -754,7 +621,7 @@ public final class StructuredFileOperations implements StructuredFile
 
         if ( this.getFileOperations() instanceof FlushableFileOperations )
         {
-            ( ( FlushableFileOperations ) this.getFileOperations() ).flush();
+            ( (FlushableFileOperations) this.getFileOperations() ).flush();
         }
     }
 
@@ -772,8 +639,8 @@ public final class StructuredFileOperations implements StructuredFile
      * {@code getBlockSize() minus {@code off}.
      */
     private void assertValidArguments( final long block, final int off,
-                                        final byte[] buf, final int index,
-                                        final int length ) throws
+                                       final byte[] buf, final int index,
+                                       final int length ) throws
         NullPointerException, IndexOutOfBoundsException, IOException
     {
         final long blockCount = this.getBlockCount();
@@ -784,11 +651,11 @@ public final class StructuredFileOperations implements StructuredFile
         }
         if ( block < 0 || block >= blockCount )
         {
-            throw new ArrayIndexOutOfBoundsException( ( int ) block );
+            throw new ArrayIndexOutOfBoundsException( (int) block );
         }
         if ( off < 0 || off >= this.getBlockSize() )
         {
-            throw new ArrayIndexOutOfBoundsException( ( int ) off );
+            throw new ArrayIndexOutOfBoundsException( off );
         }
         if ( index < 0 || index >= buf.length )
         {
@@ -811,54 +678,12 @@ public final class StructuredFileOperations implements StructuredFile
      */
     private void assertValidFileLength() throws IOException
     {
-        if ( this.getFileOperations() != null )
+        if ( this.getFileOperations() != null &&
+            this.getFileOperations().getLength() % this.getBlockSize() != 0L )
         {
-            if ( this.getFileOperations().getLength() %
-                this.getBlockSize() != 0L )
-            {
-                throw new IllegalArgumentException( Long.toString(
-                                                    this.getFileOperations().
-                                                    getLength() %
-                                                    this.getBlockSize() ) );
-
-            }
-        }
-    }
-
-    /**
-     * Checks configured properties.
-     *
-     * @throws PropertyException for illegal property values.
-     */
-    private void assertValidProperties()
-    {
-        final int minBufferedBlocks = this.getMinBufferedBlocks();
-        final int blockSize = this.getBlockSize();
-        final int monitoringThreshold = this.getMonitoringThreshold();
-
-        // minBufferedBlocks must be a positive integer.
-        if ( !( minBufferedBlocks > 0 ) )
-        {
-            throw new PropertyException(
-                "minBufferedBlocks",
-                Integer.toString( minBufferedBlocks ) );
-
-        }
-
-        // blockSize must be a positive integer.
-        if ( !( blockSize > 0 ) )
-        {
-            throw new PropertyException( "blockSize",
-                                         Integer.toString( blockSize ) );
-
-        }
-
-        // monitoringThreshold must be a positive integer.
-        if ( !( monitoringThreshold > 0 ) )
-        {
-            throw new PropertyException(
-                "monitoringThreshold",
-                Integer.toString( monitoringThreshold ) );
+            throw new IllegalArgumentException(
+                Long.toString( this.getFileOperations().getLength() %
+                this.getBlockSize() ) );
 
         }
     }
@@ -872,10 +697,23 @@ public final class StructuredFileOperations implements StructuredFile
     {
         if ( this.closed )
         {
-            throw new IOException( StructuredFileOperationsBundle.getInstance().
-                                   getAlreadyClosedText( Locale.getDefault() ) );
-
+            throw new IOException( this.getAlreadyClosedMessage() );
         }
+    }
+
+    /**
+     * Gets the value of property {@code monitoringThreshold}.
+     *
+     * @return the mininum number of bytes to copy to start any task monitoring.
+     */
+    public int getMonitoringThreshold()
+    {
+        if ( this.monitoringThreshold == null )
+        {
+            this.monitoringThreshold = this.getDefaultMonitoringThreshold();
+        }
+
+        return this.monitoringThreshold.intValue();
     }
 
     /**
@@ -896,7 +734,7 @@ public final class StructuredFileOperations implements StructuredFile
         {
             if ( listeners[i] == StructuredFileListener.class )
             {
-                ( ( StructuredFileListener ) listeners[i + 1] ).blocksInserted(
+                ( (StructuredFileListener) listeners[i + 1] ).blocksInserted(
                     index, insertedBlocks );
 
             }
@@ -921,16 +759,15 @@ public final class StructuredFileOperations implements StructuredFile
         {
             if ( listeners[i] == StructuredFileListener.class )
             {
-                ( ( StructuredFileListener ) listeners[i + 1] ).blocksDeleted(
+                ( (StructuredFileListener) listeners[i + 1] ).blocksDeleted(
                     index, deletedBlocks );
 
             }
         }
     }
 
-    private byte[] newTemporaryBuffer( final int requested ) throws IOException
+    private byte[] getBuffer( final int requested ) throws IOException
     {
-        final byte[] tmp;
         final long length = this.getFileOperations().getLength();
 
         if ( requested <= 0 || requested > length )
@@ -938,12 +775,41 @@ public final class StructuredFileOperations implements StructuredFile
             throw new IllegalArgumentException( Integer.toString( requested ) );
         }
 
-        return requested <= this.minimumBuffer.length ||
+        if ( this.defaultBuffer == null )
+        {
+            this.defaultBuffer = this.getMemoryManager().
+                allocateBytes( this.getDefaultBufferSize() );
+
+        }
+
+        return requested <= this.defaultBuffer.length ||
             this.getMemoryManager().getAvailableBytes() < requested
-            ? this.minimumBuffer
+            ? this.defaultBuffer
             : this.getMemoryManager().allocateBytes( requested );
 
     }
 
     //------------------------------------------------StructuredFileOperations--
+    //--Messages----------------------------------------------------------------
+
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages
+    // This section is managed by jdtaus-container-mojo.
+
+    /**
+     * Gets the text of message <code>alreadyClosed</code>.
+     * <blockquote><pre>Instanz geschlossen - keine E/A-Operationen möglich.</pre></blockquote>
+     * <blockquote><pre>Instance closed - cannot perform I/O.</pre></blockquote>
+     *
+     * @return Message stating that an instance is already closed.
+     */
+    private String getAlreadyClosedMessage()
+    {
+        return ContainerFactory.getContainer().
+            getMessage( this, "alreadyClosed", null );
+
+    }
+
+// </editor-fold>//GEN-END:jdtausMessages
+
+    //----------------------------------------------------------------Messages--
 }

@@ -25,12 +25,8 @@ package org.jdtaus.core.lang.util;
 import java.io.File;
 import java.net.URL;
 import org.jdtaus.core.container.ContainerFactory;
-import org.jdtaus.core.container.ContextFactory;
-import org.jdtaus.core.container.ContextInitializer;
 import org.jdtaus.core.container.Implementation;
 import org.jdtaus.core.container.ModelFactory;
-import org.jdtaus.core.container.Properties;
-import org.jdtaus.core.container.Property;
 import org.jdtaus.core.container.Specification;
 import org.jdtaus.core.lang.ExceptionEvent;
 import org.jdtaus.core.lang.ExceptionListener;
@@ -57,14 +53,8 @@ public final class ExceptionMessageProducer implements ExceptionListener
 {
     //--Implementation----------------------------------------------------------
 
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausImplementation
     // This section is managed by jdtaus-container-mojo.
 
-    /** Meta-data describing the implementation. */
-    private static final Implementation META =
-        ModelFactory.getModel().getModules().
-        getImplementation(ExceptionMessageProducer.class.getName());
-// </editor-fold>//GEN-END:jdtausImplementation
 
     //----------------------------------------------------------Implementation--
     //--Constructors------------------------------------------------------------
@@ -72,23 +62,6 @@ public final class ExceptionMessageProducer implements ExceptionListener
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
     // This section is managed by jdtaus-container-mojo.
 
-    /**
-     * Initializes the properties of the instance.
-     *
-     * @param meta the property values to initialize the instance with.
-     *
-     * @throws NullPointerException if {@code meta} is {@code null}.
-     */
-    private void initializeProperties(final Properties meta)
-    {
-        Property p;
-
-        if(meta == null)
-        {
-            throw new NullPointerException("meta");
-        }
-
-    }
 // </editor-fold>//GEN-END:jdtausConstructors
 
     //------------------------------------------------------------Constructors--
@@ -97,9 +70,6 @@ public final class ExceptionMessageProducer implements ExceptionListener
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
     // This section is managed by jdtaus-container-mojo.
 
-    /** Configured <code>ApplicationLogger</code> implementation. */
-    private transient ApplicationLogger dApplicationLogger;
-
     /**
      * Gets the configured <code>ApplicationLogger</code> implementation.
      *
@@ -107,34 +77,11 @@ public final class ExceptionMessageProducer implements ExceptionListener
      */
     private ApplicationLogger getApplicationLogger()
     {
-        ApplicationLogger ret = null;
-        if(this.dApplicationLogger != null)
-        {
-            ret = this.dApplicationLogger;
-        }
-        else
-        {
-            ret = (ApplicationLogger) ContainerFactory.getContainer().
-                getDependency(ExceptionMessageProducer.class,
-                "ApplicationLogger");
+        return (ApplicationLogger) ContainerFactory.getContainer().
+            getDependency( this, "ApplicationLogger" );
 
-            if(ModelFactory.getModel().getModules().
-                getImplementation(ExceptionMessageProducer.class.getName()).
-                getDependencies().getDependency("ApplicationLogger").
-                isBound())
-            {
-                this.dApplicationLogger = ret;
-            }
-        }
-
-        if(ret instanceof ContextInitializer && !((ContextInitializer) ret).
-            isInitialized(ContextFactory.getContext()))
-        {
-            ((ContextInitializer) ret).initialize(ContextFactory.getContext());
-        }
-
-        return ret;
     }
+
 // </editor-fold>//GEN-END:jdtausDependencies
 
     //------------------------------------------------------------Dependencies--
@@ -194,7 +141,7 @@ public final class ExceptionMessageProducer implements ExceptionListener
             else if ( rootCause instanceof Exception )
             {
                 final Message[] resolved =
-                    this.resolveMessages( ( Exception ) rootCause );
+                    this.resolveMessages( (Exception) rootCause );
 
                 if ( resolved != null )
                 {
@@ -235,9 +182,6 @@ public final class ExceptionMessageProducer implements ExceptionListener
     public ExceptionMessageProducer()
     {
         super();
-
-        this.initializeProperties( META.getProperties() );
-
         this.logDirectory = null;
         this.trackerUrl = null;
         this.reportAddress = null;
@@ -260,8 +204,8 @@ public final class ExceptionMessageProducer implements ExceptionListener
      * directory.
      */
     public ExceptionMessageProducer( final File logDirectory,
-                                      final URL trackerUrl,
-                                      final String reportAddress )
+                                     final URL trackerUrl,
+                                     final String reportAddress )
     {
         super();
         if ( logDirectory == null )
@@ -280,8 +224,6 @@ public final class ExceptionMessageProducer implements ExceptionListener
         {
             throw new NullPointerException( "reportAddress" );
         }
-
-        this.initializeProperties( META.getProperties() );
 
         this.logDirectory = logDirectory;
         this.trackerUrl = trackerUrl;
@@ -314,9 +256,9 @@ public final class ExceptionMessageProducer implements ExceptionListener
         for ( int i = resolvers.length - 1; i >= 0 && messages == null; i-- )
         {
             final ExceptionMessageResolver resolver =
-                ( ExceptionMessageResolver ) ContainerFactory.getContainer().
-                getImplementation( ExceptionMessageResolver.class,
-                                   resolvers[i].getName() );
+                (ExceptionMessageResolver) ContainerFactory.getContainer().
+                getObject( ExceptionMessageResolver.class.getName(),
+                           resolvers[i].getName() );
 
             messages = resolver.resolve( exception );
         }

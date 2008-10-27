@@ -26,15 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
-import java.util.Locale;
 import org.jdtaus.core.container.ContainerFactory;
-import org.jdtaus.core.container.ContextFactory;
-import org.jdtaus.core.container.ContextInitializer;
-import org.jdtaus.core.container.Implementation;
-import org.jdtaus.core.container.ModelFactory;
-import org.jdtaus.core.container.Properties;
-import org.jdtaus.core.container.Property;
-import org.jdtaus.core.container.PropertyException;
 import org.jdtaus.core.io.FileOperations;
 import org.jdtaus.core.lang.spi.MemoryManager;
 
@@ -46,53 +38,10 @@ import org.jdtaus.core.lang.spi.MemoryManager;
  */
 public final class RandomAccessFileOperations implements FileOperations
 {
-    //--Implementation----------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausImplementation
-    // This section is managed by jdtaus-container-mojo.
-
-    /** Meta-data describing the implementation. */
-    private static final Implementation META =
-        ModelFactory.getModel().getModules().
-        getImplementation(RandomAccessFileOperations.class.getName());
-// </editor-fold>//GEN-END:jdtausImplementation
-
-    //----------------------------------------------------------Implementation--
-    //--Constructors------------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
-    // This section is managed by jdtaus-container-mojo.
-
-    /**
-     * Initializes the properties of the instance.
-     *
-     * @param meta the property values to initialize the instance with.
-     *
-     * @throws NullPointerException if {@code meta} is {@code null}.
-     */
-    private void initializeProperties(final Properties meta)
-    {
-        Property p;
-
-        if(meta == null)
-        {
-            throw new NullPointerException("meta");
-        }
-
-        p = meta.getProperty("bufferSize");
-        this.pBufferSize = ((java.lang.Integer) p.getValue()).intValue();
-
-    }
-// </editor-fold>//GEN-END:jdtausConstructors
-
-    //------------------------------------------------------------Constructors--
     //--Dependencies------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
     // This section is managed by jdtaus-container-mojo.
-
-    /** Configured <code>MemoryManager</code> implementation. */
-    private transient MemoryManager dMemoryManager;
 
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
@@ -101,34 +50,11 @@ public final class RandomAccessFileOperations implements FileOperations
      */
     private MemoryManager getMemoryManager()
     {
-        MemoryManager ret = null;
-        if(this.dMemoryManager != null)
-        {
-            ret = this.dMemoryManager;
-        }
-        else
-        {
-            ret = (MemoryManager) ContainerFactory.getContainer().
-                getDependency(RandomAccessFileOperations.class,
-                "MemoryManager");
+        return (MemoryManager) ContainerFactory.getContainer().
+            getDependency( this, "MemoryManager" );
 
-            if(ModelFactory.getModel().getModules().
-                getImplementation(RandomAccessFileOperations.class.getName()).
-                getDependencies().getDependency("MemoryManager").
-                isBound())
-            {
-                this.dMemoryManager = ret;
-            }
-        }
-
-        if(ret instanceof ContextInitializer && !((ContextInitializer) ret).
-            isInitialized(ContextFactory.getContext()))
-        {
-            ((ContextInitializer) ret).initialize(ContextFactory.getContext());
-        }
-
-        return ret;
     }
+
 // </editor-fold>//GEN-END:jdtausDependencies
 
     //------------------------------------------------------------Dependencies--
@@ -138,19 +64,15 @@ public final class RandomAccessFileOperations implements FileOperations
     // This section is managed by jdtaus-container-mojo.
 
     /**
-     * Property {@code bufferSize}.
-     * @serial
-     */
-    private int pBufferSize;
-
-    /**
-     * Gets the value of property <code>bufferSize</code>.
+     * Gets the value of property <code>streamBufferSize</code>.
      *
-     * @return the value of property <code>bufferSize</code>.
+     * @return Size of the buffer for buffering streams.
      */
-    private int getBufferSize()
+    private int getStreamBufferSize()
     {
-        return this.pBufferSize;
+        return ( (java.lang.Integer) ContainerFactory.getContainer().
+            getProperty( this, "streamBufferSize" ) ).intValue();
+
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -235,7 +157,7 @@ public final class RandomAccessFileOperations implements FileOperations
 
         int read;
         long toRead = this.getLength();
-        final byte[] buf = this.getDefaultBuffer();
+        final byte[] buf = this.getStreamBuffer();
 
         if ( toRead > 0L )
         {
@@ -263,7 +185,7 @@ public final class RandomAccessFileOperations implements FileOperations
         this.assertNotClosed();
 
         int read;
-        final byte[] buf = this.getDefaultBuffer();
+        final byte[] buf = this.getStreamBuffer();
 
         while ( ( read = in.read( buf, 0, buf.length ) ) != FileOperations.EOF )
         {
@@ -289,8 +211,8 @@ public final class RandomAccessFileOperations implements FileOperations
     //----------------------------------------------------------FileOperations--
     //--RandomAccessFileOperations----------------------------------------------
 
-    /** Default temporary buffer. */
-    private byte[] defaultBuffer;
+    /** Stream buffer. */
+    private byte[] streamBuffer;
 
     /** Flags the instance as beeing closed. */
     private boolean closed;
@@ -316,9 +238,6 @@ public final class RandomAccessFileOperations implements FileOperations
             throw new NullPointerException( "file" );
         }
 
-        this.initializeProperties( META.getProperties() );
-        this.assertValidProperties();
-
         this.randomAccessFile = file;
     }
 
@@ -334,22 +253,6 @@ public final class RandomAccessFileOperations implements FileOperations
     }
 
     /**
-     * Checks configured properties.
-     *
-     * @throws PropertyException if property {@code bufferSize} is negative or
-     * {@code 0}.
-     */
-    private void assertValidProperties()
-    {
-        if ( this.getBufferSize() <= 0 )
-        {
-            throw new PropertyException( "bufferSize",
-                                         new Integer( this.getBufferSize() ) );
-
-        }
-    }
-
-    /**
      * Checks that the instance is not closed.
      *
      * @throws IOException if the instance is closed.
@@ -358,28 +261,50 @@ public final class RandomAccessFileOperations implements FileOperations
     {
         if ( this.closed )
         {
-            throw new IOException( RandomAccessFileOperationsBundle.getInstance().
-                                   getAlreadyClosedText( Locale.getDefault() ) );
-
+            throw new IOException( this.getAlreadyClosedMessage() );
         }
     }
 
     /**
-     * Getter for property {@code defaultBuffer}.
+     * Gets a buffer for buffering streams.
      *
-     * @return a buffer for operations which need temporary memory.
+     * @return a buffer for buffering streams.
      */
-    private byte[] getDefaultBuffer()
+    private byte[] getStreamBuffer()
     {
-        if ( this.defaultBuffer == null )
+        if ( this.streamBuffer == null )
         {
-            this.defaultBuffer = this.getMemoryManager().
-                allocateBytes( this.getBufferSize() );
+            this.streamBuffer = this.getMemoryManager().
+                allocateBytes( this.getStreamBufferSize() < 0
+                               ? 0
+                               : this.getStreamBufferSize() );
 
         }
 
-        return this.defaultBuffer;
+        return this.streamBuffer;
     }
 
     //----------------------------------------------RandomAccessFileOperations--
+    //--Messages----------------------------------------------------------------
+
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages
+    // This section is managed by jdtaus-container-mojo.
+
+    /**
+     * Gets the text of message <code>alreadyClosed</code>.
+     * <blockquote><pre>Instanz geschlossen - keine E/A-Operationen möglich.</pre></blockquote>
+     * <blockquote><pre>Instance closed - cannot perform I/O.</pre></blockquote>
+     *
+     * @return Message stating that an instance is already closed.
+     */
+    private String getAlreadyClosedMessage()
+    {
+        return ContainerFactory.getContainer().
+            getMessage( this, "alreadyClosed", null );
+
+    }
+
+// </editor-fold>//GEN-END:jdtausMessages
+
+    //----------------------------------------------------------------Messages--
 }

@@ -25,13 +25,6 @@ package org.jdtaus.core.monitor.util;
 import java.util.Date;
 import java.util.Locale;
 import org.jdtaus.core.container.ContainerFactory;
-import org.jdtaus.core.container.ContextFactory;
-import org.jdtaus.core.container.ContextInitializer;
-import org.jdtaus.core.container.Implementation;
-import org.jdtaus.core.container.ModelFactory;
-import org.jdtaus.core.container.Properties;
-import org.jdtaus.core.container.Property;
-import org.jdtaus.core.container.PropertyException;
 import org.jdtaus.core.logging.spi.Logger;
 import org.jdtaus.core.monitor.TaskEvent;
 import org.jdtaus.core.monitor.TaskListener;
@@ -47,53 +40,10 @@ import org.jdtaus.core.monitor.TaskListener;
  */
 public final class TaskDurationLogger implements TaskListener
 {
-    //--Implementation----------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausImplementation
-    // This section is managed by jdtaus-container-mojo.
-
-    /** Meta-data describing the implementation. */
-    private static final Implementation META =
-        ModelFactory.getModel().getModules().
-        getImplementation(TaskDurationLogger.class.getName());
-// </editor-fold>//GEN-END:jdtausImplementation
-
-    //----------------------------------------------------------Implementation--
-    //--Constructors------------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
-    // This section is managed by jdtaus-container-mojo.
-
-    /**
-     * Initializes the properties of the instance.
-     *
-     * @param meta the property values to initialize the instance with.
-     *
-     * @throws NullPointerException if {@code meta} is {@code null}.
-     */
-    private void initializeProperties(final Properties meta)
-    {
-        Property p;
-
-        if(meta == null)
-        {
-            throw new NullPointerException("meta");
-        }
-
-        p = meta.getProperty("loggingThresholdMillis");
-        this.pLoggingThresholdMillis = ((java.lang.Long) p.getValue()).longValue();
-
-    }
-// </editor-fold>//GEN-END:jdtausConstructors
-
-    //------------------------------------------------------------Constructors--
     //--Dependencies------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
     // This section is managed by jdtaus-container-mojo.
-
-    /** Configured <code>Logger</code> implementation. */
-    private transient Logger dLogger;
 
     /**
      * Gets the configured <code>Logger</code> implementation.
@@ -102,34 +52,11 @@ public final class TaskDurationLogger implements TaskListener
      */
     private Logger getLogger()
     {
-        Logger ret = null;
-        if(this.dLogger != null)
-        {
-            ret = this.dLogger;
-        }
-        else
-        {
-            ret = (Logger) ContainerFactory.getContainer().
-                getDependency(TaskDurationLogger.class,
-                "Logger");
+        return (Logger) ContainerFactory.getContainer().
+            getDependency( this, "Logger" );
 
-            if(ModelFactory.getModel().getModules().
-                getImplementation(TaskDurationLogger.class.getName()).
-                getDependencies().getDependency("Logger").
-                isBound())
-            {
-                this.dLogger = ret;
-            }
-        }
-
-        if(ret instanceof ContextInitializer && !((ContextInitializer) ret).
-            isInitialized(ContextFactory.getContext()))
-        {
-            ((ContextInitializer) ret).initialize(ContextFactory.getContext());
-        }
-
-        return ret;
     }
+
 // </editor-fold>//GEN-END:jdtausDependencies
 
     //------------------------------------------------------------Dependencies--
@@ -139,19 +66,15 @@ public final class TaskDurationLogger implements TaskListener
     // This section is managed by jdtaus-container-mojo.
 
     /**
-     * Property {@code loggingThresholdMillis}.
-     * @serial
-     */
-    private long pLoggingThresholdMillis;
-
-    /**
-     * Gets the value of property <code>loggingThresholdMillis</code>.
+     * Gets the value of property <code>defaultLoggingThresholdMillis</code>.
      *
-     * @return the value of property <code>loggingThresholdMillis</code>.
+     * @return Default number of milliseconds a task at least needs to run to trigger a message when finished.
      */
-    public long getLoggingThresholdMillis()
+    private java.lang.Long getDefaultLoggingThresholdMillis()
     {
-        return this.pLoggingThresholdMillis;
+        return (java.lang.Long) ContainerFactory.getContainer().
+            getProperty( this, "defaultLoggingThresholdMillis" );
+
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -178,14 +101,13 @@ public final class TaskDurationLogger implements TaskListener
                 now - start > this.getLoggingThresholdMillis() )
             {
                 this.getLogger().info(
-                    TaskDurationLoggerBundle.getInstance().
-                    getDurationInfoMessage( Locale.getDefault() ).
-                    format( new Object[] { event.getTask().getDescription().
-                                           getText( Locale.getDefault() ),
-                                           new Date( start ),
-                                           new Date( now ),
-                                           new Long( now - start )
-                        } ) );
+                    this.getDurationInfoMessage(
+                    event.getTask().getDescription().
+                    getText( Locale.getDefault() ),
+                    new Date( start ),
+                    new Date( now ),
+                    new Long( now - start ) ) );
+
             }
         }
     }
@@ -193,12 +115,16 @@ public final class TaskDurationLogger implements TaskListener
     //------------------------------------------------------------TaskListener--
     //--TaskDurationLogger------------------------------------------------------
 
+    /**
+     * The number of milliseconds a task at least needs to run to trigger a
+     * message when finished.
+     */
+    private Long loggingTresholdMillis;
+
     /** Creates a new {@code TaskDurationLogger} instance. */
     public TaskDurationLogger()
     {
         super();
-        this.initializeProperties( META.getProperties() );
-        this.assertValidProperties();
     }
 
     /**
@@ -208,33 +134,81 @@ public final class TaskDurationLogger implements TaskListener
      *
      * @param loggingThresholdMillis the number of milliseconds a task at least
      * needs to run to trigger a message when finished.
-     *
-     * @throws PropertyException if {@code loggingThresholdMillis} is negative
-     * or zero.
      */
     public TaskDurationLogger( final long loggingThresholdMillis )
     {
         super();
-        this.initializeProperties( META.getProperties() );
-        this.pLoggingThresholdMillis = loggingThresholdMillis;
-        this.assertValidProperties();
-    }
 
-    /**
-     * Checks configured properties.
-     *
-     * @throws PropertyException for illegal property value.
-     */
-    private void assertValidProperties()
-    {
-        if ( this.getLoggingThresholdMillis() < 0L )
+        if ( loggingThresholdMillis > 0 )
         {
-            throw new PropertyException(
-                "loggingThresholdMillis",
-                Long.toString( this.getLoggingThresholdMillis() ) );
-
+            this.loggingTresholdMillis = new Long( loggingThresholdMillis );
         }
     }
 
+    /**
+     * Gets the number of milliseconds a task at least needs to run to trigger
+     * a message when finished.
+     *
+     * @return the number of milliseconds a task at least needs to run to
+     * trigger a message when finished.
+     */
+    public long getLoggingThresholdMillis()
+    {
+        if ( this.loggingTresholdMillis == null )
+        {
+            this.loggingTresholdMillis =
+                this.getDefaultLoggingThresholdMillis();
+
+        }
+
+        return this.loggingTresholdMillis.intValue();
+    }
+
     //------------------------------------------------------TaskDurationLogger--
+    //--Messages----------------------------------------------------------------
+
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages
+    // This section is managed by jdtaus-container-mojo.
+
+    /**
+     * Gets the text of message <code>durationInfo</code>.
+     * <blockquote><pre>Taskinformation:
+     *    Beschreibung ... : {0}
+     *    Start .......... : {1,date,long} um {1,time,long}
+     *    Ende ........... : {2,date,long} um {2,time,long}
+     *    Laufzeit ....... : {3,long}ms</pre></blockquote>
+     * <blockquote><pre>Taskinformation:
+     *    Description ... : {0}
+     *    Start ......... : {1,date,long} at {1,time,long}
+     *    End ........... : {2,date,long} at {2,time,long}
+     *    Duration ...... : {3}ms</pre></blockquote>
+     *
+     * @param taskDescription The description of the task.
+     * @param startDate The start date of the task.
+     * @param endDate The end date of the task.
+     * @param durationMillis The number of milliseconds the task ran.
+     *
+     * @return Information about a task.
+     */
+    private String getDurationInfoMessage(
+            java.lang.String taskDescription,
+            java.util.Date startDate,
+            java.util.Date endDate,
+            java.lang.Number durationMillis )
+    {
+        return ContainerFactory.getContainer().
+            getMessage( this, "durationInfo",
+                new Object[]
+                {
+                    taskDescription,
+                    startDate,
+                    endDate,
+                    durationMillis
+                });
+
+    }
+
+// </editor-fold>//GEN-END:jdtausMessages
+
+    //----------------------------------------------------------------Messages--
 }

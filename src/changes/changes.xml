@@ -121,5 +121,11 @@
       Updated module descriptor to 1.2 model version.]]>
       </action>
     </release>
+    <release version="1.4" date="2008-10-27"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.3 model version.]]>
+      </action>
+    </release>
   </body>
 </document>

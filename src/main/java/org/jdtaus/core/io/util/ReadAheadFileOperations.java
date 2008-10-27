@@ -25,15 +25,7 @@ package org.jdtaus.core.io.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Locale;
 import org.jdtaus.core.container.ContainerFactory;
-import org.jdtaus.core.container.ContextFactory;
-import org.jdtaus.core.container.ContextInitializer;
-import org.jdtaus.core.container.Implementation;
-import org.jdtaus.core.container.ModelFactory;
-import org.jdtaus.core.container.Properties;
-import org.jdtaus.core.container.Property;
-import org.jdtaus.core.container.PropertyException;
 import org.jdtaus.core.io.FileOperations;
 import org.jdtaus.core.lang.spi.MemoryManager;
 
@@ -56,53 +48,10 @@ import org.jdtaus.core.lang.spi.MemoryManager;
  */
 public final class ReadAheadFileOperations implements FlushableFileOperations
 {
-    //--Implementation----------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausImplementation
-    // This section is managed by jdtaus-container-mojo.
-
-    /** Meta-data describing the implementation. */
-    private static final Implementation META =
-        ModelFactory.getModel().getModules().
-        getImplementation(ReadAheadFileOperations.class.getName());
-// </editor-fold>//GEN-END:jdtausImplementation
-
-    //----------------------------------------------------------Implementation--
-    //--Constructors------------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
-    // This section is managed by jdtaus-container-mojo.
-
-    /**
-     * Initializes the properties of the instance.
-     *
-     * @param meta the property values to initialize the instance with.
-     *
-     * @throws NullPointerException if {@code meta} is {@code null}.
-     */
-    private void initializeProperties(final Properties meta)
-    {
-        Property p;
-
-        if(meta == null)
-        {
-            throw new NullPointerException("meta");
-        }
-
-        p = meta.getProperty("cacheSize");
-        this.pCacheSize = ((java.lang.Integer) p.getValue()).intValue();
-
-    }
-// </editor-fold>//GEN-END:jdtausConstructors
-
-    //------------------------------------------------------------Constructors--
     //--Dependencies------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
     // This section is managed by jdtaus-container-mojo.
-
-    /** Configured <code>MemoryManager</code> implementation. */
-    private transient MemoryManager dMemoryManager;
 
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
@@ -111,34 +60,11 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      */
     private MemoryManager getMemoryManager()
     {
-        MemoryManager ret = null;
-        if(this.dMemoryManager != null)
-        {
-            ret = this.dMemoryManager;
-        }
-        else
-        {
-            ret = (MemoryManager) ContainerFactory.getContainer().
-                getDependency(ReadAheadFileOperations.class,
-                "MemoryManager");
+        return (MemoryManager) ContainerFactory.getContainer().
+            getDependency( this, "MemoryManager" );
 
-            if(ModelFactory.getModel().getModules().
-                getImplementation(ReadAheadFileOperations.class.getName()).
-                getDependencies().getDependency("MemoryManager").
-                isBound())
-            {
-                this.dMemoryManager = ret;
-            }
-        }
-
-        if(ret instanceof ContextInitializer && !((ContextInitializer) ret).
-            isInitialized(ContextFactory.getContext()))
-        {
-            ((ContextInitializer) ret).initialize(ContextFactory.getContext());
-        }
-
-        return ret;
     }
+
 // </editor-fold>//GEN-END:jdtausDependencies
 
     //------------------------------------------------------------Dependencies--
@@ -148,19 +74,15 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     // This section is managed by jdtaus-container-mojo.
 
     /**
-     * Property {@code cacheSize}.
-     * @serial
-     */
-    private int pCacheSize;
-
-    /**
-     * Gets the value of property <code>cacheSize</code>.
+     * Gets the value of property <code>defaultCacheSize</code>.
      *
-     * @return the value of property <code>cacheSize</code>.
+     * @return Default cache size in byte.
      */
-    public int getCacheSize()
+    private java.lang.Integer getDefaultCacheSize()
     {
-        return this.pCacheSize;
+        return (java.lang.Integer) ContainerFactory.getContainer().
+            getProperty( this, "defaultCacheSize" );
+
     }
 
 // </editor-fold>//GEN-END:jdtausProperties
@@ -252,11 +174,11 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
                 "Unexpected implementation limit reached.";
 
             final int cachedLength = len > this.cacheLength -
-                ( int ) cacheStart
-                ? this.cacheLength - ( int ) cacheStart
+                (int) cacheStart
+                ? this.cacheLength - (int) cacheStart
                 : len;
 
-            System.arraycopy( this.cache, ( int ) cacheStart, buf, off,
+            System.arraycopy( this.getCache(), (int) cacheStart, buf, off,
                               cachedLength );
 
             len -= cachedLength;
@@ -300,11 +222,11 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
                 "Unexpected implementation limit reached.";
 
             final int cachedLength = len > this.cacheLength -
-                ( int ) cacheStart
-                ? this.cacheLength - ( int ) cacheStart
+                (int) cacheStart
+                ? this.cacheLength - (int) cacheStart
                 : len;
 
-            System.arraycopy( buf, off, this.cache, ( int ) cacheStart,
+            System.arraycopy( buf, off, this.getCache(), (int) cacheStart,
                               cachedLength );
 
         }
@@ -361,7 +283,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
 
         if ( this.fileOperations instanceof FlushableFileOperations )
         {
-            ( ( FlushableFileOperations ) this.fileOperations ).flush();
+            ( (FlushableFileOperations) this.fileOperations ).flush();
         }
     }
 
@@ -372,7 +294,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     private final FileOperations fileOperations;
 
     /** Cached bytes. */
-    private final byte[] cache;
+    private byte[] cache;
 
     /** Position in the file {@code cache} starts. */
     private long cachePosition;
@@ -387,6 +309,9 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
 
     /** Flags the instance as beeing closed. */
     private boolean closed;
+
+    /** Cache size in byte. */
+    private Integer cacheSize;
 
     /**
      * Creates a new {@code ReadAheadFileOperations} instance taking the
@@ -407,15 +332,8 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
             throw new NullPointerException( "fileOperations" );
         }
 
-        this.initializeProperties( META.getProperties() );
-        this.assertValidProperties();
-
         this.fileOperations = fileOperations;
         this.filePointer = fileOperations.getFilePointer();
-
-        // Pre-allocate the cache.
-        this.cache =
-            this.getMemoryManager().allocateBytes( this.getCacheSize() );
     }
 
     /**
@@ -426,29 +344,17 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      * @param cacheSize the number of bytes to read-ahead.
      *
      * @throws NullPointerException if {@code fileOperations} is {@code null}.
-     * @throws PropertyException if {@code cacheSize} is negative or zero.
      * @throws IOException if reading fails.
      */
     public ReadAheadFileOperations( final FileOperations fileOperations,
-                                     final int cacheSize ) throws IOException
+                                    final int cacheSize ) throws IOException
     {
-        super();
+        this( fileOperations );
 
-        if ( fileOperations == null )
+        if ( cacheSize > 0 )
         {
-            throw new NullPointerException( "fileOperations" );
+            this.cacheSize = new Integer( cacheSize );
         }
-
-        this.initializeProperties( META.getProperties() );
-        this.pCacheSize = cacheSize;
-        this.assertValidProperties();
-
-        this.fileOperations = fileOperations;
-        this.filePointer = fileOperations.getFilePointer();
-
-        // Pre-allocate the cache.
-        this.cache =
-            this.getMemoryManager().allocateBytes( this.getCacheSize() );
     }
 
     /**
@@ -464,19 +370,35 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     }
 
     /**
-     * Checks configured properties.
+     * Gets the size of the cache in byte.
      *
-     * @throws PropertyException for illegal property values.
+     * @return the size of the cache in byte.
      */
-    private void assertValidProperties()
+    public int getCacheSize()
     {
-        if ( this.getCacheSize() <= 0 )
+        if ( this.cacheSize == null )
         {
-            throw new PropertyException(
-                "cacheSize",
-                Integer.toString( this.getCacheSize() ) );
+            this.cacheSize = this.getDefaultCacheSize();
+        }
+
+        return this.cacheSize.intValue();
+    }
+
+    /**
+     * Gets the cache buffer.
+     *
+     * @return the cache buffer.
+     */
+    private byte[] getCache()
+    {
+        if ( this.cache == null )
+        {
+            this.cache =
+                this.getMemoryManager().allocateBytes( this.getCacheSize() );
 
         }
+
+        return this.cache;
     }
 
     /**
@@ -488,9 +410,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     {
         if ( this.closed )
         {
-            throw new IOException( ReadAheadFileOperationsBundle.getInstance().
-                                   getAlreadyClosedText( Locale.getDefault() ) );
-
+            throw new IOException( this.getAlreadyClosedMessage() );
         }
     }
 
@@ -502,9 +422,9 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     private void fillCache() throws IOException
     {
         final long delta = this.getLength() - this.filePointer;
-        final int toRead = delta > this.cache.length
-            ? this.cache.length
-            : ( int ) delta;
+        final int toRead = delta > this.getCache().length
+            ? this.getCache().length
+            : (int) delta;
 
         this.cachePosition = this.filePointer;
 
@@ -515,7 +435,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
         {
             this.fileOperations.setFilePointer( this.filePointer );
             final int read = this.fileOperations.read(
-                this.cache, totalRead, readLength );
+                this.getCache(), totalRead, readLength );
 
             assert read != FileOperations.EOF : "Unexpected end of file.";
 
@@ -529,4 +449,26 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     }
 
     //-------------------------------------------------ReadAheadFileOperations--
+    //--Messages----------------------------------------------------------------
+
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages
+    // This section is managed by jdtaus-container-mojo.
+
+    /**
+     * Gets the text of message <code>alreadyClosed</code>.
+     * <blockquote><pre>Instanz geschlossen - keine E/A-Operationen möglich.</pre></blockquote>
+     * <blockquote><pre>Instance closed - cannot perform I/O.</pre></blockquote>
+     *
+     * @return Message stating that an instance is already closed.
+     */
+    private String getAlreadyClosedMessage()
+    {
+        return ContainerFactory.getContainer().
+            getMessage( this, "alreadyClosed", null );
+
+    }
+
+// </editor-fold>//GEN-END:jdtausMessages
+
+    //----------------------------------------------------------------Messages--
 }

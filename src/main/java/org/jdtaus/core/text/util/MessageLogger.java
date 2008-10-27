@@ -24,12 +24,6 @@ package org.jdtaus.core.text.util;
 
 import java.util.Locale;
 import org.jdtaus.core.container.ContainerFactory;
-import org.jdtaus.core.container.ContextFactory;
-import org.jdtaus.core.container.ContextInitializer;
-import org.jdtaus.core.container.Implementation;
-import org.jdtaus.core.container.ModelFactory;
-import org.jdtaus.core.container.Properties;
-import org.jdtaus.core.container.Property;
 import org.jdtaus.core.logging.spi.Logger;
 import org.jdtaus.core.text.MessageEvent;
 import org.jdtaus.core.text.MessageListener;
@@ -44,50 +38,10 @@ import org.jdtaus.core.text.MessageListener;
  */
 public final class MessageLogger implements MessageListener
 {
-    //--Implementation----------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausImplementation
-    // This section is managed by jdtaus-container-mojo.
-
-    /** Meta-data describing the implementation. */
-    private static final Implementation META =
-        ModelFactory.getModel().getModules().
-        getImplementation(MessageLogger.class.getName());
-// </editor-fold>//GEN-END:jdtausImplementation
-
-    //----------------------------------------------------------Implementation--
-    //--Constructors------------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
-    // This section is managed by jdtaus-container-mojo.
-
-    /**
-     * Initializes the properties of the instance.
-     *
-     * @param meta the property values to initialize the instance with.
-     *
-     * @throws NullPointerException if {@code meta} is {@code null}.
-     */
-    private void initializeProperties(final Properties meta)
-    {
-        Property p;
-
-        if(meta == null)
-        {
-            throw new NullPointerException("meta");
-        }
-
-    }
-// </editor-fold>//GEN-END:jdtausConstructors
-
-    //------------------------------------------------------------Constructors--
     //--Dependencies------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
     // This section is managed by jdtaus-container-mojo.
-
-    /** Configured <code>Logger</code> implementation. */
-    private transient Logger dLogger;
 
     /**
      * Gets the configured <code>Logger</code> implementation.
@@ -96,45 +50,14 @@ public final class MessageLogger implements MessageListener
      */
     private Logger getLogger()
     {
-        Logger ret = null;
-        if(this.dLogger != null)
-        {
-            ret = this.dLogger;
-        }
-        else
-        {
-            ret = (Logger) ContainerFactory.getContainer().
-                getDependency(MessageLogger.class,
-                "Logger");
+        return (Logger) ContainerFactory.getContainer().
+            getDependency( this, "Logger" );
 
-            if(ModelFactory.getModel().getModules().
-                getImplementation(MessageLogger.class.getName()).
-                getDependencies().getDependency("Logger").
-                isBound())
-            {
-                this.dLogger = ret;
-            }
-        }
-
-        if(ret instanceof ContextInitializer && !((ContextInitializer) ret).
-            isInitialized(ContextFactory.getContext()))
-        {
-            ((ContextInitializer) ret).initialize(ContextFactory.getContext());
-        }
-
-        return ret;
     }
+
 // </editor-fold>//GEN-END:jdtausDependencies
 
     //------------------------------------------------------------Dependencies--
-    //--Properties--------------------------------------------------------------
-
-// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausProperties
-    // This section is managed by jdtaus-container-mojo.
-
-// </editor-fold>//GEN-END:jdtausProperties
-
-    //--------------------------------------------------------------Properties--
     //--MessageListener---------------------------------------------------------
 
     /**
@@ -174,35 +97,41 @@ public final class MessageLogger implements MessageListener
 
                 default:
                     this.getLogger().warn(
-                        MessageLoggerBundle.getInstance().
-                        getUnknownMessageTypeMessage( Locale.getDefault() ).
-                        format( new Object[] {
-                                new Integer( event.getType() )
-                            } ) );
+                        this.getUnknownMessageEventTypeMessage(
+                        new Integer( event.getType() ) ) );
 
             }
         }
     }
 
     //---------------------------------------------------------MessageListener--
-    //--MessageLogger-----------------------------------------------------------
+    //--Messages----------------------------------------------------------------
 
-    /** Creates a new {@code MessageLogger} instance. */
-    public MessageLogger()
-    {
-        super();
-        this.initializeProperties( META.getProperties() );
-        this.assertValidProperties();
-    }
+// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages
+    // This section is managed by jdtaus-container-mojo.
 
     /**
-     * Checks configured properties.
+     * Gets the text of message <code>unknownMessageEventType</code>.
+     * <blockquote><pre>Meldung unbekannten Typs {0,number} ignoriert.</pre></blockquote>
+     * <blockquote><pre>Ignored message event of unknown type {0,number}.</pre></blockquote>
      *
-     * @throws PropertyException for illegal property values.
+     * @param unknownEventType The unknown event type.
+     *
+     * @return Message stating that an unknown message event got ignored.
      */
-    private void assertValidProperties()
+    private String getUnknownMessageEventTypeMessage(
+            java.lang.Number unknownEventType )
     {
+        return ContainerFactory.getContainer().
+            getMessage( this, "unknownMessageEventType",
+                new Object[]
+                {
+                    unknownEventType
+                });
+
     }
 
-    //-----------------------------------------------------------MessageLogger--
+// </editor-fold>//GEN-END:jdtausMessages
+
+    //----------------------------------------------------------------Messages--
 }
