@@ -43,8 +43,10 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.jdtaus.mojo.resource.model.Implementation;
+import org.jdtaus.mojo.resource.model.Message;
 import org.jdtaus.mojo.resource.model.ModelManager;
 import org.jdtaus.mojo.resource.model.Module;
+import org.jdtaus.mojo.resource.model.Text;
 import org.jdtaus.mojo.resource.util.BundleGenerator;
 
 /**
@@ -194,9 +196,13 @@ public class JavaResourcesMojo extends AbstractMojo
             final Module module = this.getModelManager().
                 getModule( this.getModuleDescriptor() );
 
-            if ( module != null && module.getImplementations() != null )
+            if ( module != null )
             {
-                this.generateBundles( module );
+                this.assertValidTemplates( module );
+                if ( module.getImplementations() != null )
+                {
+                    this.generateBundles( module );
+                }
             }
         }
         catch ( Exception e )
@@ -355,6 +361,68 @@ public class JavaResourcesMojo extends AbstractMojo
             format( new Date() ) );
 
         out.close();
+    }
+
+    private void assertValidTemplates( final Module module )
+        throws MojoExecutionException
+    {
+        if ( module.getImplementations() != null )
+        {
+            for ( Iterator it = module.getImplementations().getImplementation().
+                iterator(); it.hasNext(); )
+            {
+                final Implementation impl = (Implementation) it.next();
+                if ( impl.getMessages() == null )
+                {
+                    continue;
+                }
+
+                for ( Iterator m = impl.getMessages().getMessage().iterator();
+                    m.hasNext(); )
+                {
+                    this.assertValidMessage( (Message) m.next() );
+                }
+            }
+        }
+
+        if ( module.getMessages() != null )
+        {
+            for ( Iterator it = module.getMessages().getMessage().iterator();
+                it.hasNext(); )
+            {
+                this.assertValidMessage( (Message) it.next() );
+            }
+        }
+    }
+
+    private void assertValidMessage( final Message message )
+        throws MojoExecutionException
+    {
+        if ( message.getTemplate() != null )
+        {
+            for ( Iterator it = message.getTemplate().getText().iterator();
+                it.hasNext(); )
+            {
+                final Text text = (Text) it.next();
+                try
+                {
+                    new MessageFormat( text.getValue() );
+                }
+                catch ( IllegalArgumentException e )
+                {
+                    final MessageFormat fmt =
+                        this.getMessage( "illegalTemplate" );
+
+                    throw new MojoExecutionException( fmt.format( new Object[]
+                        {
+                            text.getValue(),
+                            message.getName(),
+                            e.getMessage()
+                        } ), e );
+
+                }
+            }
+        }
     }
 
     //-------------------------------------------------------JavaResourcesMojo--

@@ -73,5 +73,11 @@
       is incompatible to previous versions.]]>
       </action>
     </release>
+    <release version="3.1" date="2008-10-27"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Added missing validation to fail a build for invalid message templates.]]>
+      </action>
+    </release>
   </body>
 </document>
