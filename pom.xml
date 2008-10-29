@@ -8,7 +8,7 @@
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-runtime</artifactId>
   <name>jDTAUS Core Reference Implementation</name>
-  <version>1.6-SNAPSHOT</version>
+  <version>1.5-1-SNAPSHOT</version>
   <description>jDTAUS core reference implementation.</description>
   <packaging>jar</packaging>
   <scm>
@@ -135,7 +135,7 @@
     <dependency>
       <artifactId>jdtaus-core-client-container</artifactId>
       <groupId>org.jdtaus.core.container</groupId>
-      <version>1.5</version>
+      <version>1.5-1</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -183,7 +183,7 @@
     <dependency>
       <artifactId>jdtaus-core-utilities</artifactId>
       <groupId>org.jdtaus.core</groupId>
-      <version>1.4</version>
+      <version>1.4-1</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
