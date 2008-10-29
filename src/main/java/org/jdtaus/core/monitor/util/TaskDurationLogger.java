@@ -176,7 +176,7 @@ public final class TaskDurationLogger implements TaskListener
      *    Beschreibung ... : {0}
      *    Start .......... : {1,date,long} um {1,time,long}
      *    Ende ........... : {2,date,long} um {2,time,long}
-     *    Laufzeit ....... : {3,long}ms</pre></blockquote>
+     *    Laufzeit ....... : {3}ms</pre></blockquote>
      * <blockquote><pre>Taskinformation:
      *    Description ... : {0}
      *    Start ......... : {1,date,long} at {1,time,long}

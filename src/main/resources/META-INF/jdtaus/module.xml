@@ -664,7 +664,7 @@
     Beschreibung ... : {0}
     Start .......... : {1,date,long} um {1,time,long}
     Ende ........... : {2,date,long} um {2,time,long}
-    Laufzeit ....... : {3,long}ms]]></container:text>
+    Laufzeit ....... : {3}ms]]></container:text>
       </container:template>
       <container:arguments>
         <container:argument container:index="0" container:name="taskDescription" container:type="text">
