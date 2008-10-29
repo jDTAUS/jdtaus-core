@@ -9,12 +9,12 @@
   <artifactId>jdtaus-resource-mojo</artifactId>
   <packaging>maven-plugin</packaging>
   <name>jDTAUS Core Resource Mojo</name>
-  <version>3.1</version>
+  <version>3.2-SNAPSHOT</version>
   <description>Source generator for resource bundles.</description>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags/jdtaus-resource-mojo-3.1</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags/jdtaus-resource-mojo-3.1</developerConnection>
-    <url>http://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/jdtaus-resource-mojo/tags/jdtaus-resource-mojo-3.1</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/branches/jdtaus-resource-mojo-1.x</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-resource-mojo/branches/jdtaus-resource-mojo-1.x</developerConnection>
+    <url>http://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/jdtaus-resource-mojo/branches/jdtaus-resource-mojo-1.x</url>
   </scm>
   <build>
     <resources>
