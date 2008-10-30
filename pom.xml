@@ -129,13 +129,19 @@
     <dependency>
       <artifactId>jdtaus-core-api</artifactId>
       <groupId>org.jdtaus.common</groupId>
-      <version>1.5</version>
+      <version>1.6</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <artifactId>jdtaus-core-spi</artifactId>
+      <groupId>org.jdtaus.core</groupId>
+      <version>1.6</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <artifactId>jdtaus-core-client-container</artifactId>
       <groupId>org.jdtaus.core.container</groupId>
-      <version>1.5-2</version>
+      <version>1.6</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
