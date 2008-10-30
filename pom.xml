@@ -135,7 +135,7 @@
     <dependency>
       <artifactId>jdtaus-core-client-container</artifactId>
       <groupId>org.jdtaus.core.container</groupId>
-      <version>1.5-1</version>
+      <version>1.5-2</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -177,7 +177,7 @@
     <dependency>
       <artifactId>jdtaus-core-entity-resolver</artifactId>
       <groupId>org.jdtaus.core.sax</groupId>
-      <version>1.1</version>
+      <version>1.1-1</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
