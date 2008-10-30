@@ -406,8 +406,7 @@ public class ModelManager
         }
 
         return ( this.getJavaPackageName( implementation ) + '.' +
-            this.getJavaTypeName( implementation ) ).replace(
-            '.', File.separatorChar );
+            this.getJavaTypeName( implementation ) ).replace( '.', '/' );
 
     }
 
