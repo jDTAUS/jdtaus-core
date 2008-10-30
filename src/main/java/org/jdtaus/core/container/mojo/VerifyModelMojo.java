@@ -52,7 +52,7 @@ import org.jdtaus.core.container.Specifications;
  * @version $Id$
  * @goal verify-model
  * @phase verify
- * @requiresDependencyResolution runtime
+ * @requiresDependencyResolution test
  */
 public class VerifyModelMojo extends AbstractContainerMojo
 {

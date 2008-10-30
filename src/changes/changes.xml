@@ -67,5 +67,11 @@
       Added a report for the container model.]]>
       </action>
     </release>
+    <release version="3.1" date="2008-10-30"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Corrected dependency resolution to support standalone artifacts.]]>
+      </action>
+    </release>
   </body>
 </document>

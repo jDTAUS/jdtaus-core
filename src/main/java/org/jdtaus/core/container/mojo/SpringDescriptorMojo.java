@@ -49,7 +49,7 @@ import org.springframework.core.io.FileSystemResource;
  * @version $Id$
  * @goal spring-descriptor
  * @phase process-resources
- * @requiresDependencyResolution runtime
+ * @requiresDependencyResolution test
  */
 public class SpringDescriptorMojo extends AbstractContainerMojo
 {

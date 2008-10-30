@@ -36,7 +36,7 @@ import org.apache.maven.plugin.MojoFailureException;
  * @version $Id$
  * @goal verify-jar
  * @phase verify
- * @requiresDependencyResolution runtime
+ * @requiresDependencyResolution test
  */
 public class VerifyJarMojo extends VerifyModelMojo
 {

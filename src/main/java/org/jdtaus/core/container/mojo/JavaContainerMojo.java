@@ -59,6 +59,7 @@ import org.jdtaus.core.container.mojo.model.JavaArtifact;
  * @version $Id$
  * @goal java-container
  * @phase process-resources
+ * @requiresDependencyResolution test
  */
 public class JavaContainerMojo extends AbstractContainerMojo
 {
