@@ -51,7 +51,7 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-        <version>3.0</version>
+        <version>3.1</version>
         <dependencies>
           <dependency>
             <artifactId>jdtaus-core-client-container</artifactId>
@@ -89,7 +89,7 @@
           <dependency>
             <artifactId>jdtaus-container-mojo</artifactId>
             <groupId>org.jdtaus.mojo</groupId>
-            <version>3.0</version>
+            <version>3.1</version>
             <scope>runtime</scope>
           </dependency>
           <dependency>
@@ -210,7 +210,7 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-        <version>3.0</version>
+        <version>3.1</version>
         <configuration>
           <moduleName>${pom.name}</moduleName>
         </configuration>
