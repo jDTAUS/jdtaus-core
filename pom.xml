@@ -142,7 +142,7 @@
     <dependency>
       <artifactId>jdtaus-core-client-container</artifactId>
       <groupId>org.jdtaus.core.container</groupId>
-      <version>1.6</version>
+      <version>1.7</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -190,7 +190,7 @@
     <dependency>
       <artifactId>jdtaus-core-utilities</artifactId>
       <groupId>org.jdtaus.core</groupId>
-      <version>1.4-1</version>
+      <version>1.4-2</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>

@@ -62,5 +62,23 @@
       <li>org.jdtaus.core:jdtaus-core-utilities:jar:1.4-1</li>
       <li>org.jdtaus.core:jdtaus-core-messages:jar:1.2</li></ul>]]></action>
     </release>
+    <release version="1.7" date="2008-12-02"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated to latest artifact releases:<ul>
+      <li>org.jdtaus.common:jdtaus-core-api:jar:1.6</li>
+      <li>org.jdtaus.core:jdtaus-core-schemas:jar:1.0</li>
+      <li>org.jdtaus.core.container:jdtaus-core-client-container:jar:1.7</li>
+      <li>org.jdtaus.core.container:jdtaus-core-servlet-container:jar:1.1</li>
+      <li>org.jdtaus.core.lang:jdtaus-core-memory-manager:jar:1.2</li>
+      <li>org.jdtaus.core:jdtaus-core-spi:jar:1.6</li>
+      <li>org.jdtaus.core.logging:jdtaus-core-jdk-logging:jar:1.2</li>
+      <li>org.jdtaus.core.text:jdtaus-core-application-logger:jar:1.3</li>
+      <li>org.jdtaus.core.monitor:jdtaus-core-task-monitor:jar:1.2</li>
+      <li>org.jdtaus.core.lang:jdtaus-core-jdk14-executor:jar:1.2</li>
+      <li>org.jdtaus.core.sax:jdtaus-core-entity-resolver:jar:1.1-1</li>
+      <li>org.jdtaus.core:jdtaus-core-utilities:jar:1.4-2</li>
+      <li>org.jdtaus.core:jdtaus-core-messages:jar:1.2</li></ul>]]></action>
+    </release>
   </body>
 </document>
