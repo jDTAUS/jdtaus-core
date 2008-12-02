@@ -135,5 +135,12 @@
       invalid message template.]]>
       </action>
     </release>
+    <release version="1.4-2" date="2008-12-02"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Removed deprecations of methods <code>equals</code> and
+      <code>hashCode</code> of class <code>MemoryFileOperations</code>.]]>
+      </action>
+    </release>
   </body>
 </document>

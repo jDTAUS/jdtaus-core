@@ -207,7 +207,7 @@ public final class MemoryFileOperations
             // less than len byte before EOF
             final int remaining = (int) ( this.length - this.filePointer );
             System.arraycopy( this.data, (int) this.filePointer, buf, off,
-                              remaining );
+                remaining );
 
             this.filePointer += remaining;
             ret = remaining;
@@ -420,8 +420,8 @@ public final class MemoryFileOperations
         {
             this.defaultBuffer = this.getMemoryManager().
                 allocateBytes( this.getStreamBufferSize() < 0
-                               ? 0
-                               : this.getStreamBufferSize() );
+                ? 0
+                : this.getStreamBufferSize() );
 
         }
 
@@ -439,22 +439,28 @@ public final class MemoryFileOperations
      *
      * @return {@code true} if this object is the same as {@code o};
      * {@code false} otherwise.
-     * @deprecated Replaced by {@code Arrays.equals( getData(), ( (MemoryFileOperations) o ).getData() )}
      */
     public boolean equals( final Object o )
     {
-        return super.equals( o );
+        boolean equal = this == o;
+
+        if ( !equal && o instanceof MemoryFileOperations )
+        {
+            final MemoryFileOperations that = (MemoryFileOperations) o;
+            equal = Arrays.equals( getData(), that.getData() );
+        }
+
+        return equal;
     }
 
     /**
      * Returns a hash code value for this object.
      *
      * @return a hash code value for this object.
-     * @deprecated Replaced by {@code getData().hashCode()}
      */
     public int hashCode()
     {
-        return super.hashCode();
+        return this.getData().hashCode();
     }
 
     /**
