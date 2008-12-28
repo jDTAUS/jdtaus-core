@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+  <properties>
+    <title>Changelog</title>
+    <author email="cs@jdtaus.org">Christian Schulte
+    </author>
+  </properties>
+  <body>
+    <release version="1.0" date="2007-06-01"
+             description="First stable release."/>
+    <release version="1.1" date="2007-08-01"
+             description="Maintainance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated tests to the 1.1 model version XML module descriptor.
+      Added various tests triggering bugs found during development of the
+      1.2 API and corresponding implementations.]]>
+      </action>
+    </release>
+    <release version="1.2" date="2007-11-03"
+             description="Maintainance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added<ul>
+      <li><code>org.jdtaus.core.lang.it.ExceptionEventSourceTest</code></li>
+      <li><code>org.jdtaus.core.lang.spi.it.ExecutorTest</code></li></ul>
+      for the 1.4 API.]]>
+      </action>
+    </release>
+    <release version="1.2.1" date="2008-03-10"
+             description="Maintainance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated to latest mojo releases.]]>
+      </action>
+    </release>
+    <release version="1.2.2" date="2008-07-04"
+             description="Maintainance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Maven POM updates.]]>
+      </action>
+    </release>
+    <release version="1.2.3" date="2008-07-13"
+             description="Maintainance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.2 model version.]]>
+      </action>
+    </release>
+    <release version="1.3" date="2008-10-27"
+             description="Maintainance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Moved various container implementation specific test to the container
+      implementation artifact.]]>
+      </action>
+    </release>
+    <release version="1.8" date="2008-12-28"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Maven POM updates.]]>
+      </action>
+    </release>
+  </body>
+</document>
