@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  ${pom.name}
+  Copyright (c) 2005 Christian Schulte
+
+  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+  <cs@jdtaus.org> (+49 2331 3543887)
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Document   : module.xml
+  Author     : Christian Schulte <cs@jdtaus.org>
+  Version    : $Id$
+  Description: Runtime configuration for the ${pom.name} module.
+
+  $Id$
+-->
+<container:module xmlns:container="http://jdtaus.org/core/model/container"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+                  container:name="${pom.name}"
+                  container:version="${pom.version}"
+                  container:modelVersion="1.4">
+
+  <container:documentation container:defaultLanguage="en">
+    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+  </container:documentation>
+  <container:specifications>
+    <container:specification container:identifier="org.jdtaus.core.text.MessageEventSource"
+                             container:vendor="${pom.organization.name}"
+                             container:version="1.3"
+                             container:scope="singleton"
+                             container:multiplicity="one">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[MessageEventSource is implemented by classes firing MessageEvents.]]>></container:text>
+      </container:documentation>
+    </container:specification>
+    <container:specification container:identifier="org.jdtaus.core.text.MessageListener"
+                             container:vendor="${pom.organization.name}"
+                             container:version="1.0"
+                             container:scope="singleton"
+                             container:multiplicity="many">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Listener to be notified about messages.]]>></container:text>
+      </container:documentation>
+    </container:specification>
+    <container:specification container:identifier="org.jdtaus.core.io.FileOperations"
+                             container:vendor="${pom.organization.name}"
+                             container:version="1.3"
+                             container:scope="multiton"
+                             container:multiplicity="many">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Elementary I/O operations.]]></container:text>
+      </container:documentation>
+    </container:specification>
+    <container:specification container:identifier="org.jdtaus.core.io.StructuredFile"
+                             container:vendor="${pom.organization.name}"
+                             container:version="1.3"
+                             container:scope="multiton"
+                             container:multiplicity="many">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Block oriented I/O operations.]]></container:text>
+      </container:documentation>
+      <container:properties>
+        <container:property container:name="blockSize"
+                            container:type="int">
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The length of one block in byte.]]></container:text>
+          </container:documentation>
+        </container:property>
+      </container:properties>
+    </container:specification>
+    <container:specification container:identifier="org.jdtaus.core.lang.Runtime"
+                             container:vendor="${pom.organization.name}"
+                             container:version="1.0"
+                             container:scope="singleton"
+                             container:stateless="true"
+                             container:multiplicity="one">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation runtime.]]></container:text>
+      </container:documentation>
+    </container:specification>
+    <container:specification container:identifier="org.jdtaus.core.lang.ExceptionEventSource"
+                             container:vendor="${pom.organization.name}"
+                             container:version="1.0"
+                             container:scope="singleton"
+                             container:multiplicity="one">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[ExceptionEventSource is implemented by classes firing ExceptionEvents.]]></container:text>
+      </container:documentation>
+    </container:specification>
+    <container:specification container:identifier="org.jdtaus.core.lang.ExceptionListener"
+                             container:vendor="${pom.organization.name}"
+                             container:version="1.0"
+                             container:scope="singleton"
+                             container:multiplicity="many">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Listener to be notified about exceptions.]]></container:text>
+      </container:documentation>
+    </container:specification>
+    <container:specification container:identifier="org.jdtaus.core.monitor.TaskEventSource"
+                             container:vendor="${pom.organization.name}"
+                             container:version="1.3"
+                             container:scope="singleton"
+                             container:multiplicity="one">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[TaskEventSource is implemented by classes firing TaskEvents.]]></container:text>
+      </container:documentation>
+    </container:specification>
+    <container:specification container:identifier="org.jdtaus.core.monitor.TaskListener"
+                             container:vendor="${pom.organization.name}"
+                             container:version="1.0"
+                             container:scope="singleton"
+                             container:multiplicity="many">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Listener to be notified about task events.]]></container:text>
+      </container:documentation>
+    </container:specification>
+  </container:specifications>
+  <container:implementations>
+    <container:implementation container:identifier="org.jdtaus.core.container.ContainerError"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unrecoverable error thrown if no working {@code Container} is available in the system.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="containerError"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.ContextError"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unrecoverable error thrown if no working {@code Context} is available in the system.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="contextError"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.DependencyCycleException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for cyclic dependency graphs.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="dependencyCycle"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.DuplicateArgumentException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for duplicate arguments.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="duplicateArgument"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.DuplicateDependencyException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for duplicate dependencies.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="duplicateDependency"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.DuplicateImplementationException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for duplicate implementations.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="duplicateImplementation"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.DuplicateMessageException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for duplicate messages.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="duplicateMessage"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.DuplicateModuleException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for duplicate modules.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="duplicateModule"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.DuplicatePropertyException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for duplicate properties.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="duplicateProperty"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.DuplicateSpecificationException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for duplicate specifications.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="duplicateSpecification"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.IllegalDependencyTypeException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for type collisions of inherited dependencies.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="illegalDependencyType"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.IllegalPropertyTypeException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for type collisions of inherited properties, implemented properties, or dependency properties.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="illegalPropertyType"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.ImplementationException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when an implementation fails to operate.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="implementationException"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.IncompatibleImplementationException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for implementation incompatibilities. An {@code Implementation} is required to implement and to depend on a specification version compatible with the version in use. This exception gets thrown for any implementation implementing or depending on a specification version incompatible with the version in use.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="incompatibleImplementation"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.InheritanceConstraintException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for inheritance constraint violations. An {@code Implementation} is only allowed to be the parent of another implementation if the value of property {@code final} is {@code false}. This exception gets thrown for any implementation violating this constraint.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="inheritanceConstraint"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.InstantiationException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when creating an instance of an implementation fails.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="instantiationException"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.MissingArgumentException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when argument meta-data is missing.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="missingArgument"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.MissingDependencyException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when dependency meta-data is missing.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="missingDependency"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.MissingImplementationException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when implementation meta-data is missing.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="missingImplementation"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.MissingMessageException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when message meta-data is missing.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="missingMessage"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.MissingModuleException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when module meta-data is missing.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="missingModule"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.MissingPropertyException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when property meta-data is missing.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="missingProperty"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.MissingSpecificationException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when specification meta-data is missing.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="missingSpecification"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.ModelError"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unrecoverable error thrown if no working {@code Model} is available in the system.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="modelError"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.MultiplicityConstraintException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for multiplicity constraint violations. A {@code Dependency} is only allowed to not specify an implementation to use only if the value of property {@code multiplicity} of the corresponding specification equals {@code MULTIPLICITY_ONE}. This exception gets thrown for any dependencies violating this constraint.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="multiplicityConstraint"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.PropertyException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for illegal property values.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="propertyException"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.PropertyOverwriteConstraintException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown for property overwrite constraint violations. A {@code Dependency} is allowed to provide values for any properties declared for its specification if the specification applies to scope {@code SCOPE_MULTITON}. An implementation must provide values for all properties declared for its implemented specifications. This exception gets thrown for any violations to these restrictions.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="propertyOverwriteConstraint"/>
+        <container:reference container:name="propertyNotImplemented"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.text.MessageEvent"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Event holding messages.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="missingMessages"/>
+      </container:messages>
+    </container:implementation>
+  </container:implementations>
+  <container:messages>
+    <container:message container:name="containerError">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[{0}]]></container:text>
+        <container:text container:language="de"><![CDATA[{0}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="containerError" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="contextError">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[{0}]]></container:text>
+        <container:text container:language="de"><![CDATA[{0}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="contextError" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="duplicateArgument">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Multiple arguments with name "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Mehrere Argumente mit Namen "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="argumentName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="duplicateDependency">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Multiple dependencies with name "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Mehrere Abhängigkeiten mit Namen "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="dependencyName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="duplicateImplementation">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Multiple implementations with identifier "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Mehrere Implementierungen mit Identifikation "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="duplicateMessage">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Multiple messages with name "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Mehrere Meldungen mit Namen "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="messageName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="duplicateModule">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Multiple modules with name "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Mehrere Module mit Namen "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="moduleName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="duplicateProperty">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Multiple properties with name "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Mehrere Eigenschaften mit Namen "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="propertyName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="duplicateSpecification">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Multiple specifications identified by "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Mehrere Spezifikationen für Identifikation "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="specificationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="propertyException">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Invalid value "{1}" for property "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Ungültiger Wert "{1}" für Property "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="propertyName" container:type="text"/>
+        <container:argument container:index="1" container:name="value" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="implementationException">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation: {0}, Version: {1}, Module: {2}: {3}]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung: {0}, Version: {1}, Modul: {2}: {3}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="1" container:name="implementationVersion" container:type="text"/>
+        <container:argument container:index="2" container:name="moduleName" container:type="text"/>
+        <container:argument container:index="3" container:name="message" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="noDetailsAvailable">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[No more details available.]]></container:text>
+        <container:text container:language="de"><![CDATA[Keine weiteren Details verfügbar.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="instantiationException">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Error during instantiation: {0}]]></container:text>
+        <container:text container:language="de"><![CDATA[Fehler während der Instantiierung: {0}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="message" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingArgument">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unknown argument "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Unbekanntes Argument "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="argumentName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingDependency">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unknown dependency "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Unbekannte Abhängigkeit "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="dependencyName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingImplementation">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unknown implementation "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Unbekannte Implementierung "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingMessage">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unknown message "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Unbekannte Meldung "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="messageName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingModule">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unknown module "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Unbekanntes Modul "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="moduleName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingProperty">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unknown property "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Unbekannte Eigenschaft "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="propertyName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingSpecification">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unknown specification "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Unbekannte Spezifikation "{0}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="specificationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="modelError">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[{0}]]></container:text>
+        <container:text container:language="de"><![CDATA[{0}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="modelError" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="multiplicityConstraint">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Mandatory implementation is missing for specification {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Erforderliche Implementierung für Spezifikation {0} nicht vorhanden.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="specificationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="propertyOverwriteConstraint">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Dependency "{1}" for implementation "{0}" violates model constraints.]]></container:text>
+        <container:text container:language="de"><![CDATA[Abhängigkeit "{1}" der Implementierung "{0}" verletzt Modell-Auflagen.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="1" container:name="dependencyName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="propertyNotImplemented">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation "{0}" does not implement property "{2}" specified by "{1}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung "{0}" implementiert die "{2}" Eigenschaft der Spezifikation "{1}" nicht.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="1" container:name="specificationIdentifier" container:type="text"/>
+        <container:argument container:index="2" container:name="propertyName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="inheritanceConstraint">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Implementation {0} cannot inherit from a final implementation.]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung {0} kann nicht von einer finalen Implementierung erben.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="dependencyCycle">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Dependency cycle: {0} -> {1} -> {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Zyklische Abhängigkeiten: {0} -> {1} -> {0}.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="1" container:name="depedencyObjectIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="incompatibleImplementation">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[{0,choice,0#Implementation "{3}" implements version "{4}" of specification "{1}". Required implementation level is "{2}".|1#Implementation "{3}" depends on version "{5}" of specification "{1}". Available specification level is "{2}".}.]]></container:text>
+        <container:text container:language="de"><![CDATA[{0,choice,0#Implementierung "{3}" implementiert Version "{4}" der Spezifikation "{1}". Benötigte Implementierungsstufe ist "{2}"|1#Implementierung "{3}" hängt von Version "{5}" der Spezifikation "{1}" ab. Verfügbare Spezifikationsstufe ist "{2}".}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="incompatibilityType" container:type="number"/>
+        <container:argument container:index="1" container:name="specificationIdentifier" container:type="text"/>
+        <container:argument container:index="2" container:name="requiredImplementationLevel" container:type="text"/>
+        <container:argument container:index="3" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="4" container:name="implementedVersion" container:type="text"/>
+        <container:argument container:index="5" container:name="requiredVersion" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="illegalPropertyType">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Illegal type "{1}" for property "{0}". Expected type "{2}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Ungültiger Typ "{1}" für Eigenschaft "{0}". Erwartet Typ "{2}".]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="propertyName" container:type="text"/>
+        <container:argument container:index="1" container:name="illegalType" container:type="text"/>
+        <container:argument container:index="2" container:name="expectedType" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="illegalDependencyType">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The dependency "{1}" of implementation "{0}" has illegal type "{2}". Expected type "{3}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Ungültiger Typ "{2}" der Abhängigkeit "{1}" von Implementierung "{0}". Typ "{3}" erwartet.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="1" container:name="dependencyName" container:type="text"/>
+        <container:argument container:index="2" container:name="illegalType" container:type="text"/>
+        <container:argument container:index="3" container:name="expectedType" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingMessages">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Could not deserialize any messages.]]></container:text>
+        <container:text container:language="de"><![CDATA[Es konnten keine Message-Instanzen deserialisiert werden.]]></container:text>
+      </container:template>
+    </container:message>
+  </container:messages>
+</container:module>

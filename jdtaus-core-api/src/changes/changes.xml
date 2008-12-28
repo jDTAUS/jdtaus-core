@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+  <properties>
+    <title>Changelog</title>
+    <author email="cs@jdtaus.org">Christian Schulte
+    </author>
+  </properties>
+  <body>
+    <release version="1.0" date="2007-06-01"
+             description="First stable release."/>
+    <release version="1.1" date="2007-07-02"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated class <code>org.jdtaus.core.text.MessageEvent</code> to support
+      multiple messages per instance instead of just a single one.]]>
+      </action>
+    </release>
+    <release version="1.1.1" date="2007-07-09"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Fixed <code>StackOverflowError</code>s thrown by methods
+      <code>clone()</code> and <code>toString()</code> of various container
+      model classes.]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Improved some container model classes to reset the internal state before
+      throwing an <code>IllegalArgumentException</code> or subclasses
+      thereof.]]>
+      </action>
+    </release>
+    <release version="1.2" date="2007-08-01"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added classes<ul>
+      <li><code>org.jdtaus.core.container.MultiplicityConstraintException</code></li>
+      <li><code>org.jdtaus.core.container.PropertyOverwriteConstraintException</code></li>
+      <li><code>org.jdtaus.core.container.InheritanceConstraintException</code></li></ul>]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated classes<ul>
+      <li><code>org.jdtaus.core.container.Specification</code>:<blockquote>
+      Added property <code>multiplicity</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.container.Implementation</code>:<blockquote>
+      Added property <code>final</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.monitor.Task</code>:<blockquote>Added properties
+      <code>timestamp</code> and <code>progressDescription</code> and static
+      <code>Comparator</code> fields <code>ASCENDING</code> and
+      <code>DESCENDING</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.text.MessageEvent</code>:<blockquote>Added
+      constant <code>ERROR</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.io.FileOperations</code>:<blockquote>Added
+      constant <code>EOF</code>.</blockquote></li></ul>]]>
+      </action>
+    </release>
+    <release version="1.3" date="2007-08-23"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated the message of
+      <code>org.jdtaus.core.container.ImplementationException</code> to
+      contain detail information about the failed implementation.]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated classes<ul>
+      <li><code>org.jdtaus.core.io.FileOperations</code>:<blockquote>Added
+      method <code>close()</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.io.StructuredFile</code>:<blockquote>Added
+      method <code>close()</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.text.Message</code>:<blockquote>Updated the
+      <code>Comparator</code> implementations provided via the static
+      <code>ASCENDING</code> and <code>DESCENDING</code> fields
+      to additionally implement <code>java.io.Serializable</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.monitor.Task</code>:<blockquote>Updated the
+      <code>Comparator</code> implementations provided via the static
+      <code>ASCENDING</code> and <code>DESCENDING</code> fields
+      to additionally implement <code>java.io.Serializable</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.text.Messages</code>:<blockquote>Added method
+      <code>addMessages(Message[])</code>.</blockquote></li></ul>]]>
+      </action>
+    </release>
+    <release version="1.4" date="2007-11-04"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added<ul>
+      <li><code>org.jdtaus.core.lang.ExceptionEvent</code></li>
+      <li><code>org.jdtaus.core.lang.ExceptionEventSource</code></li>
+      <li><code>org.jdtaus.core.lang.ExceptionListener</code></li>
+      </ul>]]>
+      </action>
+    </release>
+    <release version="1.4.1" date="2008-03-10"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added various missing serial version UID fields for backwards
+      compatibility. Updated to latest mojo releases.]]>
+      </action>
+    </release>
+    <release version="1.4.2" date="2008-05-20"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Updated the <code>clone()</code> method of classes<ul>
+      <li><code>org.jdtaus.core.container.Dependencies</code></li>
+      <li><code>org.jdtaus.core.container.Implementations</code></li>
+      <li><code>org.jdtaus.core.container.Properties</code></li>
+      <li><code>org.jdtaus.core.container.Specifications</code></li>
+      </ul><blockquote>
+      Added missing initialization of cloned instances.
+      </blockquote>]]>
+      </action>
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Updated methods <code>getSpecifications()</code>,
+      <code>getSpecification(String)</code>, <code>getImplementations()</code>
+      and <code>getImplementation(String)</code> of class<ul>
+      <li><code>org.jdtaus.core.container.Modules</code></li></ul>
+      <blockquote>
+      Changes of module instances were ignored.
+      </blockquote>]]>
+      </action>
+    </release>
+    <release version="1.4.3" date="2008-07-04"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+            Maven POM updates.]]>
+      </action>
+    </release>
+    <release version="1.4.4" date="2008-07-13"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.2 model version.]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added XML schemas<ul>
+      <li><code>org/jdtaus/core/model/jdtaus-core-1.0.xsd</code><blockquote>
+      jDTAUS Core Model
+      </blockquote></li>
+      <li><code>org/jdtaus/core/model/container/jdtaus-container-1.0.xsd</code><blockquote>
+      jDTAUS Container Model
+      The recommended namespace prefix is "container".
+      </blockquote></li>
+      <li><code>org/jdtaus/core/model/monitor/jdtaus-monitor-1.0.xsd</code><blockquote>
+      jDTAUS Monitor Model
+      The recommended namespace prefix is "monitor".
+      </blockquote></li>
+      <li><code>org/jdtaus/core/model/text/jdtaus-text-1.0.xsd</code><blockquote>
+      jDTAUS Text Model
+      The recommended namespace prefix is "text".
+      </blockquote></li></ul>]]>
+      </action>
+    </release>
+    <release version="1.4.5" date="2008-07-13"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Added missing version attribute to complex type <code>Module</code> of
+      schema <code>org/jdtaus/core/model/container/jdtaus-container-1.0.xsd</code>.]]>
+      </action>
+    </release>
+    <release version="1.5" date="2008-10-27"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added versioning support to the container model.]]></action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added support for messages to the container model.]]></action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated the container API to make use of object identity.]]></action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated the format of any <code>toString</code> method.]]></action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Moved any XML schema to the jdtaus-core-schemas artifact.]]></action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added<ul>
+      <li><code>org.jdtaus.core.container.Argument</code></li>
+      <li><code>org.jdtaus.core.container.Arguments</code></li>
+      <li><code>org.jdtaus.core.container.DependencyCycleException</code></li>
+      <li><code>org.jdtaus.core.container.DuplicateArgumentException</code></li>
+      <li><code>org.jdtaus.core.container.DuplicateMessageException</code></li>
+      <li><code>org.jdtaus.core.container.IllegalDependencyTypeException</code></li>
+      <li><code>org.jdtaus.core.container.IllegalPropertyTypeException</code></li>
+      <li><code>org.jdtaus.core.container.IncompatibleImplementationException</code></li>
+      <li><code>org.jdtaus.core.container.Message</code></li>
+      <li><code>org.jdtaus.core.container.Messages</code></li>
+      <li><code>org.jdtaus.core.container.MissingArgumentException</code></li>
+      <li><code>org.jdtaus.core.container.MissingMessageException</code></li>
+      <li><code>org.jdtaus.core.container.ModelObject</code></li>
+      <li><code>org.jdtaus.core.container.Text</code></li>
+      </ul>]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Udated<ul>
+      <li><code>org.jdtaus.core.container.Container</code><blockquote>
+      Deprecated methods <code>getImplementation</code> and
+      <code>getDependency</code>. Added methods <code>getObject</code>,
+      <code>getDependency(Object,String)</code>, <code>getProperty</code> and
+      <code>getMessage</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.container.Context</code><blockquote>Deprecated
+      methods <code>getAttribute</code>, <code>setAttribute</code> and
+      <code>removeAttribute</code>. Added methods <code>getObject</code>,
+      <code>setObject</code>, <code>removeObject</code> and
+      <code>getObjectKeys</code></blockquote></li>
+      <li><code>org.jdtaus.core.container.Implementation</code><blockquote>Added
+      methods <code>getDeclaredImplementedSpecifications</code>,
+      <code>getDeclaredDependencies</code>, <code>getDelcaredProperties</code>.
+      <code>getMessages</code> and <code>getDeclaredMessages</code>
+      </blockquote></li>
+      <li><code>org.jdtaus.core.container.Specification</code><blockquote>
+      Deprecated methods <code>getDescription</code> and
+      <code>isSingleton</code>. Added methods <code>getScope</code>,
+      <code>isStateless</code> and <code>getProperties</code></blockquote></li>
+      </ul>]]>
+      </action>
+    </release>
+    <release version="1.6" date="2008-10-30"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Udated<ul>
+      <li><code>org.jdtaus.core.container.Container</code><blockquote>
+      Added method <code>getObject(String)</code>.</blockquote></li></ul>]]>
+      </action>
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Udated<ul>
+      <li><code>org.jdtaus.core.monitor.Task</code><blockquote>
+      Synchronized access to a task's state correcting a long standing sporadic
+      <code>IllegalStateException</code> thrown by the default task monitor
+      implementation.</blockquote></li></ul>]]>
+      </action>
+    </release>
+    <release version="1.8" date="2008-12-28"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Udated<ul>
+      <li><code>org.jdtaus.core.container.Container</code><blockquote>
+      Deprecated methods <code>getObject(String)</code>,
+      <code>getObject(String,String)</code> and
+      <code>getMessage(Object,String,Object)</code>. Added methods
+      <code>getObject(Class)</code>, <code>getObject(Class,String)</code> and
+      <code>getMessage(Object,String,Locale,Object)</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.container.Module</code><blockquote>
+      to additionally use the version property when comparing objects using the
+      <code>equals</code> method.</blockquote></li></ul>]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated classloading to not use the thread context classloader by default
+      any more. Former behaviour can be enabled by setting the system property
+      <code>org.jdtaus.core.container.ClassLoaderFactory.enableContextClassloader</code>
+      to <code>true</code>.]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added specification meta-data for interfaces
+      <code>org.jdtaus.core.lang.ExceptionListener</code>,
+      <code>org.jdtaus.core.monitor.TaskListener</code>,
+      <code>org.jdtaus.core.text.MessageListener</code> to the module
+      descriptor.]]></action>
+    </release>
+  </body>
+</document>
