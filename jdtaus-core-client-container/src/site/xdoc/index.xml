@@ -9,7 +9,8 @@
       <p>
         This artifact provides the jDTAUS <code>Container</code>,
         <code>Context</code> and <code>Model</code> reference implementation
-        backed by document resources.
+        backed by document resources. It implements a runtime suitable for
+        standalone, single-session applications.
       </p>
       <p>
         The implementation supports documents conforming to schemas as listed in

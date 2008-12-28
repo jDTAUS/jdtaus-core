@@ -48,7 +48,7 @@ public class BundleGenerator
         BundleGenerator.class.getName();
 
     /** Constant for the version of the generator. */
-    private static final String GENERATOR_VERSION = "3.0";
+    private static final String GENERATOR_VERSION = "3.3";
 
     /** Name of the velocity classpath resource loader implementation. */
     private static final String VELOCITY_RESOURCE_LOADER =

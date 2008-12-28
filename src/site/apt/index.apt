@@ -1,0 +1,75 @@
+  -----
+jDTAUS Core
+  -----
+Christian Schulte
+  -----
+July 2005
+  -----
+
+Introduction
+
+  The {{{jdtaus-core-api/project-summary.html}Core API artifact}} provides
+  the jDTAUS Core's {{{jdtaus-core-api/apidocs/index.html}programming interface}}
+  to services like task monitoring and modular object management and
+  configuration. Whenever that artifact is used at compile time, an application
+  assembler needs to provide additional runtime artifacts for proper operation
+  as shown below.
+
+*-------------------+----------------------------------------------------------+
+|| <<Artifact>>     || <<Description>>                                        ||
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-client-container/index.html} jDTAUS Core RI Client Container}} | <<<Container>>>, <<<Model>>> and <<<Context>>> reference implementation. {{{jdtaus-core-client-container/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-servlet-container/index.html} jDTAUS Core RI Servlet Container}} | Web application integration reference implementation. (Only needed when integrating with web applications.) {{{jdtaus-core-servlet-container/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-jdk-logging/project-summary.html} jDTAUS Core RI JDK 1.4 Logging}} | JDK 1.4 logging reference implementation. {{{jdtaus-core-jdk-logging/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-log4j-logging/project-summary.html} jDTAUS Core RI Log4J Logging}} | Log4J logging reference implementation. {{{jdtaus-core-log4j-logging/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-commons-logging/project-summary.html} jDTAUS Core RI Commons Logging}} | Commons logging reference implementation. {{{jdtaus-core-commons-logging/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-task-monitor/project-summary.html} jDTAUS Core RI Task Monitor}} | Task monitoring reference implementation. {{{jdtaus-core-task-monitor/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-memory-manager/project-summary.html} jDTAUS Core RI Memory Manager}} | Runtime reference implementation. {{{jdtaus-core-memory-manager/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-jdk14-executor/project-summary.html} jDTAUS Core RI JDK 1.4 Executor}} | JDK 1.4 executor reference implementation. {{{jdtaus-core-jdk14-executor/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-application-logger/project-summary.html} jDTAUS Core RI Application Logger}} | Application logger reference implementation. {{{jdtaus-core-application-logger/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+
+  <<Note:>> The logging implementations are exclusive. Only one of the artifacts
+  is allowed to be put on an application's classpath.
+
+* Developing using the jDTAUS Core
+
+  The following table lists artifacts which are of interest when developing
+  using the jDTAUS Core.
+
+*-------------------+----------------------------------------------------------+
+|| <<Artifact>>     || <<Description>>                                        ||
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-utilities/project-summary.html} jDTAUS Core Utilities}} | Core utility components. {{{jdtaus-core-utilities/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-spi/project-summary.html} jDTAUS Core SPI}} | Core implementation programming interface. {{{jdtaus-core-spi/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-it/project-summary.html} jDTAUS Core Test Suite}} | Core test suite. {{{jdtaus-core-it/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-core-messages/project-summary.html} jDTAUS Core Messages}} | Core application messages. {{{jdtaus-core-messages/apidocs/}See Javadoc}}|
+*-------------------+----------------------------------------------------------+
+
+  These are Maven 2 plugins of interest when developing using the jDTAUS Core.
+
+*-------------------+----------------------------------------------------------+
+|| <<Plugin>>       || <<Description>>                                        ||
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-resource-mojo/} <<<resource>>>}} | Source generator for resource bundles. |
+*-------------------+----------------------------------------------------------+
+| {{{jdtaus-container-mojo/} <<<container>>>}} | Source generator for the container model. |
+*-------------------+-----------------------------------------------------------+
+
+News
+
+* April, 2007
+
+  As of April, 2007 all jDTAUS artifacts are provided via the central Maven 2
+  repository in group {{{http://repo1.maven.org/maven2/org/jdtaus}org.jdtaus}}.

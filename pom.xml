@@ -13,7 +13,8 @@
   <version>1.8</version>
   <description><![CDATA[
   jDTAUS Core provides a common application programming interface for jDTAUS
-  integration. This is the parent module for the core artifacts.]]>
+  integration with corresponding reference implementations. This is the parent
+  module of the core artifacts.]]>
   </description>
   <url>http://sites.jdtaus.org/jdtaus-core/1.0.x</url>
   <inceptionYear>2005</inceptionYear>
@@ -214,6 +215,7 @@
             <charset>UTF-8</charset>
             <docencoding>UTF-8</docencoding>
             <encoding>UTF-8</encoding>
+            <keywords>true</keywords>
             <doctitle>${pom.name} Specification ${pom.version}</doctitle>
             <linksource>true</linksource>
             <nodeprecated>true</nodeprecated>
@@ -708,10 +710,12 @@
               <report>javadoc</report>
             </reports>
             <configuration>
+              <aggregate>false</aggregate>
               <author>true</author>
               <charset>UTF-8</charset>
               <docencoding>UTF-8</docencoding>
               <encoding>UTF-8</encoding>
+              <keywords>true</keywords>
               <doctitle>${pom.name} Specification ${pom.version}</doctitle>
               <linksource>true</linksource>
               <nodeprecated>true</nodeprecated>
@@ -728,6 +732,52 @@
               </links>
             </configuration>
           </reportSet>
+          <!-- reportSet>
+            <id>aggregate</id>
+            <inherited>false</inherited>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+            <configuration>
+              <aggregate>true</aggregate>
+              <breakiterator>true</breakiterator>
+              <charset>UTF-8</charset>
+              <docencoding>UTF-8</docencoding>
+              <encoding>UTF-8</encoding>
+              <keywords>false</keywords>
+              <linksource>true</linksource>
+              <serialwarn>true</serialwarn>
+              <show>private</show>
+              <doctitle>${pom.name} Specification ${pom.version}</doctitle>
+              <windowtitle>${pom.name} Specification ${pom.version}</windowtitle>
+              <groups>
+                <group>
+                  <title>Application Programming Interface</title>
+                  <packages>org.jdtaus.core.container:org.jdtaus.core.lang:org.jdtaus.core.io:org.jdtaus.core.monitor:org.jdtaus.core.text</packages>
+                </group>
+                <group>
+                  <title>Implementation Programming Interface</title>
+                  <packages>org.jdtaus.core.container.spi:org.jdtaus.core.lang.spi:org.jdtaus.core.io.spi:org.jdtaus.core.monitor.spi:org.jdtaus.core.text.spi:org.jdtaus.core.logging.spi*</packages>
+                </group>
+                <group>
+                  <title>Utility Components</title>
+                  <packages>org.jdtaus.core.container.util*:org.jdtaus.core.lang.util*:org.jdtaus.core.io.util*:org.jdtaus.core.monitor.util*:org.jdtaus.core.text.util*:org.jdtaus.core.nio.util*:org.jdtaus.core.sax.util*:org.jdtaus.core.swing.util*</packages>
+                </group>
+                <group>
+                  <title>Reference Implementation</title>
+                  <packages>org.jdtaus.core.container.ri*:org.jdtaus.core.lang.ri*:org.jdtaus.core.monitor.ri*:org.jdtaus.core.text.ri*:org.jdtaus.core.logging.ri*:org.jdtaus.core.sax.ri*:org.jdtaus.core.messages*</packages>
+                </group>
+                <group>
+                  <title>Tests</title>
+                  <packages>org.jdtaus.core.container.it*:org.jdtaus.core.lang.it*::org.jdtaus.core.lang.spi.it*:org.jdtaus.core.io.it*:org.jdtaus.core.monitor.it*::org.jdtaus.core.monitor.spi.it*:org.jdtaus.core.text.it*:org.jdtaus.core.text.spi.it*:org.jdtaus.core.logging.spi.it*</packages>
+                </group>
+                <group>
+                  <title>Maven 2 Mojos</title>
+                  <packages>org.jdtaus.core.container.mojo*:org.jdtaus.mojo*</packages>
+                </group>
+              </groups>
+            </configuration>
+          </reportSet -->
         </reportSets>
       </plugin>
       <plugin>
