@@ -25,7 +25,7 @@ jDTAUS Resource Mojo: Usage
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-resource-mojo</artifactId>
-      <version>RELEASE</version>
+      <version>3.3</version>
       <executions>
         <execution>
           <id>jdtaus-generate</id>
@@ -83,4 +83,4 @@ jDTAUS Resource Mojo: Usage
   module descriptor.
 
   See {{{/../jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
-  XML schema regarding the document structured.
+  XML schema regarding the document structure.

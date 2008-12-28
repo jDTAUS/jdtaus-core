@@ -14,6 +14,12 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.text.MessageFormat;
 
+#if($comment)
+/**
+ * Accessor methods for the <code>"$modelManager.getJavaClasspathLocation( $implementation )"</code>
+ * <code>ResourceBundle</code>.
+ */
+#end
 class ${modelManager.getJavaTypeName( $implementation )}
 {
 
@@ -24,7 +30,7 @@ class ${modelManager.getJavaTypeName( $implementation )}
     new ${modelManager.getJavaTypeName( $implementation )}();
 
 #if($comment)
-  /** Creates a new ${modelManager.getJavaTypeName( $implementation )} instance. */
+  /** Creates a new <code>${modelManager.getJavaTypeName( $implementation )}</code> instance. */
 #end
   ${modelManager.getJavaTypeName( $implementation )}()
   {
@@ -38,9 +44,9 @@ class ${modelManager.getJavaTypeName( $implementation )}
 
 #if($comment)
   /**
-   * Gets the ${modelManager.getJavaTypeName( $implementation )} singleton.
+   * Gets the <code>${modelManager.getJavaTypeName( $implementation )}</code> singleton.
    *
-   * @return the ${modelManager.getJavaTypeName( $implementation )} singleton.
+   * @return The <code>${modelManager.getJavaTypeName( $implementation )}</code> singleton.
    */
 #end
   static ${modelManager.getJavaTypeName( $implementation )} getInstance()
@@ -60,10 +66,10 @@ class ${modelManager.getJavaTypeName( $implementation )}
   /**
    * Gets a message for a given key and locale.
    *
-   * @param key the key of the message to return.
-   * @param locale the locale of the message.
+   * @param key The key of the message to return.
+   * @param locale The locale of the message.
    *
-   * @return message for {@code key} using {@code locale}.
+   * @return Message for {@code key} using {@code locale}.
    */
 #end
   private String getMessage( final String key, Locale locale )
