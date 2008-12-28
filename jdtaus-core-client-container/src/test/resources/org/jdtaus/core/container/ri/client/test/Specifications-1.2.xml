@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  ${pom.name}
+  Copyright (c) 2005 Christian Schulte
+
+  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+  <cs@jdtaus.org> (+49 2331 3543887)
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Document   : module.xml
+  Author     : Christian Schulte <cs@jdtaus.org>
+  Version    : $Id$
+  Description: Runtime configuration for the ${pom.name} module.
+
+  $Id$
+-->
+<module:module xmlns:container="http://jdtaus.org/core/model/container"
+               xmlns:module="http://jdtaus.org/core/model/container/module"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://jdtaus.org/core/model/container/module http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd
+                                   http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/xsd/jdtaus-container-1.0.xsd"
+               container:name="${pom.name} Specifications 1.2"
+               container:description="${pom.description}"
+               container:version="${pom.version}"
+               module:modelVersion="1.2">
+  <container:specifications>
+    <container:specification container:identifier="org.jdtaus.core.logging.spi.Logger-1_2"
+                             container:description="${pom.description}"
+                             container:vendor="${pom.organization.name}"
+                             container:version="${pom.version}"
+                             container:singleton="true"
+                             container:multiplicity="one"/>
+
+  </container:specifications>
+</module:module>

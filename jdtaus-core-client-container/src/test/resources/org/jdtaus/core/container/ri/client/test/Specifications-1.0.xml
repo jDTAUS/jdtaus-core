@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  jDTAUS - DTAUS fileformat.
+  Copyright (c) 2005 Christian Schulte <cs@schulte.it>
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Document   : module.xml
+  Author     : Christian Schulte <cs@jdtaus.org>
+  Version    : $Id$
+  Description: Runtime configuration for the ${pom.name} module.
+
+-->
+
+<jdtaus:module xmlns="http://jdtaus.org/runtime/container/xml"
+               xmlns:jdtaus="http://jdtaus.org/runtime/container/xml"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://jdtaus.org/runtime/container/xml http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/jdtaus-module-1.0.xsd"
+               jdtaus:name="${pom.name} Specifications 1.0"
+               jdtaus:description="${pom.description}"
+               jdtaus:version="1.0">
+
+  <jdtaus:specifications>
+    <jdtaus:specification jdtaus:identifier="org.jdtaus.core.logging.spi.Logger-1_0"
+                          jdtaus:description="${pom.description}"
+                          jdtaus:vendor="${pom.organization.name}"
+                          jdtaus:version="${pom.version}"
+                          jdtaus:singleton="true"/>
+
+  </jdtaus:specifications>
+</jdtaus:module>

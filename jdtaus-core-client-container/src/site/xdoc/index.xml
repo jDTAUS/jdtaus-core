@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <properties>
+    <title>jDTAUS Core RI Client Container</title>
+    <author email="cs@jdtaus.org">Christian Schulte</author>
+  </properties>
+  <body>
+    <section name="Introduction">
+      <p>
+        This artifact provides the jDTAUS <code>Container</code>,
+        <code>Context</code> and <code>Model</code> reference implementation
+        backed by document resources.
+      </p>
+      <p>
+        The implementation supports documents conforming to schemas as listed in
+        the following table. Support for deprecated schemas may be removed in
+        next major releases so that it is recommended to upgrade any documents
+        to conform to the latest schema before upgrading to such releases.
+        <table>
+          <tr>
+            <th>Namespace URI</th>
+            <th>Schema location</th>
+            <th>Introduced in</th>
+            <th>End of support</th>
+          </tr>
+          <tr>
+            <td>http://jdtaus.org/core/runtime/container/xml</td>
+            <td>
+              <a href="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/jdtaus-module-1.0.xsd">jdtaus-module-1.0.xsd</a>
+            </td>
+            <td>1.0</td>
+            <td>2.0</td>
+          </tr>
+          <tr>
+            <td>http://jdtaus.org/core/runtime/container/xml</td>
+            <td>
+              <a href="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/jdtaus-module-1.1.xsd">jdtaus-module-1.1.xsd</a>
+            </td>
+            <td>1.1</td>
+            <td>2.0</td>
+          </tr>
+          <tr>
+            <td>http://jdtaus.org/core/model/container/module</td>
+            <td>
+              <a href="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd">jdtaus-module-1.2.xsd</a>
+            </td>
+            <td>1.4</td>
+            <td>2.0</td>
+          </tr>
+          <tr>
+            <td>http://jdtaus.org/core/model/container</td>
+            <td>
+              <a href="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd">jdtaus-container-1.1.xsd</a>
+            </td>
+            <td>1.5</td>
+            <td></td>
+          </tr>
+        </table>
+      </p>
+      <p>
+        To provide any documents to the implementation, an application's
+        classpath needs to be setup to contain documents for use by
+        <a href="apidocs/org/jdtaus/core/container/ri/client/DefaultModel.html">the <code>Model</code> implementation</a>
+        which searches for classpath document resources located
+        at <code>META-INF/jdtaus/module.xml</code> by default.
+      </p>
+    </section>
+  </body>
+</document>
