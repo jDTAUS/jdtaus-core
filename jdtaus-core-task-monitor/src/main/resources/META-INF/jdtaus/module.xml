@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  ${pom.name}
+  Copyright (c) 2005 Christian Schulte
+
+  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+  <cs@jdtaus.org> (+49 2331 3543887)
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Document   : module.xml
+  Author     : Christian Schulte <cs@jdtaus.org>
+  Version    : $Id$
+  Description: Runtime configuration for the ${pom.name} module.
+
+-->
+<container:module xmlns:container="http://jdtaus.org/core/model/container"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+                  container:name="${pom.name}"
+                  container:version="${pom.version}"
+                  container:modelVersion="1.4">
+
+  <container:documentation container:defaultLanguage="en">
+    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+  </container:documentation>
+
+  <container:implementations>
+    <container:implementation container:identifier="org.jdtaus.core.monitor.ri.DefaultTaskMonitor"
+                              container:name="jDTAUS Core SPI"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[jDTAUS Core SPI TaskMonitor reference implementation.]]></container:text>
+      </container:documentation>
+
+      <container:specifications>
+        <container:reference container:identifier="org.jdtaus.core.monitor.TaskEventSource"
+                             container:version="1.3"/>
+        <container:reference container:identifier="org.jdtaus.core.monitor.spi.TaskMonitor"
+                             container:version="1.3"/>
+      </container:specifications>
+      <container:dependencies>
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
+
+          <container:properties>
+            <container:property container:name="name"
+                                container:type="java.lang.String"
+                                container:value="org.jdtaus.core.monitor.ri.DefaultTaskMonitor"/>
+
+          </container:properties>
+        </container:dependency>
+        <container:dependency container:identifier="org.jdtaus.core.monitor.TaskListener"
+                              container:version="1.0"
+                              container:name="TaskListener"
+                              container:bound="false"/>
+
+        <container:dependency container:identifier="java.util.Locale"
+                              container:implementationName="default"
+                              container:version="1.1"
+                              container:name="Locale"
+                              container:bound="false"/>
+
+      </container:dependencies>
+      <container:properties>
+        <container:property container:name="defaultPollIntervalMillis"
+                            container:type="java.lang.Long"
+                            container:value="250">
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default number of milliseconds per poll interval.]]></container:text>
+          </container:documentation>
+        </container:property>
+      </container:properties>
+      <container:messages>
+        <container:reference container:name="threadStarted"/>
+        <container:reference container:name="threadDied"/>
+        <container:reference container:name="taskAlreadyStarted"/>
+      </container:messages>
+    </container:implementation>
+  </container:implementations>
+  <container:messages>
+    <container:message container:name="threadStarted">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about a started thread.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[New thread started. Period {0,number}ms.]]></container:text>
+        <container:text container:language="de"><![CDATA[Neuen Thread gestartet. Abtastperiode {0,number}ms.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="periodMillis" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Period of the started thread.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="threadDied">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about a dead thread.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The monitor thread terminated abnormally. Consult the logs for any causes.]]></container:text>
+        <container:text container:language="de"><![CDATA[Thread abnorm beendet. Konsultieren Sie die Protokolle für mögliche Ursachen.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="taskAlreadyStarted">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about an already running task.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[A task with description {0} already has been started at {1,time,long}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Ein Vorgang mit Beschreibung {0} wurde bereits um {1,time,long} gestartet.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="taskDescription" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Description of the already running task.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="startTime" container:type="time">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Time the already running task got started.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+  </container:messages>
+</container:module>
