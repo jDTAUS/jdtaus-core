@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  ${pom.name}
+  Copyright (c) 2005 Christian Schulte
+
+  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+  <cs@jdtaus.org> (+49 2331 3543887)
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Document   : module.xml
+  Author     : Christian Schulte <cs@jdtaus.org>
+  Version    : $Id$
+  Description: Runtime configuration for the ${pom.name} module.
+
+-->
+<container:module xmlns:container="http://jdtaus.org/core/model/container"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+                  container:name="${pom.name}"
+                  container:version="${pom.version}"
+                  container:modelVersion="1.4">
+
+  <container:documentation container:defaultLanguage="en">
+    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+  </container:documentation>
+
+  <container:implementations>
+    <container:implementation container:identifier="org.jdtaus.core.sax.ri.resolver.ClasspathEntityResolver"
+                              container:name="jDTAUS Core SPI"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[EntityResolver implementation resolving XML schemas from classpath resources.]]></container:text>
+      </container:documentation>
+
+      <container:specifications>
+        <container:reference container:identifier="org.xml.sax.EntityResolver"/>
+      </container:specifications>
+
+      <container:dependencies>
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
+
+          <container:properties>
+            <container:property container:name="name"
+                                container:type="java.lang.String"
+                                container:value="org.jdtaus.core.sax.ri.resolver.ClasspathEntityResolver"/>
+
+          </container:properties>
+
+        </container:dependency>
+        <container:dependency container:identifier="java.util.Locale"
+                              container:implementationName="default"
+                              container:version="1.1"
+                              container:name="Locale"
+                              container:bound="false"/>
+
+      </container:dependencies>
+
+      <container:properties>
+        <container:property container:name="defaultSchemaExtensions"
+                            container:type="java.lang.String"
+                            container:value="xsd">
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default extensions to match classpath resources with (separated by ',').]]></container:text>
+          </container:documentation>
+        </container:property>
+      </container:properties>
+
+      <container:messages>
+        <container:reference container:name="candidateSchema"/>
+        <container:reference container:name="resolvedSystemId"/>
+        <container:reference container:name="unsupportedSystemIdUri"/>
+        <container:reference container:name="disabled"/>
+      </container:messages>
+    </container:implementation>
+  </container:implementations>
+  <container:messages>
+    <container:message container:name="candidateSchema">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about a schema added to the list of candidate schemas.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Added {0} to the list of candidate schema resources.]]></container:text>
+        <container:text container:language="de"><![CDATA[{0} zur Liste der Schema-Kandidaten hinzugefügt.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="schemaLocation" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Location of the candidate schema.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="resolvedSystemId">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about a resolved schema.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[{0}
+        -> {1}]]></container:text>
+        <container:text container:language="de"><![CDATA[{0}
+        -> {1}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="systemId" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[System id of the schema.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="resolvedSystemId" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Resolved system id of the schema.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="unsupportedSystemIdUri">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about an unsupported system id URI.]]>
+        </container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Unsupported system id URI "{0}". {1}]]></container:text>
+        <container:text container:language="de"><![CDATA[Nicht unterstützter System-ID URI "{0}". {1}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="systemIdUri" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Unsupported system id URI.]]>
+            </container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="cause" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Cause the URI is not supported.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="disabled">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[.]]>
+        </container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Could not process classpath resources. Resolver is disabled ! {0}]]></container:text>
+        <container:text container:language="de"><![CDATA[Klassenpfad-Resourcen konnten nicht verarbeitet werden. Resolver wurde deaktiviert ! {0}]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="cause" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Cause the resolver is disabled.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+  </container:messages>
+</container:module>

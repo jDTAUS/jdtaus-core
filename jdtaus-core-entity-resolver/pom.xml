@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>jdtaus-core</artifactId>
+    <groupId>org.jdtaus</groupId>
+    <version>1.8-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jdtaus-core-entity-resolver</artifactId>
+  <groupId>org.jdtaus.core.sax</groupId>
+  <name>jDTAUS Core RI Entity Resolver</name>
+  <description>jDTAUS XML entity resolver resolving XML schemas from classpath resources.</description>
+  <build>
+    <resources>
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.jdtaus.mojo</groupId>
+        <artifactId>jdtaus-container-mojo</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.jdtaus.core.container</groupId>
+            <artifactId>jdtaus-core-client-container</artifactId>
+            <version>${jdtaus-core.version}</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <inputEncoding>UTF-8</inputEncoding>
+          <outputEncoding>UTF-8</outputEncoding>
+          <locales>en</locales>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.jdtaus.core</groupId>
+      <artifactId>jdtaus-core-spi</artifactId>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>jdtaus-container-mojo</artifactId>
+        <groupId>org.jdtaus.mojo</groupId>
+        <version>${jdtaus-container-mojo.version}</version>
+        <configuration>
+          <moduleName>${pom.name}</moduleName>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>
