@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  ${pom.name}
+  Copyright (c) 2005 Christian Schulte
+
+  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+  <cs@jdtaus.org> (+49 2331 3543887)
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Document   : module.xml
+  Author     : Christian Schulte <cs@jdtaus.org>
+  Version    : $Id$
+  Description: Runtime configuration for the ${pom.name} module.
+
+-->
+<container:module xmlns:container="http://jdtaus.org/core/model/container"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+                  container:name="${pom.name}"
+                  container:version="${pom.version}"
+                  container:modelVersion="1.4">
+
+  <container:documentation container:defaultLanguage="en">
+    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+  </container:documentation>
+
+  <container:implementations>
+    <container:implementation container:identifier="org.jdtaus.core.container.ri.servlet.ContextLostException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when the ServletContext for a thread of execution is not set.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="contextLost"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.ri.servlet.SessionLostException"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Gets thrown when the HttpSession for a thread of execution is null.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="sessionLost"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.ri.servlet.ServletFilter"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[jDTAUS webapp integration filter.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="systemProperty"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.container.ri.servlet.ServletRequestLocale"
+                              container:name="default"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[This class overwrites the automatically discovered default java.util.Locale implementation and is used to provide the locale of the current servlet request in service.]]></container:text>
+      </container:documentation>
+      <container:specifications>
+        <container:reference container:identifier="java.util.Locale"/>
+      </container:specifications>
+    </container:implementation>
+  </container:implementations>
+
+  <container:messages>
+    <container:message container:name="contextLost">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about the thread without context.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[No context available for thread {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Kein Context für Thread {0}.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="threadName" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Name of the thread without context.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="sessionLost">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about the thread without session.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[No session available for thread {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Keine Sitzung für Thread {0}.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="threadName" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Name of the thread without session.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="systemProperty">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about an updated system property.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[System property {0} set to {1}.]]></container:text>
+        <container:text container:language="de"><![CDATA[System Eigenschaft {0} auf {1} gesetzt.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="propertyName" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Name of the updated system property.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="value" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Value the system property got updated to.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+  </container:messages>
+</container:module>
