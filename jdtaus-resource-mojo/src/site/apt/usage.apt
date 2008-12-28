@@ -82,5 +82,5 @@ jDTAUS Resource Mojo: Usage
   together with corresponding properties files for all messages from the
   module descriptor.
 
-  See {{{/../jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
+  See {{{../jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
   XML schema regarding the document structure.
