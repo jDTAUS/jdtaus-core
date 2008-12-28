@@ -56,7 +56,7 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
 
     /** Location of the implementation template. */
     private static final String FACTORY_BEAN_TEMPLATE_LOCATION =
-        "META-INF/templates/FactoryBean.java.vm";
+                                "META-INF/templates/FactoryBean.java.vm";
 
     /**
      * Name of the spring beans descriptor to generate.
@@ -115,18 +115,19 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         final ClassLoader mavenLoader =
-            Thread.currentThread().getContextClassLoader();
+                          Thread.currentThread().getContextClassLoader();
 
         try
         {
             final ClassLoader runtimeLoader =
-                this.getRuntimeClassLoader( mavenLoader );
+                              this.getRuntimeClassLoader( mavenLoader );
 
             Thread.currentThread().setContextClassLoader( runtimeLoader );
+            enableThreadContextClassLoader();
 
-            final BeansElement springModel =
-                this.getModelManager().getSpringModel(
-                this.getFactoryBean(), ModelFactory.newModel().getModules() );
+            final BeansElement springModel = this.getModelManager().
+                getSpringModel( this.getFactoryBean(),
+                                ModelFactory.newModel().getModules() );
 
             if ( springModel.getImportOrAliasOrBean().size() > 0 )
             {
@@ -137,7 +138,7 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
 
                 this.getModelManager().getSpringMarshaller().
                     marshal( springModel, new FileOutputStream(
-                             this.getSpringDescriptorFile() ) );
+                    this.getSpringDescriptorFile() ) );
 
                 this.getLog().info(
                     SpringDescriptorMojoBundle.getInstance().
@@ -151,11 +152,13 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
                 beanFactory.containsBean( "TEST" );
 
                 final JavaArtifact artifact =
-                    new JavaArtifact( this.getFactoryBean() );
+                                   new JavaArtifact( this.getFactoryBean() );
 
                 final File source =
-                    new File( this.getSourceRoot(), artifact.getPackagePath() +
-                              File.separator + artifact.getName() + ".java" );
+                           new File( this.getSourceRoot(),
+                                     artifact.getPackagePath() +
+                                     File.separator + artifact.getName() +
+                                     ".java" );
 
                 if ( !source.getParentFile().exists() )
                 {
@@ -179,8 +182,7 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
                 ctx.put( "project", this.getMavenProject() );
 
                 this.getVelocity().mergeTemplate(
-                    FACTORY_BEAN_TEMPLATE_LOCATION,
-                    ctx, writer );
+                    FACTORY_BEAN_TEMPLATE_LOCATION, ctx, writer );
 
                 writer.close();
 
@@ -221,7 +223,9 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
         }
         finally
         {
+            disableThreadContextClassLoader();
             Thread.currentThread().setContextClassLoader( mavenLoader );
         }
     }
+
 }

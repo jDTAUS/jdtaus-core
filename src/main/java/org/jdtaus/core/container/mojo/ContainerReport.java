@@ -179,8 +179,8 @@ public class ContainerReport extends AbstractMavenReport
 
         if ( canGenerate )
         {
-            final File modelFile =
-                new File( this.buildOutputDirectory, "container-report.xml" );
+            final File modelFile = new File( this.buildOutputDirectory,
+                                             "container-report.xml" );
 
             canGenerate = modelFile.exists();
         }
@@ -207,20 +207,21 @@ public class ContainerReport extends AbstractMavenReport
         throws MavenReportException
     {
         final ClassLoader mavenLoader =
-            Thread.currentThread().getContextClassLoader();
+                          Thread.currentThread().getContextClassLoader();
 
         try
         {
-            final File modelFile =
-                new File( this.buildOutputDirectory, "container-report.xml" );
+            final File modelFile = new File( this.buildOutputDirectory,
+                                             "container-report.xml" );
 
-            final ResourceLoader resourceLoader =
-                new ResourceLoader( this.getClass().getClassLoader() );
+            final ResourceLoader resourceLoader = new ResourceLoader(
+                this.getClass().getClassLoader() );
 
             resourceLoader.addResource( "META-INF/jdtaus/module.xml",
                                         modelFile.toURI().toURL() );
 
             Thread.currentThread().setContextClassLoader( resourceLoader );
+            AbstractContainerMojo.enableThreadContextClassLoader();
 
             this.getSink().head();
             this.getSink().title();
@@ -257,7 +258,7 @@ public class ContainerReport extends AbstractMavenReport
                 this.getSink().section1_();
 
                 if ( module.getImplementations().size() > 0 ||
-                    module.getSpecifications().size() > 0 )
+                     module.getSpecifications().size() > 0 )
                 {
                     this.getSink().section1();
                     this.getSink().sectionTitle1();
@@ -310,8 +311,7 @@ public class ContainerReport extends AbstractMavenReport
         catch ( MissingModuleException e )
         {
             this.getSink().paragraph();
-            this.getSink().text(
-                ContainerReportBundle.getInstance().
+            this.getSink().text( ContainerReportBundle.getInstance().
                 getNotAModuleMessage( locale ) );
 
             this.getSink().paragraph_();
@@ -325,6 +325,7 @@ public class ContainerReport extends AbstractMavenReport
         }
         finally
         {
+            AbstractContainerMojo.disableThreadContextClassLoader();
             Thread.currentThread().setContextClassLoader( mavenLoader );
         }
     }
@@ -612,10 +613,10 @@ public class ContainerReport extends AbstractMavenReport
                 this.getSink().tableCell();
 
                 for ( int is = impl.getImplementedSpecifications().size() - 1;
-                    is >= 0; is-- )
+                      is >= 0; is-- )
                 {
                     final Specification spec =
-                        impl.getImplementedSpecifications().
+                                        impl.getImplementedSpecifications().
                         getSpecification( is );
 
                     this.getSink().monospaced();
@@ -694,7 +695,7 @@ public class ContainerReport extends AbstractMavenReport
                 final Dependency dep = unresolved.getDependency( i );
 
                 if ( rendered.contains( dep.getSpecification().
-                                        getIdentifier() ) )
+                    getIdentifier() ) )
                 {
                     continue;
                 }
@@ -711,8 +712,8 @@ public class ContainerReport extends AbstractMavenReport
                 {
                     this.getSink().paragraph();
                     this.getSink().text( dep.getSpecification().
-                                         getDocumentation().
-                                         getValue( locale ) );
+                        getDocumentation().
+                        getValue( locale ) );
 
                     this.getSink().paragraph_();
                 }
@@ -753,7 +754,7 @@ public class ContainerReport extends AbstractMavenReport
                                   final Locale locale )
     {
         for ( int i = model.getSpecifications().size() - 1;
-            i >= 0; i-- )
+              i >= 0; i-- )
         {
             final Specification spec = model.getSpecifications().
                 getSpecification( i );
@@ -773,7 +774,7 @@ public class ContainerReport extends AbstractMavenReport
             {
                 this.getSink().paragraph();
                 this.getSink().text( spec.getDocumentation().
-                                     getValue( locale ) );
+                    getValue( locale ) );
 
                 this.getSink().paragraph_();
             }
@@ -797,7 +798,7 @@ public class ContainerReport extends AbstractMavenReport
                     spec.getIdentifier().replaceAll( "\\.", "/" ) + ".html" );
 
                 this.getSink().text( ContainerReportBundle.getInstance().
-                                     getSeeJavadocLinkMessage( locale ) );
+                    getSeeJavadocLinkMessage( locale ) );
 
                 this.getSink().link_();
                 this.getSink().paragraph_();
@@ -807,7 +808,7 @@ public class ContainerReport extends AbstractMavenReport
         }
 
         for ( int i = model.getImplementations().size() - 1;
-            i >= 0; i-- )
+              i >= 0; i-- )
         {
             final Implementation impl = model.getImplementations().
                 getImplementation( i );
@@ -827,7 +828,7 @@ public class ContainerReport extends AbstractMavenReport
             {
                 this.getSink().paragraph();
                 this.getSink().text( impl.getDocumentation().
-                                     getValue( locale ) );
+                    getValue( locale ) );
 
                 this.getSink().paragraph_();
             }
@@ -945,10 +946,10 @@ public class ContainerReport extends AbstractMavenReport
             this.getSink().paragraph();
             this.generateMessagesTable( impl.getMessages(),
                                         ContainerReportBundle.getInstance().
-                                        getMessagesTableDescriptionMessage(
-                                        locale ),
+                getMessagesTableDescriptionMessage(
+                locale ),
                                         ContainerReportBundle.getInstance().
-                                        getNoMessagesMessage( locale ),
+                getNoMessagesMessage( locale ),
                                         locale );
 
             this.getSink().paragraph_();
@@ -960,7 +961,7 @@ public class ContainerReport extends AbstractMavenReport
                     impl.getIdentifier().replaceAll( "\\.", "/" ) + ".html" );
 
                 this.getSink().text( ContainerReportBundle.getInstance().
-                                     getSeeJavadocLinkMessage( locale ) );
+                    getSeeJavadocLinkMessage( locale ) );
 
                 this.getSink().link_();
                 this.getSink().paragraph_();
@@ -1047,7 +1048,7 @@ public class ContainerReport extends AbstractMavenReport
                 {
                     this.getSink().paragraph();
                     this.getSink().text( pr.getDocumentation().
-                                         getValue( locale ) );
+                        getValue( locale ) );
 
                     this.getSink().paragraph_();
                 }
@@ -1143,7 +1144,7 @@ public class ContainerReport extends AbstractMavenReport
                     this.getSink().paragraph();
                     this.getSink().monospaced();
                     this.getSink().text( msg.getDocumentation().
-                                         getValue( locale ) );
+                        getValue( locale ) );
 
                     this.getSink().monospaced_();
                     this.getSink().paragraph_();
@@ -1208,9 +1209,9 @@ public class ContainerReport extends AbstractMavenReport
                         getDependency( d ).clone();
 
                     if ( dep.getImplementation() == null &&
-                        dep.getSpecification().getMultiplicity() ==
-                        Specification.MULTIPLICITY_ONE &&
-                        dep.getSpecification().getImplementations().
+                         dep.getSpecification().getMultiplicity() ==
+                         Specification.MULTIPLICITY_ONE &&
+                         dep.getSpecification().getImplementations().
                         size() != 1 )
                     {
                         dep = (Dependency) dep.clone();

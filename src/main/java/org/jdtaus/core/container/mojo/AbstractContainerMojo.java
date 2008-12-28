@@ -64,6 +64,13 @@ public abstract class AbstractContainerMojo extends AbstractMojo
     //--Configuration-----------------------------------------------------------
 
     /**
+     * Name of the system property controlling the use of the context
+     * classloader.
+     */
+    private static final String SYS_ENABLE_CONTEXT_CLASSLOADER =
+        "org.jdtaus.core.container.ClassLoaderFactory.enableContextClassloader";
+
+    /**
      * @parameter expression="${project}"
      * @required
      * @readonly
@@ -81,6 +88,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
      * The encoding to use for reading and writing sources. By default the
      * system's default encoding will be used.
      * @parameter expression="${encoding}"
+     *            default-value="${project.build.sourceEncoding}"
      * @optional
      */
     private String encoding;
@@ -160,8 +168,8 @@ public abstract class AbstractContainerMojo extends AbstractMojo
     protected final Locale getLocale()
     {
         return this.locale == null
-            ? Locale.getDefault()
-            : new Locale( this.locale );
+               ? Locale.getDefault()
+               : new Locale( this.locale );
 
     }
 
@@ -183,7 +191,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
 
         int i = 0;
         for ( Iterator it = this.getMavenProject().getRuntimeArtifacts().
-            iterator(); it.hasNext();)
+            iterator(); it.hasNext(); )
         {
             final Artifact a = (Artifact) it.next();
 
@@ -207,7 +215,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
 
         i = 0;
         for ( Iterator it = this.getMavenProject().getCompileArtifacts().
-            iterator(); it.hasNext();)
+            iterator(); it.hasNext(); )
         {
             final Artifact a = (Artifact) it.next();
 
@@ -247,11 +255,11 @@ public abstract class AbstractContainerMojo extends AbstractMojo
 
         elements.add( this.getMavenProject().getBuild().getOutputDirectory() );
         elements.add( this.getMavenProject().getBuild().
-                      getTestOutputDirectory() );
+            getTestOutputDirectory() );
 
         int i = 0;
         for ( Iterator it = this.getMavenProject().getTestArtifacts().
-            iterator(); it.hasNext();)
+            iterator(); it.hasNext(); )
         {
             final Artifact a = (Artifact) it.next();
 
@@ -347,6 +355,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
     {
         return false;
     }
+
     /** Default source include patterns. */
     protected static final String[] DEFAULT_SOURCE_INCLUDES =
     {
@@ -402,6 +411,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
          * {@code false} if not.
          */
         boolean isModified();
+
     }
 
     /**
@@ -436,11 +446,11 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         final String fileName = className.replace( '.', File.separatorChar ).
             concat( ".java" );
 
-        for ( it = roots.iterator(); it.hasNext();)
+        for ( it = roots.iterator(); it.hasNext(); )
         {
             source = (String) it.next();
             file =
-                new File( source.concat( File.separator ).concat( fileName ) );
+            new File( source.concat( File.separator ).concat( fileName ) );
             if ( file.canRead() && file.canWrite() )
             {
                 ret = file;
@@ -471,8 +481,8 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         Iterator j;
         final Collection files = new LinkedList();
 
-        for ( i = this.getMavenProject().getCompileSourceRoots().
-                iterator(); i.hasNext();)
+        for ( i = this.getMavenProject().getCompileSourceRoots().iterator();
+              i.hasNext(); )
         {
             sourceRoot = (String) i.next();
             parentRoot = new File( sourceRoot );
@@ -488,8 +498,8 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             scanner.addDefaultExcludes();
             scanner.scan();
 
-            for ( j = Arrays.asList( scanner.getIncludedFiles() ).
-                    iterator(); j.hasNext();)
+            for ( j = Arrays.asList( scanner.getIncludedFiles() ).iterator();
+                  j.hasNext(); )
             {
                 file = new File( parentRoot, (String) j.next() );
                 files.add( file );
@@ -515,8 +525,8 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         Iterator j;
         final Collection files = new LinkedList();
 
-        for ( i = this.getMavenProject().getTestCompileSourceRoots().
-                iterator(); i.hasNext();)
+        for ( i = this.getMavenProject().getTestCompileSourceRoots().iterator();
+              i.hasNext(); )
         {
             sourceRoot = (String) i.next();
             parentRoot = new File( sourceRoot );
@@ -532,8 +542,8 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             scanner.addDefaultExcludes();
             scanner.scan();
 
-            for ( j = Arrays.asList( scanner.getIncludedFiles() ).
-                    iterator(); j.hasNext();)
+            for ( j = Arrays.asList( scanner.getIncludedFiles() ).iterator();
+                  j.hasNext(); )
             {
                 file = new File( parentRoot, (String) j.next() );
                 files.add( file );
@@ -654,8 +664,8 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             else
             {
                 reader = new BufferedReader( new InputStreamReader(
-                                             new FileInputStream( file ),
-                                             this.getEncoding() ) );
+                    new FileInputStream( file ),
+                    this.getEncoding() ) );
 
             }
 
@@ -723,8 +733,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
                 }
 
                 this.getLog().info( AbstractContainerMojoBundle.getInstance().
-                                    getFileInfoMessage( Locale.getDefault(),
-                                                        file.getName() ) );
+                    getFileInfoMessage( Locale.getDefault(), file.getName() ) );
 
                 fileWriter.write( str );
                 fileWriter.close();
@@ -756,7 +765,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         }
 
         final char[] spaces =
-            new char[ this.spacesPerIndentationLevel.intValue() ];
+                     new char[ this.spacesPerIndentationLevel.intValue() ];
 
         Arrays.fill( spaces, ' ' );
         stringBuffer.append( spaces );
@@ -781,12 +790,12 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         try
         {
             int i = 0;
-            for ( it = this.getClasspathElements().iterator(); it.hasNext();)
+            for ( it = this.getClasspathElements().iterator(); it.hasNext(); )
             {
                 final String element = (String) it.next();
                 final URL url = new File( element ).toURI().toURL();
                 if ( !urls.contains( url ) &&
-                    this.isClasspathElementIncluded( element ) )
+                     this.isClasspathElementIncluded( element ) )
                 {
                     urls.add( url );
 
@@ -841,12 +850,12 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         {
             int i = 0;
             for ( it = this.getTestClasspathElements().iterator();
-                it.hasNext();)
+                  it.hasNext(); )
             {
                 final String element = (String) it.next();
                 final URL url = new File( element ).toURI().toURL();
                 if ( !urls.contains( url ) &&
-                    this.isTestClasspathElementIncluded( element ) )
+                     this.isTestClasspathElementIncluded( element ) )
                 {
                     urls.add( url );
 
@@ -930,9 +939,33 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         commentLinebreak.append( " *" );
 
         normalized =
-            normalized.replaceAll( "\n", commentLinebreak.toString() );
+        normalized.replaceAll( "\n", commentLinebreak.toString() );
 
         return normalized;
+    }
+
+    /**
+     * Enables the use of the thread context classloader by setting system
+     * property {@code org.jdtaus.core.container.ClassLoaderFactory.enableContextClassloader}
+     * to {@code true}.
+     */
+    protected static void enableThreadContextClassLoader()
+    {
+        System.setProperty( SYS_ENABLE_CONTEXT_CLASSLOADER,
+                            Boolean.toString( true ) );
+
+    }
+
+    /**
+     * Disables the use of the thread context classloader by setting system
+     * property {@code org.jdtaus.core.container.ClassLoaderFactory.enableContextClassloader}
+     * to {@code true}.
+     */
+    protected static void disableThreadContextClassLoader()
+    {
+        System.setProperty( SYS_ENABLE_CONTEXT_CLASSLOADER,
+                            Boolean.toString( false ) );
+
     }
 
     //---------------------------------------------------AbstractContainerMojo--

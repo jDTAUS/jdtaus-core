@@ -75,5 +75,11 @@
       Corrected dependency resolution to support standalone artifacts.]]>
       </action>
     </release>
+    <release version="3.2" date="2008-12-28"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Added goals java-container-tests, java-commit and java-commit-tests.]]>
+      </action>
+    </release>
   </body>
 </document>

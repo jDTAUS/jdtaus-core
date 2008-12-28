@@ -50,9 +50,8 @@ public class VerifyJarMojo extends VerifyModelMojo
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         this.getLog().info( VerifyJarMojoBundle.getInstance().
-                            getJarFileMessage(
-                            Locale.getDefault(),
-                            this.jarFile.getAbsolutePath() ) );
+            getJarFileMessage( Locale.getDefault(),
+                               this.jarFile.getAbsolutePath() ) );
 
         super.execute();
     }
@@ -67,4 +66,5 @@ public class VerifyJarMojo extends VerifyModelMojo
 
         return new ResourceLoader( urls, parent );
     }
+
 }

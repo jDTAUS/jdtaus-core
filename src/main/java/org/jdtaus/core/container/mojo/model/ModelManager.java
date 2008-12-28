@@ -34,7 +34,7 @@ import org.jdtaus.core.container.mojo.model.container.ArgumentElement;
 import org.jdtaus.core.container.mojo.model.container.ArgumentType;
 import org.jdtaus.core.container.mojo.model.container.ArgumentsElement;
 import org.jdtaus.core.container.mojo.model.container.DependenciesElement;
-import org.jdtaus.core.container.mojo.model.container.Dependency;
+import org.jdtaus.core.container.mojo.model.container.DependencyElement;
 import org.jdtaus.core.container.mojo.model.container.ImplementationElement;
 import org.jdtaus.core.container.mojo.model.container.ImplementationsElement;
 import org.jdtaus.core.container.mojo.model.container.Message;
@@ -43,6 +43,7 @@ import org.jdtaus.core.container.mojo.model.container.MessageReference;
 import org.jdtaus.core.container.mojo.model.container.MessagesElement;
 import org.jdtaus.core.container.mojo.model.container.ModelObject;
 import org.jdtaus.core.container.mojo.model.container.Module;
+import org.jdtaus.core.container.mojo.model.container.ModuleElement;
 import org.jdtaus.core.container.mojo.model.container.ModulesElement;
 import org.jdtaus.core.container.mojo.model.container.Multiplicity;
 import org.jdtaus.core.container.mojo.model.container.ObjectFactory;
@@ -54,6 +55,7 @@ import org.jdtaus.core.container.mojo.model.container.PropertyType;
 import org.jdtaus.core.container.mojo.model.container.Scope;
 import org.jdtaus.core.container.mojo.model.container.SpecificationElement;
 import org.jdtaus.core.container.mojo.model.container.SpecificationReference;
+import org.jdtaus.core.container.mojo.model.container.Specifications;
 import org.jdtaus.core.container.mojo.model.container.SpecificationsElement;
 import org.jdtaus.core.container.mojo.model.container.Text;
 import org.jdtaus.core.container.mojo.model.container.Texts;
@@ -61,7 +63,7 @@ import org.jdtaus.core.container.mojo.model.spring.BeanElement;
 import org.jdtaus.core.container.mojo.model.spring.BeansElement;
 
 /**
- * Manages the {@code http://jdtaus.org/core/model/container} model.
+ * Manages the {@code http://jdtaus.org/core/model/container} namespace.
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $Id$
@@ -70,9 +72,6 @@ import org.jdtaus.core.container.mojo.model.spring.BeansElement;
  */
 public class ModelManager extends AbstractLogEnabled
 {
-
-    /** Component role. */
-    public static final String ROLE = ModelManager.class.getName();
 
     /** Package names of the container model classes. */
     private static final String CONTAINER_MODEL_PACKAGES =
@@ -197,15 +196,21 @@ public class ModelManager extends AbstractLogEnabled
     /**
      * Maps a container {@code Modules} instance to the JAXB model.
      *
-     * @param model the container model to map.
+     * @param cModules the container model to map.
      *
      * @return {@code model} mapped to the plugin's model.
      *
+     * @throws NullPointerException if {@code cModules} is {@code null}.
      * @throws JAXBException if mapping fails.
      */
     public ModulesElement getContainerModel(
         final org.jdtaus.core.container.Modules cModules ) throws JAXBException
     {
+        if ( cModules == null )
+        {
+            throw new NullPointerException( "cModules" );
+        }
+
         final ObjectFactory f = new ObjectFactory();
         final ModulesElement modules = f.createModulesElement();
 
@@ -235,6 +240,295 @@ public class ModelManager extends AbstractLogEnabled
         this.map( modules, cModules );
 
         return modules.getModule().size() > 0 ? modules : null;
+    }
+
+    /**
+     * Maps a container {@code Implementation} instance to the plugin's
+     * model with any references resolved.
+     *
+     * @param model The model to use for resolving references.
+     * @param implementation The container model to map.
+     *
+     * @return {@code implementation} mapped to the plugin's model with any
+     * references resolved.
+     *
+     * @throws NullPointerException if {@code implementation} or {@code model}
+     * is {@code null}.
+     * @throws JAXBException if mapping fails.
+     */
+    public ModuleElement getResolvedImplementation(
+        final org.jdtaus.core.container.Model model,
+        final org.jdtaus.core.container.Implementation implementation )
+        throws JAXBException
+    {
+        if ( implementation == null )
+        {
+            throw new NullPointerException( "implementation" );
+        }
+
+        final ObjectFactory f = new ObjectFactory();
+        final ImplementationElement e = f.createImplementationElement();
+        final ModuleElement m = f.createModuleElement();
+
+        m.setImplementations( f.createImplementationsElement() );
+        m.setSpecifications( f.createSpecificationsElement() );
+        m.setName( implementation.getIdentifier() );
+        m.setVersion( implementation.getVersion() );
+        this.map( m, implementation );
+
+        for ( int d = implementation.getDependencies().size() - 1; d >= 0; d-- )
+        {
+            if ( e.getDependencies() == null )
+            {
+                e.setDependencies( f.createDependenciesElement() );
+            }
+
+            final org.jdtaus.core.container.Dependency dep =
+                implementation.getDependencies().getDependency( d );
+
+            e.getDependencies().getDependency().
+                add( this.getDependency( dep ) );
+
+            if ( this.getSpecification(
+                m.getSpecifications(), dep.getSpecification().
+                getIdentifier() ) == null )
+            {
+                m.getSpecifications().getSpecification().add(
+                    this.getSpecification( model.getModules().getSpecification(
+                    dep.getSpecification().getIdentifier() ) ) );
+
+            }
+        }
+
+        e.setFinal( implementation.isFinal() );
+        e.setIdentifier( implementation.getIdentifier() );
+        e.setMessages( this.map( implementation.getMessages() ) );
+        e.setName( implementation.getName() );
+        e.setProperties( this.map( implementation.getProperties() ) );
+        e.setSpecifications( f.createSpecificationsElement() );
+
+        for ( int i = implementation.getImplementedSpecifications().size() - 1;
+              i >= 0; i-- )
+        {
+            final org.jdtaus.core.container.Specification s =
+                implementation.getImplementedSpecifications().
+                getSpecification( i );
+
+            final SpecificationReference ref = f.createSpecificationReference();
+            ref.setIdentifier( s.getIdentifier() );
+            ref.setVersion( s.getVersion() );
+            this.map( ref, s );
+
+            e.getSpecifications().getReference().add( ref );
+
+            if ( this.getSpecification( m.getSpecifications(),
+                                        s.getIdentifier() ) == null )
+            {
+                m.getSpecifications().getSpecification().
+                    add( this.getSpecification( model.getModules().
+                    getSpecification( s.getIdentifier() ) ) );
+
+            }
+        }
+
+        e.setVendor( implementation.getVendor() );
+        e.setVersion( implementation.getVersion() );
+
+        if ( implementation.getParent() != null )
+        {
+            e.setParent( implementation.getParent().getIdentifier() );
+        }
+
+        this.map( e, implementation );
+        m.getImplementations().getImplementation().add( e );
+
+        return m;
+    }
+
+    /**
+     * Maps a container {@code Specification} instance to the plugin's
+     * model.
+     *
+     * @param specificaction The container model to map.
+     *
+     * @return {@code specificaction} mapped to the plugin's model.
+     *
+     * @throws NullPointerException if {@code specificaction} is {@code null}.
+     * @throws JAXBException if mapping fails.
+     */
+    public SpecificationElement getSpecification(
+        final org.jdtaus.core.container.Specification specification )
+        throws JAXBException
+    {
+        if ( specification == null )
+        {
+            throw new NullPointerException( "specification" );
+        }
+
+        final ObjectFactory f = new ObjectFactory();
+        final SpecificationElement e = f.createSpecificationElement();
+
+        e.setIdentifier( specification.getIdentifier() );
+        e.setMultiplicity( this.getMultiplicity( specification ) );
+        e.setProperties( this.map( specification.getProperties() ) );
+        e.setScope( this.getScope( specification ) );
+        e.setStateless( specification.isStateless() );
+        e.setVendor( specification.getVendor() );
+        e.setVersion( specification.getVersion() );
+
+        this.map( e, specification );
+
+        return e;
+    }
+
+    /**
+     * Maps a container {@code Dependency} instance to the plugin's
+     * model.
+     *
+     * @param dependency The container model to map.
+     *
+     * @return {@code dependency} mapped to the plugin's model.
+     *
+     * @throws NullPointerException if {@code dependency} is {@code null}.
+     * @throws JAXBException if mapping fails.
+     */
+    public DependencyElement getDependency(
+        final org.jdtaus.core.container.Dependency dependency )
+        throws JAXBException
+    {
+        if ( dependency == null )
+        {
+            throw new NullPointerException( "dependency" );
+        }
+
+        final ObjectFactory f = new ObjectFactory();
+        final DependencyElement dep = f.createDependencyElement();
+
+        dep.setBound( dependency.isBound() );
+        dep.setName( dependency.getName() );
+        dep.setIdentifier( dependency.getSpecification().getIdentifier() );
+
+        if ( dependency.getSpecification().getVersion() != null )
+        {
+            dep.setVersion( dependency.getSpecification().getVersion() );
+        }
+
+        if ( dependency.getImplementation() != null )
+        {
+            dep.setImplementationName( dependency.getImplementation().
+                getName() );
+
+        }
+
+        final int propertyCount = dependency.getDeclaredProperties().size();
+
+        if ( propertyCount > 0 )
+        {
+            final Properties properties = f.createProperties();
+            dep.setProperties( properties );
+
+            for ( int p = propertyCount - 1; p >= 0; p-- )
+            {
+                final org.jdtaus.core.container.Property cProperty =
+                    dependency.getDeclaredProperties().getProperty( p );
+
+                final Property property = f.createProperty();
+
+                property.setName( cProperty.getName() );
+                property.setType( PropertyType.fromValue(
+                    cProperty.getType().getName() ) );
+
+                property.setValue( cProperty.getValue() != null
+                                   ? cProperty.getValue().toString()
+                                   : null );
+
+                this.map( property, cProperty );
+                properties.getProperty().add( property );
+            }
+
+            this.map( properties, dependency.getDeclaredProperties() );
+        }
+
+        this.map( dep, dependency );
+        return dep;
+    }
+
+    /**
+     * Gets the scope of a specification.
+     *
+     * @param specification The specification to get the scope of.
+     *
+     * @return The scope of {@code specification}.
+     *
+     * @throws NullPointerException if {@code specification} is {@code null}.
+     */
+    public Scope getScope(
+        final org.jdtaus.core.container.Specification specification )
+    {
+        if ( specification == null )
+        {
+            throw new NullPointerException( "specification" );
+        }
+
+        final Scope scope;
+        switch ( specification.getScope() )
+        {
+            case org.jdtaus.core.container.Specification.SCOPE_CONTEXT:
+                scope = Scope.CONTEXT;
+                break;
+
+            case org.jdtaus.core.container.Specification.SCOPE_MULTITON:
+                scope = Scope.MULTITON;
+                break;
+
+            case org.jdtaus.core.container.Specification.SCOPE_SINGLETON:
+                scope = Scope.SINGLETON;
+                break;
+
+            default:
+                throw new AssertionError( Integer.toString(
+                    specification.getScope() ) );
+
+        }
+
+        return scope;
+    }
+
+    /**
+     * Gets the multiplicity of a specification.
+     *
+     * @param specification The specification to get the multiplicity of.
+     *
+     * @return The multiplicity of {@code specification}.
+     *
+     * @throws NullPointerException if {@code specification} is {@code null}.
+     */
+    public Multiplicity getMultiplicity(
+        final org.jdtaus.core.container.Specification specification )
+    {
+        if ( specification == null )
+        {
+            throw new NullPointerException( "specification" );
+        }
+
+        final Multiplicity multiplicity;
+        switch ( specification.getMultiplicity() )
+        {
+            case org.jdtaus.core.container.Specification.MULTIPLICITY_MANY:
+                multiplicity = Multiplicity.MANY;
+                break;
+
+            case org.jdtaus.core.container.Specification.MULTIPLICITY_ONE:
+                multiplicity = Multiplicity.ONE;
+                break;
+
+            default:
+                throw new AssertionError( Integer.toString(
+                    specification.getMultiplicity() ) );
+
+        }
+
+        return multiplicity;
     }
 
     /**
@@ -268,7 +562,7 @@ public class ModelManager extends AbstractLogEnabled
                     spec.getImplementations().getImplementation( i );
 
                 final String id = spec.getIdentifier() + '.' +
-                    impl.getName().hashCode();
+                                  impl.getName().hashCode();
 
                 final BeanElement bean = f.createBeanElement();
                 bean.setClazz( factoryBeanClassName );
@@ -313,17 +607,17 @@ public class ModelManager extends AbstractLogEnabled
         final String springScope;
 
         if ( specification.getScope() ==
-            org.jdtaus.core.container.Specification.SCOPE_CONTEXT )
+             org.jdtaus.core.container.Specification.SCOPE_CONTEXT )
         {
             springScope = "jdtaus-context";
         }
         else if ( specification.getScope() ==
-            org.jdtaus.core.container.Specification.SCOPE_MULTITON )
+                  org.jdtaus.core.container.Specification.SCOPE_MULTITON )
         {
             springScope = "prototype";
         }
         else if ( specification.getScope() ==
-            org.jdtaus.core.container.Specification.SCOPE_SINGLETON )
+                  org.jdtaus.core.container.Specification.SCOPE_SINGLETON )
         {
             springScope = "singleton";
         }
@@ -452,6 +746,94 @@ public class ModelManager extends AbstractLogEnabled
     }
 
     /**
+     * Gets the Java type of a given property.
+     *
+     * @param property The property to get the Java type of.
+     *
+     * @return The Java type of {@code property}.
+     */
+    public Class getJavaType( final PropertyElement property )
+    {
+        final Class propertyType;
+        final String typeName = property.getType().getValue();
+
+        if ( typeName.equals( Boolean.TYPE.getName() ) )
+        {
+            propertyType = Boolean.TYPE;
+        }
+        else if ( typeName.equals( Byte.TYPE.getName() ) )
+        {
+            propertyType = Byte.TYPE;
+        }
+        else if ( typeName.equals( Character.TYPE.getName() ) )
+        {
+            propertyType = Character.TYPE;
+        }
+        else if ( typeName.equals( Double.TYPE.getName() ) )
+        {
+            propertyType = Double.TYPE;
+        }
+        else if ( typeName.equals( Float.TYPE.getName() ) )
+        {
+            propertyType = Float.TYPE;
+        }
+        else if ( typeName.equals( Integer.TYPE.getName() ) )
+        {
+            propertyType = Integer.TYPE;
+        }
+        else if ( typeName.equals( Long.TYPE.getName() ) )
+        {
+            propertyType = Long.TYPE;
+        }
+        else if ( typeName.equals( Short.TYPE.getName() ) )
+        {
+            propertyType = Short.TYPE;
+        }
+        else if ( typeName.equals( Boolean.class.getName() ) )
+        {
+            propertyType = Boolean.class;
+        }
+        else if ( typeName.equals( Byte.class.getName() ) )
+        {
+            propertyType = Byte.class;
+        }
+        else if ( typeName.equals( Character.class.getName() ) )
+        {
+            propertyType = Character.class;
+        }
+        else if ( typeName.equals( Double.class.getName() ) )
+        {
+            propertyType = Double.class;
+        }
+        else if ( typeName.equals( Float.class.getName() ) )
+        {
+            propertyType = Float.class;
+        }
+        else if ( typeName.equals( Integer.class.getName() ) )
+        {
+            propertyType = Integer.class;
+        }
+        else if ( typeName.equals( Long.class.getName() ) )
+        {
+            propertyType = Long.class;
+        }
+        else if ( typeName.equals( Short.class.getName() ) )
+        {
+            propertyType = Short.class;
+        }
+        else if ( typeName.equals( String.class.getName() ) )
+        {
+            propertyType = String.class;
+        }
+        else
+        {
+            throw new IllegalArgumentException( property.getType().getValue() );
+        }
+
+        return propertyType;
+    }
+
+    /**
      * Maps a container {@code Specifications} instance to the plugin's model.
      *
      * @param cSpecifications the container model to map.
@@ -469,56 +851,9 @@ public class ModelManager extends AbstractLogEnabled
 
         for ( int i = cSpecifications.size() - 1; i >= 0; i-- )
         {
-            final SpecificationElement spec = f.createSpecificationElement();
+            specs.getSpecification().add( this.getSpecification(
+                cSpecifications.getSpecification( i ) ) );
 
-            spec.setIdentifier( cSpecifications.getSpecification( i ).
-                                getIdentifier() );
-
-            spec.setMultiplicity( cSpecifications.getSpecification( i ).
-                                  getMultiplicity() ==
-                                  org.jdtaus.core.container.Specification.MULTIPLICITY_ONE
-                                  ? Multiplicity.ONE
-                                  : Multiplicity.MANY );
-
-            final int cScope = cSpecifications.getSpecification( i ).getScope();
-            if ( org.jdtaus.core.container.Specification.SCOPE_CONTEXT == cScope )
-            {
-                spec.setScope( Scope.CONTEXT );
-            }
-            else if ( org.jdtaus.core.container.Specification.SCOPE_MULTITON ==
-                cScope )
-            {
-                spec.setScope( Scope.MULTITON );
-            }
-            else if ( org.jdtaus.core.container.Specification.SCOPE_SINGLETON ==
-                cScope )
-            {
-                spec.setScope( Scope.SINGLETON );
-            }
-            else
-            {
-                throw new AssertionError( Integer.toString( cScope ) );
-            }
-
-            spec.setVendor( cSpecifications.getSpecification( i ).
-                            getVendor() );
-
-            spec.setStateless( cSpecifications.getSpecification( i ).
-                               isStateless() );
-
-            if ( cSpecifications.getSpecification( i ).getVersion() != null )
-            {
-                spec.setVersion( cSpecifications.getSpecification( i ).
-                                 getVersion() );
-
-            }
-
-            spec.setProperties( this.map( cSpecifications.getSpecification( i ).
-                                          getProperties() ) );
-
-            this.map( spec, cSpecifications.getSpecification( i ) );
-
-            specs.getSpecification().add( spec );
         }
 
         this.map( specs, cSpecifications );
@@ -550,33 +885,33 @@ public class ModelManager extends AbstractLogEnabled
 
             impl.setDependencies(
                 map( cImplementations.getImplementation( i ).
-                     getDeclaredDependencies() ) );
+                getDeclaredDependencies() ) );
 
             impl.setFinal( cImplementations.getImplementation( i ).isFinal() );
             impl.setIdentifier( cImplementations.getImplementation( i ).
-                                getIdentifier() );
+                getIdentifier() );
 
             final SpecificationsElement is =
                 f.createSpecificationsElement();
 
             for ( int s = cImplementations.getImplementation( i ).
                 getDeclaredImplementedSpecifications().size() - 1;
-                s >= 0; s-- )
+                  s >= 0; s-- )
             {
                 final SpecificationReference im =
                     f.createSpecificationReference();
 
                 im.setIdentifier( cImplementations.getImplementation( i ).
-                                  getImplementedSpecifications().
-                                  getSpecification( s ).getIdentifier() );
+                    getImplementedSpecifications().
+                    getSpecification( s ).getIdentifier() );
 
                 if ( cImplementations.getImplementation( i ).
                     getImplementedSpecifications().
                     getSpecification( s ).getVersion() != null )
                 {
                     im.setVersion( cImplementations.getImplementation( i ).
-                                   getImplementedSpecifications().
-                                   getSpecification( s ).getVersion() );
+                        getImplementedSpecifications().
+                        getSpecification( s ).getVersion() );
 
                 }
 
@@ -593,13 +928,13 @@ public class ModelManager extends AbstractLogEnabled
             if ( cImplementations.getImplementation( i ).getParent() != null )
             {
                 impl.setParent( cImplementations.getImplementation( i ).
-                                getParent().getIdentifier() );
+                    getParent().getIdentifier() );
 
             }
 
             impl.setProperties(
                 map( cImplementations.getImplementation( i ).
-                     getDeclaredProperties() ) );
+                getDeclaredProperties() ) );
 
             impl.setVendor( cImplementations.getImplementation( i ).getVendor() );
             impl.setVersion(
@@ -636,7 +971,7 @@ public class ModelManager extends AbstractLogEnabled
             }
 
             if ( !messages.getMessage().isEmpty() ||
-                !messages.getReference().isEmpty() )
+                 !messages.getReference().isEmpty() )
             {
                 impl.setMessages( messages );
             }
@@ -669,62 +1004,9 @@ public class ModelManager extends AbstractLogEnabled
 
         for ( int i = cDependencies.size() - 1; i >= 0; i-- )
         {
-            final Dependency dep = f.createDependencyElement();
-            dep.setBound( cDependencies.getDependency( i ).isBound() );
-            dep.setName( cDependencies.getDependency( i ).getName() );
-            dep.setIdentifier( cDependencies.getDependency( i ).
-                               getSpecification().getIdentifier() );
+            deps.getDependency().add( this.getDependency( cDependencies.
+                getDependency( i ) ) );
 
-            if ( cDependencies.getDependency( i ).getSpecification().
-                getVersion() != null )
-            {
-                dep.setVersion( cDependencies.getDependency( i ).
-                                getSpecification().getVersion() );
-
-            }
-
-            if ( cDependencies.getDependency( i ).getImplementation() != null )
-            {
-                dep.setImplementationName( cDependencies.getDependency( i ).
-                                           getImplementation().getName() );
-
-            }
-
-            final int propertyCount = cDependencies.getDependency( i ).
-                getDeclaredProperties().size();
-
-            if ( propertyCount > 0 )
-            {
-                final Properties properties = f.createProperties();
-                dep.setProperties( properties );
-
-                for ( int p = propertyCount - 1; p >= 0; p-- )
-                {
-                    final org.jdtaus.core.container.Property cProperty =
-                        cDependencies.getDependency( i ).
-                        getDeclaredProperties().getProperty( p );
-
-                    final Property property = f.createProperty();
-
-                    property.setName( cProperty.getName() );
-                    property.setType( PropertyType.fromValue(
-                                      cProperty.getType().getName() ) );
-
-                    property.setValue( cProperty.getValue() != null
-                                       ? cProperty.getValue().toString()
-                                       : null );
-
-                    this.map( property, cProperty );
-                    properties.getProperty().add( property );
-                }
-
-                this.map( properties, cDependencies.getDependency( i ).
-                          getDeclaredProperties() );
-
-            }
-
-            this.map( dep, cDependencies.getDependency( i ) );
-            deps.getDependency().add( dep );
         }
 
         this.map( deps, cDependencies );
@@ -754,12 +1036,12 @@ public class ModelManager extends AbstractLogEnabled
 
             p.setName( cProperties.getProperty( i ).getName() );
             p.setType( PropertyType.fromValue( cProperties.getProperty( i ).
-                                               getType().getName() ) );
+                getType().getName() ) );
 
             if ( cProperties.getProperty( i ).getValue() != null )
             {
                 p.setValue( cProperties.getProperty( i ).getValue().
-                            toString() );
+                    toString() );
 
             }
 
@@ -792,10 +1074,10 @@ public class ModelManager extends AbstractLogEnabled
             final MessageElement m = f.createMessageElement();
             m.setName( cMessages.getMessage( i ).getName() );
             m.setTemplate( this.map( cMessages.getMessage( i ).
-                                     getTemplate() ) );
+                getTemplate() ) );
 
             m.setArguments( this.map( cMessages.getMessage( i ).
-                                      getArguments() ) );
+                getArguments() ) );
 
             this.map( m, cMessages.getMessage( i ) );
             messages.getMessage().add( m );
@@ -825,28 +1107,28 @@ public class ModelManager extends AbstractLogEnabled
         {
             final ArgumentElement a = f.createArgumentElement();
             a.setIndex( BigInteger.valueOf( cArguments.getArgument( i ).
-                                            getIndex() ) );
+                getIndex() ) );
 
             a.setName( cArguments.getArgument( i ).getName() );
 
             final ArgumentType type;
             if ( org.jdtaus.core.container.Argument.TYPE_DATE ==
-                cArguments.getArgument( i ).getType() )
+                 cArguments.getArgument( i ).getType() )
             {
                 type = ArgumentType.DATE;
             }
             else if ( org.jdtaus.core.container.Argument.TYPE_NUMBER ==
-                cArguments.getArgument( i ).getType() )
+                      cArguments.getArgument( i ).getType() )
             {
                 type = ArgumentType.NUMBER;
             }
             else if ( org.jdtaus.core.container.Argument.TYPE_TEXT ==
-                cArguments.getArgument( i ).getType() )
+                      cArguments.getArgument( i ).getType() )
             {
                 type = ArgumentType.TEXT;
             }
             else if ( org.jdtaus.core.container.Argument.TYPE_TIME ==
-                cArguments.getArgument( i ).getType() )
+                      cArguments.getArgument( i ).getType() )
             {
                 type = ArgumentType.TIME;
             }
@@ -897,7 +1179,7 @@ public class ModelManager extends AbstractLogEnabled
                 if ( value.equals( cText.getValue() ) )
                 {
                     texts.setDefaultLanguage( locales[i].getLanguage().
-                                              toLowerCase() );
+                        toLowerCase() );
 
                 }
             }
@@ -937,7 +1219,7 @@ public class ModelManager extends AbstractLogEnabled
         Message message = null;
 
         for ( Iterator it = module.getMessages().getMessage().iterator();
-            it.hasNext();)
+              it.hasNext(); )
         {
             final Message current = (Message) it.next();
             if ( current.getName().equals( name ) )
@@ -949,4 +1231,32 @@ public class ModelManager extends AbstractLogEnabled
 
         return message;
     }
+
+    /**
+     * Gets a specification form a set of specifications.
+     *
+     * @param specs The set of specifications to get a specification from.
+     * @param identifier The identifier of the specification to return.
+     *
+     * @return The specification identified by {@code identifier} from
+     * {@code specs} or {@code null} if {@code specs} does not contain a
+     * specification identified by {@code identifier}.
+     */
+    private SpecificationElement getSpecification(
+        final Specifications specs, final String identifier )
+    {
+        SpecificationElement s = null;
+        for ( Iterator it = specs.getSpecification().iterator(); it.hasNext(); )
+        {
+            final SpecificationElement e = (SpecificationElement) it.next();
+            if ( identifier.equals( e.getIdentifier() ) )
+            {
+                s = e;
+                break;
+            }
+        }
+
+        return s;
+    }
+
 }

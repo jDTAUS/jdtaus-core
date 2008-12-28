@@ -33,7 +33,7 @@
                   xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
                   container:name="${pom.name}"
                   container:version="${pom.version}"
-                  container:modelVersion="1.3">
+                  container:modelVersion="1.4">
 
   <container:documentation container:defaultLanguage="en">
     <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
@@ -82,6 +82,9 @@
         <container:reference container:name="messageGetterComment"/>
         <container:reference container:name="defaultArgumentDescription"/>
         <container:reference container:name="createdFile"/>
+        <container:reference container:name="localeParamComment"/>
+        <container:reference container:name="committedFile"/>
+        <container:reference container:name="defaultDependencyDescription"/>
       </container:messages>
     </container:implementation>
     <container:implementation container:identifier="org.jdtaus.core.container.mojo.ContainerReport"
@@ -200,6 +203,13 @@
         <container:reference container:name="unresolvedDependencies"/>
         <container:reference container:name="unresolvedDependency"/>
         <container:reference container:name="validModel"/>
+        <container:reference container:name="uncommitted"/>
+        <container:reference container:name="missingCommittedDependency"/>
+        <container:reference container:name="illegalSpecification"/>
+        <container:reference container:name="missingCommittedProperty"/>
+        <container:reference container:name="illegalProperty"/>
+        <container:reference container:name="missingCommittedMessage"/>
+        <container:reference container:name="illegalMultiplicity"/>
       </container:messages>
     </container:implementation>
     <container:implementation container:identifier="org.jdtaus.core.container.mojo.model.ModelManager"
@@ -277,15 +287,25 @@
         <container:text container:language="en"><![CDATA[/**
      * Gets the configured <code>{0}</code> implementation.
      *
-     * @return the configured <code>{0}</code> implementation.
+     * @return {1}
      */
 ]]></container:text>
         <container:text container:language="de"><![CDATA[/**
      * Ermittelt die Implementierung der <code>{0}</code> Dependency.
      *
-     * @return die Implementierung der <code>{0}</code> Dependency.
+     * @return {1}
      */
 ]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="dependencyTypeName" container:type="text"/>
+        <container:argument container:index="1" container:name="dependencyDescription" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="defaultDependencyDescription">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The configured <code>{0}</code> implementation.]]></container:text>
+        <container:text container:language="de"><![CDATA[Implementierung der <code>{0}</code> Dependency.]]></container:text>
       </container:template>
       <container:arguments>
         <container:argument container:index="0" container:name="dependencyTypeName" container:type="text"/>
@@ -305,7 +325,7 @@
         super();
     }'
 ]]></container:text>
-        <container:text container:language="de"><![CDATA[/** Standard Konstruktor Implementierung <code>{0}</code>. */
+   <container:text container:language="de"><![CDATA[/** Standard Konstruktor der <code>{0}</code> Implementierung. */
     public {1}()
     '{
         super();
@@ -922,6 +942,96 @@
       </container:template>
       <container:arguments>
         <container:argument container:index="0" container:name="fileName" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="localeParamComment">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The locale of the message instance to return.]]></container:text>
+        <container:text container:language="de"><![CDATA[Lokalisierung der zu ermittelnden Meldungs-Instanz.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="committedFile">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Committing file {0} (+{1,number} bytes).]]></container:text>
+        <container:text container:language="de"><![CDATA[Fixiert {0} (+{1,number} Byte).]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="fileName" container:type="text"/>
+        <container:argument container:index="1" container:name="bytesAdded" container:type="number"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="uncommitted">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Cannot verify class {0}. No metadata committed.]]></container:text>
+        <container:text container:language="de"><![CDATA[{0} kann nicht geprüft werden. Keine fixierten Metadaten vorhanden.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingCommittedDependency">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Dependency {0} missing for implementation {1}.]]></container:text>
+        <container:text container:language="de"><![CDATA[{0} Abhängigkeit der Implementierung {1} fehlt.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="dependencyName" container:type="text"/>
+        <container:argument container:index="1" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="illegalSpecification">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Dependency {0} of implementation {1} has incompatible specification {2}. Expected {3}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Inkompatible {0} Spezifikation {2} von Implementierung {1}. Erwartet {3}.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="dependencyName" container:type="text"/>
+        <container:argument container:index="1" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="2" container:name="specificationIdentifier" container:type="text"/>
+        <container:argument container:index="3" container:name="expectedIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingCommittedProperty">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Property {0} missing for implementation {1}.]]></container:text>
+        <container:text container:language="de"><![CDATA[{0} Eigenschaft der Implementierung {1} fehlt.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="propertyName" container:type="text"/>
+        <container:argument container:index="1" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="illegalProperty">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Property {0} of implementation {1} has incorrect type {2}. Expected {3}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Ungültiger Typ {2} der {0} Eigenschaft von Implementierung {1}. Erwartet {3}.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="propertyName" container:type="text"/>
+        <container:argument container:index="1" container:name="implementationIdentifier" container:type="text"/>
+        <container:argument container:index="2" container:name="propertyType" container:type="text"/>
+        <container:argument container:index="3" container:name="expectedType" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="missingCommittedMessage">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message {0} missing for implementation {1}.]]></container:text>
+        <container:text container:language="de"><![CDATA[{0} Meldung der Implementierung {1} fehlt.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="messageName" container:type="text"/>
+        <container:argument container:index="1" container:name="implementationIdentifier" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="illegalMultiplicity">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Specification {0} has incorrect multiplicity {1}. Expected {2}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Ungültige Kardinalität {1} der Spezifikation {0}. Erwartet {2}.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="specificationIdentifier" container:type="text"/>
+        <container:argument container:index="1" container:name="multiplicity" container:type="text"/>
+        <container:argument container:index="2" container:name="expectedMultiplicity" container:type="text"/>
       </container:arguments>
     </container:message>
   </container:messages>

@@ -14,7 +14,7 @@ jDTAUS Container Mojo
 
 * Goals Overview
 
-  Currently the Container Mojo has five goals.
+  Currently the Container Mojo has eight goals.
 
   * {{{clean-sources-mojo.html}jdtaus-container-mojo:clean-sources}} is
     not bound to any particular lifecycle phase and is used to cleanup a
@@ -22,7 +22,20 @@ jDTAUS Container Mojo
 
   * {{{java-container-mojo.html}jdtaus-container-mojo:java-container}}
     is bound to the process-resources phase and is used to manage source code
-    sections in java class files backed by a project's container model.
+    sections in main java class files backed by a project's container model.
+
+  * {{{java-container-tests-mojo.html}jdtaus-container-mojo:java-container-tests}}
+    is bound to the process-test-resources phase and is used to manage source
+    code sections in test java class files backed by a project's test container
+    model.
+
+  * {{{java-commit-mojo.html}jdtaus-container-mojo:java-commit}}
+    is bound to the process-classes phase and is used to commit a project's
+    container model to compiled main java classes.
+
+  * {{{java-commit-tests-mojo.html}jdtaus-container-mojo:java-commit-tests}}
+    is bound to the process-test-classes phase and is used to commit a project's
+    test container model to compiled test java classes.
 
   * {{{verify-model-mojo.html}jdtaus-container-mojo:verify-model}}
     is bound to the verify phase and is used to verify a project's container

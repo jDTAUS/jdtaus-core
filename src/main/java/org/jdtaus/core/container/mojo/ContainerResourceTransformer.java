@@ -97,7 +97,7 @@ public class ContainerResourceTransformer implements ResourceTransformer
             if ( this.modules == null )
             {
                 this.modules = new ObjectFactory().createModulesElement();
-                this.modules.setModelVersion( "1.3" );
+                this.modules.setModelVersion( "1.4" );
             }
 
             final Object o = this.getModelManager().

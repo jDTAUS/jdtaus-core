@@ -23,12 +23,16 @@
 package org.jdtaus.core.container.mojo;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
+import javax.xml.bind.JAXBException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.velocity.VelocityContext;
@@ -50,6 +54,7 @@ import org.jdtaus.core.container.Properties;
 import org.jdtaus.core.container.Property;
 import org.jdtaus.core.container.Specification;
 import org.jdtaus.core.container.Specifications;
+import org.jdtaus.core.container.mojo.comp.VersionParser;
 import org.jdtaus.core.container.mojo.model.JavaArtifact;
 
 /**
@@ -65,6 +70,9 @@ public class JavaContainerMojo extends AbstractContainerMojo
 {
     //--Configuration-----------------------------------------------------------
 
+    /** Model version 1.4. */
+    private static final String V1_4 = "1.4";
+
     /**
      * Output directory.
      * @parameter expression="${project.build.directory}/container"
@@ -73,13 +81,14 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
     /**
      * The name of the module to process.
-     * @parameter expression="${moduleName}"
+     * @parameter expression="${moduleName}" default-value="${project.name}"
      */
     private String moduleName;
 
     /**
      * The name of the test module to process.
      * @parameter expression="${testModuleName}"
+     *            default-value="${project.name} Tests"
      */
     private String testModuleName;
 
@@ -88,84 +97,84 @@ public class JavaContainerMojo extends AbstractContainerMojo
      * code.
      * @parameter expression="${specificationsStartingMarker}" default-value="//--Specification-----------------------------------------------------------"
      */
-    protected String specificationsStartingMarker;
+    private String specificationsStartingMarker;
 
     /**
      * The string marking the ending line up to where specification code should
      * be inserted.
      * @parameter expression="${specificationsEndingMarker}" default-value="//-----------------------------------------------------------Specification--"
      */
-    protected String specificationsEndingMarker;
+    private String specificationsEndingMarker;
 
     /**
      * The string marking the starting line where to start inserting implementation
      * code.
      * @parameter expression="${implementationsStartingMarker}" default-value="//--Implementation----------------------------------------------------------"
      */
-    protected String implementationsStartingMarker;
+    private String implementationsStartingMarker;
 
     /**
      * The string marking the ending line up to where implementation code should
      * be inserted.
      * @parameter expression="${implementationsEndingMarker}" default-value="//----------------------------------------------------------Implementation--"
      */
-    protected String implementationsEndingMarker;
+    private String implementationsEndingMarker;
 
     /**
      * The string marking the starting line where to start inserting constructor
      * code.
      * @parameter expression="${constructorsStartingMarker}" default-value="//--Constructors------------------------------------------------------------"
      */
-    protected String constructorsStartingMarker;
+    private String constructorsStartingMarker;
 
     /**
      * The string marking the ending line up to where constructor code should be
      * inserted.
      * @parameter expression="${constructorsEndingMarker}" default-value="//------------------------------------------------------------Constructors--"
      */
-    protected String constructorsEndingMarker;
+    private String constructorsEndingMarker;
 
     /**
      * The string marking the starting line where to start inserting dependency
      * code.
      * @parameter expression="${dependenciesStartingMarker}" default-value="//--Dependencies------------------------------------------------------------"
      */
-    protected String dependenciesStartingMarker;
+    private String dependenciesStartingMarker;
 
     /**
      * The string marking the ending line up to where dependency code should be
      * inserted.
      * @parameter expression="${dependenciesEndingMarker}" default-value="//------------------------------------------------------------Dependencies--"
      */
-    protected String dependenciesEndingMarker;
+    private String dependenciesEndingMarker;
 
     /**
      * The string marking the starting line where to start inserting
      * implementation property code.
      * @parameter expression="${propertiesStartingMarker}" default-value="//--Properties--------------------------------------------------------------"
      */
-    protected String propertiesStartingMarker;
+    private String propertiesStartingMarker;
 
     /**
      * The string marking the ending line up to where implementation property
      * code should be inserted.
      * @parameter expression="${propertiesEndingMarker}" default-value="//--------------------------------------------------------------Properties--"
      */
-    protected String propertiesEndingMarker;
+    private String propertiesEndingMarker;
 
     /**
      * The string marking the starting line where to start inserting
      * implementation message code.
      * @parameter expression="${messagesStartingMarker}" default-value="//--Messages----------------------------------------------------------------"
      */
-    protected String messagesStartingMarker;
+    private String messagesStartingMarker;
 
     /**
      * The string marking the ending line up to where implementation message
      * code should be inserted.
      * @parameter expression="${messagesEndingMarker}" default-value="//----------------------------------------------------------------Messages--"
      */
-    protected String messagesEndingMarker;
+    private String messagesEndingMarker;
 
     /**
      * Specifies the target editor used for editing sourcefiles. Used for e.g.
@@ -174,19 +183,37 @@ public class JavaContainerMojo extends AbstractContainerMojo
      *
      * @parameter expression="${targetIde}" default-value="netbeans"
      */
-    protected String targetIde;
+    private String targetIde;
 
     /**
      * Source root to create new source files in.
      * @parameter expression="${sourceRoot}"
      *            default-value="${basedir}/src/main/java"
      */
-    protected File sourceRoot;
+    private File sourceRoot;
+
+    /** Cached model. */
+    protected Model model;
+
+    /**
+     * Gets the model of the current execution.
+     *
+     * @return The model of the current execution.
+     */
+    protected Model getModel()
+    {
+        if ( this.model == null )
+        {
+            this.model = ModelFactory.newModel();
+        }
+
+        return this.model;
+    }
 
     /**
      * Accessor to the currently executed jDTAUS module.
      *
-     * @return the currently executed jDTAUS module or {@code null} if no module
+     * @return The currently executed jDTAUS module or {@code null} if no module
      * is defined for the currently executed jDTAUS module.
      */
     protected final Module getModule()
@@ -197,9 +224,13 @@ public class JavaContainerMojo extends AbstractContainerMojo
         {
             try
             {
-                final Model model = ModelFactory.newModel();
-                this.getLog().debug( model.getModules().toString() );
-                module = model.getModules().getModule( this.moduleName );
+                module = this.getModel().getModules().
+                    getModule( this.moduleName );
+
+                if ( this.getLog().isDebugEnabled() )
+                {
+                    this.getLog().debug( module.toString() );
+                }
             }
             catch ( MissingModuleException e )
             {
@@ -215,7 +246,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
     /**
      * Accessor to the currently executed jDTAUS test module.
      *
-     * @return the currently executed jDTAUS test module or {@code null} if
+     * @return The currently executed jDTAUS test module or {@code null} if
      * no test module is defined for the currently executed jDTAUS module.
      */
     protected final Module getTestModule()
@@ -226,9 +257,13 @@ public class JavaContainerMojo extends AbstractContainerMojo
         {
             try
             {
-                final Model model = ModelFactory.newModel();
-                this.getLog().debug( model.getModules().toString() );
-                module = model.getModules().getModule( this.testModuleName );
+                module = this.getModel().getModules().
+                    getModule( this.testModuleName );
+
+                if ( this.getLog().isDebugEnabled() )
+                {
+                    this.getLog().debug( module.toString() );
+                }
             }
             catch ( MissingModuleException e )
             {
@@ -244,7 +279,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
     /**
      * Gets the target editor to use when generating source code.
      *
-     * @return the target editor to use when generating source code.
+     * @return The target editor to use when generating source code.
      */
     protected final String getTargetEditor()
     {
@@ -254,11 +289,21 @@ public class JavaContainerMojo extends AbstractContainerMojo
     /**
      * Gets the source root to create new source files in.
      *
-     * @return the source root to create new source files in.
+     * @return The source root to create new source files in.
      */
     protected final File getSourceRoot()
     {
         return this.sourceRoot;
+    }
+
+    /**
+     * Gets the output directory of the mojo.
+     *
+     * @return The output directory of the mojo.
+     */
+    protected final File getOutputDirectory()
+    {
+        return this.outputDirectory;
     }
 
     //-----------------------------------------------------------Configuration--
@@ -267,32 +312,26 @@ public class JavaContainerMojo extends AbstractContainerMojo
     /** {@inheritDoc} */
     public void execute() throws MojoExecutionException, MojoFailureException
     {
-        int i;
-        Implementations impls;
-        Specifications specs;
-
-        final ClassLoader mavenLoader =
-            Thread.currentThread().getContextClassLoader();
+        final ClassLoader mavenLoader = Thread.currentThread().
+            getContextClassLoader();
 
         try
         {
-            final ClassLoader runtimeLoader =
-                this.getRuntimeClassLoader( mavenLoader );
+            this.model = null;
 
-            final ClassLoader testLoader =
-                this.getTestClassLoader( mavenLoader );
+            Thread.currentThread().setContextClassLoader(
+                this.getRuntimeClassLoader( mavenLoader ) );
 
-            // Try the main-module using the runtime classpath.
-            Thread.currentThread().setContextClassLoader( runtimeLoader );
+            enableThreadContextClassLoader();
 
             final Module mod = this.getModule();
 
             if ( mod != null )
             {
-                specs = mod.getSpecifications();
-                impls = mod.getImplementations();
+                final Specifications specs = mod.getSpecifications();
+                final Implementations impls = mod.getImplementations();
 
-                for ( i = specs.size() - 1; i >= 0; i-- )
+                for ( int i = specs.size() - 1; i >= 0; i-- )
                 {
                     this.generateSpecification(
                         this.getMavenProject().getCompileSourceRoots(),
@@ -300,7 +339,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
                 }
 
-                for ( i = impls.size() - 1; i >= 0; i-- )
+                for ( int i = impls.size() - 1; i >= 0; i-- )
                 {
                     this.generateImplementation(
                         this.getMavenProject().getCompileSourceRoots(),
@@ -308,75 +347,12 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
                 }
 
-                final Model cModel = ModelFactory.newModel();
-
-                // Save the default model.
-                final org.jdtaus.core.container.mojo.model.container.Modules model =
-                    this.getModelManager().getContainerModel(
-                    cModel.getModules() );
-
-                final File reportFile =
-                    new File( this.outputDirectory, "container-report.xml" );
-
-                if ( !reportFile.getParentFile().exists() )
-                {
-                    reportFile.getParentFile().mkdirs();
-                }
-
-                this.getModelManager().getContainerMarshaller().
-                    marshal( model, new FileOutputStream( reportFile ) );
+                this.writeContainerReport( this.getModel(),
+                                           "container-report.xml" );
 
                 this.getLog().info( JavaContainerMojoBundle.getInstance().
                     getProcessingModuleMessage( Locale.getDefault(),
-                    mod.getName() ) );
-
-            }
-
-            // Try the test-module using a corresonding classpath.
-            Thread.currentThread().setContextClassLoader( testLoader );
-
-            final Module testMod = this.getTestModule();
-
-            if ( testMod != null )
-            {
-                specs = testMod.getSpecifications();
-                impls = testMod.getImplementations();
-
-                for ( i = specs.size() - 1; i >= 0; i-- )
-                {
-                    this.generateSpecification(
-                        this.getMavenProject().getTestCompileSourceRoots(),
-                        specs.getSpecification( i ) );
-
-                }
-
-                for ( i = impls.size() - 1; i >= 0; i-- )
-                {
-                    this.generateImplementation(
-                        this.getMavenProject().getTestCompileSourceRoots(),
-                        impls.getImplementation( i ) );
-
-                }
-
-                // Save the default model.
-                final org.jdtaus.core.container.mojo.model.container.Modules model =
-                    this.getModelManager().getContainerModel(
-                    ModelFactory.newModel().getModules() );
-
-                final File reportFile = new File( this.outputDirectory,
-                    "container-test-report.xml" );
-
-                if ( !reportFile.getParentFile().exists() )
-                {
-                    reportFile.getParentFile().mkdirs();
-                }
-
-                this.getModelManager().getContainerMarshaller().
-                    marshal( model, new FileOutputStream( reportFile ) );
-
-                this.getLog().info( JavaContainerMojoBundle.getInstance().
-                    getProcessingModuleMessage( Locale.getDefault(),
-                    testMod.getName() ) );
+                                                mod.getName() ) );
 
             }
         }
@@ -398,6 +374,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
         }
         finally
         {
+            disableThreadContextClassLoader();
             Thread.currentThread().setContextClassLoader( mavenLoader );
         }
     }
@@ -410,7 +387,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
         "META-INF/templates/Implementation.java.vm";
 
     /** Adds dependency getters to an implementation. */
-    public class DependencyEditor implements AbstractContainerMojo.SourceEditor
+    private class DependencyEditor implements AbstractContainerMojo.SourceEditor
     {
 
         private boolean editing = false;
@@ -423,8 +400,8 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
         private final boolean markersNeeded;
 
-        public DependencyEditor( final String fileName,
-            final Implementation impl )
+        private DependencyEditor( final String fileName,
+                                  final Implementation impl )
         {
             if ( fileName == null )
             {
@@ -448,13 +425,13 @@ public class JavaContainerMojo extends AbstractContainerMojo
             {
                 throw new MojoFailureException(
                     JavaContainerMojoBundle.getInstance().
-                    getUnexpectedEndOfInputMessage( getLocale(),
-                    this.fileName ) );
+                    getUnexpectedEndOfInputMessage( Locale.getDefault(),
+                                                    this.fileName ) );
 
             }
 
             if ( line != null &&
-                dependenciesStartingMarker.equals( line.trim() ) )
+                 dependenciesStartingMarker.equals( line.trim() ) )
             {
                 // Skip all input up to the ending marker.
                 this.editing = true;
@@ -487,16 +464,26 @@ public class JavaContainerMojo extends AbstractContainerMojo
                             dep.getSpecification().getIdentifier() );
 
                         if ( dep.getImplementation() == null &&
-                            dep.getSpecification().getMultiplicity() ==
-                            Specification.MULTIPLICITY_MANY )
+                             dep.getSpecification().getMultiplicity() ==
+                             Specification.MULTIPLICITY_MANY )
                         {
                             depType += "[]";
                         }
 
+                        final boolean hasDescription = dep.getDocumentation().
+                            getLocales().length > 0;
+
+                        final String description =
+                            hasDescription
+                            ? dep.getDocumentation().getValue( getLocale() )
+                            : JavaContainerMojoBundle.getInstance().
+                            getDefaultDependencyDescriptionMessage(
+                            getLocale(), dep.getName() );
+
                         indent( buf );
                         buf.append( JavaContainerMojoBundle.getInstance().
                             getDependencyGetterCommentMessage(
-                            getLocale(), dep.getName() ) );
+                            getLocale(), dep.getName(), description ) );
 
                         indent( buf );
                         buf.append(
@@ -514,7 +501,8 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
                         indent( buf );
                         indent( buf );
-                        buf.append( "return (" ).append( depType ).append( ") " ).
+                        buf.append( "return (" ).append( depType ).
+                            append( ") " ).
                             append( "ContainerFactory.getContainer().\n" );
 
                         indent( buf );
@@ -570,7 +558,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
     }
 
     /** Adds property getters to an implementation. */
-    public class PropertyEditor implements AbstractContainerMojo.SourceEditor
+    private class PropertyEditor implements AbstractContainerMojo.SourceEditor
     {
 
         private boolean editing = false;
@@ -583,8 +571,8 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
         private final boolean markersNeeded;
 
-        public PropertyEditor( final String fileName,
-            final Implementation impl )
+        private PropertyEditor( final String fileName,
+                                final Implementation impl )
         {
             if ( fileName == null )
             {
@@ -608,13 +596,13 @@ public class JavaContainerMojo extends AbstractContainerMojo
             {
                 throw new MojoFailureException(
                     JavaContainerMojoBundle.getInstance().
-                    getUnexpectedEndOfInputMessage( getLocale(),
-                    this.fileName ) );
+                    getUnexpectedEndOfInputMessage( Locale.getDefault(),
+                                                    this.fileName ) );
 
             }
 
             if ( line != null &&
-                propertiesStartingMarker.equals( line.trim() ) )
+                 propertiesStartingMarker.equals( line.trim() ) )
             {
                 // Skip all input up to the ending marker.
                 this.editing = true;
@@ -638,7 +626,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
                 {
                     this.modified = true;
                     this.generateProperties( this.impl.getDeclaredProperties(),
-                        buf );
+                                             buf );
 
                 }
 
@@ -681,34 +669,36 @@ public class JavaContainerMojo extends AbstractContainerMojo
         }
 
         private void generateProperties( final Properties properties,
-            final StringBuffer buf )
+                                         final StringBuffer buf )
         {
             for ( int i = properties.size() - 1; i >= 0; i-- )
             {
                 final Property property = properties.getProperty( i );
 
                 // Getter.
-                final boolean hasDescription =
-                    property.getDocumentation().getLocales().length > 0;
+                final boolean hasDescription = property.getDocumentation().
+                    getLocales().length > 0;
 
                 final String description = hasDescription
-                    ? property.getDocumentation().getValue( getLocale() )
-                    : JavaContainerMojoBundle.getInstance().
+                                           ? property.getDocumentation().
+                    getValue( getLocale() )
+                                           : JavaContainerMojoBundle.getInstance().
                     getDefaultPropertyDescriptionMessage( getLocale(),
-                    property.getName() );
+                                                          property.getName() );
 
                 indent( buf );
                 buf.append( JavaContainerMojoBundle.getInstance().
-                    getPropertyGetterCommentMessage( getLocale(),
-                    property.getName(), formatComment( description ) ) ).
-                    append( '\n' );
+                    getPropertyGetterCommentMessage(
+                    getLocale(), property.getName(),
+                    formatComment( description ) ) ).append( '\n' );
 
                 indent( buf );
                 buf.append( property.isApi()
-                    ? "public "
-                    : ( this.impl.isFinal() && this.impl.getParent() == null
-                    ? "private "
-                    : "protected " ) );
+                            ? "public "
+                            : ( this.impl.isFinal() &&
+                                this.impl.getParent() == null
+                                ? "private "
+                                : "protected " ) );
 
                 buf.append( property.getType().getName() ).append( " " ).
                     append( getModelManager().
@@ -760,7 +750,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
     }
 
     /** Adds implementation constructors. */
-    public class ConstructorsEditor implements
+    private class ConstructorsEditor implements
         AbstractContainerMojo.SourceEditor
     {
 
@@ -774,7 +764,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
         private final boolean markersNeeded;
 
-        public ConstructorsEditor(
+        private ConstructorsEditor(
             final String fileName, final Implementation impl )
             throws MojoFailureException
         {
@@ -800,13 +790,13 @@ public class JavaContainerMojo extends AbstractContainerMojo
             {
                 throw new MojoFailureException(
                     JavaContainerMojoBundle.getInstance().
-                    getUnexpectedEndOfInputMessage( getLocale(),
-                    this.fileName ) );
+                    getUnexpectedEndOfInputMessage( Locale.getDefault(),
+                                                    this.fileName ) );
 
             }
 
             if ( line != null &&
-                constructorsStartingMarker.equals( line.trim() ) )
+                 constructorsStartingMarker.equals( line.trim() ) )
             {
                 // Skip all input up to the ending marker.
                 this.editing = true;
@@ -831,9 +821,10 @@ public class JavaContainerMojo extends AbstractContainerMojo
                 if ( this.impl.getImplementedSpecifications().size() > 0 )
                 {
                     indent( buf );
-                    buf.append( JavaContainerMojoBundle.getInstance().
-                        getStandardConstructorMessage( getLocale(),
-                        this.impl.getIdentifier(), implType ) );
+                    buf.append(
+                        JavaContainerMojoBundle.getInstance().
+                        getStandardConstructorMessage(
+                        getLocale(), this.impl.getIdentifier(), implType ) );
 
                     buf.append( '\n' );
                 }
@@ -879,7 +870,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
     }
 
     /** Adds message getters to an implementation. */
-    public class MessageEditor implements AbstractContainerMojo.SourceEditor
+    private class MessageEditor implements AbstractContainerMojo.SourceEditor
     {
 
         private boolean editing = false;
@@ -893,7 +884,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
         private final boolean markersNeeded;
 
         public MessageEditor( final String fileName,
-            final Implementation impl )
+                              final Implementation impl )
         {
             if ( fileName == null )
             {
@@ -917,13 +908,13 @@ public class JavaContainerMojo extends AbstractContainerMojo
             {
                 throw new MojoFailureException(
                     JavaContainerMojoBundle.getInstance().
-                    getUnexpectedEndOfInputMessage( getLocale(),
-                    this.fileName ) );
+                    getUnexpectedEndOfInputMessage( Locale.getDefault(),
+                                                    this.fileName ) );
 
             }
 
             if ( line != null &&
-                messagesStartingMarker.equals( line.trim() ) )
+                 messagesStartingMarker.equals( line.trim() ) )
             {
                 // Skip all input up to the ending marker.
                 this.editing = true;
@@ -947,7 +938,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
                 {
                     this.modified = true;
                     this.generateMessages( this.impl.getDeclaredMessages(),
-                        buf );
+                                           buf );
 
                 }
 
@@ -990,214 +981,264 @@ public class JavaContainerMojo extends AbstractContainerMojo
         }
 
         private void generateMessages( final Messages messages,
-            final StringBuffer buf )
+                                       final StringBuffer buf )
+            throws MojoFailureException
         {
-            for ( int i = messages.size() - 1; i >= 0; i-- )
+            try
             {
-                final Message message = messages.getMessage( i );
-
-                // Getter.
-                final boolean hasDescription =
-                    message.getDocumentation().getLocales().length > 0;
-
-                final String description = hasDescription
-                    ? message.getDocumentation().getValue( getLocale() )
-                    : JavaContainerMojoBundle.getInstance().
-                    getDefaultMessageDescriptionMessage( getLocale(),
-                    message.getName() );
-
-                indent( buf );
-                buf.append( "/**\n" );
-                indent( buf );
-                buf.append( " * " );
-                buf.append( JavaContainerMojoBundle.getInstance().
-                    getMessageGetterCommentMessage( getLocale(),
-                    message.getName() ) ).append( '\n' );
-
-                final Locale[] locales = message.getTemplate().getLocales();
-                for ( int d = locales.length - 1; d >= 0; d-- )
+                for ( int i = messages.size() - 1; i >= 0; i-- )
                 {
+                    final Message message = messages.getMessage( i );
+
+                    // Getter.
+                    final boolean hasDescription = message.getDocumentation().
+                        getLocales().length > 0;
+
+                    final String description = hasDescription
+                                               ? message.getDocumentation().
+                        getValue( getLocale() )
+                                               : JavaContainerMojoBundle.
+                        getInstance().
+                        getDefaultMessageDescriptionMessage( getLocale(),
+                                                             message.getName() );
+
                     indent( buf );
-                    buf.append( " * <blockquote><pre>" );
-                    buf.append( formatComment( message.getTemplate().getValue(
-                        locales[d] ) ) );
+                    buf.append( "/**\n" );
+                    indent( buf );
+                    buf.append( " * " );
+                    buf.append( JavaContainerMojoBundle.getInstance().
+                        getMessageGetterCommentMessage( getLocale(),
+                                                        message.getName() ) ).
+                        append( '\n' );
 
-                    buf.append( "</pre></blockquote>\n" );
-                }
+                    final Locale[] locales = message.getTemplate().getLocales();
+                    for ( int d = locales.length - 1; d >= 0; d-- )
+                    {
+                        indent( buf );
+                        buf.append( " * <blockquote><pre>" );
+                        buf.append( formatComment( message.getTemplate().
+                            getValue( locales[d] ) ) );
 
-                if ( message.getArguments().size() > 0 )
-                {
+                        buf.append( "</pre></blockquote>\n" );
+                    }
+
+                    if ( message.getArguments().size() > 0 ||
+                         VersionParser.compare( messages.getModelVersion(),
+                                                V1_4 ) >= 0 )
+                    {
+                        indent( buf );
+                        buf.append( " *\n" );
+
+                        if ( VersionParser.compare( messages.getModelVersion(),
+                                                    V1_4 ) >= 0 )
+                        {
+                            indent( buf );
+                            buf.append( " * @param locale " ).
+                                append( formatComment(
+                                JavaContainerMojoBundle.getInstance().
+                                getLocaleParamCommentMessage( getLocale() ) ) ).
+                                append( '\n' );
+
+                        }
+
+                        for ( int a = 0; a < message.getArguments().size();
+                              a++ )
+                        {
+                            indent( buf );
+                            buf.append( " * @param " ).
+                                append( message.getArguments().getArgument( a ).
+                                getName() ).append( " " );
+
+                            if ( message.getArguments().getArgument( a ).
+                                getDocumentation().getLocales().length > 0 )
+                            {
+                                buf.append(
+                                    formatComment(
+                                    message.getArguments().getArgument( a ).
+                                    getDocumentation().
+                                    getValue( getLocale() ) ) );
+
+                            }
+                            else
+                            {
+                                buf.append( formatComment(
+                                    JavaContainerMojoBundle.getInstance().
+                                    getDefaultArgumentDescriptionMessage(
+                                    getLocale() ) ) );
+
+                            }
+
+                            buf.append( '\n' );
+                        }
+                    }
+
                     indent( buf );
                     buf.append( " *\n" );
 
-                    for ( int a = 0; a < message.getArguments().size(); a++ )
+                    indent( buf );
+                    buf.append( " * @return " );
+                    buf.append( formatComment( description ) ).append( '\n' );
+                    indent( buf );
+                    buf.append( " */\n" );
+
+                    indent( buf );
+                    buf.append( this.impl.isFinal() &&
+                                this.impl.getParent() == null
+                                ? "private" : "protected" );
+
+                    buf.append( " String " ).append(
+                        getModelManager().getJavaGetterMethodName( message ) );
+
+                    buf.append( "(" );
+                    if ( VersionParser.compare( messages.getModelVersion(),
+                                                V1_4 ) >= 0 )
                     {
+                        buf.append( " final Locale locale" );
+                        if ( message.getArguments().size() > 0 )
+                        {
+                            buf.append( ',' );
+                        }
+                    }
+
+                    if ( message.getArguments().size() > 0 )
+                    {
+                        buf.append( "\n" );
                         indent( buf );
-                        buf.append( " * @param " ).append(
-                            message.getArguments().getArgument( a ).getName() ).
-                            append( " " );
+                        indent( buf );
+                        indent( buf );
 
-                        if ( message.getArguments().getArgument( a ).
-                            getDocumentation().getLocales().length > 0 )
+                        for ( int a = 0; a < message.getArguments().size();
+                              a++ )
                         {
-                            buf.append(
-                                formatComment(
-                                message.getArguments().getArgument( a ).
-                                getDocumentation().getValue( getLocale() ) ) );
+                            final Argument arg = message.getArguments().
+                                getArgument( a );
 
+                            final String javaType;
+                            switch ( arg.getType() )
+                            {
+                                case Argument.TYPE_DATE:
+                                case Argument.TYPE_TIME:
+                                    javaType = "java.util.Date";
+                                    break;
+
+                                case Argument.TYPE_NUMBER:
+                                    javaType = "java.lang.Number";
+                                    break;
+
+                                case Argument.TYPE_TEXT:
+                                    javaType = "java.lang.String";
+                                    break;
+
+                                default:
+                                    throw new AssertionError(
+                                        Integer.toString( arg.getType() ) );
+
+                            }
+
+                            buf.append( "final " ).append( javaType ).
+                                append( " " ).append( arg.getName() );
+
+                            if ( a + 1 < message.getArguments().size() )
+                            {
+                                buf.append( ",\n" );
+                                indent( buf );
+                                indent( buf );
+                                indent( buf );
+                            }
+                            else
+                            {
+                                buf.append( " )\n" );
+                            }
                         }
-                        else
-                        {
-                            buf.append( formatComment(
-                                JavaContainerMojoBundle.getInstance().
-                                getDefaultArgumentDescriptionMessage(
-                                getLocale() ) ) );
-
-                        }
-
-                        buf.append( '\n' );
                     }
-                }
-
-                indent( buf );
-                buf.append( " *\n" );
-
-                indent( buf );
-                buf.append( " * @return " );
-                buf.append( formatComment( description ) ).append( '\n' );
-                indent( buf );
-                buf.append( " */\n" );
-
-                indent( buf );
-                buf.append( this.impl.isFinal() && this.impl.getParent() == null
-                    ? "private"
-                    : "protected" );
-
-                buf.append( " String " ).append(
-                    getModelManager().getJavaGetterMethodName( message ) );
-
-                buf.append( "(" );
-                if ( message.getArguments().size() > 0 )
-                {
-                    buf.append( "\n" );
-                    indent( buf );
-                    indent( buf );
-                    indent( buf );
-
-                    for ( int a = 0; a < message.getArguments().size(); a++ )
+                    else
                     {
-                        final Argument arg =
-                            message.getArguments().getArgument( a );
-
-                        final String javaType;
-                        switch ( arg.getType() )
+                        if ( VersionParser.compare( messages.getModelVersion(),
+                                                    V1_4 ) >= 0 )
                         {
-                            case Argument.TYPE_DATE:
-                            case Argument.TYPE_TIME:
-                                javaType = "java.util.Date";
-                                break;
-
-                            case Argument.TYPE_NUMBER:
-                                javaType = "java.lang.Number";
-                                break;
-
-                            case Argument.TYPE_TEXT:
-                                javaType = "java.lang.String";
-                                break;
-
-                            default:
-                                throw new AssertionError(
-                                    Integer.toString( arg.getType() ) );
-
+                            buf.append( " " );
                         }
 
-                        buf.append( javaType ).append( " " ).
-                            append( arg.getName() );
-
-                        if ( a + 1 < message.getArguments().size() )
-                        {
-                            buf.append( ",\n" );
-                            indent( buf );
-                            indent( buf );
-                            indent( buf );
-                        }
-                        else
-                        {
-                            buf.append( " )\n" );
-                        }
+                        buf.append( ")\n" );
                     }
-                }
-                else
-                {
-                    buf.append( ")\n" );
-                }
 
-                indent( buf );
-                buf.append( "{\n" );
-
-                indent( buf );
-                indent( buf );
-                buf.append( "return ContainerFactory.getContainer().\n" );
-                indent( buf );
-                indent( buf );
-                indent( buf );
-                buf.append( "getMessage( this, \"" ).
-                    append( message.getName() ).append( '"' );
-
-                if ( message.getArguments().size() > 0 )
-                {
-                    buf.append( ",\n" );
-                    indent( buf );
-                    indent( buf );
-                    indent( buf );
-                    indent( buf );
-                    buf.append( "new Object[]\n" );
-                    indent( buf );
-                    indent( buf );
-                    indent( buf );
                     indent( buf );
                     buf.append( "{\n" );
 
-                    for ( int a = 0; a < message.getArguments().size(); a++ )
+                    indent( buf );
+                    indent( buf );
+                    buf.append( "return ContainerFactory.getContainer().\n" );
+                    indent( buf );
+                    indent( buf );
+                    indent( buf );
+                    buf.append( "getMessage( this, \"" ).
+                        append( message.getName() ).append( '"' );
+
+                    if ( VersionParser.compare( messages.getModelVersion(),
+                                                V1_4 ) >= 0 )
                     {
-                        final Argument arg =
-                            message.getArguments().getArgument( a );
+                        buf.append( ", locale" );
+                    }
 
+                    if ( message.getArguments().size() > 0 )
+                    {
+                        buf.append( ",\n" );
                         indent( buf );
                         indent( buf );
                         indent( buf );
                         indent( buf );
+                        buf.append( "new Object[]\n" );
                         indent( buf );
-                        buf.append( arg.getName() );
+                        indent( buf );
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "{\n" );
 
-                        if ( a + 1 < message.getArguments().size() )
+                        for ( int a = 0; a < message.getArguments().size(); a++ )
                         {
-                            buf.append( "," );
+                            final Argument arg =
+                                message.getArguments().getArgument( a );
+
+                            indent( buf );
+                            indent( buf );
+                            indent( buf );
+                            indent( buf );
+                            indent( buf );
+                            buf.append( arg.getName() );
+
+                            if ( a + 1 < message.getArguments().size() )
+                            {
+                                buf.append( "," );
+                            }
+
+                            buf.append( "\n" );
                         }
 
-                        buf.append( "\n" );
+                        indent( buf );
+                        indent( buf );
+                        indent( buf );
+                        indent( buf );
+                        buf.append( "});\n\n" );
+                    }
+                    else
+                    {
+                        buf.append( ", null );\n\n" );
                     }
 
                     indent( buf );
-                    indent( buf );
-                    indent( buf );
-                    indent( buf );
-                    buf.append( "});\n\n" );
+                    buf.append( "}\n\n" );
                 }
-                else
-                {
-                    buf.append( ", null );\n\n" );
-                }
-
-                indent( buf );
-                buf.append( "}\n\n" );
+            }
+            catch ( ParseException e )
+            {
+                throw new MojoFailureException( e.getMessage(), e );
             }
         }
 
     }
 
     /** Cleans a section. */
-    public class RemovingEditor implements AbstractContainerMojo.SourceEditor
+    private class RemovingEditor implements AbstractContainerMojo.SourceEditor
     {
 
         private boolean editing = false;
@@ -1210,9 +1251,9 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
         private final String endingMarker;
 
-        public RemovingEditor( final String fileName,
-            final String startingMarker,
-            final String endingMarker )
+        private RemovingEditor( final String fileName,
+                                final String startingMarker,
+                                final String endingMarker )
         {
             if ( fileName == null )
             {
@@ -1238,8 +1279,8 @@ public class JavaContainerMojo extends AbstractContainerMojo
             {
                 throw new MojoFailureException(
                     JavaContainerMojoBundle.getInstance().
-                    getUnexpectedEndOfInputMessage( getLocale(),
-                    this.fileName ) );
+                    getUnexpectedEndOfInputMessage( Locale.getDefault(),
+                                                    this.fileName ) );
 
             }
 
@@ -1289,7 +1330,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
     }
 
-    public String getTypeFromClassName( final String className )
+    protected String getTypeFromClassName( final String className )
     {
         if ( className == null )
         {
@@ -1300,7 +1341,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
     }
 
     protected void generateImplementation( final List roots,
-        final Implementation impl )
+                                           final Implementation impl )
         throws MojoExecutionException, MojoFailureException
     {
         try
@@ -1323,9 +1364,9 @@ public class JavaContainerMojo extends AbstractContainerMojo
                 final JavaArtifact artifact =
                     new JavaArtifact( impl.getIdentifier() );
 
-                source =
-                    new File( this.getSourceRoot(), artifact.getPackagePath() +
-                    File.separator + artifact.getName() + ".java" );
+                source = new File( this.getSourceRoot(),
+                                   artifact.getPackagePath() + File.separator +
+                                   artifact.getName() + ".java" );
 
                 if ( !source.getParentFile().exists() )
                 {
@@ -1349,28 +1390,28 @@ public class JavaContainerMojo extends AbstractContainerMojo
                 ctx.put( "project", this.getMavenProject() );
                 ctx.put( "implementation", impl );
                 ctx.put( "constructorsStartingMarker",
-                    this.constructorsStartingMarker );
+                         this.constructorsStartingMarker );
 
                 ctx.put( "constructorsEndingMarker",
-                    this.constructorsEndingMarker );
+                         this.constructorsEndingMarker );
 
                 ctx.put( "dependenciesStartingMarker",
-                    this.dependenciesStartingMarker );
+                         this.dependenciesStartingMarker );
 
                 ctx.put( "dependenciesEndingMarker",
-                    this.dependenciesEndingMarker );
+                         this.dependenciesEndingMarker );
 
                 ctx.put( "propertiesStartingMarker",
-                    this.propertiesStartingMarker );
+                         this.propertiesStartingMarker );
 
                 ctx.put( "propertiesEndingMarker",
-                    this.propertiesEndingMarker );
+                         this.propertiesEndingMarker );
 
                 ctx.put( "messagesStartingMarker",
-                    this.messagesStartingMarker );
+                         this.messagesStartingMarker );
 
                 ctx.put( "messagesEndingMarker",
-                    this.messagesEndingMarker );
+                         this.messagesEndingMarker );
 
                 this.getVelocity().mergeTemplate(
                     IMPLEMENTATION_TEMPLATE_LOCATION,
@@ -1380,7 +1421,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
                 this.getLog().info( JavaContainerMojoBundle.getInstance().
                     getCreatedFileMessage( Locale.getDefault(),
-                    source.getName() ) );
+                                           source.getName() ) );
 
             }
 
@@ -1400,47 +1441,48 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
             edited =
                 this.edit( content,
-                new RemovingEditor( path,
-                this.implementationsStartingMarker,
-                this.implementationsEndingMarker ) );
+                           new RemovingEditor( path,
+                                               this.implementationsStartingMarker,
+                                               this.implementationsEndingMarker ) );
 
             edited =
                 this.edit( edited,
-                new RemovingEditor( path,
-                this.dependenciesStartingMarker,
-                this.dependenciesEndingMarker ) );
+                           new RemovingEditor( path,
+                                               this.dependenciesStartingMarker,
+                                               this.dependenciesEndingMarker ) );
 
             edited =
                 this.edit( edited,
-                new RemovingEditor( path,
-                this.propertiesStartingMarker,
-                this.propertiesEndingMarker ) );
+                           new RemovingEditor( path,
+                                               this.propertiesStartingMarker,
+                                               this.propertiesEndingMarker ) );
 
             edited =
                 this.edit( edited,
-                new RemovingEditor( path,
-                this.constructorsStartingMarker,
-                this.constructorsEndingMarker ) );
+                           new RemovingEditor( path,
+                                               this.constructorsStartingMarker,
+                                               this.constructorsEndingMarker ) );
 
             edited =
                 this.edit( edited,
-                new RemovingEditor( path,
-                this.messagesStartingMarker,
-                this.messagesEndingMarker ) );
+                           new RemovingEditor( path,
+                                               this.messagesStartingMarker,
+                                               this.messagesEndingMarker ) );
 
             edited = this.edit( edited, depEditor );
             edited = this.edit( edited, propEditor );
             edited = this.edit( edited, ctorsEditor );
             edited = this.edit( edited, messageEditor );
             edited = this.edit( edited,
-                new CleanMojo.RemoveTrailingSpacesEditor() );
+                                new CleanMojo.RemoveTrailingSpacesEditor() );
 
             if ( depEditor.isMarkersNeeded() && !depEditor.isModified() )
             {
                 throw new MojoExecutionException(
                     JavaContainerMojoBundle.getInstance().
-                    getMissingMarkersMessage( getLocale(),
-                    this.dependenciesStartingMarker, path ) );
+                    getMissingMarkersMessage( Locale.getDefault(),
+                                              this.dependenciesStartingMarker,
+                                              path ) );
 
             }
 
@@ -1448,8 +1490,9 @@ public class JavaContainerMojo extends AbstractContainerMojo
             {
                 throw new MojoExecutionException(
                     JavaContainerMojoBundle.getInstance().
-                    getMissingMarkersMessage( getLocale(),
-                    this.propertiesStartingMarker, path ) );
+                    getMissingMarkersMessage( Locale.getDefault(),
+                                              this.propertiesStartingMarker,
+                                              path ) );
 
             }
 
@@ -1457,18 +1500,20 @@ public class JavaContainerMojo extends AbstractContainerMojo
             {
                 throw new MojoExecutionException(
                     JavaContainerMojoBundle.getInstance().
-                    getMissingMarkersMessage( getLocale(),
-                    this.constructorsStartingMarker, path ) );
+                    getMissingMarkersMessage( Locale.getDefault(),
+                                              this.constructorsStartingMarker,
+                                              path ) );
 
             }
 
             if ( messageEditor.isMarkersNeeded() &&
-                !messageEditor.isModified() )
+                 !messageEditor.isModified() )
             {
                 throw new MojoExecutionException(
                     JavaContainerMojoBundle.getInstance().
-                    getMissingMarkersMessage( getLocale(),
-                    this.messagesStartingMarker, path ) );
+                    getMissingMarkersMessage( Locale.getDefault(),
+                                              this.messagesStartingMarker,
+                                              path ) );
 
             }
 
@@ -1484,8 +1529,8 @@ public class JavaContainerMojo extends AbstractContainerMojo
     }
 
     protected void generateSpecification( final List roots,
-        final Specification spec )
-        throws MojoExecutionException, MojoFailureException
+                                          final Specification spec )
+        throws MojoExecutionException, MojoFailureException, IOException
     {
         if ( spec == null )
         {
@@ -1502,13 +1547,12 @@ public class JavaContainerMojo extends AbstractContainerMojo
         {
             final String path = source.getAbsolutePath();
             final String content = this.load( source );
-            String edited =
-                this.edit( content, new RemovingEditor(
+            String edited = this.edit( content, new RemovingEditor(
                 path, this.specificationsStartingMarker,
                 this.specificationsEndingMarker ) );
 
             edited = this.edit( edited,
-                new CleanMojo.RemoveTrailingSpacesEditor() );
+                                new CleanMojo.RemoveTrailingSpacesEditor() );
 
             if ( !content.equals( edited ) )
             {
@@ -1544,6 +1588,24 @@ public class JavaContainerMojo extends AbstractContainerMojo
         }
 
         return buf.toString();
+    }
+
+    protected void writeContainerReport( final Model model,
+                                         final String name )
+        throws JAXBException, FileNotFoundException
+    {
+        final File reportFile = new File( this.getOutputDirectory(),
+                                          name );
+
+        if ( !reportFile.getParentFile().exists() )
+        {
+            reportFile.getParentFile().mkdirs();
+        }
+
+        this.getModelManager().getContainerMarshaller().marshal(
+            this.getModelManager().getContainerModel( model.getModules() ),
+            new FileOutputStream( reportFile ) );
+
     }
 
     //-----------------------------------------------------------ContainerMojo--

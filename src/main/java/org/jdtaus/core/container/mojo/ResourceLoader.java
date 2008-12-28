@@ -56,8 +56,8 @@ final class ResourceLoader extends URLClassLoader
     ResourceLoader( final ClassLoader delegate )
     {
         super( new URL[]
-               {
-               } );
+            {
+            } );
 
         this.delegate = delegate;
     }
@@ -82,7 +82,7 @@ final class ResourceLoader extends URLClassLoader
 
         try
         {
-            thisClass = this.delegate.loadClass( name );
+            thisClass = Class.forName( name, true, this.delegate );
         }
         catch ( ClassNotFoundException e )
         {

@@ -79,10 +79,23 @@ public class ${artifact.getName()} implements FactoryBean
 
     public Object getObject() throws Exception
     {
-        return ContainerFactory.getContainer().
-            getObject( this.getSpecificationIdentifier(),
-                       this.getImplementationName() );
+        final Object o;
+        final Class specificationClass = Class.forName(
+            this.getSpecificationIdentifier(), true,
+            this.getClassLoader( this.getClass() ) );
 
+        if ( this.getImplementationName() != null )
+        {
+            o = ContainerFactory.getContainer().getObject(
+                specificationClass, this.getImplementationName() );
+
+        }
+        else
+        {
+            o = ContainerFactory.getContainer().getObject( specificationClass );
+        }
+
+        return o;
     }
 
     public Class getObjectType()
@@ -98,4 +111,14 @@ public class ${artifact.getName()} implements FactoryBean
 
     }
 
+    protected ClassLoader getClassLoader( final Class clazz )
+    {
+        ClassLoader classLoader = clazz.getClassLoader();
+        if( classLoader == null )
+        {
+            classLoader = ClassLoader.getSystemClassLoader();
+        }
+
+        return classLoader;
+    }
 }
