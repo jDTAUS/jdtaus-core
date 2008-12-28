@@ -1,0 +1,124 @@
+## @param project The maven project of the factory bean implementation.
+## @param artifact The artifact of the factory bean implementation.
+/*
+ *  ${project.getName()}
+#foreach ($developer in $project.getDevelopers())
+ *  Copyright (c) $project.inceptionYear $developer.getName()#if($developer.getEmail()) <${developer.getEmail()}>#end
+
+#end
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ *  $Id$
+ */
+package ${artifact.getPackageName()};
+
+import org.jdtaus.core.container.ContainerFactory;
+import org.jdtaus.core.container.ModelFactory;
+import org.jdtaus.core.container.Specification;
+import org.springframework.beans.factory.FactoryBean;
+
+/**
+ * Spring {@code FactoryBean} implementation delegating to the {@code Container}
+ * singleton.
+ * <p>Property {@code specificationIdentifier} holds the identifier of the
+ * specification to return an object for. Property {@code implementationName}
+ * holds the optional name of the implementation of the object to return.</p>
+ *
+#foreach ($developer in $project.getDevelopers())
+#if($developer.getEmail())
+ * @author <a href="mailto:${developer.getEmail()}">${developer.getName()}</a>
+#end
+#if(!$developer.getEmail())
+ * @author ${developer.getName()}
+#end
+#end
+ * @version $Id$
+ *
+ * @see org.jdtaus.core.container.ContainerFactory#newContainer()
+ */
+public class ${artifact.getName()} implements FactoryBean
+{
+    /** Identifier of the specification of this factory bean. */
+    private String specificationIdentifier;
+
+    /** Implementation name of this factory bean. */
+    private String implementationName;
+
+    /**
+     * Gets the value of property {@code specificationIdentifier}.
+     *
+     * @return the identifier of the specification of this factory bean.
+     */
+    public String getSpecificationIdentifier()
+    {
+        return this.specificationIdentifier;
+    }
+
+    /**
+     * Gets the value of property {@code implementationName}.
+     *
+     * @return the implementation name of this factory bean.
+     */
+    public String getImplementationName()
+    {
+        return this.implementationName;
+    }
+
+    public Object getObject() throws Exception
+    {
+        final Object o;
+        final Class specificationClass = Class.forName(
+            this.getSpecificationIdentifier(), true,
+            this.getClassLoader( this.getClass() ) );
+
+        if ( this.getImplementationName() != null )
+        {
+            o = ContainerFactory.getContainer().getObject(
+                specificationClass, this.getImplementationName() );
+
+        }
+        else
+        {
+            o = ContainerFactory.getContainer().getObject( specificationClass );
+        }
+
+        return o;
+    }
+
+    public Class getObjectType()
+    {
+        return null;
+    }
+
+    public boolean isSingleton()
+    {
+        return ModelFactory.getModel().getModules().
+            getSpecification( this.getSpecificationIdentifier() ).
+            getScope() == Specification.SCOPE_SINGLETON;
+
+    }
+
+    protected ClassLoader getClassLoader( final Class clazz )
+    {
+        ClassLoader classLoader = clazz.getClassLoader();
+        if( classLoader == null )
+        {
+            classLoader = ClassLoader.getSystemClassLoader();
+        }
+
+        return classLoader;
+    }
+}

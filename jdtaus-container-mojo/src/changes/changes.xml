@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+  <properties>
+    <title>Changelog</title>
+    <author email="cs@jdtaus.org">Christian Schulte
+    </author>
+  </properties>
+  <body>
+    <release version="1.0" date="2007-06-01"
+             description="First stable release."/>
+    <release version="1.1" date="2007-08-01"
+             description="Feature enhancement.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added new goal <code>verify-model</code>. Added configuration parameter
+      <code>targetEditor</code> to goal <code>generate-container</code>.]]>
+      </action>
+    </release>
+    <release version="1.2" date="2007-08-24"
+             description="Feature enhancement.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added support for test modules. Added mojo configuration parameters
+      <code>testModuleName</code> and <code>mode</code> to goal
+      <code>generate-container</code>.]]>
+      </action>
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Added missing test for consistent use of <code>final</code> modifiers
+      to goal <code>verify-model</code>.]]>
+      </action>
+    </release>
+    <release version="2.0" date="2008-03-10"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated to generate fields with names according to the property name or
+      dependency name instead of numbering the various fields according to the
+      order specified in the model. <b>Note:</b> Generated code is not
+      compatible with previous versions of the plugin.]]>
+      </action>
+    </release>
+    <release version="2.1" date="2008-07-04"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Deprecated the <code>mode</code> parameter.]]>
+      </action>
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Corrected various classloader issues to support processing of any
+      available module regardless of the <code>mode</code> parameter. The
+      plugin can now be configured in a parent pom and reused in any
+      child-pom regardless of the artifact defining jDTAUS modules or not.]]>
+      </action>
+    </release>
+    <release version="2.1.1" date="2008-07-13"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added site documentation.]]>
+      </action>
+    </release>
+    <release version="3.0" date="2008-10-27"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Corrected support for dependencies with scope "provided".]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated to support the jDTAUS Core API 1.5 features. As such, this version
+      is incompatible to previous versions.]]>
+      </action>
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added a report for the container model.]]>
+      </action>
+    </release>
+    <release version="3.1" date="2008-10-30"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Corrected dependency resolution to support standalone artifacts.]]>
+      </action>
+    </release>
+    <release version="3.2" date="2008-12-28"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Added goals java-container-tests, java-commit and java-commit-tests.]]>
+      </action>
+    </release>
+  </body>
+</document>

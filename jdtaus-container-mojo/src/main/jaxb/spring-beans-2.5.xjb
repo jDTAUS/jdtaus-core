@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings version="1.0" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:beans="http://www.springframework.org/schema/beans">
+
+  <jaxb:bindings schemaLocation="http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+                 node="xs:schema">
+
+    <jaxb:bindings node="//xs:attributeGroup[@name='beanAttributes']">
+      <jaxb:bindings node=".//xs:attribute[@name='class']">
+        <jaxb:property name="clazz"/>
+      </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xs:element[@name='constructor-arg']">
+      <jaxb:bindings node=".//xs:attribute[@name='ref']">
+        <jaxb:property name="shortcutRef"/>
+      </jaxb:bindings>
+      <jaxb:bindings node=".//xs:attribute[@name='value']">
+        <jaxb:property name="shortcutValue"/>
+      </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xs:complexType[@name='propertyType']">
+      <jaxb:bindings node=".//xs:attribute[@name='ref']">
+        <jaxb:property name="shortcutRef"/>
+      </jaxb:bindings>
+      <jaxb:bindings node=".//xs:attribute[@name='value']">
+        <jaxb:property name="shortcutValue"/>
+      </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xs:complexType[@name='entryType']">
+      <jaxb:bindings node=".//xs:attribute[@name='key']">
+        <jaxb:property name="keyAttribute"/>
+      </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:schemaBindings>
+      <jaxb:package name="org.jdtaus.core.container.mojo.model.spring"/>
+      <jaxb:nameXmlTransform>
+        <jaxb:elementName suffix="Element"/>
+      </jaxb:nameXmlTransform>
+    </jaxb:schemaBindings>
+
+  </jaxb:bindings>
+
+</jaxb:bindings>
