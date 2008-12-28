@@ -10,7 +10,7 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.7-SNAPSHOT</version>
+  <version>1.8-SNAPSHOT</version>
   <description><![CDATA[
   jDTAUS Core provides a common application programming interface for jDTAUS
   integration. This is the parent module for the core artifacts.]]>
@@ -61,27 +61,57 @@
           <groupId>org.codehaus.plexus</groupId>
           <artifactId>plexus-maven-plugin</artifactId>
           <version>1.3.8</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>descriptor</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>javacc-maven-plugin</artifactId>
-          <version>2.4.1</version>
+          <version>${javacc-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>javacc</id>
+              <goals>
+                <goal>javacc</goal>
+              </goals>
+              <configuration>
+                <forceLaCheck>true</forceLaCheck>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.jvnet.jaxb1.maven2</groupId>
           <artifactId>maven-jaxb1-plugin</artifactId>
           <version>1.0-rc10</version>
-          <configuration>
-            <extension>true</extension>
-            <strict>true</strict>
-            <bindingDirectory>src/main/jaxb</bindingDirectory>
-            <schemaDirectory>src/main/jaxb</schemaDirectory>
-          </configuration>
+          <executions>
+            <execution>
+              <id>generate-jaxb</id>
+              <phase>generate-sources</phase>
+              <goals>
+                <goal>generate</goal>
+              </goals>
+              <configuration>
+                <extension>true</extension>
+                <strict>true</strict>
+                <bindingDirectory>src/main/jaxb</bindingDirectory>
+                <schemaDirectory>src/main/jaxb</schemaDirectory>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
-          <version>2.0-beta-7</version>
+          <version>2.0-beta-8</version>
+          <configuration>
+            <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags</tagBase>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -96,41 +126,119 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
           <version>2.2</version>
+          <executions>
+            <execution>
+              <id>sign</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+              <configuration>
+                <storepass>${jarsign.storepass}</storepass>
+                <keypass>${jarsign.keypass}</keypass>
+                <alias>${jarsign.alias}</alias>
+                <jarPath>${project.build.directory}/${project.build.finalName}.jar</jarPath>
+                <signedjar>${project.build.directory}/signed/${project.build.finalName}.jar</signedjar>
+              </configuration>
+            </execution>
+          </executions>
+          <configuration>
+            <archive>
+              <index>true</index>
+              <addMavenDescriptor>false</addMavenDescriptor>
+              <compress>true</compress>
+              <manifestEntries>
+                <Build-Date>${buildNumber}</Build-Date>
+              </manifestEntries>
+            </archive>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
           <version>1.0-alpha-4</version>
+          <executions>
+            <execution>
+              <id>sign</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+              <configuration>
+                <keyname>${gpg.keyname}</keyname>
+                <passphrase>${gpg.passphrase}</passphrase>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-remote-resources-plugin</artifactId>
           <version>1.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>2.1</version>
+          <executions>
+            <execution>
+              <id>process</id>
+              <goals>
+                <goal>process</goal>
+              </goals>
+              <configuration>
+                <resourceBundles>
+                  <resourceBundle>org.jdtaus:jdtaus-lgpl-resource-bundle:1.1</resourceBundle>
+                </resourceBundles>
+                <properties>
+                  <buildNumber>${buildNumber}</buildNumber>
+                </properties>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
-          <version>2.4.3</version>
+          <version>${maven-plugin-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>generate-helpmojo</id>
+              <goals>
+                <goal>helpmojo</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.5</version>
+          <version>${maven-javadoc-plugin.version}</version>
+          <configuration>
+            <author>true</author>
+            <charset>UTF-8</charset>
+            <docencoding>UTF-8</docencoding>
+            <encoding>UTF-8</encoding>
+            <doctitle>${pom.name} Specification ${pom.version}</doctitle>
+            <linksource>true</linksource>
+            <nodeprecated>true</nodeprecated>
+            <quiet>false</quiet>
+            <verbose>false</verbose>
+            <serialwarn>true</serialwarn>
+            <windowtitle>${pom.name} Specification ${pom.version}</windowtitle>
+            <overview>${basedir}/src/main/javadoc/overview.html</overview>
+            <show>public</show>
+            <links>
+              <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+              <link>http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/apidocs</link>
+              <link>http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-spi/apidocs</link>
+            </links>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jxr-plugin</artifactId>
-          <version>2.1</version>
+          <version>${maven-jxr-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>2.4</version>
+          <version>${maven-pmd-plugin.version}</version>
           <configuration>
             <sourceEncoding>UTF-8</sourceEncoding>
           </configuration>
@@ -138,12 +246,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-report-plugin</artifactId>
-          <version>2.4.3</version>
+          <version>${maven-surefire-report-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>2.2</version>
+          <version>${maven-checkstyle-plugin.version}</version>
           <configuration>
             <encoding>UTF-8</encoding>
           </configuration>
@@ -151,7 +259,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-changes-plugin</artifactId>
-          <version>2.0</version>
+          <version>${maven-changes-plugin.version}</version>
           <configuration>
             <issueLinkTemplate>http://bugzilla.jdtaus.org/cgi-bin/bugzilla/show_bug.cgi?id=%ISSUE%</issueLinkTemplate>
             <reportSets>
@@ -167,6 +275,20 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
           <version>1.2</version>
+          <dependencies>
+            <dependency>
+              <artifactId>jdtaus-container-mojo</artifactId>
+              <groupId>org.jdtaus.mojo</groupId>
+              <version>${jdtaus-container-mojo.version}</version>
+              <scope>runtime</scope>
+            </dependency>
+            <dependency>
+              <artifactId>jdtaus-core-client-container</artifactId>
+              <groupId>org.jdtaus.core.container</groupId>
+              <version>${jdtaus-core.version}</version>
+              <scope>runtime</scope>
+            </dependency>
+          </dependencies>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -185,13 +307,87 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
           <version>2.0.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jdtaus.mojo</groupId>
+          <artifactId>jdtaus-resource-mojo</artifactId>
+          <version>${jdtaus-resource-mojo.version}</version>
+          <executions>
+            <execution>
+              <id>generate-resources</id>
+              <goals>
+                <goal>java-resources</goal>
+              </goals>
+              <configuration>
+                <encoding>UTF-8</encoding>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.jdtaus.mojo</groupId>
+          <artifactId>jdtaus-container-mojo</artifactId>
+          <version>${jdtaus-container-mojo.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.jdtaus.core.container</groupId>
+              <artifactId>jdtaus-core-client-container</artifactId>
+              <version>${jdtaus-core.version}</version>
+              <scope>runtime</scope>
+            </dependency>
+          </dependencies>
+          <executions>
+            <execution>
+              <id>manage-main</id>
+              <goals>
+                <goal>java-container</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>manage-tests</id>
+              <goals>
+                <goal>java-container-tests</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>commit-main</id>
+              <goals>
+                <goal>java-commit</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>commit-tests</id>
+              <goals>
+                <goal>java-commit-tests</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <locale>en</locale>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>buildnumber-maven-plugin</artifactId>
+          <groupId>org.codehaus.mojo</groupId>
+          <version>1.0-beta-1</version>
+          <executions>
+            <execution>
+              <inherited>false</inherited>
+              <phase>validate</phase>
+              <goals>
+                <goal>create</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <format>{0,date,yyyy-MM-dd'T'HH:mm:ssZ}</format>
+            <items>
+              <item>timestamp</item>
+            </items>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -199,95 +395,14 @@
       <plugin>
         <artifactId>buildnumber-maven-plugin</artifactId>
         <groupId>org.codehaus.mojo</groupId>
-        <version>1.0-beta-1</version>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>create</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <format>{0,date,yyyy-MM-dd'T'HH:mm:ssZ}</format>
-          <items>
-            <item>timestamp</item>
-          </items>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags</tagBase>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>sign</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-            <configuration>
-              <storepass>${jarsign.storepass}</storepass>
-              <keypass>${jarsign.keypass}</keypass>
-              <alias>${jarsign.alias}</alias>
-              <jarPath>${project.build.directory}/${project.build.finalName}.jar</jarPath>
-              <signedjar>${project.build.directory}/signed/${project.build.finalName}.jar</signedjar>
-            </configuration>
-          </execution>
-        </executions>
-        <configuration>
-          <archive>
-            <index>true</index>
-            <addMavenDescriptor>false</addMavenDescriptor>
-            <compress>true</compress>
-            <manifestEntries>
-              <Build-Date>${buildNumber}</Build-Date>
-            </manifestEntries>
-          </archive>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>sign</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-            <configuration>
-              <keyname>${gpg.keyname}</keyname>
-              <passphrase>${gpg.passphrase}</passphrase>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-remote-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>process</id>
-            <goals>
-              <goal>process</goal>
-            </goals>
-            <configuration>
-              <resourceBundles>
-                <resourceBundle>org.jdtaus:jdtaus-lgpl-resource-bundle:1.1</resourceBundle>
-              </resourceBundles>
-              <properties>
-                <buildNumber>${buildNumber}</buildNumber>
-              </properties>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
@@ -312,20 +427,12 @@
     <module>jdtaus-core-utilities</module>
     <module>jdtaus-core-runtime</module>
   </modules>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </reporting>
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>[3.8, 3.8.2]</version>
+        <version>3.8.2</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -344,7 +451,7 @@
         <groupId>javax.servlet</groupId>
         <artifactId>servlet-api</artifactId>
         <scope>provided</scope>
-        <version>(2.2, 2.4]</version>
+        <version>2.3</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven</groupId>
@@ -429,23 +536,143 @@
       <dependency>
         <groupId>javax.xml.parsers</groupId>
         <artifactId>jaxp-api</artifactId>
-        <version>1.4</version>
+        <version>1.4.2</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>com.sun.xml.parsers</groupId>
         <artifactId>jaxp-ri</artifactId>
-        <version>1.4</version>
+        <version>1.4.2</version>
         <scope>runtime</scope>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring</artifactId>
-        <version>2.5.5</version>
+        <version>2.5.6</version>
         <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.bcel</groupId>
+        <artifactId>bcel</artifactId>
+        <version>5.2</version>
+        <scope>compile</scope>
+      </dependency>
+      <!-- Dependencies with unmanaged scope.                                -->
+      <dependency>
+        <groupId>org.jdtaus.common</groupId>
+        <artifactId>jdtaus-core-api</artifactId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jdtaus.core.container</groupId>
+        <artifactId>jdtaus-core-client-container</artifactId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jdtaus.core</groupId>
+        <artifactId>jdtaus-core-spi</artifactId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jdtaus.core</groupId>
+        <artifactId>jdtaus-core-it</artifactId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jdtaus.core.logging</groupId>
+        <artifactId>jdtaus-core-jdk-logging</artifactId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jdtaus.core</groupId>
+        <artifactId>jdtaus-core-messages</artifactId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jdtaus.core</groupId>
+        <artifactId>jdtaus-core-schemas</artifactId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jdtaus.core.monitor</groupId>
+        <artifactId>jdtaus-core-task-monitor</artifactId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jdtaus.core.lang</groupId>
+        <artifactId>jdtaus-core-memory-manager</artifactId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jdtaus.core.text</groupId>
+        <artifactId>jdtaus-core-application-logger</artifactId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <artifactId>jdtaus-core-servlet-container</artifactId>
+        <groupId>org.jdtaus.core.container</groupId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <artifactId>jdtaus-core-entity-resolver</artifactId>
+        <groupId>org.jdtaus.core.sax</groupId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <artifactId>jdtaus-core-utilities</artifactId>
+        <groupId>org.jdtaus.core</groupId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <artifactId>jdtaus-core-messages</artifactId>
+        <groupId>org.jdtaus.core</groupId>
+        <version>${jdtaus-core.version}</version>
+      </dependency>
+      <dependency>
+        <artifactId>jdtaus-core-jdk14-executor</artifactId>
+        <groupId>org.jdtaus.core.lang</groupId>
+        <version>${jdtaus-core.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
+  <repositories>
+    <repository>
+      <id>maven2-repository.dev.java.net</id>
+      <name>Java.net Maven 2 Repository</name>
+      <url>http://download.java.net/maven/2/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>maven-repository.dev.java.net</id>
+      <name>Java.net Maven 1 Repository (legacy)</name>
+      <url>http://download.java.net/maven/1/</url>
+      <layout>legacy</layout>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>maven2-repository.dev.java.net</id>
+      <name>Java.net Maven 2 Repository</name>
+      <url>http://download.java.net/maven/2/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+    <pluginRepository>
+      <id>maven-repository.dev.java.net</id>
+      <name>Java.net Maven 1 Repository (legacy)</name>
+      <url>http://download.java.net/maven/1/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <layout>legacy</layout>
+    </pluginRepository>
+  </pluginRepositories>
   <distributionManagement>
     <repository>
       <id>jdtaus-releases</id>
@@ -462,4 +689,105 @@
       <url>scp://web.rent-a-mailserver.de/var/httpd/D0001/sites.jdtaus.org/jdtaus-core/1.0.x</url>
     </site>
   </distributionManagement>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven-javadoc-plugin.version}</version>
+        <reportSets>
+          <reportSet>
+            <id>javadoc</id>
+            <inherited>true</inherited>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+            <configuration>
+              <author>true</author>
+              <charset>UTF-8</charset>
+              <docencoding>UTF-8</docencoding>
+              <encoding>UTF-8</encoding>
+              <doctitle>${pom.name} Specification ${pom.version}</doctitle>
+              <linksource>true</linksource>
+              <nodeprecated>true</nodeprecated>
+              <quiet>false</quiet>
+              <verbose>false</verbose>
+              <serialwarn>true</serialwarn>
+              <windowtitle>${pom.name} Specification ${pom.version}</windowtitle>
+              <overview>${basedir}/src/main/javadoc/overview.html</overview>
+              <show>public</show>
+              <links>
+                <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+                <link>http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/apidocs</link>
+                <link>http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-spi/apidocs</link>
+              </links>
+            </configuration>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>${maven-jxr-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>${maven-pmd-plugin.version}</version>
+        <configuration>
+          <sourceEncoding>UTF-8</sourceEncoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>${maven-surefire-report-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven-checkstyle-plugin.version}</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>${maven-changes-plugin.version}</version>
+        <reportSets>
+          <reportSet>
+            <id>changes</id>
+            <inherited>true</inherited>
+            <reports>
+              <report>changes-report</report>
+            </reports>
+            <configuration>
+              <issueLinkTemplatePerSystem>
+                <Bugzilla>http://bugzilla.jdtaus.org/cgi-bin/bugzilla/show_bug.cgi?id=%ISSUE%</Bugzilla>
+              </issueLinkTemplatePerSystem>
+            </configuration>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+  <properties>
+    <jdtaus-core.version>1.8-SNAPSHOT</jdtaus-core.version>
+    <jdtaus-container-mojo.version>3.2-SNAPSHOT</jdtaus-container-mojo.version>
+    <jdtaus-resource-mojo.version>3.3-SNPASHOT</jdtaus-resource-mojo.version>
+    <maven-javadoc-plugin.version>2.5</maven-javadoc-plugin.version>
+    <maven-jxr-plugin.version>2.1</maven-jxr-plugin.version>
+    <maven-pmd-plugin.version>2.4</maven-pmd-plugin.version>
+    <maven-surefire-report-plugin.version>2.4.3</maven-surefire-report-plugin.version>
+    <maven-checkstyle-plugin.version>2.2</maven-checkstyle-plugin.version>
+    <maven-changes-plugin.version>2.1</maven-changes-plugin.version>
+    <maven-plugin-plugin.version>2.4.3</maven-plugin-plugin.version>
+    <javacc-maven-plugin.version>2.5</javacc-maven-plugin.version>
+  </properties>
 </project>
