@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  ${pom.name}
+  Copyright (c) 2005 Christian Schulte
+
+  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+  <cs@jdtaus.org> (+49 2331 3543887)
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Document   : module.xml
+  Author     : Christian Schulte <cs@jdtaus.org>
+  Version    : $Id$
+  Description: Runtime configuration for the ${pom.name} module.
+
+-->
+<container:module xmlns:container="http://jdtaus.org/core/model/container"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+                  container:name="${pom.name}"
+                  container:version="${pom.version}"
+                  container:modelVersion="1.4">
+
+  <container:documentation container:defaultLanguage="en">
+    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+  </container:documentation>
+
+  <container:implementations>
+    <container:implementation container:identifier="org.jdtaus.core.lang.ri.DefaultMemoryManager"
+                              container:name="jDTAUS Core SPI"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[jDTAUS Core SPI MemoryManager reference implementation.]]></container:text>
+      </container:documentation>
+
+      <container:specifications>
+        <container:reference container:identifier="org.jdtaus.core.lang.Runtime"
+                             container:version="1.0"/>
+        <container:reference container:identifier="org.jdtaus.core.lang.spi.MemoryManager"
+                             container:version="1.0"/>
+      </container:specifications>
+
+      <container:dependencies>
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
+
+          <container:properties>
+            <container:property container:name="name"
+                                container:type="java.lang.String"
+                                container:value="org.jdtaus.core.lang.ri.DefaultMemoryManager"/>
+
+          </container:properties>
+        </container:dependency>
+        <container:dependency container:identifier="java.util.Locale"
+                              container:implementationName="default"
+                              container:version="1.1"
+                              container:name="Locale"
+                              container:bound="false"/>
+
+      </container:dependencies>
+      <container:properties>
+        <container:property container:name="defaultMaximumPercent"
+                            container:type="java.lang.Integer"
+                            container:value="98">
+
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default maximum percent of memory for use by the implementation.]]></container:text>
+          </container:documentation>
+        </container:property>
+
+        <container:property container:name="defaultMaximumRetries"
+                            container:type="java.lang.Integer"
+                            container:value="1">
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default number of retries when trying to free memory.]]></container:text>
+          </container:documentation>
+        </container:property>
+      </container:properties>
+
+      <container:messages>
+        <container:reference container:name="outOfMemoryWarning"/>
+        <container:reference container:name="forcingGarbageCollection"/>
+      </container:messages>
+
+    </container:implementation>
+  </container:implementations>
+
+  <container:messages>
+    <container:message container:name="outOfMemoryWarning">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Out of memory warning.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Memory low (needed {0,number}, available {1,number}).]]></container:text>
+        <container:text container:language="de"><![CDATA[Wenig Hauptspeicher (verfügbar: {1,number}, benötigt {0,number}).]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="neededMemory" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Needed number of bytes.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="availableMemory" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Available bytes.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="forcingGarbageCollection">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about a forced garbage collection.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Forcing garbage collection ({0,number}).]]></container:text>
+        <container:text container:language="de"><![CDATA[Speicherbereinigung erzwungen ({0,number}).]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="retry" container:type="number">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Number of currently forced garbage collections.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+  </container:messages>
+</container:module>
