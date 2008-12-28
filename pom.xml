@@ -10,7 +10,7 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.8-SNAPSHOT</version>
+  <version>1.8</version>
   <description><![CDATA[
   jDTAUS Core provides a common application programming interface for jDTAUS
   integration. This is the parent module for the core artifacts.]]>
