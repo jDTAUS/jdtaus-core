@@ -11,11 +11,16 @@ jDTAUS Container Mojo: Usage
 * Managing source code sections in java source files
 
   The java-container, java-container-tests, java-commit and java-commit-tests
-  goals of the Container Mojo are used in a multi-module parent pom by providing
-  the following configuration. For each project providing container model data
-  as determined by the container implementation provided to the mojo by a
-  corresponding dependency, the mojo will manage the contents of various
-  source code sections based on that data.
+  goals of the Container Mojo are used in a parent pom of a multi-module project
+  by providing a configuration as shown below. For each project providing
+  container model data (as determined by the container implementation provided
+  to the mojo by a corresponding container implementation dependency), the mojo
+  will manage the contents of various source code sections based on that data.
+
+  See the {{{/../jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
+  regarding the jDTAUS Container reference implemenation shown below, which
+  expects XML document resources located at classpath location
+  <<<META-INF/jdtaus/module.xml>>>.
 
 +---
 ...
