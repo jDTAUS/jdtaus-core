@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>jdtaus-core</artifactId>
+    <groupId>org.jdtaus</groupId>
+    <version>1.8-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jdtaus.core</groupId>
+  <artifactId>jdtaus-core-schemas</artifactId>
+  <name>jDTAUS Core XML Schemas</name>
+  <description>jDTAUS core XML schemas.</description>
+  <build>
+    <resources>
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/site/resources</directory>
+        <targetPath>org/jdtaus/core/model</targetPath>
+        <includes>
+          <include>jdtaus-core-1.0.xsd</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/site/resources</directory>
+        <targetPath>org/jdtaus/core/model/container</targetPath>
+        <includes>
+          <include>jdtaus-container-1.0.xsd</include>
+          <include>jdtaus-container-1.1.xsd</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/site/resources</directory>
+        <targetPath>org/jdtaus/core/model/monitor</targetPath>
+        <includes>
+          <include>jdtaus-monitor-1.0.xsd</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/site/resources</directory>
+        <targetPath>org/jdtaus/core/model/text</targetPath>
+        <includes>
+          <include>jdtaus-text-1.0.xsd</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
+</project>

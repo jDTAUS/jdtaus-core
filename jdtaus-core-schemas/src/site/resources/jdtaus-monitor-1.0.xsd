@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  jDTAUS Monitor Model
+  Copyright (c) 2005 Christian Schulte
+
+  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+  <cs@jdtaus.org> (+49 2331 3543887)
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Document   : jdtaus-monitor-1.0.xsd
+  Author     : Christian Schulte <cs@jdtaus.org>
+  Description: jDTAUS Monitor Model.
+
+  Example usage:
+
+  <xsd:import namespace="http://jdtaus.org/core/model/monitor"
+              schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-monitor-1.0.xsd"/>
+
+  The recommended namespace prefix is "monitor".
+
+  $Id$
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:core="http://jdtaus.org/core/model"
+            xmlns:text="http://jdtaus.org/core/model/text"
+            xmlns:monitor="http://jdtaus.org/core/model/monitor"
+            targetNamespace="http://jdtaus.org/core/model/monitor"
+            elementFormDefault="qualified"
+            attributeFormDefault="qualified">
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en"><![CDATA[
+  jDTAUS Monitor Model
+  Copyright (c) 2005 Christian Schulte
+
+  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+  <cs@jdtaus.org> (+49 2331 3543887)
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Example usage:
+
+  <xsd:import namespace="http://jdtaus.org/core/model/monitor"
+              schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-monitor-1.0.xsd" />
+
+  The recommended namespace prefix is "monitor".]]>
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:import namespace="http://jdtaus.org/core/model"
+              schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-core-1.0.xsd"/>
+  <xsd:import namespace="http://jdtaus.org/core/model/text"
+              schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-text-1.0.xsd"/>
+  <!--                                                                       -->
+  <!-- Tasks                                                                 -->
+  <!--                                                                       -->
+  <xsd:element name="tasks" type="monitor:Tasks"/>
+  <xsd:complexType name="Tasks">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en"><![CDATA[
+        List of tasks.]]>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element ref="monitor:task" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--                                                                       -->
+  <!-- Task                                                                  -->
+  <!--                                                                       -->
+  <xsd:element name="task" type="monitor:Task"/>
+  <xsd:complexType name="Task">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en"><![CDATA[
+        A task of execution.]]>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="description" type="text:Message" minOccurs="1"
+                   maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">
+            Description of the task.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="progressDescription" type="text:Message" minOccurs="0"
+                   maxOccurs="1">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">
+            Description of the progress of the task.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="cancelled" type="xsd:boolean" use="optional">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+            Flag indicating that an application cancelled the task.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="minimum" type="xsd:int" use="optional">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+            The lower bound of the progress range.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="maximum" type="xsd:int" use="optional">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+            The upper bound of the progress range.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="progress" type="xsd:int" use="optional">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Indicates the progress of the task.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="indeterminate" type="xsd:boolean" use="required">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Flag indicating if the operations performed by the task are of unknown
+          length.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="cancelable" type="xsd:boolean" use="required">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Flag indicating that an application may cancel the task.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="taskId" type="core:Uuid" use="optional">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+            Unique task identifier.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+</xsd:schema>
