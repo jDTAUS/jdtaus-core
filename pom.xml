@@ -10,7 +10,7 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.9-SNAPSHOT</version>
+  <version>1.8</version>
   <description><![CDATA[
   jDTAUS Core provides a common application programming interface for jDTAUS
   integration with corresponding reference implementations. This is the parent
@@ -19,9 +19,9 @@
   <url>http://sites.jdtaus.org/jdtaus-core/1.0.x</url>
   <inceptionYear>2005</inceptionYear>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-1.8</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-1.8</developerConnection>
+    <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/tags/jdtaus-core-1.8</url>
   </scm>
   <build>
     <pluginManagement>
@@ -828,9 +828,9 @@
     </plugins>
   </reporting>
   <properties>
-    <jdtaus-core.version>1.9-SNAPSHOT</jdtaus-core.version>
-    <jdtaus-container-mojo.version>3.3-SNAPSHOT</jdtaus-container-mojo.version>
-    <jdtaus-resource-mojo.version>3.4-SNAPSHOT</jdtaus-resource-mojo.version>
+    <jdtaus-core.version>1.8</jdtaus-core.version>
+    <jdtaus-container-mojo.version>3.2</jdtaus-container-mojo.version>
+    <jdtaus-resource-mojo.version>3.3</jdtaus-resource-mojo.version>
     <maven-javadoc-plugin.version>2.5</maven-javadoc-plugin.version>
     <maven-jxr-plugin.version>2.1</maven-jxr-plugin.version>
     <maven-pmd-plugin.version>2.4</maven-pmd-plugin.version>
