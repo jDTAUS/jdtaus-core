@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  ${pom.name}
+  Copyright (c) 2005 Christian Schulte
+
+  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
+  <cs@jdtaus.org> (+49 2331 3543887)
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Document   : module.xml
+  Author     : Christian Schulte <cs@jdtaus.org>
+  Version    : $Id$
+  Description: Runtime configuration for the ${pom.name} module.
+
+-->
+<container:module xmlns:container="http://jdtaus.org/core/model/container"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+                  container:name="${pom.name}"
+                  container:version="${pom.version}"
+                  container:modelVersion="1.4">
+
+  <container:documentation container:defaultLanguage="en">
+    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+  </container:documentation>
+  <container:implementations>
+    <container:implementation container:identifier="org.jdtaus.core.messages.BugReportMessage"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating how to report a bug.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="bugReport"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.messages.DeletesBlocksMessage"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that blocks are being deleted.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="deletesBlocks"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.messages.ExceptionMessage"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that an exception occured.]]></container:text>
+      </container:documentation>
+      <container:dependencies>
+        <container:dependency container:identifier="java.util.Locale"
+                              container:implementationName="default"
+                              container:version="1.1"
+                              container:name="Locale"
+                              container:bound="false"/>
+
+      </container:dependencies>
+      <container:messages>
+        <container:reference container:name="exceptionInfo"/>
+        <container:reference container:name="errorInfo"/>
+        <container:reference container:name="noDetailsAvailable"/>
+        <container:reference container:name="missingObjectStreamField"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.messages.IllegalPropertyMessage"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that an illegal value was specified for a property.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="illegalProperty"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.messages.InsertsBlocksMessage"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that blocks are being inserted.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="insertsBlocks"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.messages.MandatoryPropertyMessage"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that no value was specified for a mandatory property.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="mandatoryProperty"/>
+      </container:messages>
+    </container:implementation>
+    <container:implementation container:identifier="org.jdtaus.core.messages.UndefinedApplicationStateMessage"
+                              container:name="${pom.name}"
+                              container:vendor="${pom.organization.name}"
+                              container:version="${pom.version}"
+                              container:final="true">
+
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that the application's state is undefined.]]></container:text>
+      </container:documentation>
+      <container:messages>
+        <container:reference container:name="undefinedApplicationState"/>
+      </container:messages>
+    </container:implementation>
+  </container:implementations>
+  <container:messages>
+    <container:message container:name="bugReport">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about how to report a bug.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Please report this at {1} or send
+an email to {2} including a copy of the logfiles located in directory
+{0}.
+
+]]></container:text>
+        <container:text container:language="de"><![CDATA[Bitte berichten Sie dieses Problem entweder unter {1}
+oder per eMail an {2}. Fügen Sie Ihrem Fehler-Bericht bitte eine Kopie der aktuellen
+Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzeichnis
+{0}.
+
+]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="logDirectory" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Directory holding the application's logfiles.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="trackerUrl" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[URL to the application's online bugtracking system.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="2" container:name="reportAddress" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Email address to alternatively send bugreports to.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="deletesBlocks">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Progress description when blocks are deleted.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Deletes blocks.]]></container:text>
+        <container:text container:language="de"><![CDATA[Entfernt Satzabschnitte.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="insertsBlocks">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Progress description when blocks are inserted.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Inserts blocks.]]></container:text>
+        <container:text container:language="de"><![CDATA[Fügt Satzabschnitte ein.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="exceptionInfo">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about an exception.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[A {0} occured.
+{1}
+
+]]></container:text>
+        <container:text container:language="de"><![CDATA[Eine {0} ist aufgetreten.
+{1}
+
+]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="exceptionName" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Name of the exception.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="exceptionMessage" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Message of the exception.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="errorInfo">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about an error.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[A {0} occured.
+{1}
+
+]]></container:text>
+        <container:text container:language="de"><![CDATA[Ein {0} ist aufgetreten.
+{1}
+
+]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="errorName" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Name of the error.]]>
+            </container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="errorMessage" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Message of the error.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <container:message container:name="noDetailsAvailable">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information that no details are available.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[No details available.]]></container:text>
+        <container:text container:language="de"><![CDATA[Keine Details verfügbar.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="missingObjectStreamField">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information that a field in an object stream is missong.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Missing fields in object stream.]]></container:text>
+        <container:text container:language="de"><![CDATA[Fehlende Felder im Datenstrom.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="illegalProperty">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about an illegal property.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Illegal data.]]></container:text>
+        <container:text container:language="de"><![CDATA[Ungültige Angaben.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="mandatoryProperty">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about a mandatory property.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Missing information.]]></container:text>
+        <container:text container:language="de"><![CDATA[Fehlende Angaben.]]></container:text>
+      </container:template>
+    </container:message>
+    <container:message container:name="undefinedApplicationState">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about an illegal application state.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[The application may not work correctly any more. A shutdown is recommended!
+Please close any open files and restart the application.
+
+]]></container:text>
+        <container:text container:language="de"><![CDATA[Die Anwendung arbeitet eventuell nicht mehr korrekt weiter. Ein Neustart wird empfohlen.
+Bitte schließen Sie alle momentan geöffneten Dateien und starten die Anwendung erneut.
+
+]]></container:text>
+      </container:template>
+    </container:message>
+  </container:messages>
+</container:module>
