@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+  <properties>
+    <title>Changelog</title>
+    <author email="cs@jdtaus.org">Christian Schulte
+    </author>
+  </properties>
+  <body>
+    <release version="1.0" date="2007-06-01"
+             description="First stable release."/>
+    <release version="1.1" description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Removed depracted API calls. Added support for logging all messages
+      provided by class <code>org.jdtaus.core.text.MessageEvent</code>.]]>
+      </action>
+    </release>
+    <release version="1.1.1" date="2007-08-01"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated the XML module descriptor to the 1.1 model version.]]>
+      </action>
+    </release>
+    <release version="1.2" date="2007-08-24"
+             description="Refactored.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Moved class <code>org.jdtaus.core.text.ri.combined.CombinedApplicationLogger</code>
+      to <code>org.jdtaus.core.text.ri.DefaultApplicationLogger</code>.
+      With this release the implementation no longer performs any logging
+      of <code>MessageEvent</code>s. The preferred way to log such events is to
+      register a <code>MessageListener</code> with the application's
+      <code>MessageEventSource</code>. A reference <code>MessageListener</code>
+      implementation is provided as part of the <code>jdtaus-core-utilities</code>
+      artifact.]]>
+      </action>
+    </release>
+    <release version="1.2.1" date="2008-03-10"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated to latest mojo releases.]]>
+      </action>
+    </release>
+    <release version="1.2.2" date="2008-07-04"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Maven POM updates.]]>
+      </action>
+    </release>
+    <release version="1.2.3" date="2008-07-13"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.2 model version.]]>
+      </action>
+    </release>
+    <release version="1.3" date="2008-10-27"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.3 model version.]]>
+      </action>
+    </release>
+    <release version="1.8" date="2008-12-28"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated to provide messages to any available <code>MessageListener</code>
+      implementation in the system in addition to any listeners registered
+      programmactically.]]>
+      </action>
+    </release>
+  </body>
+</document>
