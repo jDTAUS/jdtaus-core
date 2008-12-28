@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+  <properties>
+    <title>Changelog</title>
+    <author email="cs@jdtaus.org">Christian Schulte
+    </author>
+  </properties>
+  <body>
+    <release version="1.0" date="2007-06-01"
+             description="First stable release."/>
+    <release version="1.1" date="2007-08-01"
+             description="Feature enhancements and bugfixes.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added classes<ul>
+      <li><code>org.jdtaus.core.io.util.ReadAheadFileOperations</code></li>
+      <li><code>org.jdtaus.core.io.util.CoalescingFileOperations</code></li>
+      <li><code>org.jdtaus.core.monitor.util.SwingProgressMonitor</code></li>
+      <li><code>org.jdtaus.core.monitor.util.TaskDurationLogger</code></li>
+      <li><code>org.jdtaus.core.monitor.util.SwingProgressMonitor</code></li>
+      <li><code>org.jdtaus.core.text.util.SwingMessagePane</code></li></ul>
+      Added interfaces<ul>
+      <li><code>org.jdtaus.core.io.util.FlushableFileOperations</code></li></ul>
+      Updated classes<ul>
+      <li><code>org.jdtaus.core.io.util.MemoryFileOperations</code>:<blockquote>
+      Added a constructor taking an initial capacity to class.</blockquote></li>
+      <li><code>org.jdtaus.core.io.util.StructuredFileOperations</code>:
+      <blockquote>Removed any caching performed in favour of the new generalized
+      caching implementations.</blockquote></li></ul>
+      Updated the XML module descriptor to the 1.1 model version.]]>
+      </action>
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Classes <code>org.jdtaus.core.io.util.MemoryFileOperations</code>
+      and <code>org.jdtaus.core.io.util.RandomAccessFileOperations>/code> did
+      not update the file pointer value when using one of the methods
+      <code>read(OutputStream)</code> or <code>write(InputStream)</code>.]]>
+      </action>
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Class <code>org.jdtaus.core.io.util.MemoryFileOperations</code> did not
+      update the file pointer value correctly when truncating a file.]]>
+      </action>
+    </release>
+    <release version="1.2" date="2007-08-24"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added classes<ul>
+      <li><code>org.jdtaus.core.text.util.MessageLogger</code></li></ul>
+      Updated classes<ul>
+      <li><code>org.jdtaus.core.io.util.CoalescingFileOperations</code>:
+      <blockquote>Changed the modifier of method <code>getBlockSize()</code>
+      from <code>private</code> to <code>public</code>. Added method
+      <code>getFileOperations()</code>. Added method <code>close()</code>
+      introduced in the 1.3 API <code>FileOperations</code> interface.
+      </blockquote></li>
+      <li><code>org.jdtaus.core.io.util.MemoryFileOperations</code>:<blockquote>
+      Added method <code>close()</code> introduced in the 1.3 API
+      <code>FileOperations</code> interface.</blockquote></li>
+      <li><code>org.jdtaus.core.io.util.RandomAccessFileOperations</code>:
+      <blockquote>Added method <code>close()</code> introduced in the 1.3 API
+      <code>FileOperations</code> interface.</blockquote></li>
+      <li><code>org.jdtaus.core.io.util.RandomAccessFileOperations</code>:
+      <blockquote>Changed the modifier of method <code>getCacheSize()</code>
+      from <code>private</code> to <code>public</code>. Added method
+      <code>getFileOperations()</code>. Added method <code>close()</code>
+      introduced in the 1.3 API <code>FileOperations</code> interface.
+      </blockquote></li>
+      <li><code>org.jdtaus.core.monitor.util.SwingProgressMonitor</code>:
+      <blockquote>Changed the modifier of methods <code>getMillisToPopup()</code>
+      and <code>getMillisToDecideToPopup()</code> from <code>private</code> to
+      <code>public</code>.</blockquote></li>
+      <li><code>org.jdtaus.core.text.util.SwingMessagePane</code>:
+      <blockquote>Added method <code>getMaximumMessages()</code>. Added support
+      for <code>MessageEvent</code>s of type <code>ERROR</code>. Added a
+      constructor taking the value of property <code>maximumMessages</code> for
+      programmatic configuration.</blockquote></li></ul>]]>
+      </action>
+    </release>
+    <release version="1.3" date="2007-12-25"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added classes<ul>
+      <li><code>org.jdtaus.core.swing.util.BlockingGlassPane</code></li>
+      <li><code>org.jdtaus.core.lang.util.ExceptionLogger</code></li>
+      <li><code>org.jdtaus.core.lang.util.ExceptionMessageProducer</code></li>
+      <li><code>org.jdtaus.core.lang.util.ExceptionMessageResolver</code></li>
+      </ul>]]>
+      </action>
+    </release>
+    <release version="1.3.1" date="2008-03-10"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated to latest mojo releases.]]>
+      </action>
+    </release>
+    <release version="1.3.2" date="2008-05-20"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated class<ul>
+      <li><code>org.jdtaus.core.monitor.util.SwingProgressMonitor</code>
+      <blockquote>
+      Added a label to the progress dialog displaying the estimated end of an
+      operation.</blockquote></li></ul>
+      ]]>
+      </action>
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Updated class<ul>
+      <li><code>org.jdtaus.core.monitor.util.SwingProgressMonitor</code>
+      <blockquote>
+      The dialog sometimes did not get closed correctly.</blockquote></li></ul>
+      ]]>
+      </action>
+    </release>
+    <release version="1.3.3" date="2008-07-04"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Maven POM updates.]]>
+      </action>
+    </release>
+    <release version="1.3.4" date="2008-07-13"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.2 model version.]]>
+      </action>
+    </release>
+    <release version="1.4" date="2008-10-27"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.3 model version.]]>
+      </action>
+    </release>
+    <release version="1.4-1" date="2008-10-28"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Corrected IllegalArgumentException thrown by class
+      <code>org.jdtaus.core.monitor.util.TaskDurationLogger</code> due to
+      invalid message template.]]>
+      </action>
+    </release>
+    <release version="1.4-2" date="2008-12-02"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Removed deprecations of methods <code>equals</code> and
+      <code>hashCode</code> of class <code>MemoryFileOperations</code>.]]>
+      </action>
+    </release>
+    <release version="1.8" date="2008-12-28"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.4 model version and added additional
+      dependencies to class <code>java.util.Locale</code>.]]>
+      </action>
+    </release>
+  </body>
+</document>
