@@ -1,0 +1,28 @@
+  -----
+jDTAUS Resource Mojo
+  -----
+Christian Schulte
+  -----
+July 2008
+  -----
+
+jDTAUS Resource Mojo
+
+  The jDTAUS Resource Mojo is a collection of tools dealing with a projects'
+  resources.
+
+* Goals Overview
+
+  Currently the Resource Mojo has one goal. It is already bound to its
+  proper phase within the Maven lifecycle and is therefore executed
+  automatically if the plugin is configured for a project.
+
+  * {{{java-resources-mojo.html}jdtaus-resource-mojo:java-resources}} is
+    bound to the process-resources phase and is used to generate java classes
+    with accessor methods to also generated resource bundles taken from a
+    projects module descriptor.
+
+* Usage
+
+  Instructions on how to use the Resource Mojo can be found
+  {{{usage.html}here}}.

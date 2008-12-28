@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings version="1.0" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:container="http://jdtaus.org/core/model/container">
+
+  <jaxb:bindings schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+                 node="xs:schema">
+
+    <jaxb:schemaBindings>
+      <jaxb:package name="org.jdtaus.mojo.resource.model" />
+      <jaxb:nameXmlTransform>
+        <jaxb:elementName suffix="Element"/>
+      </jaxb:nameXmlTransform>
+    </jaxb:schemaBindings>
+
+  </jaxb:bindings>
+</jaxb:bindings>

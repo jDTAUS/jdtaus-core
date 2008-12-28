@@ -1,0 +1,81 @@
+## @param module The module containing implementation.
+## @param implementation The implementation of the bundle.
+## @param modelManager The model manager.
+/*
+ * WARNING: Generated code. All changes will be lost upon re-generation.
+ *
+ * Generator $generatorName $generatorVersion
+ * Template $templateLocation
+ * Generated $now
+ */
+package ${modelManager.getJavaPackageName( $implementation )};
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.text.MessageFormat;
+
+class ${modelManager.getJavaTypeName( $implementation )}
+{
+
+#if($comment)
+  /** Singleton instance. */
+#end
+  private static final ${modelManager.getJavaTypeName( $implementation )} instance =
+    new ${modelManager.getJavaTypeName( $implementation )}();
+
+#if($comment)
+  /** Creates a new ${modelManager.getJavaTypeName( $implementation )} instance. */
+#end
+  ${modelManager.getJavaTypeName( $implementation )}()
+  {
+#foreach($message in $implementation.getMessages().getMessage())
+    this.getMessage ( "$message.getName()", Locale.getDefault() );
+#end
+#foreach($messageReference in $implementation.getMessages().getReference())
+    this.getMessage ( "$messageReference.getName()", Locale.getDefault() );
+#end
+  }
+
+#if($comment)
+  /**
+   * Gets the ${modelManager.getJavaTypeName( $implementation )} singleton.
+   *
+   * @return the ${modelManager.getJavaTypeName( $implementation )} singleton.
+   */
+#end
+  static ${modelManager.getJavaTypeName( $implementation )} getInstance()
+  {
+    return instance;
+  }
+
+#foreach($message in $implementation.getMessages().getMessage())
+#parse("META-INF/templates/Bundle.java-getter.vm")
+#end
+#foreach($messageReference in $implementation.getMessages().getReference())
+#set($message = $modelManager.getMessage( $module, $messageReference.getName() ) )
+#parse("META-INF/templates/Bundle.java-getter.vm")
+#end
+
+#if($comment)
+  /**
+   * Gets a message for a given key and locale.
+   *
+   * @param key the key of the message to return.
+   * @param locale the locale of the message.
+   *
+   * @return message for {@code key} using {@code locale}.
+   */
+#end
+  private String getMessage( final String key, Locale locale )
+  {
+    if ( locale == null )
+    {
+      locale = Locale.getDefault();
+    }
+
+    return ResourceBundle.getBundle(
+        "$modelManager.getJavaClasspathLocation( $implementation )", locale ).
+        getString( key );
+
+  }
+}
