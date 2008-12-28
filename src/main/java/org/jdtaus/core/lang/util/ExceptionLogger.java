@@ -37,12 +37,6 @@ import org.jdtaus.core.logging.spi.Logger;
  */
 public final class ExceptionLogger implements ExceptionListener
 {
-    //--Implementation----------------------------------------------------------
-
-    // This section is managed by jdtaus-container-mojo.
-
-
-    //----------------------------------------------------------Implementation--
     //--Constructors------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
@@ -59,7 +53,7 @@ public final class ExceptionLogger implements ExceptionListener
     /**
      * Gets the configured <code>Logger</code> implementation.
      *
-     * @return the configured <code>Logger</code> implementation.
+     * @return The configured <code>Logger</code> implementation.
      */
     private Logger getLogger()
     {

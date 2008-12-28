@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import org.jdtaus.core.container.ContainerFactory;
@@ -61,7 +62,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
      *
-     * @return the configured <code>MemoryManager</code> implementation.
+     * @return The configured <code>MemoryManager</code> implementation.
      */
     private MemoryManager getMemoryManager()
     {
@@ -71,9 +72,21 @@ public final class CoalescingFileOperations implements FlushableFileOperations
     }
 
     /**
+     * Gets the configured <code>Locale</code> implementation.
+     *
+     * @return The configured <code>Locale</code> implementation.
+     */
+    private Locale getLocale()
+    {
+        return (Locale) ContainerFactory.getContainer().
+            getDependency( this, "Locale" );
+
+    }
+
+    /**
      * Gets the configured <code>Logger</code> implementation.
      *
-     * @return the configured <code>Logger</code> implementation.
+     * @return The configured <code>Logger</code> implementation.
      */
     private Logger getLogger()
     {
@@ -151,8 +164,8 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                     "Unexpected implementation limit reached.";
 
                 nodes[i].length = blockDelta >= this.getBlockSize()
-                    ? this.getBlockSize()
-                    : (int) blockDelta;
+                                  ? this.getBlockSize()
+                                  : (int) blockDelta;
 
             }
         }
@@ -181,8 +194,8 @@ public final class CoalescingFileOperations implements FlushableFileOperations
                         "Unexpected implementation limit reached.";
 
                     nodes[i].length = blockDelta >= this.getBlockSize()
-                        ? this.getBlockSize()
-                        : (int) blockDelta;
+                                      ? this.getBlockSize()
+                                      : (int) blockDelta;
 
                 }
             }
@@ -258,19 +271,20 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
                     // Use the current file pointer as the starting index.
                     final long delta =
-                        nodes[i].cacheIndex + ( this.filePointer -
-                        nodes[i].block * this.getBlockSize() );
+                        nodes[i].cacheIndex +
+                        ( this.filePointer - nodes[i].block *
+                                             this.getBlockSize() );
 
                     assert delta <= Integer.MAX_VALUE :
                         "Unexpected implementation limit reached.";
 
                     final int blockOffset = (int) delta;
                     final int blockDelta = nodes[i].length -
-                        ( blockOffset - nodes[i].cacheIndex );
+                                           ( blockOffset - nodes[i].cacheIndex );
 
                     final int copyLength = len > blockDelta
-                        ? blockDelta
-                        : len;
+                                           ? blockDelta
+                                           : len;
 
                     System.arraycopy( this.getCache(), blockOffset, buf, off,
                                       copyLength );
@@ -288,6 +302,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
                     this.getLogger().debug(
                         this.getReadBypassesCacheMessage(
+                        this.getLocale(),
                         new Integer( this.getBlockSize() ),
                         new Integer( this.getCacheBlocks() ),
                         new Integer( len ) ) );
@@ -345,19 +360,20 @@ public final class CoalescingFileOperations implements FlushableFileOperations
             { // Node is associated with cache memory; cache is used.
 
                 // Use the current file pointer as the starting index.
-                final long delta = nodes[i].cacheIndex + ( this.filePointer -
-                    nodes[i].block * this.getBlockSize() );
+                final long delta = nodes[i].cacheIndex +
+                                   ( this.filePointer - nodes[i].block *
+                                                        this.getBlockSize() );
 
                 assert delta <= Integer.MAX_VALUE :
                     "Unexpected implementation limit reached.";
 
                 final int blockOffset = (int) delta;
                 final int blockDelta = nodes[i].length -
-                    ( blockOffset - nodes[i].cacheIndex );
+                                       ( blockOffset - nodes[i].cacheIndex );
 
                 final int copyLength = len > blockDelta
-                    ? blockDelta
-                    : len;
+                                       ? blockDelta
+                                       : len;
 
                 System.arraycopy( buf, off, this.getCache(), blockOffset,
                                   copyLength );
@@ -375,6 +391,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
                 this.getLogger().debug(
                     this.getWriteBypassesCacheMessage(
+                    this.getLocale(),
                     new Integer( this.getBlockSize() ),
                     new Integer( this.getCacheBlocks() ),
                     new Integer( len ) ) );
@@ -442,7 +459,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         Node previous = null;
         boolean dirty = false;
 
-        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext();)
+        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext(); )
         {
             final Map.Entry entry = (Map.Entry) it.next();
             final long block = ( (Long) entry.getKey() ).longValue();
@@ -450,7 +467,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
             // Skip any end of file nodes and nodes not associated with memory.
             if ( current.length == FileOperations.EOF ||
-                current.cacheIndex == Node.NO_CACHEINDEX )
+                 current.cacheIndex == Node.NO_CACHEINDEX )
             {
                 continue;
             }
@@ -469,7 +486,8 @@ public final class CoalescingFileOperations implements FlushableFileOperations
             { // Expand the current chunk.
 
                 assert current.cacheIndex == previous.cacheIndex +
-                    this.getBlockSize() : "Unexpected cache state.";
+                                             this.getBlockSize() :
+                    "Unexpected cache state.";
 
                 previous = current;
                 length += current.length;
@@ -505,7 +523,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         }
 
         // Reset cache state.
-        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext();)
+        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext(); )
         {
             final Map.Entry entry = (Map.Entry) it.next();
             final Node current = (Node) entry.getValue();
@@ -540,6 +558,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         boolean dirty;
 
     }
+
     /** The {@code FileOperations} backing the instance. */
     private final FileOperations fileOperations;
 
@@ -741,13 +760,13 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         else
         {
             if ( !( filePointer >= this.cachedFilePointerBlockStart &&
-                filePointer <= this.cachedFilePointerBlockStart +
-                this.getBlockSize() ) )
+                    filePointer <= this.cachedFilePointerBlockStart +
+                                   this.getBlockSize() ) )
             {
                 this.cachedFilePointerBlock =
                     ( filePointer / this.getBlockSize() ) -
                     ( ( filePointer % this.getBlockSize() ) /
-                    this.getBlockSize() );
+                      this.getBlockSize() );
 
                 this.cachedFilePointerBlockStart =
                     this.cachedFilePointerBlock * this.getBlockSize();
@@ -793,7 +812,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
             long block;
 
             for ( block = startingBlock, i = 0; block <= endingBlock;
-                block++, i++ )
+                  block++, i++ )
             {
                 nodes[i] = this.getCacheNode( block );
             }
@@ -841,7 +860,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         for ( int i = nodes.length - 1; i >= 0; i-- )
         {
             if ( nodes[i].cacheIndex == Node.NO_CACHEINDEX &&
-                this.nextCacheIndex < this.getCache().length )
+                 this.nextCacheIndex < this.getCache().length )
             { // Node is not associated with any cache memory and can be read.
 
                 // Update the length field of the node for the block checking
@@ -900,7 +919,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         int defragIndex = 0;
 
         // Step through the cached blocks and defragment the cache.
-        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext();)
+        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext(); )
         {
             final Map.Entry entry = (Map.Entry) it.next();
             final long block = ( (Long) entry.getKey() ).longValue();
@@ -908,7 +927,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
             // Skip any end of file nodes and nodes not associated with memory.
             if ( current.length == FileOperations.EOF ||
-                current.cacheIndex == Node.NO_CACHEINDEX )
+                 current.cacheIndex == Node.NO_CACHEINDEX )
             {
                 continue;
             }
@@ -958,7 +977,9 @@ public final class CoalescingFileOperations implements FlushableFileOperations
     {
         if ( this.closed )
         {
-            throw new IOException( this.getAlreadyClosedMessage() );
+            throw new IOException( this.getAlreadyClosedMessage(
+                this.getLocale() ) );
+
         }
     }
 
@@ -973,19 +994,20 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      * <blockquote><pre>Eine Lese-Operation umging den Cache. Cache zu klein dimensioniert. Aktuelle Blockgröße ist {0,number} und Cache umfaßt {1,number} Blöcke. {2,number} Bytes konnten nicht zwischengespeichert werden.</pre></blockquote>
      * <blockquote><pre>A read operation bypassed the cache. Consider increasing the cache. Current block size is {0,number} and current number of cache blocks is {1,number}. {2,number} bytes could not be cached.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
      * @param blockSize The current block size in use.
      * @param cacheBlocks The current number of blocks in use.
      * @param uncachedBytes The number of bytes bypassing caching.
      *
      * @return Information about a misconfigured cache.
      */
-    private String getReadBypassesCacheMessage(
-            java.lang.Number blockSize,
-            java.lang.Number cacheBlocks,
-            java.lang.Number uncachedBytes )
+    private String getReadBypassesCacheMessage( final Locale locale,
+            final java.lang.Number blockSize,
+            final java.lang.Number cacheBlocks,
+            final java.lang.Number uncachedBytes )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "readBypassesCache",
+            getMessage( this, "readBypassesCache", locale,
                 new Object[]
                 {
                     blockSize,
@@ -1000,19 +1022,20 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      * <blockquote><pre>Eine Schreib-Operation umging den Cache. Cache zu klein dimensioniert. Aktuelle Blockgröße ist {0,number} und Cache umfaßt {1,number} Blöcke. {2,number} Bytes konnten nicht zwischengespeichert werden.</pre></blockquote>
      * <blockquote><pre>A write operation bypassed the cache. Consider increasing the cache. Current block size is {0,number} and current number of cache blocks is {1,number}. {2,number} bytes could not be cached.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
      * @param blockSize The current block size in use.
      * @param cacheBlocks The current number of blocks in use.
      * @param uncachedBytes The number of bytes bypassing caching.
      *
      * @return Information about a misconfigured cache.
      */
-    private String getWriteBypassesCacheMessage(
-            java.lang.Number blockSize,
-            java.lang.Number cacheBlocks,
-            java.lang.Number uncachedBytes )
+    private String getWriteBypassesCacheMessage( final Locale locale,
+            final java.lang.Number blockSize,
+            final java.lang.Number cacheBlocks,
+            final java.lang.Number uncachedBytes )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "writeBypassesCache",
+            getMessage( this, "writeBypassesCache", locale,
                 new Object[]
                 {
                     blockSize,
@@ -1027,12 +1050,14 @@ public final class CoalescingFileOperations implements FlushableFileOperations
      * <blockquote><pre>Instanz geschlossen - keine E/A-Operationen möglich.</pre></blockquote>
      * <blockquote><pre>Instance closed - cannot perform I/O.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
+     *
      * @return Message stating that an instance is already closed.
      */
-    private String getAlreadyClosedMessage()
+    private String getAlreadyClosedMessage( final Locale locale )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "alreadyClosed", null );
+            getMessage( this, "alreadyClosed", locale, null );
 
     }
 

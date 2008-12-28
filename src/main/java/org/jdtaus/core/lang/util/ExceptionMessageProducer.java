@@ -51,12 +51,6 @@ import org.jdtaus.core.text.spi.ApplicationLogger;
  */
 public final class ExceptionMessageProducer implements ExceptionListener
 {
-    //--Implementation----------------------------------------------------------
-
-    // This section is managed by jdtaus-container-mojo.
-
-
-    //----------------------------------------------------------Implementation--
     //--Constructors------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausConstructors
@@ -73,7 +67,7 @@ public final class ExceptionMessageProducer implements ExceptionListener
     /**
      * Gets the configured <code>ApplicationLogger</code> implementation.
      *
-     * @return the configured <code>ApplicationLogger</code> implementation.
+     * @return The configured <code>ApplicationLogger</code> implementation.
      */
     private ApplicationLogger getApplicationLogger()
     {
@@ -257,7 +251,7 @@ public final class ExceptionMessageProducer implements ExceptionListener
         {
             final ExceptionMessageResolver resolver =
                 (ExceptionMessageResolver) ContainerFactory.getContainer().
-                getObject( ExceptionMessageResolver.class.getName(),
+                getObject( ExceptionMessageResolver.class,
                            resolvers[i].getName() );
 
             messages = resolver.resolve( exception );

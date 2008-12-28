@@ -144,5 +144,12 @@
       <code>hashCode</code> of class <code>MemoryFileOperations</code>.]]>
       </action>
     </release>
+    <release version="1.8" date="2008-12-28"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.4 model version and added additional
+      dependencies to class <code>java.util.Locale</code>.]]>
+      </action>
+    </release>
   </body>
 </document>

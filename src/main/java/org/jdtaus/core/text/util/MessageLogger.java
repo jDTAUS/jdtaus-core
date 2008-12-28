@@ -46,12 +46,24 @@ public final class MessageLogger implements MessageListener
     /**
      * Gets the configured <code>Logger</code> implementation.
      *
-     * @return the configured <code>Logger</code> implementation.
+     * @return The configured <code>Logger</code> implementation.
      */
     private Logger getLogger()
     {
         return (Logger) ContainerFactory.getContainer().
             getDependency( this, "Logger" );
+
+    }
+
+    /**
+     * Gets the configured <code>Locale</code> implementation.
+     *
+     * @return The configured <code>Locale</code> implementation.
+     */
+    private Locale getLocale()
+    {
+        return (Locale) ContainerFactory.getContainer().
+            getDependency( this, "Locale" );
 
     }
 
@@ -76,7 +88,7 @@ public final class MessageLogger implements MessageListener
             for ( int i = 0; i < numMessages; i++ )
             {
                 messages.append( event.getMessages()[i].getText(
-                                 Locale.getDefault() ) ).append( '\n' );
+                    this.getLocale() ) ).append( '\n' );
 
             }
 
@@ -98,6 +110,7 @@ public final class MessageLogger implements MessageListener
                 default:
                     this.getLogger().warn(
                         this.getUnknownMessageEventTypeMessage(
+                        this.getLocale(),
                         new Integer( event.getType() ) ) );
 
             }
@@ -115,15 +128,16 @@ public final class MessageLogger implements MessageListener
      * <blockquote><pre>Meldung unbekannten Typs {0,number} ignoriert.</pre></blockquote>
      * <blockquote><pre>Ignored message event of unknown type {0,number}.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
      * @param unknownEventType The unknown event type.
      *
      * @return Message stating that an unknown message event got ignored.
      */
-    private String getUnknownMessageEventTypeMessage(
-            java.lang.Number unknownEventType )
+    private String getUnknownMessageEventTypeMessage( final Locale locale,
+            final java.lang.Number unknownEventType )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "unknownMessageEventType",
+            getMessage( this, "unknownMessageEventType", locale,
                 new Object[]
                 {
                     unknownEventType

@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.util.Locale;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.io.FileOperations;
 import org.jdtaus.core.lang.spi.MemoryManager;
@@ -46,12 +47,24 @@ public final class RandomAccessFileOperations implements FileOperations
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
      *
-     * @return the configured <code>MemoryManager</code> implementation.
+     * @return The configured <code>MemoryManager</code> implementation.
      */
     private MemoryManager getMemoryManager()
     {
         return (MemoryManager) ContainerFactory.getContainer().
             getDependency( this, "MemoryManager" );
+
+    }
+
+    /**
+     * Gets the configured <code>Locale</code> implementation.
+     *
+     * @return The configured <code>Locale</code> implementation.
+     */
+    private Locale getLocale()
+    {
+        return (Locale) ContainerFactory.getContainer().
+            getDependency( this, "Locale" );
 
     }
 
@@ -90,8 +103,8 @@ public final class RandomAccessFileOperations implements FileOperations
         this.assertNotClosed();
 
         return this.cachedLength != NO_CACHEDLENGTH
-            ? this.cachedLength
-            : ( this.cachedLength =
+               ? this.cachedLength
+               : ( this.cachedLength =
             this.getRandomAccessFile().length() );
 
     }
@@ -133,7 +146,7 @@ public final class RandomAccessFileOperations implements FileOperations
         file.write( buf, off, len );
 
         if ( this.cachedLength != NO_CACHEDLENGTH &&
-            pointer + len > this.cachedLength )
+             pointer + len > this.cachedLength )
         {
             this.cachedLength = file.length();
         }
@@ -261,7 +274,9 @@ public final class RandomAccessFileOperations implements FileOperations
     {
         if ( this.closed )
         {
-            throw new IOException( this.getAlreadyClosedMessage() );
+            throw new IOException( this.getAlreadyClosedMessage(
+                this.getLocale() ) );
+
         }
     }
 
@@ -295,12 +310,14 @@ public final class RandomAccessFileOperations implements FileOperations
      * <blockquote><pre>Instanz geschlossen - keine E/A-Operationen möglich.</pre></blockquote>
      * <blockquote><pre>Instance closed - cannot perform I/O.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
+     *
      * @return Message stating that an instance is already closed.
      */
-    private String getAlreadyClosedMessage()
+    private String getAlreadyClosedMessage( final Locale locale )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "alreadyClosed", null );
+            getMessage( this, "alreadyClosed", locale, null );
 
     }
 

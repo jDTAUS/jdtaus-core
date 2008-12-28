@@ -57,12 +57,24 @@ public final class SwingMessagePane implements MessageListener
     /**
      * Gets the configured <code>Logger</code> implementation.
      *
-     * @return the configured <code>Logger</code> implementation.
+     * @return The configured <code>Logger</code> implementation.
      */
     private Logger getLogger()
     {
         return (Logger) ContainerFactory.getContainer().
             getDependency( this, "Logger" );
+
+    }
+
+    /**
+     * Gets the configured <code>Locale</code> implementation.
+     *
+     * @return The configured <code>Locale</code> implementation.
+     */
+    private Locale getLocale()
+    {
+        return (Locale) ContainerFactory.getContainer().
+            getDependency( this, "Locale" );
 
     }
 
@@ -113,10 +125,10 @@ public final class SwingMessagePane implements MessageListener
                             new Object[ event.getMessages().length ];
 
                         for ( int i = 0; i < messages.length &&
-                            i < getMaximumMessages(); i++ )
+                                         i < getMaximumMessages(); i++ )
                         {
                             messages[i] = event.getMessages()[i].getText(
-                                Locale.getDefault() );
+                                getLocale() );
 
                         }
 
@@ -125,7 +137,7 @@ public final class SwingMessagePane implements MessageListener
                             case MessageEvent.INFORMATION:
                                 JOptionPane.showMessageDialog(
                                     getParent(), messages,
-                                    getInformationMessage(),
+                                    getInformationMessage( getLocale() ),
                                     JOptionPane.INFORMATION_MESSAGE );
 
                                 break;
@@ -133,7 +145,7 @@ public final class SwingMessagePane implements MessageListener
                             case MessageEvent.NOTIFICATION:
                                 JOptionPane.showMessageDialog(
                                     getParent(), messages,
-                                    getNotificationMessage(),
+                                    getNotificationMessage( getLocale() ),
                                     JOptionPane.INFORMATION_MESSAGE );
 
                                 break;
@@ -141,7 +153,7 @@ public final class SwingMessagePane implements MessageListener
                             case MessageEvent.WARNING:
                                 JOptionPane.showMessageDialog(
                                     getParent(), messages,
-                                    getWarningMessage(),
+                                    getWarningMessage( getLocale() ),
                                     JOptionPane.WARNING_MESSAGE );
 
                                 break;
@@ -152,7 +164,7 @@ public final class SwingMessagePane implements MessageListener
 
                                 JOptionPane.showMessageDialog(
                                     getParent(), messages,
-                                    getErrorMessage(),
+                                    getErrorMessage( getLocale() ),
                                     JOptionPane.ERROR_MESSAGE );
 
                                 break;
@@ -160,10 +172,12 @@ public final class SwingMessagePane implements MessageListener
                             default:
                                 getLogger().warn(
                                     getUnknownMessageEventTypeMessage(
+                                    getLocale(),
                                     new Integer( event.getType() ) ) );
 
                         }
                     }
+
                 } );
         }
     }
@@ -289,15 +303,16 @@ public final class SwingMessagePane implements MessageListener
      * <blockquote><pre>Meldung unbekannten Typs {0,number} ignoriert.</pre></blockquote>
      * <blockquote><pre>Ignored message event of unknown type {0,number}.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
      * @param unknownEventType The unknown event type.
      *
      * @return Message stating that an unknown message event got ignored.
      */
-    private String getUnknownMessageEventTypeMessage(
-            java.lang.Number unknownEventType )
+    private String getUnknownMessageEventTypeMessage( final Locale locale,
+            final java.lang.Number unknownEventType )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "unknownMessageEventType",
+            getMessage( this, "unknownMessageEventType", locale,
                 new Object[]
                 {
                     unknownEventType
@@ -310,12 +325,14 @@ public final class SwingMessagePane implements MessageListener
      * <blockquote><pre>Information</pre></blockquote>
      * <blockquote><pre>Information</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
+     *
      * @return Information title.
      */
-    private String getInformationMessage()
+    private String getInformationMessage( final Locale locale )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "information", null );
+            getMessage( this, "information", locale, null );
 
     }
 
@@ -324,12 +341,14 @@ public final class SwingMessagePane implements MessageListener
      * <blockquote><pre>Hinweis</pre></blockquote>
      * <blockquote><pre>Notification</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
+     *
      * @return Notification title.
      */
-    private String getNotificationMessage()
+    private String getNotificationMessage( final Locale locale )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "notification", null );
+            getMessage( this, "notification", locale, null );
 
     }
 
@@ -338,12 +357,14 @@ public final class SwingMessagePane implements MessageListener
      * <blockquote><pre>Warnung</pre></blockquote>
      * <blockquote><pre>Warning</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
+     *
      * @return Warning title.
      */
-    private String getWarningMessage()
+    private String getWarningMessage( final Locale locale )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "warning", null );
+            getMessage( this, "warning", locale, null );
 
     }
 
@@ -352,12 +373,14 @@ public final class SwingMessagePane implements MessageListener
      * <blockquote><pre>Fehler</pre></blockquote>
      * <blockquote><pre>Error</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
+     *
      * @return Error title.
      */
-    private String getErrorMessage()
+    private String getErrorMessage( final Locale locale )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "error", null );
+            getMessage( this, "error", locale, null );
 
     }
 

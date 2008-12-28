@@ -43,7 +43,7 @@ public final class EntityResolverChain implements EntityResolver
     /**
      * Gets the configured <code>DefaultResolvers</code> implementation.
      *
-     * @return the configured <code>DefaultResolvers</code> implementation.
+     * @return The configured <code>DefaultResolvers</code> implementation.
      */
     private EntityResolver[] getDefaultResolvers()
     {

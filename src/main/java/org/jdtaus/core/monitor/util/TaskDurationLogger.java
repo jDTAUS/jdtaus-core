@@ -48,12 +48,24 @@ public final class TaskDurationLogger implements TaskListener
     /**
      * Gets the configured <code>Logger</code> implementation.
      *
-     * @return the configured <code>Logger</code> implementation.
+     * @return The configured <code>Logger</code> implementation.
      */
     private Logger getLogger()
     {
         return (Logger) ContainerFactory.getContainer().
             getDependency( this, "Logger" );
+
+    }
+
+    /**
+     * Gets the configured <code>Locale</code> implementation.
+     *
+     * @return The configured <code>Locale</code> implementation.
+     */
+    private Locale getLocale()
+    {
+        return (Locale) ContainerFactory.getContainer().
+            getDependency( this, "Locale" );
 
     }
 
@@ -98,12 +110,13 @@ public final class TaskDurationLogger implements TaskListener
             final long start = event.getTask().getTimestamp();
 
             if ( TaskEvent.ENDED == event.getType() &&
-                now - start > this.getLoggingThresholdMillis() )
+                 now - start > this.getLoggingThresholdMillis() )
             {
                 this.getLogger().info(
                     this.getDurationInfoMessage(
+                    this.getLocale(),
                     event.getTask().getDescription().
-                    getText( Locale.getDefault() ),
+                    getText( this.getLocale() ),
                     new Date( start ),
                     new Date( now ),
                     new Long( now - start ) ) );
@@ -183,6 +196,7 @@ public final class TaskDurationLogger implements TaskListener
      *    End ........... : {2,date,long} at {2,time,long}
      *    Duration ...... : {3}ms</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
      * @param taskDescription The description of the task.
      * @param startDate The start date of the task.
      * @param endDate The end date of the task.
@@ -190,14 +204,14 @@ public final class TaskDurationLogger implements TaskListener
      *
      * @return Information about a task.
      */
-    private String getDurationInfoMessage(
-            java.lang.String taskDescription,
-            java.util.Date startDate,
-            java.util.Date endDate,
-            java.lang.Number durationMillis )
+    private String getDurationInfoMessage( final Locale locale,
+            final java.lang.String taskDescription,
+            final java.util.Date startDate,
+            final java.util.Date endDate,
+            final java.lang.Number durationMillis )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "durationInfo",
+            getMessage( this, "durationInfo", locale,
                 new Object[]
                 {
                     taskDescription,

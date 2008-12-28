@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Locale;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.io.FileOperations;
 import org.jdtaus.core.lang.spi.MemoryManager;
@@ -99,7 +100,7 @@ public final class MemoryFileOperations
     /**
      * Gets the configured <code>Logger</code> implementation.
      *
-     * @return the configured <code>Logger</code> implementation.
+     * @return The configured <code>Logger</code> implementation.
      */
     private Logger getLogger()
     {
@@ -111,12 +112,24 @@ public final class MemoryFileOperations
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
      *
-     * @return the configured <code>MemoryManager</code> implementation.
+     * @return The configured <code>MemoryManager</code> implementation.
      */
     private MemoryManager getMemoryManager()
     {
         return (MemoryManager) ContainerFactory.getContainer().
             getDependency( this, "MemoryManager" );
+
+    }
+
+    /**
+     * Gets the configured <code>Locale</code> implementation.
+     *
+     * @return The configured <code>Locale</code> implementation.
+     */
+    private Locale getLocale()
+    {
+        return (Locale) ContainerFactory.getContainer().
+            getDependency( this, "Locale" );
 
     }
 
@@ -207,7 +220,7 @@ public final class MemoryFileOperations
             // less than len byte before EOF
             final int remaining = (int) ( this.length - this.filePointer );
             System.arraycopy( this.data, (int) this.filePointer, buf, off,
-                remaining );
+                              remaining );
 
             this.filePointer += remaining;
             ret = remaining;
@@ -384,10 +397,11 @@ public final class MemoryFileOperations
         }
 
         if ( oldLength != this.data.length &&
-            this.getLogger().isDebugEnabled() )
+             this.getLogger().isDebugEnabled() )
         {
             this.getLogger().debug(
-                this.getLogResizeMessage( new Long( this.data.length ) ) );
+                this.getLogResizeMessage( this.getLocale(),
+                                          new Long( this.data.length ) ) );
 
         }
     }
@@ -420,8 +434,8 @@ public final class MemoryFileOperations
         {
             this.defaultBuffer = this.getMemoryManager().
                 allocateBytes( this.getStreamBufferSize() < 0
-                ? 0
-                : this.getStreamBufferSize() );
+                               ? 0
+                               : this.getStreamBufferSize() );
 
         }
 
@@ -491,15 +505,16 @@ public final class MemoryFileOperations
      * <blockquote><pre>aktuelle Puffergröße: {0, number} Byte</pre></blockquote>
      * <blockquote><pre>current buffer size: {0, number} byte</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
      * @param bufferSize The current size of the internal buffer.
      *
      * @return Information about the size of the internal buffer.
      */
-    private String getLogResizeMessage(
-            java.lang.Number bufferSize )
+    private String getLogResizeMessage( final Locale locale,
+            final java.lang.Number bufferSize )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "logResize",
+            getMessage( this, "logResize", locale,
                 new Object[]
                 {
                     bufferSize

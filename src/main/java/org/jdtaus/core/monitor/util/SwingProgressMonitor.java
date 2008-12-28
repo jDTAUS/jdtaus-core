@@ -73,12 +73,24 @@ public final class SwingProgressMonitor implements TaskListener
     /**
      * Gets the configured <code>Logger</code> implementation.
      *
-     * @return the configured <code>Logger</code> implementation.
+     * @return The configured <code>Logger</code> implementation.
      */
     private Logger getLogger()
     {
         return (Logger) ContainerFactory.getContainer().
             getDependency( this, "Logger" );
+
+    }
+
+    /**
+     * Gets the configured <code>Locale</code> implementation.
+     *
+     * @return The configured <code>Locale</code> implementation.
+     */
+    private Locale getLocale()
+    {
+        return (Locale) ContainerFactory.getContainer().
+            getDependency( this, "Locale" );
 
     }
 
@@ -157,6 +169,7 @@ public final class SwingProgressMonitor implements TaskListener
                 default:
                     getLogger().warn(
                         this.getUnknownTaskEventTypeMessage(
+                        this.getLocale(),
                         new Integer( event.getType() ) ) );
 
             }
@@ -202,7 +215,9 @@ public final class SwingProgressMonitor implements TaskListener
             this.cancelListener = cancelListener;
             this.startMillis = startMillis;
         }
+
     }
+
     /** The current parent component to use when displaying progress. */
     private Component parent;
 
@@ -421,7 +436,7 @@ public final class SwingProgressMonitor implements TaskListener
         if ( parentComponent != null )
         {
             if ( parentComponent instanceof Frame ||
-                parentComponent instanceof Dialog )
+                 parentComponent instanceof Dialog )
             {
                 window = (Window) parentComponent;
             }
@@ -467,6 +482,7 @@ public final class SwingProgressMonitor implements TaskListener
                         event.getTask().setCancelled( true );
                     }
                 }
+
             };
 
         final MonitorState state =
@@ -475,7 +491,7 @@ public final class SwingProgressMonitor implements TaskListener
 
         final TitledBorder border =
             BorderFactory.createTitledBorder( state.task.getDescription().
-                                              getText( Locale.getDefault() ) );
+            getText( this.getLocale() ) );
 
         state.panel.setBorder( border );
 
@@ -483,7 +499,7 @@ public final class SwingProgressMonitor implements TaskListener
         {
             state.panel.getProgressDescriptionLabel().
                 setText( state.task.getProgressDescription().
-                         getText( Locale.getDefault() ) );
+                getText( this.getLocale() ) );
 
         }
         else
@@ -519,8 +535,9 @@ public final class SwingProgressMonitor implements TaskListener
         {
             throw new IllegalStateException(
                 this.getTaskAlreadyStartedMessage(
+                this.getLocale(),
                 state.task.getDescription().
-                getText( Locale.getDefault() ),
+                getText( this.getLocale() ),
                 new Date( state.task.getTimestamp() ) ) );
 
         }
@@ -534,6 +551,7 @@ public final class SwingProgressMonitor implements TaskListener
                     state.panel.setVisible( false );
                     getDialog().add( state.panel );
                 }
+
             } );
     }
 
@@ -575,6 +593,7 @@ public final class SwingProgressMonitor implements TaskListener
 
                     getDialog().remove( state.panel );
                 }
+
             } );
 
     }
@@ -628,10 +647,10 @@ public final class SwingProgressMonitor implements TaskListener
 
                         final String newText =
                             state.task.getProgressDescription().
-                            getText( Locale.getDefault() );
+                            getText( getLocale() );
 
                         if ( oldText == null ||
-                            !oldText.equals( newText ) )
+                             !oldText.equals( newText ) )
                         {
                             state.panel.getProgressDescriptionLabel().
                                 setText( newText );
@@ -657,6 +676,7 @@ public final class SwingProgressMonitor implements TaskListener
                         }
                     }
                 }
+
             } );
 
     }
@@ -674,12 +694,12 @@ public final class SwingProgressMonitor implements TaskListener
                 this.popupDecisionMillis = now;
             }
             else if ( now - this.popupDecisionMillis >
-                this.getMillisToDecideToPopup() )
+                      this.getMillisToDecideToPopup() )
             {
                 // If any task's operation runs longer than millisToPopup,
                 // show the dialog.
                 for ( Iterator it = this.tasks.entrySet().iterator();
-                    it.hasNext();)
+                      it.hasNext(); )
                 {
                     final Map.Entry entry = (Map.Entry) it.next();
                     final MonitorState state =
@@ -690,19 +710,20 @@ public final class SwingProgressMonitor implements TaskListener
                         if ( state.task.getProgress() > state.task.getMinimum() )
                         {
                             final long predicted = ( now - state.startMillis ) *
-                                ( state.task.getMaximum() -
-                                state.task.getMinimum() ) /
-                                ( state.task.getProgress() -
-                                state.task.getMinimum() );
+                                                   ( state.task.getMaximum() -
+                                                     state.task.getMinimum() ) /
+                                                   ( state.task.getProgress() -
+                                                     state.task.getMinimum() );
 
                             final Calendar cal = Calendar.getInstance();
                             cal.setTimeInMillis( now + predicted );
 
                             state.panel.getTimeLabel().setText(
-                                getExpectedEndMessage( cal.getTime() ) );
+                                getExpectedEndMessage( this.getLocale(),
+                                                       cal.getTime() ) );
 
                             if ( predicted > getMillisToPopup() &&
-                                !state.panel.isVisible() )
+                                 !state.panel.isVisible() )
                             {
                                 // If the task is believed to last longer than
                                 // millisToPopup add the panel to the dialog.
@@ -725,13 +746,14 @@ public final class SwingProgressMonitor implements TaskListener
 
                                             }
                                         }
+
                                     } );
                             }
                         }
                     }
                     else if ( !state.panel.isVisible() &&
-                        now - state.task.getTimestamp() >
-                        this.getMillisToPopup() )
+                              now - state.task.getTimestamp() >
+                              this.getMillisToPopup() )
                     { // Only show long running indeterminate tasks.
 
                         SwingUtilities.invokeLater(
@@ -744,15 +766,13 @@ public final class SwingProgressMonitor implements TaskListener
                                     getDialog().pack();
                                     if ( !getDialog().isVisible() )
                                     {
-                                        getDialog().
-                                            setLocationRelativeTo(
+                                        getDialog().setLocationRelativeTo(
                                             getParent() );
 
-                                        getDialog().
-                                            setVisible( true );
-
+                                        getDialog().setVisible( true );
                                     }
                                 }
+
                             } );
                     }
                 }
@@ -768,6 +788,7 @@ public final class SwingProgressMonitor implements TaskListener
                     {
                         closeDialog();
                     }
+
                 } );
 
             this.popupDecisionMillis = NO_POPUPDECISION;
@@ -785,15 +806,16 @@ public final class SwingProgressMonitor implements TaskListener
      * <blockquote><pre>Verarbeitungsereignis unbekannten Typs {0,number} ignoriert.</pre></blockquote>
      * <blockquote><pre>Ignored task event of unknown type {0,number}.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
      * @param unknownEventType The unknown type of the event.
      *
      * @return Message stating that an unknown task event got ignored.
      */
-    private String getUnknownTaskEventTypeMessage(
-            java.lang.Number unknownEventType )
+    private String getUnknownTaskEventTypeMessage( final Locale locale,
+            final java.lang.Number unknownEventType )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "unknownTaskEventType",
+            getMessage( this, "unknownTaskEventType", locale,
                 new Object[]
                 {
                     unknownEventType
@@ -806,17 +828,18 @@ public final class SwingProgressMonitor implements TaskListener
      * <blockquote><pre>Verarbeitung "{0}" wurde um {1,time,long} bereits gestartet.</pre></blockquote>
      * <blockquote><pre>Task "{0}" has already been started at {1,time,long}.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
      * @param taskDescription The description of the task.
      * @param startDate The time the task started.
      *
      * @return Message stating that a task already has been started.
      */
-    private String getTaskAlreadyStartedMessage(
-            java.lang.String taskDescription,
-            java.util.Date startDate )
+    private String getTaskAlreadyStartedMessage( final Locale locale,
+            final java.lang.String taskDescription,
+            final java.util.Date startDate )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "taskAlreadyStarted",
+            getMessage( this, "taskAlreadyStarted", locale,
                 new Object[]
                 {
                     taskDescription,
@@ -830,15 +853,16 @@ public final class SwingProgressMonitor implements TaskListener
      * <blockquote><pre>Vorraussichtliches Ende am {0,date,full} um {0,time,medium} Uhr.</pre></blockquote>
      * <blockquote><pre>Expected end approximately at {0,date,full} {0,time,medium}.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
      * @param expectedEnd The expected end of the task.
      *
      * @return Message stating the expected end of a task.
      */
-    private String getExpectedEndMessage(
-            java.util.Date expectedEnd )
+    private String getExpectedEndMessage( final Locale locale,
+            final java.util.Date expectedEnd )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "expectedEnd",
+            getMessage( this, "expectedEnd", locale,
                 new Object[]
                 {
                     expectedEnd
@@ -887,7 +911,7 @@ class ProgressPanel extends JPanel
             UIManager.getString( "OptionPane.cancelButtonText" ) );
 
         this.timeLabel.setFont( this.timeLabel.getFont().deriveFont(
-                                this.timeLabel.getFont().getSize2D() - 2.0F ) );
+            this.timeLabel.getFont().getSize2D() - 2.0F ) );
 
         this.setLayout( new GridBagLayout() );
 

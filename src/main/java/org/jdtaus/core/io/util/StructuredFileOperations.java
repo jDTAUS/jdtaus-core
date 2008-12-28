@@ -24,6 +24,7 @@ package org.jdtaus.core.io.util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Locale;
 import javax.swing.event.EventListenerList;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.messages.DeletesBlocksMessage;
@@ -89,7 +90,7 @@ public final class StructuredFileOperations implements StructuredFile
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
      *
-     * @return the configured <code>MemoryManager</code> implementation.
+     * @return The configured <code>MemoryManager</code> implementation.
      */
     private MemoryManager getMemoryManager()
     {
@@ -99,9 +100,21 @@ public final class StructuredFileOperations implements StructuredFile
     }
 
     /**
+     * Gets the configured <code>Locale</code> implementation.
+     *
+     * @return The configured <code>Locale</code> implementation.
+     */
+    private Locale getLocale()
+    {
+        return (Locale) ContainerFactory.getContainer().
+            getDependency( this, "Locale" );
+
+    }
+
+    /**
      * Gets the configured <code>TaskMonitor</code> implementation.
      *
-     * @return the configured <code>TaskMonitor</code> implementation.
+     * @return The configured <code>TaskMonitor</code> implementation.
      */
     private TaskMonitor getTaskMonitor()
     {
@@ -158,7 +171,7 @@ public final class StructuredFileOperations implements StructuredFile
 
         if ( this.cachedBlockCount == NO_CACHED_BLOCKCOUNT )
         {
-            this.cachedBlockCount = new BigDecimal(
+            this.cachedBlockCount = BigDecimal.valueOf(
                 this.getFileOperations().getLength() ).divide(
                 this.decimalBlockSize, BigDecimal.ROUND_UNNECESSARY ).
                 longValue();
@@ -209,7 +222,7 @@ public final class StructuredFileOperations implements StructuredFile
         {
             this.getFileOperations().setLength(
                 this.getFileOperations().getLength() - count *
-                this.getBlockSize() );
+                                                       this.getBlockSize() );
 
             this.fireBlocksDeleted( index, count );
             return;
@@ -246,8 +259,8 @@ public final class StructuredFileOperations implements StructuredFile
             {
                 this.getFileOperations().setFilePointer( readPos );
                 final int len = toMoveByte <= buf.length
-                    ? (int) toMoveByte
-                    : buf.length;
+                                ? (int) toMoveByte
+                                : buf.length;
 
                 int read = 0;
                 int total = 0;
@@ -278,8 +291,8 @@ public final class StructuredFileOperations implements StructuredFile
 
             // Truncate the file.
             this.getFileOperations().setLength( this.getFileOperations().
-                                                getLength() - count *
-                                                this.getBlockSize() );
+                getLength() - count *
+                              this.getBlockSize() );
 
             this.fireBlocksDeleted( index, count );
         }
@@ -328,8 +341,8 @@ public final class StructuredFileOperations implements StructuredFile
 
         // Increase the length of the file.
         this.getFileOperations().setLength( this.getFileOperations().
-                                            getLength() + this.getBlockSize() *
-                                            count );
+            getLength() + this.getBlockSize() *
+                          count );
 
         // New blocks are inserted at the end of the file.
         if ( toMoveByte <= 0L )
@@ -368,8 +381,8 @@ public final class StructuredFileOperations implements StructuredFile
             while ( toMoveByte > 0L )
             {
                 final int moveLen = buf.length >= toMoveByte
-                    ? (int) toMoveByte
-                    : buf.length;
+                                    ? (int) toMoveByte
+                                    : buf.length;
 
                 readPos -= moveLen;
                 writePos -= moveLen;
@@ -662,7 +675,7 @@ public final class StructuredFileOperations implements StructuredFile
             throw new ArrayIndexOutOfBoundsException( index );
         }
         if ( length < 0L || length > buf.length - index ||
-            length > this.getBlockSize() - off )
+             length > this.getBlockSize() - off )
         {
             throw new ArrayIndexOutOfBoundsException( length );
         }
@@ -679,11 +692,11 @@ public final class StructuredFileOperations implements StructuredFile
     private void assertValidFileLength() throws IOException
     {
         if ( this.getFileOperations() != null &&
-            this.getFileOperations().getLength() % this.getBlockSize() != 0L )
+             this.getFileOperations().getLength() % this.getBlockSize() != 0L )
         {
             throw new IllegalArgumentException(
                 Long.toString( this.getFileOperations().getLength() %
-                this.getBlockSize() ) );
+                               this.getBlockSize() ) );
 
         }
     }
@@ -697,7 +710,9 @@ public final class StructuredFileOperations implements StructuredFile
     {
         if ( this.closed )
         {
-            throw new IOException( this.getAlreadyClosedMessage() );
+            throw new IOException( this.getAlreadyClosedMessage(
+                this.getLocale() ) );
+
         }
     }
 
@@ -783,9 +798,9 @@ public final class StructuredFileOperations implements StructuredFile
         }
 
         return requested <= this.defaultBuffer.length ||
-            this.getMemoryManager().getAvailableBytes() < requested
-            ? this.defaultBuffer
-            : this.getMemoryManager().allocateBytes( requested );
+               this.getMemoryManager().getAvailableBytes() < requested
+               ? this.defaultBuffer
+               : this.getMemoryManager().allocateBytes( requested );
 
     }
 
@@ -800,12 +815,14 @@ public final class StructuredFileOperations implements StructuredFile
      * <blockquote><pre>Instanz geschlossen - keine E/A-Operationen möglich.</pre></blockquote>
      * <blockquote><pre>Instance closed - cannot perform I/O.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
+     *
      * @return Message stating that an instance is already closed.
      */
-    private String getAlreadyClosedMessage()
+    private String getAlreadyClosedMessage( final Locale locale )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "alreadyClosed", null );
+            getMessage( this, "alreadyClosed", locale, null );
 
     }
 

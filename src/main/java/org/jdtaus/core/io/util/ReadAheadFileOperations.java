@@ -25,6 +25,7 @@ package org.jdtaus.core.io.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.io.FileOperations;
 import org.jdtaus.core.lang.spi.MemoryManager;
@@ -56,12 +57,24 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     /**
      * Gets the configured <code>MemoryManager</code> implementation.
      *
-     * @return the configured <code>MemoryManager</code> implementation.
+     * @return The configured <code>MemoryManager</code> implementation.
      */
     private MemoryManager getMemoryManager()
     {
         return (MemoryManager) ContainerFactory.getContainer().
             getDependency( this, "MemoryManager" );
+
+    }
+
+    /**
+     * Gets the configured <code>Locale</code> implementation.
+     *
+     * @return The configured <code>Locale</code> implementation.
+     */
+    private Locale getLocale()
+    {
+        return (Locale) ContainerFactory.getContainer().
+            getDependency( this, "Locale" );
 
     }
 
@@ -109,7 +122,7 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
         }
 
         if ( oldLength > newLength && this.cachePosition != NO_CACHEPOSITION &&
-            this.cachePosition + this.cacheLength >= newLength )
+             this.cachePosition + this.cacheLength >= newLength )
         { // Discard the end of file cache.
             this.cachePosition = NO_CACHEPOSITION;
         }
@@ -162,8 +175,8 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
         else if ( this.filePointer < fileLength )
         {
             if ( this.cachePosition == NO_CACHEPOSITION ||
-                !( this.filePointer >= this.cachePosition &&
-                this.filePointer < this.cachePosition + this.cacheLength ) )
+                 !( this.filePointer >= this.cachePosition &&
+                    this.filePointer < this.cachePosition + this.cacheLength ) )
             { // Cache not initialized or file pointer outside the cached area.
                 this.fillCache();
             }
@@ -174,9 +187,9 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
                 "Unexpected implementation limit reached.";
 
             final int cachedLength = len > this.cacheLength -
-                (int) cacheStart
-                ? this.cacheLength - (int) cacheStart
-                : len;
+                                           (int) cacheStart
+                                     ? this.cacheLength - (int) cacheStart
+                                     : len;
 
             System.arraycopy( this.getCache(), (int) cacheStart, buf, off,
                               cachedLength );
@@ -213,8 +226,8 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
         this.assertNotClosed();
 
         if ( this.cachePosition != NO_CACHEPOSITION &&
-            this.filePointer >= this.cachePosition &&
-            this.filePointer < this.cachePosition + this.cacheLength )
+             this.filePointer >= this.cachePosition &&
+             this.filePointer < this.cachePosition + this.cacheLength )
         { // Cache needs updating.
             final long cacheStart = this.filePointer - this.cachePosition;
 
@@ -222,9 +235,9 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
                 "Unexpected implementation limit reached.";
 
             final int cachedLength = len > this.cacheLength -
-                (int) cacheStart
-                ? this.cacheLength - (int) cacheStart
-                : len;
+                                           (int) cacheStart
+                                     ? this.cacheLength - (int) cacheStart
+                                     : len;
 
             System.arraycopy( buf, off, this.getCache(), (int) cacheStart,
                               cachedLength );
@@ -410,7 +423,9 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     {
         if ( this.closed )
         {
-            throw new IOException( this.getAlreadyClosedMessage() );
+            throw new IOException( this.getAlreadyClosedMessage(
+                this.getLocale() ) );
+
         }
     }
 
@@ -423,8 +438,8 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
     {
         final long delta = this.getLength() - this.filePointer;
         final int toRead = delta > this.getCache().length
-            ? this.getCache().length
-            : (int) delta;
+                           ? this.getCache().length
+                           : (int) delta;
 
         this.cachePosition = this.filePointer;
 
@@ -459,12 +474,14 @@ public final class ReadAheadFileOperations implements FlushableFileOperations
      * <blockquote><pre>Instanz geschlossen - keine E/A-Operationen möglich.</pre></blockquote>
      * <blockquote><pre>Instance closed - cannot perform I/O.</pre></blockquote>
      *
+     * @param locale The locale of the message instance to return.
+     *
      * @return Message stating that an instance is already closed.
      */
-    private String getAlreadyClosedMessage()
+    private String getAlreadyClosedMessage( final Locale locale )
     {
         return ContainerFactory.getContainer().
-            getMessage( this, "alreadyClosed", null );
+            getMessage( this, "alreadyClosed", locale, null );
 
     }
 
