@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+  <properties>
+    <title>Changelog</title>
+    <author email="cs@jdtaus.org">Christian Schulte
+    </author>
+  </properties>
+  <body>
+    <release version="1.0" date="2007-06-01"
+             description="First stable release."/>
+    <release version="1.0.1" date="2007-08-01"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated the XML module descriptor to the 1.1 model version.]]>
+      </action>
+    </release>
+    <release version="1.1" date="2007-08-24"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated classes<ul>
+      <li><code>org.jdtaus.core.logging.ri.log4j.Log4JLogger</code>:<blockquote>
+      Changed modifier of the <code>getName()</code> method from
+      <code>private</code> to <code>public</code>. Added a constructor taking
+      the value of property <code>name</code> for programmatic configuration.
+      </blockquote></li></ul>]]>
+      </action>
+    </release>
+    <release version="1.1.1" date="2008-07-04"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Maven POM updates.]]>
+      </action>
+    </release>
+    <release version="1.1.2" date="2008-07-13"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.2 model version.]]>
+      </action>
+    </release>
+    <release version="1.2" date="2008-10-27"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.3 model version.]]>
+      </action>
+    </release>
+    <release version="1.8" date="2008-12-28"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated module descriptor to 1.4 model version.]]>
+      </action>
+    </release>
+  </body>
+</document>
