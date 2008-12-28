@@ -88,5 +88,11 @@
       <code>java.io.File.separatorChar</code> is not equal to '/'.]]>
       </action>
     </release>
+    <release version="3.3" date="2008-12-28"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Maven POM updates.]]>
+      </action>
+    </release>
   </body>
 </document>
