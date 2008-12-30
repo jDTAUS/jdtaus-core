@@ -748,8 +748,8 @@
               <linksource>true</linksource>
               <serialwarn>true</serialwarn>
               <show>private</show>
-              <doctitle>${pom.name} Specification ${pom.version}</doctitle>
-              <windowtitle>${pom.name} Specification ${pom.version}</windowtitle>
+              <doctitle>${pom.name} ${pom.version} Documentation</doctitle>
+              <windowtitle>${pom.name} ${pom.version} Documentation</windowtitle>
               <groups>
                 <group>
                   <title>Application Programming Interface</title>
