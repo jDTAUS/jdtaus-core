@@ -29,7 +29,7 @@
           <dependency>
             <groupId>org.jdtaus.core.container</groupId>
             <artifactId>jdtaus-core-client-container</artifactId>
-            <version>${jdtaus-core.version}</version>
+            <version>${jdtausCoreVersion}</version>
             <scope>runtime</scope>
           </dependency>
         </dependencies>
@@ -58,7 +58,7 @@
       <plugin>
         <artifactId>jdtaus-container-mojo</artifactId>
         <groupId>org.jdtaus.mojo</groupId>
-        <version>${jdtaus-container-mojo.version}</version>
+        <version>${jdtausContainerMojoVersion}</version>
         <configuration>
           <moduleName>${pom.name}</moduleName>
         </configuration>

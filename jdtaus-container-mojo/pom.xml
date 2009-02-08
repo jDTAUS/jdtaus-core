@@ -9,7 +9,7 @@
   <groupId>org.jdtaus.mojo</groupId>
   <artifactId>jdtaus-container-mojo</artifactId>
   <name>jDTAUS Core Container Mojo</name>
-  <version>${jdtaus-container-mojo.version}</version>
+  <version>${jdtausContainerMojoVersion}</version>
   <packaging>maven-plugin</packaging>
   <description>Source generator for the container model.</description>
   <dependencies>
@@ -107,12 +107,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>${maven-plugin-plugin.version}</version>
+        <version>${mavenPluginPluginVersion}</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>javacc-maven-plugin</artifactId>
-        <version>${javacc-maven-plugin.version}</version>
+        <version>${javaccMavenPluginVersion}</version>
       </plugin>
     </plugins>
   </reporting>
