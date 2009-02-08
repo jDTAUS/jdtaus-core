@@ -766,7 +766,7 @@
               </links>
             </configuration>
           </reportSet>
-          <reportSet>
+          <!--reportSet>
             <id>aggregate</id>
             <inherited>false</inherited>
             <reports>
@@ -811,7 +811,7 @@
                 </group>
               </groups>
             </configuration>
-          </reportSet>
+          </reportSet -->
         </reportSets>
       </plugin>
       <plugin>
