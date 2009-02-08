@@ -15,27 +15,27 @@ jDTAUS Core
   assembler needs to provide corresponding implementations at runtime as shown
   below.
 
-*-------------------+-------------+--------------------------------------------+
-|| <<Artifact>>     || || License || <<Description>>                                        ||
-*-------------------+-------------+--------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
+|| <<Artifact>>     || <<License>> || <<Description>>                         ||
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-client-container/index.html} jDTAUS Core RI Client Container}} | LGPL | <<<Container>>>, <<<Model>>> and <<<Context>>> reference implementation. {{{jdtaus-core-client-container/apidocs/}See Javadoc}}|
-*-------------------+-------------+--------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-servlet-container/index.html} jDTAUS Core RI Servlet Container}} | LGPL | Web application integration reference implementation. (Only needed when integrating with web applications.) {{{jdtaus-core-servlet-container/apidocs/}See Javadoc}}|
-*-------------------+-------------+--------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-jdk-logging/project-summary.html} jDTAUS Core RI JDK 1.4 Logging}} | LGPL | JDK 1.4 logging reference implementation. {{{jdtaus-core-jdk-logging/apidocs/}See Javadoc}}|
-*-------------------+-------------+--------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-log4j-logging/project-summary.html} jDTAUS Core RI Log4J Logging}} | LGPL | Log4J logging reference implementation. {{{jdtaus-core-log4j-logging/apidocs/}See Javadoc}}|
-*-------------------+-------------+--------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-commons-logging/project-summary.html} jDTAUS Core RI Commons Logging}} | LGPL | Commons logging reference implementation. {{{jdtaus-core-commons-logging/apidocs/}See Javadoc}}|
-*-------------------+-------------+--------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-task-monitor/project-summary.html} jDTAUS Core RI Task Monitor}} | LGPL | Task monitoring reference implementation. {{{jdtaus-core-task-monitor/apidocs/}See Javadoc}}|
-*-------------------+-------------+--------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-memory-manager/project-summary.html} jDTAUS Core RI Memory Manager}} | LGPL | Runtime reference implementation. {{{jdtaus-core-memory-manager/apidocs/}See Javadoc}}|
-*-------------------+-------------+--------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-jdk14-executor/project-summary.html} jDTAUS Core RI JDK 1.4 Executor}} | LGPL | JDK 1.4 executor reference implementation. {{{jdtaus-core-jdk14-executor/apidocs/}See Javadoc}}|
-*-------------------+-------------+--------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-application-logger/project-summary.html} jDTAUS Core RI Application Logger}} | LGPL | Application logger reference implementation. {{{jdtaus-core-application-logger/apidocs/}See Javadoc}}|
-*-------------------+-------------+--------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 
   <<Note:>> The logging implementations are exclusive. Only one of the artifacts
   is allowed to be put on an application's classpath.
@@ -45,24 +45,24 @@ jDTAUS Core
   The following table lists artifacts which are of interest when developing
   using the jDTAUS Core.
 
-*-------------------+----------+-----------------------------------------------+
-|| <<Artifact>>     || License || <<Description>>                                        ||
-*-------------------+----------+-----------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
+|| <<Artifact>>     || <<License>> || <<Description>>                         ||
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-utilities/project-summary.html} jDTAUS Core Utilities}} | LGPL | Core utility components. {{{jdtaus-core-utilities/apidocs/}See Javadoc}}|
-*-------------------+----------+-----------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-spi/project-summary.html} jDTAUS Core SPI}} | LGPL | Core implementation programming interface. {{{jdtaus-core-spi/apidocs/}See Javadoc}}|
-*-------------------+----------+-----------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-it/project-summary.html} jDTAUS Core Test Suite}} | LGPL | Core test suite. {{{jdtaus-core-it/apidocs/}See Javadoc}}|
-*-------------------+----------+-----------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-messages/project-summary.html} jDTAUS Core Messages}} | LGPL | Core application messages. {{{jdtaus-core-messages/apidocs/}See Javadoc}}|
-*-------------------+----------+-----------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 
 * Maven 2 plugins
 
-*-------------------+----------+-----------------------------------------------+
-|| <<Plugin>>       || License || <<Description>>                                        ||
-*-------------------+----------+-----------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
+|| <<Plugin>>       || <<License>> || <<Description>>                         ||
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-resource-mojo/} <<<resource>>>}} | LGPL | Source generator for resource bundles. |
-*-------------------+----------+-----------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-container-mojo/} <<<container>>>}} | LGPL | Source generator for the container model. |
-*-------------------+----------+------------------------------------------------+
+*-------------------+--------------+-------------------------------------------+
