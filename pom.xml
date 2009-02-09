@@ -61,7 +61,9 @@
                 <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
                   <resource>META-INF/*.DSA</resource>
                 </transformer>
-                <transformer implementation="org.jdtaus.core.container.mojo.ContainerResourceTransformer"/>
+                <transformer implementation="org.jdtaus.core.container.mojo.ContainerResourceTransformer">
+                  <mergeModule>${pom.name}</mergeModule>
+                </transformer>
               </transformers>
             </configuration>
           </execution>
@@ -133,6 +135,10 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
     </dependency>
   </dependencies>
   <reporting>
