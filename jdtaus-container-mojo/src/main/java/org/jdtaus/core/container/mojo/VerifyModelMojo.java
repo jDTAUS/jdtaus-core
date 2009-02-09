@@ -26,6 +26,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -283,6 +285,9 @@ public class VerifyModelMojo extends AbstractContainerMojo
             final Specification spec = impl.getImplementedSpecifications().
                 getSpecification( i );
 
+            final Class specClass =
+                this.assertClassAvailable( spec.getIdentifier() );
+
             boolean isImplemented =
                 spec.getIdentifier().equals( impl.getIdentifier() );
 
@@ -297,14 +302,37 @@ public class VerifyModelMojo extends AbstractContainerMojo
 
             if ( !isImplemented )
             {
-                this.validModel = false;
+                final String methodName =
+                    spec.getIdentifier().replace( '.', '_' );
 
-                this.getLog().error(
-                    VerifyModelMojoBundle.getInstance().
-                    getMissingInterfaceMessage( Locale.getDefault(),
-                                                impl.getIdentifier(),
-                                                spec.getIdentifier() ) );
+                try
+                {
+                    final Method m =
+                        clazz.getMethod( methodName, new Class[ 0 ] );
 
+                    if ( m.getReturnType() != specClass )
+                    {
+                        this.validModel = false;
+
+                        this.getLog().error(
+                            VerifyModelMojoBundle.getInstance().
+                            getMissingInterfaceMessage(
+                            Locale.getDefault(), impl.getIdentifier(),
+                            spec.getIdentifier() ) );
+
+                    }
+                }
+                catch ( NoSuchMethodException e )
+                {
+                    this.validModel = false;
+
+                    this.getLog().error(
+                        VerifyModelMojoBundle.getInstance().
+                        getMissingInterfaceMessage(
+                        Locale.getDefault(), impl.getIdentifier(),
+                        spec.getIdentifier() ) );
+
+                }
             }
         }
     }

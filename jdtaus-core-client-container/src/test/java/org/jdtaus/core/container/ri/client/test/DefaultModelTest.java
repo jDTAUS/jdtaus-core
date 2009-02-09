@@ -25,6 +25,7 @@ package org.jdtaus.core.container.ri.client.test;
 import java.net.URL;
 import junit.framework.Assert;
 import org.jdtaus.core.container.IncompatibleImplementationException;
+import org.jdtaus.core.container.ModelError;
 import org.jdtaus.core.container.ModelFactory;
 
 /**
@@ -222,6 +223,49 @@ public class DefaultModelTest
 
     }
 
+    public void testMessages() throws Exception
+    {
+        this.assertValidModel(
+            new URL[]
+            {
+                this.getClass().getResource(
+                "MessagesTestcase1.xml" )
+            } );
+
+        this.assertValidModel(
+            new URL[]
+            {
+                this.getClass().getResource(
+                "MessagesTestcase2.xml" )
+            } );
+
+    }
+
+    public void testIllegalMessages() throws Exception
+    {
+        this.assertInvalidModel(
+            new URL[]
+            {
+                this.getClass().getResource(
+                "MessagesTestcase3.xml" )
+            } );
+
+        this.assertInvalidModel(
+            new URL[]
+            {
+                this.getClass().getResource(
+                "MessagesTestcase4.xml" )
+            } );
+
+        this.assertInvalidModel(
+            new URL[]
+            {
+                this.getClass().getResource(
+                "MessagesTestcase5.xml" )
+            } );
+
+    }
+
     protected void assertIncompatibleImplementation( final URL[] resources )
     {
         try
@@ -231,6 +275,7 @@ public class DefaultModelTest
         }
         catch ( IncompatibleImplementationException e )
         {
+            Assert.assertNotNull( e.getMessage() );
             System.out.println( e.getMessage() );
         }
     }
@@ -259,6 +304,19 @@ public class DefaultModelTest
                                 Boolean.toString( false ) );
 
             Thread.currentThread().setContextClassLoader( currentLoader );
+        }
+    }
+
+    protected void assertInvalidModel( final URL[] resources )
+    {
+        try
+        {
+            this.assertValidModel( resources );
+        }
+        catch ( ModelError e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
     }
 

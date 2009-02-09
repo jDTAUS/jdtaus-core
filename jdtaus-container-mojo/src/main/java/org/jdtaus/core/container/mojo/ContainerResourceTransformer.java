@@ -42,6 +42,7 @@ import org.jdtaus.core.container.mojo.model.ModelManager;
 import org.jdtaus.core.container.mojo.model.container.Implementation;
 import org.jdtaus.core.container.mojo.model.container.Message;
 import org.jdtaus.core.container.mojo.model.container.MessageReference;
+import org.jdtaus.core.container.mojo.model.container.Messages;
 import org.jdtaus.core.container.mojo.model.container.Module;
 import org.jdtaus.core.container.mojo.model.container.Modules;
 import org.jdtaus.core.container.mojo.model.container.ObjectFactory;
@@ -139,11 +140,11 @@ public class ContainerResourceTransformer implements ResourceTransformer
                 new ResourceLoader( this.getClass().getClassLoader() );
 
             for ( Iterator it = this.modules.getModule().iterator();
-                it.hasNext();)
+                  it.hasNext(); )
             {
                 final Module module = (Module) it.next();
                 final File tmpFile =
-                    File.createTempFile( "jdtaus-container-mojo", "xml" );
+                    File.createTempFile( "jdtaus-container-mojo", ".xml" );
 
                 tmpFile.deleteOnExit();
 
@@ -160,8 +161,10 @@ public class ContainerResourceTransformer implements ResourceTransformer
             }
 
             Thread.currentThread().setContextClassLoader( resourceLoader );
-
+            AbstractContainerMojo.enableThreadContextClassLoader();
             final Model model = ModelFactory.newModel();
+            AbstractContainerMojo.disableThreadContextClassLoader();
+
             final Modules linkedModules = this.getModelManager().
                 getContainerModel( model.getModules() );
 
@@ -178,7 +181,7 @@ public class ContainerResourceTransformer implements ResourceTransformer
                 }
 
                 for ( Iterator it = linkedModules.getModule().iterator();
-                    it.hasNext();)
+                      it.hasNext(); )
                 {
                     final Module current = (Module) it.next();
                     if ( !current.getName().equals( this.mergeModule ) )
@@ -241,7 +244,7 @@ public class ContainerResourceTransformer implements ResourceTransformer
     {
         Module module = null;
 
-        for ( Iterator it = modules.getModule().iterator(); it.hasNext();)
+        for ( Iterator it = modules.getModule().iterator(); it.hasNext(); )
         {
             final Module current = (Module) it.next();
             if ( current.getName().equals( name ) )
@@ -252,6 +255,23 @@ public class ContainerResourceTransformer implements ResourceTransformer
         }
 
         return module;
+    }
+
+    private Message findMessage( final Messages messages, final String name )
+    {
+        Message message = null;
+
+        for ( Iterator it = messages.getMessage().iterator(); it.hasNext(); )
+        {
+            final Message current = (Message) it.next();
+            if ( current.getName().equals( name ) )
+            {
+                message = current;
+                break;
+            }
+        }
+
+        return message;
     }
 
     private void mergeModule( final Module mergedModule, final Module module )
@@ -291,20 +311,24 @@ public class ContainerResourceTransformer implements ResourceTransformer
             }
 
             for ( Iterator it = module.getImplementations().getImplementation().
-                iterator(); it.hasNext();)
+                iterator(); it.hasNext(); )
             {
                 final Implementation impl = (Implementation) it.next();
                 if ( impl.getMessages() != null )
                 {
                     for ( Iterator m = impl.getMessages().getReference().
-                        iterator(); m.hasNext();)
+                        iterator(); m.hasNext(); )
                     {
-                        final MessageReference message =
+                        final MessageReference ref =
                             (MessageReference) m.next();
 
-                        message.setName( message.getName() + '@' +
-                                         module.getName() );
+                        final Message message =
+                            this.findMessage( module.getMessages(),
+                                              ref.getName() );
 
+                        impl.getMessages().getMessage().add( message );
+
+                        m.remove();
                     }
                 }
             }
@@ -314,23 +338,20 @@ public class ContainerResourceTransformer implements ResourceTransformer
 
         }
 
-        if ( module.getMessages() != null )
-        {
-            if ( mergedModule.getMessages() == null )
-            {
-                mergedModule.setMessages( f.createMessages() );
-            }
-
-            for ( Iterator it = module.getMessages().getMessage().iterator();
-                it.hasNext();)
-            {
-                final Message current = (Message) it.next();
-                current.setName( current.getName() + '@' + module.getName() );
-            }
-
-            mergedModule.getMessages().getMessage().
-                addAll( module.getMessages().getMessage() );
-
-        }
+//        if ( module.getMessages() != null )
+//        {
+//            if ( mergedModule.getMessages() == null )
+//            {
+//                mergedModule.setMessages( f.createMessages() );
+//            }
+//
+//            for ( Iterator it = module.getMessages().getMessage().iterator();
+//                  it.hasNext(); )
+//            {
+//                final Message current = (Message) it.next();
+//                mergedModule.getMessages().getMessage().add( current );
+//            }
+//        }
     }
+
 }

@@ -57,14 +57,15 @@ public class VerifyJarMojo extends VerifyModelMojo
     }
 
     protected ClassLoader getClassLoader( final ClassLoader parent )
-        throws MalformedURLException
+        throws Exception
     {
+        final ClassLoader projectClassloader = super.getClassLoader( parent );
         final URL[] urls = new URL[]
         {
             this.jarFile.toURI().toURL()
         };
 
-        return new ResourceLoader( urls, parent );
+        return new ResourceLoader( urls, projectClassloader );
     }
 
 }

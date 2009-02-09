@@ -233,7 +233,7 @@
   <!--                                                                       -->
   <xsd:element name="module" type="container:Module">
     <xsd:key name="message-key">
-      <xsd:selector xpath=".//container:messages/container:message"/>
+      <xsd:selector xpath="container:messages/container:message"/>
       <xsd:field xpath="@container:name"/>
     </xsd:key>
     <xsd:keyref name="message-reference"
@@ -310,6 +310,15 @@
         </xsd:documentation>
       </xsd:annotation>
       <xsd:selector xpath=".//container:specification"/>
+      <xsd:field xpath="@container:identifier"/>
+    </xsd:unique>
+    <xsd:unique name="specification-reference-uniqueness">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Checks uniquenes of specification references.
+        </xsd:documentation>
+      </xsd:annotation>
+      <xsd:selector xpath=".//container:reference"/>
       <xsd:field xpath="@container:identifier"/>
     </xsd:unique>
   </xsd:element>
@@ -721,6 +730,15 @@
         </xsd:documentation>
       </xsd:annotation>
       <xsd:selector xpath=".//container:message"/>
+      <xsd:field xpath="@container:name"/>
+    </xsd:unique>
+    <xsd:unique name="message-reference-uniqueness">
+      <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+          Checks message reference uniquenes.
+        </xsd:documentation>
+      </xsd:annotation>
+      <xsd:selector xpath=".//container:reference"/>
       <xsd:field xpath="@container:name"/>
     </xsd:unique>
   </xsd:element>
