@@ -22,6 +22,7 @@
  */
 package org.jdtaus.core.lang.it;
 
+import junit.framework.Assert;
 import org.jdtaus.core.lang.ExceptionEventSource;
 
 /**
@@ -64,6 +65,8 @@ public abstract class ExceptionEventSourceTest
         }
         catch ( NullPointerException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -73,6 +76,8 @@ public abstract class ExceptionEventSourceTest
         }
         catch ( NullPointerException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
     }

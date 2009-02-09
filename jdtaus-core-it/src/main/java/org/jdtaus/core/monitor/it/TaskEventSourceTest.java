@@ -79,6 +79,8 @@ public class TaskEventSourceTest
         }
         catch ( NullPointerException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
     }
@@ -99,6 +101,8 @@ public class TaskEventSourceTest
         }
         catch ( NullPointerException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
     }

@@ -131,6 +131,8 @@ public class FileOperationsTest
         }
         catch ( IllegalArgumentException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
     }
 

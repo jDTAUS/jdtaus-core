@@ -23,6 +23,7 @@
 package org.jdtaus.core.container.ri.client.versioning.test;
 
 import java.io.StringReader;
+import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.jdtaus.core.container.ri.client.versioning.ParseException;
 import org.jdtaus.core.container.ri.client.versioning.Token;
@@ -84,6 +85,8 @@ public class VersionParserTest extends TestCase
         }
         catch ( ParseException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
     }
 

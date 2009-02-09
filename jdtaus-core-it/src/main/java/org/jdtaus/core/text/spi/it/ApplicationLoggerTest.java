@@ -124,6 +124,8 @@ public class ApplicationLoggerTest extends MessageEventSourceTest
         }
         catch ( NullPointerException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
     }

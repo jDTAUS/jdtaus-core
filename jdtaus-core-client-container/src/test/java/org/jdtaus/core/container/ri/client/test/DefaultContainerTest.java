@@ -153,7 +153,8 @@ public class DefaultContainerTest
         }
         catch ( DependencyCycleException e )
         {
-            System.out.println( e.getMessage() );
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
     }
 

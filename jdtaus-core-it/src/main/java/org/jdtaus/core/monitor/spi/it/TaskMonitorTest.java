@@ -231,6 +231,8 @@ public class TaskMonitorTest extends TaskEventSourceTest
         }
         catch ( NullPointerException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -240,6 +242,8 @@ public class TaskMonitorTest extends TaskEventSourceTest
         }
         catch ( NullPointerException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
 
@@ -377,7 +381,7 @@ public class TaskMonitorTest extends TaskEventSourceTest
                         getTaskMonitor().monitor( task );
                         for ( int j = 10; j > 0; j-- )
                         {
-                            Thread.currentThread().sleep( 1000 );
+                            Thread.sleep( 1000 );
                         }
                         getTaskMonitor().finish( task );
                     }

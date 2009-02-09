@@ -132,6 +132,8 @@ public class WeakIdentityHashMapTest extends TestCase
         }
         catch ( ConcurrentModificationException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -141,6 +143,8 @@ public class WeakIdentityHashMapTest extends TestCase
         }
         catch ( ConcurrentModificationException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -150,6 +154,8 @@ public class WeakIdentityHashMapTest extends TestCase
         }
         catch ( ConcurrentModificationException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
     }
 

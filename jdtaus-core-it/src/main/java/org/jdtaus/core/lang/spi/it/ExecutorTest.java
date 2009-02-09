@@ -119,6 +119,8 @@ public abstract class ExecutorTest extends ExceptionEventSourceTest
         }
         catch ( NullPointerException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
     }
@@ -136,7 +138,7 @@ public abstract class ExecutorTest extends ExceptionEventSourceTest
         this.getExecutor().executeAsynchronously( runnable );
 
         // Wait 5 seconds and test the listener.
-        Thread.currentThread().sleep( 5000L );
+        Thread.sleep( 5000L );
 
         Assert.assertTrue( listener.getEvent().
                            getException() instanceof ExecutionException );

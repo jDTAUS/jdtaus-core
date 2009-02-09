@@ -1055,7 +1055,9 @@ public final class WeakIdentityHashMap implements Map
         {
             if ( this.modifications != WeakIdentityHashMap.this.modifications )
             {
-                throw new ConcurrentModificationException();
+                throw new ConcurrentModificationException(
+                    Thread.currentThread().getName() );
+
             }
 
             return this.next != null;
@@ -1073,7 +1075,9 @@ public final class WeakIdentityHashMap implements Map
         {
             if ( this.modifications != WeakIdentityHashMap.this.modifications )
             {
-                throw new ConcurrentModificationException();
+                throw new ConcurrentModificationException(
+                    Thread.currentThread().getName() );
+
             }
             if ( this.next == null )
             {
@@ -1115,7 +1119,9 @@ public final class WeakIdentityHashMap implements Map
         {
             if ( this.modifications != WeakIdentityHashMap.this.modifications )
             {
-                throw new ConcurrentModificationException();
+                throw new ConcurrentModificationException(
+                    Thread.currentThread().getName() );
+
             }
             if ( this.current == null )
             {

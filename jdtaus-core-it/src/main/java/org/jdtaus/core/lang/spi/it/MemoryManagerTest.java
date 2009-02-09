@@ -22,6 +22,7 @@
  */
 package org.jdtaus.core.lang.spi.it;
 
+import junit.framework.Assert;
 import org.jdtaus.core.lang.it.RuntimeTest;
 import org.jdtaus.core.lang.spi.MemoryManager;
 
@@ -79,6 +80,8 @@ public class MemoryManagerTest extends RuntimeTest
         }
         catch ( IllegalArgumentException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -88,6 +91,8 @@ public class MemoryManagerTest extends RuntimeTest
         }
         catch ( IllegalArgumentException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -97,6 +102,8 @@ public class MemoryManagerTest extends RuntimeTest
         }
         catch ( IllegalArgumentException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -106,6 +113,8 @@ public class MemoryManagerTest extends RuntimeTest
         }
         catch ( IllegalArgumentException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -115,6 +124,8 @@ public class MemoryManagerTest extends RuntimeTest
         }
         catch ( IllegalArgumentException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -124,6 +135,8 @@ public class MemoryManagerTest extends RuntimeTest
         }
         catch ( IllegalArgumentException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -133,6 +146,8 @@ public class MemoryManagerTest extends RuntimeTest
         }
         catch ( IllegalArgumentException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
         try
@@ -142,6 +157,8 @@ public class MemoryManagerTest extends RuntimeTest
         }
         catch ( IllegalArgumentException e )
         {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
         }
 
     }
