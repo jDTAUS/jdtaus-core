@@ -88,11 +88,6 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <artifactId>jdtaus-core-servlet-container</artifactId>
-      <groupId>org.jdtaus.core.container</groupId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
       <artifactId>jdtaus-core-memory-manager</artifactId>
       <groupId>org.jdtaus.core.lang</groupId>
       <scope>runtime</scope>
@@ -135,10 +130,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
     </dependency>
   </dependencies>
   <reporting>
