@@ -873,5 +873,6 @@
     <mavenChangesPluginVersion>2.1</mavenChangesPluginVersion>
     <mavenPluginPluginVersion>2.4.3</mavenPluginPluginVersion>
     <javaccMavenPluginVersion>2.5</javaccMavenPluginVersion>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
