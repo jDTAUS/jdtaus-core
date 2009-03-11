@@ -36,6 +36,14 @@
       </jaxb:bindings>
     </jaxb:bindings>
 
+    <jaxb:bindings node="//xs:complexType[@name='propsType']">
+      <jaxb:class name="Properties"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xs:complexType[@name='mapType']">
+      <jaxb:class name="Map"/>
+    </jaxb:bindings>
+
     <jaxb:schemaBindings>
       <jaxb:package name="org.jdtaus.core.container.mojo.model.spring"/>
       <jaxb:nameXmlTransform>
