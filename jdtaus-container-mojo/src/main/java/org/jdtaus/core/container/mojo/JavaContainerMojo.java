@@ -1414,8 +1414,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
                          this.messagesEndingMarker );
 
                 this.getVelocity().mergeTemplate(
-                    IMPLEMENTATION_TEMPLATE_LOCATION,
-                    ctx, writer );
+                    IMPLEMENTATION_TEMPLATE_LOCATION, "UTF-8", ctx, writer );
 
                 writer.close();
 

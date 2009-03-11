@@ -93,7 +93,9 @@ public class BundleGenerator
         ctx.put( "now", new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss.SSSZ" ).
                  format( new Date() ) );
 
-        this.getVelocity().mergeTemplate( TEMPLATE_LOCATION, ctx, writer );
+        this.getVelocity().mergeTemplate(
+            TEMPLATE_LOCATION, "UTF-8", ctx, writer );
+
     }
 
     /**
