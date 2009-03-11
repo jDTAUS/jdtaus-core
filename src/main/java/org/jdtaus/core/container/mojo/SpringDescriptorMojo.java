@@ -182,7 +182,7 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
                 ctx.put( "project", this.getMavenProject() );
 
                 this.getVelocity().mergeTemplate(
-                    FACTORY_BEAN_TEMPLATE_LOCATION, ctx, writer );
+                    FACTORY_BEAN_TEMPLATE_LOCATION, "UTF-8", ctx, writer );
 
                 writer.close();
 
