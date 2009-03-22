@@ -19,6 +19,10 @@
     <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</developerConnection>
     <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</url>
   </scm>
+  <issueManagement>
+    <system>MantisBT</system>
+    <url>https://apps.sourceforge.net/mantisbt/jdtaus/</url>
+  </issueManagement>
   <build>
     <pluginManagement>
       <plugins>
@@ -853,7 +857,7 @@
             </reports>
             <configuration>
               <issueLinkTemplatePerSystem>
-                <Bugzilla>http://bugzilla.jdtaus.org/cgi-bin/bugzilla/show_bug.cgi?id=%ISSUE%</Bugzilla>
+                <MantisBT>https://apps.sourceforge.net/mantisbt/jdtaus/view.php?id=%ISSUE%</MantisBT>
               </issueLinkTemplatePerSystem>
             </configuration>
           </reportSet>
