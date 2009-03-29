@@ -70,6 +70,20 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>javacc-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <forkMode>once</forkMode>
+          <skip>false</skip>
+          <systemProperties>
+            <property>
+              <name>java.util.logging.config.file</name>
+              <value>${project.build.testOutputDirectory}/logging.properties</value>
+            </property>
+          </systemProperties>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <reporting>
