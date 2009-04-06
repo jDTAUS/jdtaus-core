@@ -398,8 +398,8 @@
           <version>1.2</version>
           <configuration>
             <message>[maven-scm-plugin] Build ${buildNumber}</message>
-            <username>${jdtausCoreScmUsername}</username>
-            <password>${jdtausCoreScmPassword}</password>
+            <username>${jdtaus.scm.username}</username>
+            <password>${jdtaus.scm.password}</password>
             <tag>${pom.artifactId}-${pom.version}-${buildNumber}</tag>
             <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/builds</tagBase>
           </configuration>
