@@ -458,6 +458,7 @@
     <module>jdtaus-core-application-logger</module>
     <module>jdtaus-core-commons-logging</module>
     <module>jdtaus-core-log4j-logging</module>
+    <module>jdtaus-core-slf4j-logging</module>
     <module>jdtaus-core-task-monitor</module>
     <module>jdtaus-core-jdk14-executor</module>
     <module>jdtaus-core-entity-resolver</module>
@@ -483,6 +484,18 @@
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.14</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.5.6</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-jdk14</artifactId>
+        <version>1.5.6</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
