@@ -28,6 +28,8 @@ jDTAUS Core
 *-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-commons-logging/project-summary.html} jDTAUS Core RI Commons Logging}} | LGPL | Commons logging reference implementation. {{{jdtaus-core-commons-logging/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
+| {{{jdtaus-core-slf4j-logging/project-summary.html} jDTAUS Core RI Slf4J Logging}} | LGPL | Slf4J logging reference implementation. {{{jdtaus-core-slf4j-logging/apidocs/}See Javadoc}}|
+*-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-task-monitor/project-summary.html} jDTAUS Core RI Task Monitor}} | LGPL | Task monitoring reference implementation. {{{jdtaus-core-task-monitor/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-memory-manager/project-summary.html} jDTAUS Core RI Memory Manager}} | LGPL | Runtime reference implementation. {{{jdtaus-core-memory-manager/apidocs/}See Javadoc}}|
@@ -39,30 +41,3 @@ jDTAUS Core
 
   <<Note:>> The logging implementations are exclusive. Only one of the artifacts
   is allowed to be put on an application's classpath.
-
-* Developing using jDTAUS Core
-
-  The following table lists artifacts which are of interest when developing
-  using the jDTAUS Core.
-
-*-------------------+--------------+-------------------------------------------+
-|| <<Artifact>>     || <<License>> || <<Description>>                         ||
-*-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-utilities/project-summary.html} jDTAUS Core Utilities}} | LGPL | Core utility components. {{{jdtaus-core-utilities/apidocs/}See Javadoc}}|
-*-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-spi/project-summary.html} jDTAUS Core SPI}} | LGPL | Core implementation programming interface. {{{jdtaus-core-spi/apidocs/}See Javadoc}}|
-*-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-it/project-summary.html} jDTAUS Core Test Suite}} | LGPL | Core test suite. {{{jdtaus-core-it/apidocs/}See Javadoc}}|
-*-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-messages/project-summary.html} jDTAUS Core Messages}} | LGPL | Core application messages. {{{jdtaus-core-messages/apidocs/}See Javadoc}}|
-*-------------------+--------------+-------------------------------------------+
-
-* Maven 2 plugins
-
-*-------------------+--------------+-------------------------------------------+
-|| <<Plugin>>       || <<License>> || <<Description>>                         ||
-*-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-resource-mojo/} <<<resource>>>}} | LGPL | Source generator for resource bundles. |
-*-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-container-mojo/} <<<container>>>}} | LGPL | Source generator for the container model. |
-*-------------------+--------------+-------------------------------------------+
