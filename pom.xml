@@ -26,13 +26,13 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.9-SNAPSHOT</version>
+    <version>1.8</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
   <artifactId>jdtaus-container-mojo</artifactId>
   <name>jDTAUS Core Container Mojo</name>
-  <version>${jdtausContainerMojoVersion}</version>
+  <version>3.2.1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <description>Source generator for the container model.</description>
   <dependencies>
@@ -80,10 +80,12 @@
     <dependency>
       <groupId>javax.xml.parsers</groupId>
       <artifactId>jaxp-api</artifactId>
+      <version>1.4.1</version>
     </dependency>
     <dependency>
       <groupId>com.sun.xml.parsers</groupId>
       <artifactId>jaxp-ri</artifactId>
+      <version>1.4.1</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>

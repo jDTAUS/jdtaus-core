@@ -81,5 +81,13 @@
       Added goals java-container-tests, java-commit and java-commit-tests.]]>
       </action>
     </release>
+    <release version="3.2.1" date="2009-05-18"
+             description="Bugfix release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Corrected class ContainerResourceTransformer to correctly merge any
+      classpath modules. Corrected the verify-jar goal to honour a project's
+      classpath artifacts during validation.]]>
+      </action>
+    </release>
   </body>
 </document>
