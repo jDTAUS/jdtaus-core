@@ -94,5 +94,11 @@
       Maven POM updates.]]>
       </action>
     </release>
+    <release version="3.3.1" date="2009-05-18"
+             description="Bugfix release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Corrected encoding of generated source files.]]>
+      </action>
+    </release>
   </body>
 </document>
