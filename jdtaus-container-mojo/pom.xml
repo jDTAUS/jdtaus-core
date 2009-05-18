@@ -32,7 +32,7 @@
   <groupId>org.jdtaus.mojo</groupId>
   <artifactId>jdtaus-container-mojo</artifactId>
   <name>jDTAUS Core Container Mojo</name>
-  <version>3.2.1</version>
+  <version>3.3-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <description>Source generator for the container model.</description>
   <dependencies>
@@ -142,10 +142,4 @@
       </plugin>
     </plugins>
   </reporting>
-
-  <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-container-mojo-3.2.1</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-container-mojo-3.2.1</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/tags/jdtaus-container-mojo-3.2.1</url>
-  </scm>
 </project>
