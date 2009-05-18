@@ -33,7 +33,7 @@
   <artifactId>jdtaus-resource-mojo</artifactId>
   <packaging>maven-plugin</packaging>
   <name>jDTAUS Core Resource Mojo</name>
-  <version>3.3.1</version>
+  <version>3.3.2-SNAPSHOT</version>
   <description>Source generator for resource bundles.</description>
   <build>
     <resources>
@@ -94,10 +94,4 @@
       </plugin>
     </plugins>
   </reporting>
-
-  <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-resource-mojo-3.3.1</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-resource-mojo-3.3.1</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/tags/jdtaus-resource-mojo-3.3.1</url>
-  </scm>
 </project>
