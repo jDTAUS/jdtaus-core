@@ -33,7 +33,7 @@
   <artifactId>jdtaus-core-runtime</artifactId>
   <name>jDTAUS Core Reference Implementation</name>
   <description>jDTAUS core reference implementation.</description>
-  <version>1.8.1</version>
+  <version>1.9-SNAPSHOT</version>
   <build>
     <resources>
       <resource>
@@ -174,11 +174,5 @@
       </plugin>
     </plugins>
   </reporting>
-
-  <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-runtime-1.8.1</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-runtime-1.8.1</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/tags/jdtaus-core-runtime-1.8.1</url>
-  </scm>
 </project>
 
