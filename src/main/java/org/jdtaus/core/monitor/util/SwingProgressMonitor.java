@@ -716,7 +716,8 @@ public final class SwingProgressMonitor implements TaskListener
                                                      state.task.getMinimum() );
 
                             final Calendar cal = Calendar.getInstance();
-                            cal.setTimeInMillis( now + predicted );
+                            cal.setTimeInMillis(
+                                state.startMillis + predicted );
 
                             state.panel.getTimeLabel().setText(
                                 getExpectedEndMessage( this.getLocale(),

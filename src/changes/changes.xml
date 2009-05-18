@@ -151,5 +151,13 @@
       dependencies to class <code>java.util.Locale</code>.]]>
       </action>
     </release>
+    <release version="1.8.1" date="2009-05-19"
+             description="Bugfix release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated class <code>org.jdtaus.core.monitor.util.SwingProgressMonitor</code>
+      to correctly display the expected end time of running tasks. Prior to this
+      version the dialog showed a constantly increasing end time instead of
+      what got computed internally.]]></action>
+    </release>
   </body>
 </document>
