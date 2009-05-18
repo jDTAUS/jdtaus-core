@@ -26,14 +26,14 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.9-SNAPSHOT</version>
+    <version>1.8</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
   <artifactId>jdtaus-resource-mojo</artifactId>
   <packaging>maven-plugin</packaging>
   <name>jDTAUS Core Resource Mojo</name>
-  <version>${jdtausResourceMojoVersion}</version>
+  <version>3.3.1-SNAPSHOT</version>
   <description>Source generator for resource bundles.</description>
   <build>
     <resources>
@@ -77,10 +77,12 @@
     <dependency>
       <groupId>javax.xml.parsers</groupId>
       <artifactId>jaxp-api</artifactId>
+      <version>1.4.1</version>
     </dependency>
     <dependency>
       <groupId>com.sun.xml.parsers</groupId>
       <artifactId>jaxp-ri</artifactId>
+      <version>1.4.1</version>
     </dependency>
   </dependencies>
   <reporting>
@@ -88,7 +90,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>${mavenPluginPluginVersion}</version>
+        <version>${maven-plugin-plugin.version}</version>
       </plugin>
     </plugins>
   </reporting>
