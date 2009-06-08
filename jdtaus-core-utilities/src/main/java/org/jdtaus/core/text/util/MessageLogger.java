@@ -38,6 +38,54 @@ import org.jdtaus.core.text.MessageListener;
  */
 public final class MessageLogger implements MessageListener
 {
+    //--MessageListener---------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     * <p>This method logs all messages given by the event using the
+     * corresponding log level.</p>
+     *
+     * @param event the event holding messages.
+     */
+    public void onMessage( final MessageEvent event )
+    {
+        if ( event != null )
+        {
+            for ( int i = 0; i < event.getMessages().length; i++ )
+            {
+                switch ( event.getType() )
+                {
+                    case MessageEvent.ERROR:
+                        this.getLogger().error( event.getMessages()[i].getText(
+                            this.getLocale() ) );
+
+                        break;
+
+                    case MessageEvent.INFORMATION:
+                    case MessageEvent.NOTIFICATION:
+                        this.getLogger().info( event.getMessages()[i].getText(
+                            this.getLocale() ) );
+
+                        break;
+
+                    case MessageEvent.WARNING:
+                        this.getLogger().warn( event.getMessages()[i].getText(
+                            this.getLocale() ) );
+
+                        break;
+
+                    default:
+                        this.getLogger().warn(
+                            this.getUnknownMessageEventTypeMessage(
+                            this.getLocale(),
+                            new Integer( event.getType() ) ) );
+
+                }
+            }
+        }
+    }
+
+    //---------------------------------------------------------MessageListener--
     //--Dependencies------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies
@@ -70,54 +118,6 @@ public final class MessageLogger implements MessageListener
 // </editor-fold>//GEN-END:jdtausDependencies
 
     //------------------------------------------------------------Dependencies--
-    //--MessageListener---------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     * <p>This method logs all messages given by the event using the
-     * corresponding log level.</p>
-     *
-     * @param event the event holding messages.
-     */
-    public void onMessage( final MessageEvent event )
-    {
-        if ( event != null )
-        {
-            final int numMessages = event.getMessages().length;
-            final StringBuffer messages = new StringBuffer( numMessages * 200 );
-            for ( int i = 0; i < numMessages; i++ )
-            {
-                messages.append( event.getMessages()[i].getText(
-                    this.getLocale() ) ).append( '\n' );
-
-            }
-
-            switch ( event.getType() )
-            {
-                case MessageEvent.ERROR:
-                    this.getLogger().error( messages.toString() );
-                    break;
-
-                case MessageEvent.INFORMATION:
-                case MessageEvent.NOTIFICATION:
-                    this.getLogger().info( messages.toString() );
-                    break;
-
-                case MessageEvent.WARNING:
-                    this.getLogger().warn( messages.toString() );
-                    break;
-
-                default:
-                    this.getLogger().warn(
-                        this.getUnknownMessageEventTypeMessage(
-                        this.getLocale(),
-                        new Integer( event.getType() ) ) );
-
-            }
-        }
-    }
-
-    //---------------------------------------------------------MessageListener--
     //--Messages----------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages
