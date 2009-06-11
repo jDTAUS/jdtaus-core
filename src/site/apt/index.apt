@@ -38,6 +38,8 @@ jDTAUS Core
 *-------------------+--------------+-------------------------------------------+
 | {{{jdtaus-core-application-logger/project-summary.html} jDTAUS Core RI Application Logger}} | LGPL | Application logger reference implementation. {{{jdtaus-core-application-logger/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
+| {{{jdtaus-core-entity-resolver/project-summary.html} jDTAUS Core RI Entity Resolver}} | LGPL | Entity resolver reference implementation. {{{jdtaus-core-entity-resolver/apidocs/}See Javadoc}}|
+*-------------------+--------------+-------------------------------------------+
 
   <<Note:>> The logging implementations are exclusive. Only one of the artifacts
   is allowed to be put on an application's classpath.
