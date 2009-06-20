@@ -158,6 +158,7 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
+        <version>${jdtausContainerMojoVersion}</version>
         <configuration>
           <moduleName>${pom.name}</moduleName>
         </configuration>
