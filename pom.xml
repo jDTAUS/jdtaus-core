@@ -707,11 +707,6 @@
         <version>${jdtausCoreVersion}</version>
       </dependency>
       <dependency>
-        <artifactId>jdtaus-core-messages</artifactId>
-        <groupId>org.jdtaus.core</groupId>
-        <version>${jdtausCoreVersion}</version>
-      </dependency>
-      <dependency>
         <artifactId>jdtaus-core-jdk14-executor</artifactId>
         <groupId>org.jdtaus.core.lang</groupId>
         <version>${jdtausCoreVersion}</version>
