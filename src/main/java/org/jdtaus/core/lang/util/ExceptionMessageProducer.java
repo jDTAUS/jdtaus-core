@@ -194,8 +194,6 @@ public final class ExceptionMessageProducer implements ExceptionListener
      *
      * @throws NullPointerException if either {@code logDirectory},
      * {@code trackerUrl} or {@code reportAddress} is {@code null}.
-     * @throws IllegalArgumentException if {@code logDirectory} is not a
-     * directory.
      */
     public ExceptionMessageProducer( final File logDirectory,
                                      final URL trackerUrl,
@@ -205,10 +203,6 @@ public final class ExceptionMessageProducer implements ExceptionListener
         if ( logDirectory == null )
         {
             throw new NullPointerException( "logDirectory" );
-        }
-        if ( !logDirectory.isDirectory() )
-        {
-            throw new IllegalArgumentException( logDirectory.getAbsolutePath() );
         }
         if ( trackerUrl == null )
         {
