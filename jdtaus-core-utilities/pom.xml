@@ -26,12 +26,11 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.8</version>
+    <version>1.9-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-utilities</artifactId>
-  <version>1.9-SNAPSHOT</version>
   <name>jDTAUS Core Utilities</name>
   <description>jDTAUS core utility components.</description>
   <build>
@@ -54,7 +53,6 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-        <version>3.2.1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -117,7 +115,7 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-        <version>3.2.1</version>
+        <version>${jdtausContainerMojoVersion}</version>
         <configuration>
           <moduleName>${pom.name}</moduleName>
         </configuration>
