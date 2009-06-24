@@ -159,5 +159,12 @@
       version the dialog showed a constantly increasing end time instead of
       what got computed internally.]]></action>
     </release>
+    <release version="1.8.2" date="2009-06-24"
+             description="Bugfix release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Updated class <code>org.jdtaus.core.lang.util.ExceptionMessageProducer</code>
+      to correct <code>IllegalArgumentException</code>s getting thrown for
+      UNC path names.]]></action>
+    </release>
   </body>
 </document>
