@@ -31,7 +31,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-utilities</artifactId>
-  <version>1.8.2-SNAPSHOT</version>
+  <version>1.8.2</version>
   <name>jDTAUS Core Utilities</name>
   <description>jDTAUS core utility components.</description>
   <build>
@@ -124,4 +124,10 @@
       </plugin>
     </plugins>
   </reporting>
+
+  <scm>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-utilities-1.8.2</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-utilities-1.8.2</developerConnection>
+    <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/tags/jdtaus-core-utilities-1.8.2</url>
+  </scm>
 </project>
