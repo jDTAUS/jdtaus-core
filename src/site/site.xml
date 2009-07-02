@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="jDTAUS Core">
   <body>
-    <head>
-      <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
-      <script type="text/javascript">
-        _uacct = "UA-416120-1";
-        urchinTracker();
-      </script>
-    </head>
     <menu name="jDTAUS Core">
       <item name="Home" href="http://jdtaus.sourceforge.net/1.0.x"/>
       <item name="Introduction" href="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/index.html"/>
