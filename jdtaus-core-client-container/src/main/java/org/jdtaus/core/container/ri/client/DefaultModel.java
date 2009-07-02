@@ -90,7 +90,7 @@ import org.xml.sax.SAXParseException;
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
- * @see <a href="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd">jdtaus-container-1.1.xsd</a>
+ * @see <a href="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd">jdtaus-container-1.1.xsd</a>
  */
 public class DefaultModel implements Model
 {

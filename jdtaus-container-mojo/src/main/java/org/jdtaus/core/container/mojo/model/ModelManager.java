@@ -88,7 +88,7 @@ public class ModelManager extends AbstractLogEnabled
     private static final String[] CONTAINER_SCHEMA_LOCATIONS =
     {
         "http://jdtaus.org/core/model/container",
-        "http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+        "http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
     };
 
     /** Spring model schema locations. */
