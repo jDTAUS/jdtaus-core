@@ -33,12 +33,12 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.9</version>
+  <version>1.10-SNAPSHOT</version>
   <description><![CDATA[jDTAUS Core parent module.]]></description>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-1.9</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-1.9</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/tags/jdtaus-core-1.9</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</developerConnection>
+    <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</url>
   </scm>
   <build>
     <pluginManagement>
@@ -354,7 +354,7 @@
         <plugin>
           <groupId>org.jdtaus.mojo</groupId>
           <artifactId>jdtaus-resource-mojo</artifactId>
-          <version>3.4</version>
+          <version>3.5-SNAPSHOT</version>
           <executions>
             <execution>
               <id>generate-resources</id>
@@ -370,7 +370,7 @@
         <plugin>
           <groupId>org.jdtaus.mojo</groupId>
           <artifactId>jdtaus-container-mojo</artifactId>
-          <version>3.3</version>
+          <version>3.4-SNAPSHOT</version>
           <dependencies>
             <dependency>
               <groupId>org.jdtaus.core.container</groupId>
