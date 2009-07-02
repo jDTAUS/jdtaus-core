@@ -60,7 +60,7 @@ import org.jdtaus.core.container.mojo.model.JavaArtifact;
 /**
  * Mojo to generate java code.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @goal java-container
  * @phase process-resources

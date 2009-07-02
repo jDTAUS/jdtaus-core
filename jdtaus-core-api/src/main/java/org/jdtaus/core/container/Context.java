@@ -30,7 +30,7 @@ import java.util.Collection;
  * <p>The context stores key-value pairs bound to a client. For every method
  * invocation identical clients get identical contexts.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see ContextFactory

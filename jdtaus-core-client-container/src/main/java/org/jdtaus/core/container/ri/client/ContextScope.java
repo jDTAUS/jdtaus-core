@@ -28,7 +28,7 @@ import org.jdtaus.core.container.ContextFactory;
 /**
  * Context scope.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see org.jdtaus.core.container.ContainerFactory

@@ -32,7 +32,7 @@ import java.io.Serializable;
  * the argument in a set of arguments. Property {@code type} holds the type
  * of the argument.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class Argument extends ModelObject implements Cloneable, Serializable

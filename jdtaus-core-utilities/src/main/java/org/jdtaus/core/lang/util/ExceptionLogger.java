@@ -30,7 +30,7 @@ import org.jdtaus.core.logging.spi.Logger;
 /**
  * {@code ExceptionListener} logging exceptions.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see #onException(ExceptionEvent)

@@ -36,7 +36,7 @@ import java.util.TreeMap;
  * {@code bound} flag indicates if the instance of the dependency is bound to
  * the declaring implementation.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class Dependency extends ModelObject implements Cloneable, Serializable

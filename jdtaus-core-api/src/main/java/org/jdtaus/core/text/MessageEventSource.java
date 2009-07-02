@@ -34,7 +34,7 @@ package org.jdtaus.core.text;
  * source.addMessageListener(<i>your application's listener</i>);
  * </pre></blockquote></p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public interface MessageEventSource

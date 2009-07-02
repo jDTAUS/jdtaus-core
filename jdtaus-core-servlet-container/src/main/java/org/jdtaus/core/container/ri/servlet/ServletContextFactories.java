@@ -37,7 +37,7 @@ import org.jdtaus.core.container.ModelFactory;
  * and {@link ModelFactory#getModel()} methods. See the factories for how
  * to configure this class to be used.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see ServletFilter

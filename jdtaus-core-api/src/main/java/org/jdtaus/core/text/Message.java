@@ -38,7 +38,7 @@ import java.util.Locale;
  * instance always returns a type uniquely identifying a message type in the
  * system.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see MessageEvent
@@ -211,7 +211,7 @@ public abstract class Message implements Cloneable, Serializable
  * <p><b>Note:</b><br/>
  * This comparator imposes orderings that are inconsistent with equals.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 class AscendingMessageComparator implements Comparator, Serializable
@@ -259,7 +259,7 @@ class AscendingMessageComparator implements Comparator, Serializable
  * <p><b>Note:</b><br/>
  * This comparator imposes orderings that are inconsistent with equals.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 class DescendingMessageComparator

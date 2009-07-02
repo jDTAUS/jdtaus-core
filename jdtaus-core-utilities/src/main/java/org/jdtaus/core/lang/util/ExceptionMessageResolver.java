@@ -27,7 +27,7 @@ import org.jdtaus.core.text.Message;
 /**
  * Resolves {@code Message}s for given exceptions.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see ExceptionMessageProducer#onException(ExceptionEvent)

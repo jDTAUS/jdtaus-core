@@ -44,7 +44,7 @@ import org.jdtaus.core.lang.spi.MemoryManager;
  * This implementation is not thread-safe and concurrent changes to the
  * underlying {@code FileOperations} implementation are not supported.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public final class ReadAheadFileOperations implements FlushableFileOperations

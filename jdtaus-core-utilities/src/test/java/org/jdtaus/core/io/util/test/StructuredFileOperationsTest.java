@@ -31,7 +31,7 @@ import org.jdtaus.core.io.util.StructuredFileOperations;
 /**
  * Testcase for {@code StructuredFileOperations} implementations.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class StructuredFileOperationsTest extends StructuredFileTest

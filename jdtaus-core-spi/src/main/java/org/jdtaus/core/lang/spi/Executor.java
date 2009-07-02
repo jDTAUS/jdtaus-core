@@ -27,7 +27,7 @@ package org.jdtaus.core.lang.spi;
  * <p>jDTAUS Core SPI {@code Executor} specification to be used by
  * implementations to perform operations asynchronously.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @see org.jdtaus.core.container.Container
  */

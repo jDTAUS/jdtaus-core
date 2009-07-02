@@ -49,7 +49,7 @@ import org.jdtaus.core.container.ContainerFactory;
  * cursor is reset to the system's default cursor and no more blocking is
  * performed. Property {@code visible} defaults to {@code false}.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public final class BlockingGlassPane extends JComponent

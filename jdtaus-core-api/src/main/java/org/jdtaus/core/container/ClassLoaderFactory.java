@@ -25,7 +25,7 @@ package org.jdtaus.core.container;
 /**
  * Utility for loading classes.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 abstract class ClassLoaderFactory

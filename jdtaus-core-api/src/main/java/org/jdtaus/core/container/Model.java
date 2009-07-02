@@ -32,7 +32,7 @@ package org.jdtaus.core.container;
  * implementation of the dependency may be overwritten by properties defined for
  * the dependency.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see ModelFactory

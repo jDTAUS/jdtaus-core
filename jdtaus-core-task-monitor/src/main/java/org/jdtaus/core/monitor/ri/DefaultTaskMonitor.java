@@ -53,7 +53,7 @@ import org.jdtaus.core.text.Message;
  * sure {@code TaskListener} implementations are prepared for being notified
  * by a different thread than the one executing a task's operation.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see org.jdtaus.core.container.Container

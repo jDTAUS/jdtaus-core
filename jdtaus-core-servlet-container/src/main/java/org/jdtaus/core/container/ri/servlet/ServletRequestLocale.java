@@ -30,7 +30,7 @@ import java.util.Locale;
  * {@code java.util.Locale} implementation and is used to provide the locale of
  * the current servlet request in service.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class ServletRequestLocale

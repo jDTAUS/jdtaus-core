@@ -65,7 +65,7 @@ import org.jdtaus.core.container.mojo.model.spring.BeansElement;
 /**
  * Manages the {@code http://jdtaus.org/core/model/container} namespace.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @plexus.component role="org.jdtaus.core.container.mojo.model.ModelManager"
  *                   role-hint="default"

@@ -31,7 +31,7 @@ import java.util.Locale;
  * This exception gets thrown for any implementation violating this
  * constraint.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see Implementation#getParent()

@@ -33,7 +33,7 @@ import org.jdtaus.core.lang.spi.Executor;
 /**
  * jDTAUS Core SPI JDK 1.4 {@code Executor} reference implementation.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see org.jdtaus.core.container.Container

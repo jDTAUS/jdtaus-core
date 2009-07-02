@@ -34,7 +34,7 @@ import org.codehaus.plexus.util.DirectoryScanner;
 /**
  * Mojo to cleanup source files (e.g. remove trailing spaces).
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @goal clean-sources
  */

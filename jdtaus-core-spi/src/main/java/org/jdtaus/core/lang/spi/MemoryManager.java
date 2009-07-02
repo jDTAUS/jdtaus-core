@@ -27,7 +27,7 @@ package org.jdtaus.core.lang.spi;
  * <p>jDTAUS Core SPI {@code MemoryManager} specification to be used by
  * implementations when allocating memory.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @see org.jdtaus.core.container.Container
  */

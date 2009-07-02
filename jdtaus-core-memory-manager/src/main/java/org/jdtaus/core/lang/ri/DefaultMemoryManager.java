@@ -41,7 +41,7 @@ import org.jdtaus.core.logging.spi.Logger;
  * property {@code maximumPercent} is {@code 98} and the default for property
  * {@code maximumRetries} is {@code 1}.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see org.jdtaus.core.container.Container

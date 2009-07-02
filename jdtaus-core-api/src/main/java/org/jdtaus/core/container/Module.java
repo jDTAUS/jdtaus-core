@@ -34,7 +34,7 @@ import java.io.Serializable;
  * a textual version of the module. A module defines specifications,
  * implementations and properties.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class Module extends ModelObject implements Cloneable, Serializable

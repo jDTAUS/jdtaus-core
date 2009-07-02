@@ -31,7 +31,7 @@ import org.jdtaus.core.text.Message;
 /**
  * {@code Message} stating how to report a bug.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public final class BugReportMessage extends Message

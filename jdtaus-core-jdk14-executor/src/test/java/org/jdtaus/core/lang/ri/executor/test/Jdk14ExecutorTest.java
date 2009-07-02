@@ -29,7 +29,7 @@ import org.jdtaus.core.lang.spi.it.ExecutorTest;
 /**
  * Tests the {@link Jdk14Executor} implementation.
  *
- * @author <a href="mailto:cs@schulte.it">Cest.java 2469 2007-04-11 03:03:04Z schulte2005 $
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Cest.java 2469 2007-04-11 03:03:04Z schulte2005 $
  */
 public class Jdk14ExecutorTest extends ExecutorTest
 {

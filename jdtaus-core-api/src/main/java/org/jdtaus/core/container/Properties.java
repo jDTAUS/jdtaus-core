@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * Collection of properties.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class Properties extends ModelObject implements Cloneable, Serializable

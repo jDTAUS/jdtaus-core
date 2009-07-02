@@ -49,7 +49,7 @@ import org.jdtaus.core.container.ModelFactory;
  *   &lt;filter-class&gt;org.jdtaus.core.container.ri.servlet.ServletFilter&lt;/filter-class&gt;
  * &lt;/filter&gt;</pre></p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see #init(FilterConfig)

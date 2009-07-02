@@ -37,7 +37,7 @@ import org.jdtaus.core.container.Specifications;
 /**
  * Unit tests for the container model.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class ModelTest

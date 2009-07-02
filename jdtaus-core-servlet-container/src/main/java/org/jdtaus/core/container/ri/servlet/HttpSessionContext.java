@@ -34,7 +34,7 @@ import org.jdtaus.core.container.Context;
  * {@link org.jdtaus.core.container.ContextFactory#newContext()}. See the
  * factory for how to configure this class to be used.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see ServletFilter

@@ -36,7 +36,7 @@ import org.xml.sax.SAXException;
 /**
  * Manages the {@code http://jdtaus.org/core/model/container} model.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @plexus.component role="org.jdtaus.mojo.resource.model.ModelManager"
  *                   role-hint="default"

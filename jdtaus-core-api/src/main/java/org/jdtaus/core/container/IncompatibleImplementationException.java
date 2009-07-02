@@ -31,7 +31,7 @@ import java.util.Locale;
  * gets thrown for any implementation implementing or depending on a
  * specification version incompatible with the version in use.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see Specification#getVersion()

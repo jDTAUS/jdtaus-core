@@ -32,7 +32,7 @@ import org.jdtaus.core.lang.spi.Executor;
 /**
  * Testcase for {@code Executor} implementations.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public abstract class ExecutorTest extends ExceptionEventSourceTest

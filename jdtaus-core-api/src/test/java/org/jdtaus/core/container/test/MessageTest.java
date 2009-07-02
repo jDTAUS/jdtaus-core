@@ -30,7 +30,7 @@ import org.jdtaus.core.container.Message;
 /**
  * jUnit tests for {@code Message} implementations.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class MessageTest extends TestCase

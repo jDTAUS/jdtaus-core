@@ -32,7 +32,7 @@ import java.util.Locale;
  * properties declared for its implemented specifications. This exception gets
  * thrown for any violations to these restrictions.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see Implementation#getProperties()

@@ -98,7 +98,7 @@ import java.util.WeakHashMap;
  * correctness: <i>the fail-fast behavior of iterators should be used only to
  * detect bugs.</i></p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see HashMap

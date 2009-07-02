@@ -32,7 +32,7 @@ import org.apache.maven.plugin.MojoFailureException;
 /**
  * Mojo to validate a set of modules from a single jar file.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @goal verify-jar
  * @phase verify

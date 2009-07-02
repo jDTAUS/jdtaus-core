@@ -30,7 +30,7 @@ import org.jdtaus.core.logging.spi.Logger;
  * <p>The name of the Log4J logger is specified by property {@code name}.
  * Property {@code name} defaults to {@code org.jdtaus.runtime}.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see org.jdtaus.core.container.Container

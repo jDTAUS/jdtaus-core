@@ -51,7 +51,7 @@ import org.jdtaus.core.container.mojo.model.container.ObjectFactory;
  * {@code ResourceTransformer} implementation for use with the
  * {@code maven-shade-plugin} for merging container models.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see <a href="http://maven.apache.org/plugins/maven-shade-plugin/index.html">maven-shade-plugin</a>

@@ -27,7 +27,7 @@ package org.jdtaus.core.container;
  * <p>By implementing this interface implementations request custom
  * initialization.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @deprecated Removed without replacement. Implementations should not perform
  * initialization during instantiation.

@@ -35,7 +35,7 @@ import org.jdtaus.core.text.Message;
  * {@code getCause()} returns a non-{@code null} value, the root cause is used.
  * </p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public final class ExceptionMessage extends Message

@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * Object container.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see ContainerFactory

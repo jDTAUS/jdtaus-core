@@ -50,7 +50,7 @@ import java.util.TreeMap;
  * to a system's single instance store. An instance is only created if not
  * already available in that single instance store.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class Specification extends ModelObject

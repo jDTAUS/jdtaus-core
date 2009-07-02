@@ -27,7 +27,7 @@ package org.jdtaus.core.container;
  * <p>By implementing this interface implementations indicate that state may be
  * bound to a client.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @deprecated Removed without replacement. An implementation's scope is
  * specified by the specifications it implements.

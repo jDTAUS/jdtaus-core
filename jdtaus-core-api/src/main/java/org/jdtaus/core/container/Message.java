@@ -32,7 +32,7 @@ import java.io.Serializable;
  * template of the message. Property {@code arguments} holds meta-data
  * describing arguments to format the message with.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class Message extends ModelObject implements Cloneable, Serializable

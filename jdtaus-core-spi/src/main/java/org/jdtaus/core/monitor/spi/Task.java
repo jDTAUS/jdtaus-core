@@ -28,7 +28,7 @@ import org.jdtaus.core.text.Message;
  * Extends {@code Task} providing write access to the state of a {@code Task}
  * to be used by implementations.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public final class Task extends org.jdtaus.core.monitor.Task

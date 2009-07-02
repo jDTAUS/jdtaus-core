@@ -53,7 +53,7 @@ import org.jdtaus.core.container.Specification;
 /**
  * Generates a report for the artifact's container metadata.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @goal report
  * @requiresDependencyResolution runtime

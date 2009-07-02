@@ -42,7 +42,7 @@ import org.jdtaus.core.text.MessageListener;
  * hold multiple messages a maximum number of messages to display per event
  * can be specified by property {@code maximumMessages} (defaults to 25).</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see #onMessage(MessageEvent)

@@ -29,7 +29,7 @@ import org.jdtaus.core.text.Message;
 /**
  * {@code Message} stating that no value was specified for a mandatory property.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public final class MandatoryPropertyMessage extends Message

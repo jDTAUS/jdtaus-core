@@ -34,7 +34,7 @@ import java.util.Set;
 /**
  * Classloader for providing classpath resources.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see #addResource(java.lang.String, java.net.URL)

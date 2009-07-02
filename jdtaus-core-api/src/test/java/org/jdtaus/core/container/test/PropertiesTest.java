@@ -31,7 +31,7 @@ import org.jdtaus.core.container.Property;
 /**
  * jUnit tests for {@code Properties} implementations.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class PropertiesTest extends TestCase

@@ -29,7 +29,7 @@ import org.jdtaus.core.logging.spi.it.LoggerTest;
 /**
  * Tests the {@link JDK14Logger} implementation.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class JDK14LoggerTest extends LoggerTest

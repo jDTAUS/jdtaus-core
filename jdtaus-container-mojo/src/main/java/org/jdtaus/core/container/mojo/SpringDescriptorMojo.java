@@ -45,7 +45,7 @@ import org.springframework.core.io.FileSystemResource;
  * Mojo to generate a spring beans descriptor with corresponding support
  * classes from a project.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @goal spring-descriptor
  * @phase process-resources

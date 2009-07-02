@@ -29,7 +29,7 @@ import java.lang.reflect.Method;
 /**
  * Factory for the {@code Context} singleton.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public abstract class ContextFactory

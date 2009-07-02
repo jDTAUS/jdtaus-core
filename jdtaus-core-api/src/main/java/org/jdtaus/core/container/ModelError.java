@@ -28,7 +28,7 @@ import java.util.Locale;
  * Unrecoverable error thrown if no working {@code Model} is available in the
  * system.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class ModelError extends Error

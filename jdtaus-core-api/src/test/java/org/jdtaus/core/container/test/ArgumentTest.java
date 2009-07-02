@@ -30,7 +30,7 @@ import org.jdtaus.core.container.Argument;
 /**
  * jUnit tests for {@code Argument} implementations.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class ArgumentTest extends TestCase

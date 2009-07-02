@@ -33,7 +33,7 @@ import java.io.Serializable;
  * of type {@code type}. The {@code api} flag indicates if the property is part
  * of a public API.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class Property extends ModelObject implements Cloneable, Serializable

@@ -58,7 +58,7 @@ import org.jdtaus.core.monitor.TaskListener;
 /**
  * {@code TaskListener} displaying progress using a Swing dialog.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  *
  * @see #onTaskEvent(TaskEvent)
@@ -879,7 +879,7 @@ public final class SwingProgressMonitor implements TaskListener
 /**
  * {@code JPanel} displaying the progress for a {@code Task}.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 class ProgressPanel extends JPanel
@@ -976,7 +976,7 @@ class ProgressPanel extends JPanel
 /**
  * {@code JDialog} displaying the progress of all {@code Task}s.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 class ProgressDialog extends JDialog

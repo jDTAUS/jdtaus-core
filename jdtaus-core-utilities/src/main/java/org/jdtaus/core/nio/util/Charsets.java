@@ -48,7 +48,7 @@ import java.util.Map;
  * is capable of using the current thread's classloader before falling back
  * to the system classloader for loading {@code CharsetProvider} classes.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class Charsets

@@ -30,7 +30,7 @@ import org.jdtaus.core.lang.ExceptionEventSource;
  * <p>jDTAUS Core SPI {@code ExceptionHandler} specification to be used by
  * implementations to handle exceptions.</p>
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public interface ExceptionHandler extends ExceptionEventSource

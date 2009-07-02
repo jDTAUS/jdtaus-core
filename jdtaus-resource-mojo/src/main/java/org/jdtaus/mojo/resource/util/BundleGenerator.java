@@ -35,7 +35,7 @@ import org.jdtaus.mojo.resource.model.Module;
 /**
  * Generates source code of an accessor class to a {@code ResourceBundle}.
  *
- * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  * @plexus.component role="org.jdtaus.mojo.resource.util.BundleGenerator"
  *                   role-hint="default"
