@@ -892,8 +892,8 @@
   </profiles>
   <properties>
     <jdtausCoreVersion>1.9-SNAPSHOT</jdtausCoreVersion>
-    <jdtausContainerMojoVersion>3.3-SNAPSHOT</jdtausContainerMojoVersion>
-    <jdtausResourceMojoVersion>3.4-SNAPSHOT</jdtausResourceMojoVersion>
+    <jdtausContainerMojoVersion>3.3</jdtausContainerMojoVersion>
+    <jdtausResourceMojoVersion>3.4</jdtausResourceMojoVersion>
     <mavenJavadocPluginVersion>2.5</mavenJavadocPluginVersion>
     <mavenJxrPluginVersion>2.1</mavenJxrPluginVersion>
     <mavenPmdPluginVersion>2.4</mavenPmdPluginVersion>
