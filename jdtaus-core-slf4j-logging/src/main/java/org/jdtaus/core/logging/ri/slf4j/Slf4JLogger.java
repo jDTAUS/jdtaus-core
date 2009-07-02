@@ -1,6 +1,6 @@
 /*
  *  jDTAUS Core RI Slf4J Logging
- *  Copyright (c) 2005 Christian Schulte <cs@jdtaus.org>
+ *  Copyright (c) 2005 Christian Schulte <schulte2005@users.sourceforge.net>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -28,7 +28,7 @@ import org.jdtaus.core.logging.spi.Logger;
  * <p>The name of the Slf4J logger is specified by property {@code name}.
  * Property {@code name} defaults to {@code org.jdtaus.runtime}.</p>
  *
- * @author <a href="mailto:cs@jdtaus.org">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public class Slf4JLogger implements Logger

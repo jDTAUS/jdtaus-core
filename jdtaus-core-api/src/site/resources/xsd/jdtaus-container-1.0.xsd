@@ -28,7 +28,7 @@
   Example usage:
 
   <xsd:import namespace="http://jdtaus.org/core/model/container"
-              schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/xsd/jdtaus-container-1.0.xsd" />
+              schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-api/xsd/jdtaus-container-1.0.xsd" />
 
   The recommended namespace prefix is "container".
 
@@ -42,5 +42,5 @@
             elementFormDefault="qualified"
             attributeFormDefault="qualified">
 
-  <xsd:include schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-container-1.0.xsd"/>
+  <xsd:include schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.0.xsd"/>
 </xsd:schema>

@@ -3,7 +3,7 @@
  *  Copyright (c) 2005 Christian Schulte
  *
  *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
- *  <cs@jdtaus.org> (+49 2331 3543887)
+ *  <schulte2005@users.sourceforge.net> (+49 2331 3543887)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -25,7 +25,7 @@ package org.jdtaus.core.container.ri.client.test;
 /**
  * Specification for testing dependency cycle detection.
  *
- * @author <a href="mailto:cs@jdtaus.org">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public interface CycleTestSpecification2

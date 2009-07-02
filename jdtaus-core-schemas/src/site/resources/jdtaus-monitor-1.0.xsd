@@ -28,7 +28,7 @@
   Example usage:
 
   <xsd:import namespace="http://jdtaus.org/core/model/monitor"
-              schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-monitor-1.0.xsd"/>
+              schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-monitor-1.0.xsd"/>
 
   The recommended namespace prefix is "monitor".
 
@@ -66,15 +66,15 @@
   Example usage:
 
   <xsd:import namespace="http://jdtaus.org/core/model/monitor"
-              schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-monitor-1.0.xsd" />
+              schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-monitor-1.0.xsd" />
 
   The recommended namespace prefix is "monitor".]]>
     </xsd:documentation>
   </xsd:annotation>
   <xsd:import namespace="http://jdtaus.org/core/model"
-              schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-core-1.0.xsd"/>
+              schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-core-1.0.xsd"/>
   <xsd:import namespace="http://jdtaus.org/core/model/text"
-              schemaLocation="http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-schemas/jdtaus-text-1.0.xsd"/>
+              schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-text-1.0.xsd"/>
   <!--                                                                       -->
   <!-- Tasks                                                                 -->
   <!--                                                                       -->

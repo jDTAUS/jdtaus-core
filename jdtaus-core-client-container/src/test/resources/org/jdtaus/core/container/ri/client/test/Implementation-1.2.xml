@@ -31,8 +31,8 @@
 <module:module xmlns:container="http://jdtaus.org/core/model/container"
                xmlns:module="http://jdtaus.org/core/model/container/module"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xsi:schemaLocation="http://jdtaus.org/core/model/container/module http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd
-                                   http://jdtaus.org/core/model/container http://sites.jdtaus.org/jdtaus-core/1.0.x/jdtaus-core-api/xsd/jdtaus-container-1.0.xsd"
+               xsi:schemaLocation="http://jdtaus.org/core/model/container/module http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd
+                                   http://jdtaus.org/core/model/container http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-api/xsd/jdtaus-container-1.0.xsd"
                container:name="${pom.name} Implementation 1.2"
                container:description="${pom.description}"
                container:version="${pom.version}"

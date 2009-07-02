@@ -1,6 +1,6 @@
 /*
  *  jDTAUS Core Utilities
- *  Copyright (c) 2005 Christian Schulte <cs@jdtaus.org>
+ *  Copyright (c) 2005 Christian Schulte <schulte2005@users.sourceforge.net>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -30,7 +30,7 @@ import org.xml.sax.SAXException;
  * {@code EntityResolver} implementation backed by a chain of resolvers used
  * for resolving entities.
  *
- * @author <a href="mailto:cs@jdtaus.org">Christian Schulte</a>
+ * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
  * @version $Id$
  */
 public final class EntityResolverChain implements EntityResolver
