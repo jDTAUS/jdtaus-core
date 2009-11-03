@@ -1231,7 +1231,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
             }
             catch ( ParseException e )
             {
-                throw new MojoFailureException( e.getMessage(), e );
+                throw (MojoFailureException) new MojoFailureException( e.getMessage() ).initCause( e );
             }
         }
 
@@ -1523,7 +1523,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
         }
         catch ( Exception e )
         {
-            throw new MojoFailureException( e.getMessage(), e );
+            throw (MojoFailureException) new MojoFailureException( e.getMessage() ).initCause( e );
         }
     }
 
