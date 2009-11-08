@@ -63,8 +63,6 @@
           </dependency>
         </dependencies>
         <configuration>
-          <inputEncoding>UTF-8</inputEncoding>
-          <outputEncoding>UTF-8</outputEncoding>
           <locales>en</locales>
         </configuration>
       </plugin>
@@ -79,6 +77,7 @@
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jdtaus.core</groupId>

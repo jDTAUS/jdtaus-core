@@ -73,5 +73,32 @@
         </includes>
       </resource>
     </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestSections>
+              <manifestSection>
+                <name>org/jdtaus/core/model/jdtaus-core-1.0.xsd</name>
+              </manifestSection>
+              <manifestSection>
+                <name>org/jdtaus/core/model/container/jdtaus-container-1.0.xsd</name>
+              </manifestSection>
+              <manifestSection>
+                <name>org/jdtaus/core/model/container/jdtaus-container-1.1.xsd</name>
+              </manifestSection>
+              <manifestSection>
+                <name>org/jdtaus/core/model/monitor/jdtaus-monitor-1.0.xsd</name>
+              </manifestSection>
+              <manifestSection>
+                <name>org/jdtaus/core/model/text/jdtaus-text-1.0.xsd</name>
+              </manifestSection>
+            </manifestSections>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
