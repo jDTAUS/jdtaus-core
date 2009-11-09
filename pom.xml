@@ -33,15 +33,15 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.9.1</version>
+  <version>1.9.2-SNAPSHOT</version>
   <description>jDTAUS Core parent module.</description>
   <prerequisites>
     <maven>2.0.10</maven>
   </prerequisites>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-1.9.1</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-1.9.1</developerConnection>
-    <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/tags/jdtaus-core-1.9.1</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</developerConnection>
+    <url>https://jdtaus.svn.sourceforge.net/viewvc/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</url>
   </scm>
   <build>
     <extensions>
@@ -355,7 +355,7 @@
         <plugin>
           <groupId>org.jdtaus.mojo</groupId>
           <artifactId>jdtaus-resource-mojo</artifactId>
-          <version>3.4.1</version>
+          <version>3.4.2-SNAPSHOT</version>
           <executions>
             <execution>
               <id>generate-resources</id>
@@ -368,7 +368,7 @@
         <plugin>
           <groupId>org.jdtaus.mojo</groupId>
           <artifactId>jdtaus-container-mojo</artifactId>
-          <version>3.3.1</version>
+          <version>3.3.2-SNAPSHOT</version>
           <dependencies>
             <dependency>
               <groupId>org.jdtaus.core.container</groupId>
