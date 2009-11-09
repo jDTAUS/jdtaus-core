@@ -26,7 +26,7 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.9.1-SNAPSHOT</version>
+    <version>1.9.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jdtaus-core-memory-manager</artifactId>
@@ -84,7 +84,7 @@
       <plugin>
         <artifactId>jdtaus-container-mojo</artifactId>
         <groupId>org.jdtaus.mojo</groupId>
-        <version>3.3.1-SNAPSHOT</version>
+        <version>3.3.1</version>
         <configuration>
           <moduleName>${pom.name}</moduleName>
         </configuration>
