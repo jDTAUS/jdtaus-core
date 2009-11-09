@@ -108,5 +108,10 @@
       <action dev="schulte2005" type="fix"><![CDATA[
       Corrected GPG signatures.]]></action>
     </release>
+    <release version="3.4.1" date="2009-11-09"
+             description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Maven POM updates.]]></action>
+    </release>
   </body>
 </document>

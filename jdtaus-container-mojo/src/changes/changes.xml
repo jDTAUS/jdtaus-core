@@ -97,5 +97,12 @@
       <action dev="schulte2005" type="fix"><![CDATA[
       Corrected GPG signatures.]]></action>
     </release>
+    <release version="3.3.1" date="2009-11-09"
+             description="Bugfix release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Corrected a <code>NullPointerException</code> thrown when messages
+      are declared for implementations without the corresponding module
+      declaring any messages.]]></action>
+    </release>
   </body>
 </document>
