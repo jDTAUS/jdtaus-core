@@ -310,7 +310,7 @@
             <dependency>
               <artifactId>jdtaus-container-mojo</artifactId>
               <groupId>org.jdtaus.mojo</groupId>
-              <version>3.3.1-SNAPSHOT</version>
+              <version>3.3.1</version>
               <scope>runtime</scope>
             </dependency>
             <dependency>
