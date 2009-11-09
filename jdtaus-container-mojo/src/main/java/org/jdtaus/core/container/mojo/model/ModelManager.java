@@ -1218,14 +1218,17 @@ public class ModelManager extends AbstractLogEnabled
     {
         Message message = null;
 
-        for ( Iterator it = module.getMessages().getMessage().iterator();
-              it.hasNext(); )
+        if ( module.getMessages() != null )
         {
-            final Message current = (Message) it.next();
-            if ( current.getName().equals( name ) )
+            for ( Iterator it = module.getMessages().getMessage().iterator();
+                  it.hasNext(); )
             {
-                message = current;
-                break;
+                final Message current = (Message) it.next();
+                if ( current.getName().equals( name ) )
+                {
+                    message = current;
+                    break;
+                }
             }
         }
 
