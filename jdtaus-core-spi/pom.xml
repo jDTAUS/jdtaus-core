@@ -26,7 +26,7 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.10-SNAPSHOT</version>
+    <version>1.9.2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jdtaus-core-spi</artifactId>
@@ -100,6 +100,14 @@
         <version>3.4-SNAPSHOT</version>
         <configuration>
           <moduleName>${project.name}</moduleName>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>clirr-maven-plugin</artifactId>
+        <version>${clirrMavenPluginVersion}</version>
+        <configuration>
+          <minSeverity>info</minSeverity>
         </configuration>
       </plugin>
     </plugins>

@@ -33,7 +33,7 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.10-SNAPSHOT</version>
+  <version>1.9.2-SNAPSHOT</version>
   <description>jDTAUS Core parent module.</description>
   <prerequisites>
     <maven>2.0.10</maven>
@@ -462,7 +462,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>clirr-maven-plugin</artifactId>
-          <version>2.2.2</version>
+          <version>${clirrMavenPluginVersion}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -838,7 +838,7 @@
     </profile>
   </profiles>
   <properties>
-    <jdtausCoreVersion>1.10-SNAPSHOT</jdtausCoreVersion>
+    <jdtausCoreVersion>1.9.2-SNAPSHOT</jdtausCoreVersion>
     <mavenJavadocPluginVersion>2.6.1</mavenJavadocPluginVersion>
     <mavenJxrPluginVersion>2.1</mavenJxrPluginVersion>
     <mavenPmdPluginVersion>2.4</mavenPmdPluginVersion>
@@ -847,6 +847,7 @@
     <mavenPluginPluginVersion>2.5.1</mavenPluginPluginVersion>
     <mavenShadePluginVersion>1.2.1</mavenShadePluginVersion>
     <javaccMavenPluginVersion>2.6</javaccMavenPluginVersion>
+    <clirrMavenPluginVersion>2.2.2</clirrMavenPluginVersion>
     <surefireVersion>2.4.3</surefireVersion>
   </properties>
 </project>
