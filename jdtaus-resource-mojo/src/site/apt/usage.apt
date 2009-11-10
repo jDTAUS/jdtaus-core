@@ -25,7 +25,7 @@ jDTAUS Resource Mojo: Usage
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-resource-mojo</artifactId>
-      <version>3.4.1</version>
+      <version>3.5</version>
       <executions>
         <execution>
           <id>jdtaus-generate</id>

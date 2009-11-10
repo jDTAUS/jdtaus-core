@@ -314,7 +314,7 @@
             <dependency>
               <artifactId>jdtaus-container-mojo</artifactId>
               <groupId>org.jdtaus.mojo</groupId>
-              <version>3.3.2-SNAPSHOT</version>
+              <version>3.4-SNAPSHOT</version>
               <scope>runtime</scope>
             </dependency>
             <dependency>
@@ -359,7 +359,7 @@
         <plugin>
           <groupId>org.jdtaus.mojo</groupId>
           <artifactId>jdtaus-resource-mojo</artifactId>
-          <version>3.4.2-SNAPSHOT</version>
+          <version>3.5-SNAPSHOT</version>
           <executions>
             <execution>
               <id>generate-resources</id>
@@ -372,7 +372,7 @@
         <plugin>
           <groupId>org.jdtaus.mojo</groupId>
           <artifactId>jdtaus-container-mojo</artifactId>
-          <version>3.3.2-SNAPSHOT</version>
+          <version>3.4-SNAPSHOT</version>
           <dependencies>
             <dependency>
               <groupId>org.jdtaus.core.container</groupId>

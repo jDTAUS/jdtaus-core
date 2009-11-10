@@ -33,7 +33,7 @@
   <artifactId>jdtaus-resource-mojo</artifactId>
   <packaging>maven-plugin</packaging>
   <name>jDTAUS Core Resource Mojo</name>
-  <version>3.4.2-SNAPSHOT</version>
+  <version>3.5-SNAPSHOT</version>
   <description>Source generator for resource bundles.</description>
   <build>
     <resources>
