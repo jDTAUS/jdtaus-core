@@ -340,7 +340,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
     /**
      * Gets all interfaces implemented by a given class.
      *
-     * @param clazz the class to get all implemented interfaces from.
+     * @param clazz the class to get all implemented interfaces of.
      * @param interfaces set for collecting interfaces recursively.
      */
     private void getAllImplementedInterfaces( final Class clazz,
@@ -351,6 +351,13 @@ public class VerifyModelMojo extends AbstractContainerMojo
         {
             this.getAllImplementedInterfaces( current[i], interfaces );
             interfaces.add( current[i] );
+        }
+
+        if ( clazz.getSuperclass() != null )
+        {
+            this.getAllImplementedInterfaces(
+                clazz.getSuperclass(), interfaces );
+
         }
     }
 
@@ -550,8 +557,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
                 for ( Iterator it = committedModule.getSpecifications().
                     getSpecification().iterator(); it.hasNext(); )
                 {
-                    final SpecificationElement s = (SpecificationElement) it.
-                        next();
+                    final SpecificationElement s = (SpecificationElement) it.next();
 
                     try
                     {
@@ -564,8 +570,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
                         if ( !this.getModelManager().getMultiplicity( spec ).
                             equals( s.getMultiplicity() ) )
                         {
-                            this.getLog().error( VerifyModelMojoBundle.
-                                getInstance().
+                            this.getLog().error( VerifyModelMojoBundle.getInstance().
                                 getIllegalMultiplicityMessage(
                                 Locale.getDefault(), s.getIdentifier(),
                                 specifiedMultiplicity.getValue(),
