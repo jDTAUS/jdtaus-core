@@ -23,6 +23,10 @@
 package org.jdtaus.core.container.ri.client.test;
 
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import junit.framework.Assert;
 import org.jdtaus.core.container.IncompatibleImplementationException;
 import org.jdtaus.core.container.ModelError;
@@ -38,6 +42,9 @@ public class DefaultModelTest
 {
 
     private static final String MODEL_LOCATION = "META-INF/jdtaus/module.xml";
+
+    private static final String TRANSFORMATION_LOCATION =
+        "META-INF/jdtaus/container.xslt";
 
     /**
      * Name of the system property controlling the use of the context
@@ -266,6 +273,18 @@ public class DefaultModelTest
 
     }
 
+    public void testSystemProperties() throws Exception
+    {
+        for ( Iterator it = System.getProperties().entrySet().iterator();
+              it.hasNext(); )
+        {
+            final Map.Entry e = (Map.Entry) it.next();
+            Logger.getLogger( this.getClass().getName() ).
+                log( Level.CONFIG, e.getKey() + ":" + e.getValue() );
+
+        }
+    }
+
     protected void assertIncompatibleImplementation( final URL[] resources )
     {
         try
@@ -282,15 +301,19 @@ public class DefaultModelTest
 
     protected void assertValidModel( final URL[] resources )
     {
-        final ClassLoader currentLoader = Thread.currentThread().
-            getContextClassLoader();
+        final ClassLoader currentLoader =
+            Thread.currentThread().getContextClassLoader();
 
         try
         {
-            final ResourceLoader resourceLoader = new ResourceLoader(
-                this.getClass().getClassLoader() );
+            final ResourceLoader resourceLoader =
+                new ResourceLoader( this.getClass().getClassLoader() );
 
             resourceLoader.addResources( MODEL_LOCATION, resources );
+            resourceLoader.addResources( TRANSFORMATION_LOCATION, new URL[]
+                {
+                    this.getClass().getResource( "noop.xslt" )
+                } );
 
             Thread.currentThread().setContextClassLoader( resourceLoader );
             System.setProperty( SYS_ENABLE_CONTEXT_CLASSLOADER,

@@ -51,6 +51,14 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.ErrorListener;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamSource;
 import org.jdtaus.core.container.Argument;
 import org.jdtaus.core.container.Arguments;
 import org.jdtaus.core.container.Dependencies;
@@ -121,6 +129,10 @@ public class DefaultModel implements Model
     /** Location of the document resources searched for by default. */
     private static final String MODEL_LOCATION =
         "META-INF/jdtaus/module.xml";
+
+    /** Location of the transformation resources searched for by default. */
+    private static final String TRANSFORMATION_LOCATION =
+        "META-INF/jdtaus/container.xslt";
 
     /** Model versions supported by this implementation. */
     private static final String SUPPORTED_MODEL_VERSIONS[] =
@@ -208,6 +220,14 @@ public class DefaultModel implements Model
         {
             throw new ModelError( e );
         }
+        catch ( TransformerConfigurationException e )
+        {
+            throw new ModelError( e );
+        }
+        catch ( TransformerException e )
+        {
+            throw new ModelError( e );
+        }
         finally
         {
             this.specifications = null;
@@ -269,10 +289,14 @@ public class DefaultModel implements Model
      * @throws ParserConfigurationException if configuring the parser fails.
      * @throws SAXException if parsing documents fails.
      * @throws ParseException if parsing versions fails.
+     * @throws TransformerConfigurationException if creating a transformer
+     * fails.
+     * @throws TransformerException if transforming documents fails.
      */
     private Modules readModules()
         throws IOException, ParserConfigurationException, SAXException,
-               ParseException
+               ParseException, TransformerConfigurationException,
+               TransformerException
     {
         final Map documents = new HashMap();
         final DocumentBuilderFactory xmlFactory =
@@ -861,8 +885,9 @@ public class DefaultModel implements Model
         return implementation;
     }
 
-    private Modules transformDocuments( Map xml )
-        throws ParseException
+    private Modules transformDocuments( final Map xml )
+        throws ParseException, IOException, TransformerConfigurationException,
+               TransformerException
     {
         final Modules mods = new Modules();
         mods.setModelVersion( MODEL_VERSION );
@@ -872,7 +897,80 @@ public class DefaultModel implements Model
         for ( Iterator it = xml.entrySet().iterator(); it.hasNext(); )
         {
             final Map.Entry entry = (Map.Entry) it.next();
-            final Document doc = (Document) entry.getValue();
+            Document doc = (Document) entry.getValue();
+
+            final TransformerFactory f = TransformerFactory.newInstance();
+            final Enumeration transformers = ClassLoaderFactory.loadResources(
+                this.getClass(), TRANSFORMATION_LOCATION );
+
+            for ( ; transformers.hasMoreElements(); )
+            {
+                final URL rsrc = (URL) transformers.nextElement();
+
+                if ( LOGGER.isLoggable( Level.CONFIG ) )
+                {
+                    LOGGER.log( Level.CONFIG, DefaultModelBundle.getInstance().
+                        getResourceInformationMessage(
+                        Locale.getDefault(), rsrc.toExternalForm() ) );
+
+                }
+
+                f.setErrorListener( new ErrorListener()
+                {
+
+                    public void warning( final TransformerException e )
+                        throws TransformerException
+                    {
+                        LOGGER.log( Level.WARNING,
+                                    DefaultModelBundle.getInstance().
+                            getParseExceptionMessage(
+                            Locale.getDefault(), rsrc.toExternalForm(),
+                            e.getMessage(),
+                            new Integer( e.getLocator().getLineNumber() ),
+                            new Integer( e.getLocator().getColumnNumber() ) ) );
+
+                    }
+
+                    public void error( final TransformerException e )
+                        throws TransformerException
+                    {
+                        throw new TransformerException(
+                            DefaultModelBundle.getInstance().
+                            getParseExceptionMessage(
+                            Locale.getDefault(), rsrc.toExternalForm(),
+                            e.getMessage(),
+                            new Integer( e.getLocator().getLineNumber() ),
+                            new Integer( e.getLocator().getColumnNumber() ) ),
+                            e );
+
+                    }
+
+                    public void fatalError( final TransformerException e )
+                        throws TransformerException
+                    {
+                        throw new TransformerException(
+                            DefaultModelBundle.getInstance().
+                            getParseExceptionMessage(
+                            Locale.getDefault(), rsrc.toExternalForm(),
+                            e.getMessage(),
+                            new Integer( e.getLocator().getLineNumber() ),
+                            new Integer( e.getLocator().getColumnNumber() ) ),
+                            e );
+
+                    }
+
+                } );
+
+                final Transformer t =
+                    f.newTransformer( new StreamSource( rsrc.openStream() ) );
+
+                final DOMSource source = new DOMSource( doc );
+                final DOMResult result = new DOMResult();
+                t.transform( source, result );
+
+                doc = (Document) result.getNode();
+            }
+
             final URL documentResource = (URL) entry.getKey();
             final Element e = doc.getDocumentElement();
             String namespace = doc.getDocumentElement().getNamespaceURI();
