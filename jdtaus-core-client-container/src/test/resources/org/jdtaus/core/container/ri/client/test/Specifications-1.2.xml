@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-  ${pom.name}
+  ${project.name}
   Copyright (c) 2005 Christian Schulte
 
   Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
@@ -24,7 +24,7 @@
   Document   : module.xml
   Author     : Christian Schulte <schulte2005@users.sourceforge.net>
   Version    : $Id$
-  Description: Runtime configuration for the ${pom.name} module.
+  Description: Runtime configuration for the ${project.name} module.
 
   $Id$
 -->
@@ -33,15 +33,15 @@
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://jdtaus.org/core/model/container/module http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd
                                    http://jdtaus.org/core/model/container http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-api/xsd/jdtaus-container-1.0.xsd"
-               container:name="${pom.name} Specifications 1.2"
-               container:description="${pom.description}"
-               container:version="${pom.version}"
+               container:name="${project.name} Specifications 1.2"
+               container:description="${project.description}"
+               container:version="${project.version}"
                module:modelVersion="1.2">
   <container:specifications>
     <container:specification container:identifier="org.jdtaus.core.logging.spi.Logger-1_2"
-                             container:description="${pom.description}"
-                             container:vendor="${pom.organization.name}"
-                             container:version="${pom.version}"
+                             container:description="${project.description}"
+                             container:vendor="${project.organization.name}"
+                             container:version="${project.version}"
                              container:singleton="true"
                              container:multiplicity="one"/>
 

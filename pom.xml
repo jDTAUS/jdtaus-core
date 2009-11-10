@@ -33,7 +33,7 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.9.2-SNAPSHOT</version>
+  <version>1.10-SNAPSHOT</version>
   <description>jDTAUS Core parent module.</description>
   <prerequisites>
     <maven>2.0.10</maven>
@@ -163,8 +163,12 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>${surefireVersion}</version>
           <configuration>
-            <forkMode>never</forkMode>
-            <skip>false</skip>
+            <systemProperties>
+              <property>
+                <name>java.util.logging.config.file</name>
+                <value>${project.build.testOutputDirectory}/logging.properties</value>
+              </property>
+            </systemProperties>
           </configuration>
         </plugin>
         <plugin>
@@ -245,8 +249,8 @@
             <serialwarn>true</serialwarn>
             <show>public</show>
             <source>1.4</source>
-            <doctitle>${pom.name} ${pom.version}</doctitle>
-            <windowtitle>${pom.name} ${pom.version}</windowtitle>
+            <doctitle>${project.name} ${project.version}</doctitle>
+            <windowtitle>${project.name} ${project.version}</windowtitle>
             <detectJavaApiLink>true</detectJavaApiLink>
             <detectOfflineLinks>false</detectOfflineLinks>
             <!-- <detectLinks>true</detectLinks> Disabled due to http://jira.codehaus.org/browse/MJAVADOC-273 -->
@@ -434,7 +438,7 @@
             <message>[maven-scm-plugin] Build ${buildNumber}</message>
             <username>${jdtaus.scm.username}</username>
             <password>${jdtaus.scm.password}</password>
-            <tag>${pom.artifactId}-${pom.version}-${buildNumber}</tag>
+            <tag>${project.artifactId}-${project.version}-${buildNumber}</tag>
             <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/builds</tagBase>
           </configuration>
         </plugin>
@@ -459,6 +463,11 @@
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>clirr-maven-plugin</artifactId>
           <version>2.2.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.1</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -606,6 +615,16 @@
         <version>1.0.6</version>
       </dependency>
       <dependency>
+        <groupId>javax.xml.parsers</groupId>
+        <artifactId>jaxp-api</artifactId>
+        <version>1.4.2</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.xml.parsers</groupId>
+        <artifactId>jaxp-ri</artifactId>
+        <version>1.4.2</version>
+      </dependency>
+      <dependency>
         <groupId>org.jdtaus.common</groupId>
         <artifactId>jdtaus-core-api</artifactId>
         <version>${jdtausCoreVersion}</version>
@@ -706,8 +725,8 @@
               <serialwarn>true</serialwarn>
               <show>public</show>
               <source>1.4</source>
-              <doctitle>${pom.name} ${pom.version}</doctitle>
-              <windowtitle>${pom.name} ${pom.version}</windowtitle>
+              <doctitle>${project.name} ${project.version}</doctitle>
+              <windowtitle>${project.name} ${project.version}</windowtitle>
               <detectJavaApiLink>true</detectJavaApiLink>
               <detectOfflineLinks>false</detectOfflineLinks>
               <!-- <detectLinks>true</detectLinks> Disabled due to http://jira.codehaus.org/browse/MJAVADOC-273 -->
@@ -819,7 +838,7 @@
     </profile>
   </profiles>
   <properties>
-    <jdtausCoreVersion>1.9.2-SNAPSHOT</jdtausCoreVersion>
+    <jdtausCoreVersion>1.10-SNAPSHOT</jdtausCoreVersion>
     <mavenJavadocPluginVersion>2.6.1</mavenJavadocPluginVersion>
     <mavenJxrPluginVersion>2.1</mavenJxrPluginVersion>
     <mavenPmdPluginVersion>2.4</mavenPmdPluginVersion>

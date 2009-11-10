@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-  ${pom.name}
+  ${project.name}
   Copyright (c) 2005 Christian Schulte
 
   Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
@@ -24,25 +24,27 @@
   Document   : module.xml
   Author     : Christian Schulte <schulte2005@users.sourceforge.net>
   Version    : $Id$
-  Description: Runtime configuration for the ${pom.name} module.
+  Description: Runtime configuration for the ${project.name} module.
 
   $Id$
 -->
 <container:module xmlns:container="http://jdtaus.org/core/model/container"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://jdtaus.org/core/model/container http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
-                  container:name="${pom.name}"
-                  container:version="${pom.version}"
+                  container:name="${project.name}"
+                  container:version="${project.version}"
                   container:modelVersion="1.4">
 
   <container:documentation container:defaultLanguage="en">
-    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+    <container:text container:language="en"><![CDATA[${project.description}]]></container:text>
   </container:documentation>
   <container:implementations>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.container.ri.client.BootstrapEntityResolver"
-                              container:name="${pom.name}"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:name="${project.name}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -54,10 +56,12 @@
         <container:reference container:name="resourceNotAvailable"/>
       </container:messages>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.container.ri.client.DefaultModel"
-                              container:name="${pom.name}"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:name="${project.name}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -102,10 +106,12 @@
         <container:reference container:name="ignoredModule"/>
       </container:messages>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.container.ri.client.DefaultContainer"
-                              container:name="${pom.name}"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:name="${project.name}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -117,6 +123,7 @@
     </container:implementation>
   </container:implementations>
   <container:messages>
+    <!-- ******************************************************************* -->
     <container:message container:name="unsupportedSystemIdUri">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Unsupported system id URI "{0}". {1}]]></container:text>
@@ -127,6 +134,7 @@
         <container:argument container:index="1" container:name="caus" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="resolvedSystemIdUri">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[{0}
@@ -139,6 +147,7 @@
         <container:argument container:index="1" container:name="resolvedSystemIdUri" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="resourceNotAvailable">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Resource {0} is not available.]]></container:text>
@@ -148,6 +157,7 @@
         <container:argument container:index="0" container:name="resourceName" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="noValidationWarning">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[No JAXP validation available. {0}]]></container:text>
@@ -157,6 +167,7 @@
         <container:argument container:index="0" container:name="cause" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="missingImplementation">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[({0}: {1})]]></container:text>
@@ -167,6 +178,7 @@
         <container:argument container:index="1" container:name="implementationIdentifier2" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="invalidMultiplicity">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[{0} implementations for specification {1} with multiplicity MULTIPLICITY_ONE.]]></container:text>
@@ -177,18 +189,21 @@
         <container:argument container:index="1" container:name="specificationIdentifier" container:type="number"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="unresolvedImplementation">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[No implementation available.]]></container:text>
         <container:text container:language="de"><![CDATA[Keine Implementierung verfügbar.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="platformModuleDescription">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Module holding any automatically discovered meta-data.]]></container:text>
         <container:text container:language="de"><![CDATA[Modul mit automatisch ermittelten Meta-Daten.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="noPlatformSpecification">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[{0} is no platform specification.]]></container:text>
@@ -198,6 +213,7 @@
         <container:argument container:index="0" container:name="specificationIdentifier" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="notPublic">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[{0} is not declared public.]]></container:text>
@@ -207,6 +223,7 @@
         <container:argument container:index="0" container:name="specificationIdentifier" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="addedPlatformModule">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Added {0}.]]></container:text>
@@ -216,6 +233,7 @@
         <container:argument container:index="0" container:name="platformDescription" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="addedPlatformSpecification">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Platform specification {0} discovered automatically. Version {1} - Vendor {2}]]></container:text>
@@ -227,6 +245,7 @@
         <container:argument container:index="2" container:name="specificationVendor" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="deprecatedModel">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Processed deprecated model version {0} {1}.]]></container:text>
@@ -237,6 +256,7 @@
         <container:argument container:index="1" container:name="deprecatedVersion" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="unsupportedModelversion">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Unsupported model version {0}.]]></container:text>
@@ -246,6 +266,7 @@
         <container:argument container:index="0" container:name="unsupportedVersion" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="unsupportedMultiplicity">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Unsupported multiplicity {0}.]]></container:text>
@@ -255,6 +276,7 @@
         <container:argument container:index="0" container:name="unsupportedMultiplicity" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="unsupportedPropertyType">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Unsupported property type {0}.]]></container:text>
@@ -264,6 +286,7 @@
         <container:argument container:index="0" container:name="unsupportedPropertyType" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="classNotFound">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Could not load class {0}.]]></container:text>
@@ -273,6 +296,7 @@
         <container:argument container:index="0" container:name="className" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="unknownNamespace">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Unknown namespace {0} for document element {1}.]]></container:text>
@@ -283,6 +307,7 @@
         <container:argument container:index="1" container:name="documentElementName" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="invalidVersion">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Invalid version {0} at {1,number}.]]></container:text>
@@ -293,6 +318,7 @@
         <container:argument container:index="1" container:name="invalidIndex" container:type="number"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="incompatibleDependency">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Implementation "{1}" depends on version "{2}" of specification "{0}". Available specification level is  "{3}".]]></container:text>
@@ -305,6 +331,7 @@
         <container:argument container:index="3" container:name="availableVersion" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="providerClassNotFound">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Class {0} defined in {1} not found.]]></container:text>
@@ -315,6 +342,7 @@
         <container:argument container:index="1" container:name="fileName" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="invalidProviderClass">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Invalid provider class {0}. {1}]]></container:text>
@@ -325,6 +353,7 @@
         <container:argument container:index="1" container:name="cause" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="configuredResource">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Resource: {0}]]></container:text>
@@ -334,6 +363,7 @@
         <container:argument container:index="0" container:name="resourceName" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="incompatibleImplementation">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Implementation "{0}" implements version "{2}" of specification "{1}". Required implementation level is "{3}".]]></container:text>
@@ -346,6 +376,7 @@
         <container:argument container:index="3" container:name="specifiedVersion" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="unsupportedElement">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Unsupported XML element {0}.]]></container:text>
@@ -355,6 +386,7 @@
         <container:argument container:index="0" container:name="elementName" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="parseException">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Error parsing resource "{0}" at line {2}, column {3}. {1}]]></container:text>
@@ -367,6 +399,7 @@
         <container:argument container:index="3" container:name="column" container:type="number"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="missingAttribute">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Attribute "{0}" expected on element "{1}".]]></container:text>
@@ -377,6 +410,7 @@
         <container:argument container:index="1" container:name="elementName" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="unsupportedScope">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Unknown scope "{1}" of specification "{0}".]]></container:text>
@@ -387,6 +421,7 @@
         <container:argument container:index="1" container:name="specificationIdentifier" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="propertyValueNotAllowed">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[No value allowed for property "{1}" of specification "{0}".]]></container:text>
@@ -397,6 +432,7 @@
         <container:argument container:index="1" container:name="propertyName" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="missingPropertyType">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Property "{0}" of "{1}" has no type.]]></container:text>
@@ -407,6 +443,7 @@
         <container:argument container:index="1" container:name="elementName" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="unsupportedArgumentType">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Unsupported argument type {0}.]]></container:text>
@@ -416,6 +453,7 @@
         <container:argument container:index="0" container:name="unsupportedType" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="illegalTemplate">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Illegal template "{0}" for message "{1}". {2}]]></container:text>
@@ -427,6 +465,7 @@
         <container:argument container:index="2" container:name="cause" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="nullImplementationNameWarning">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Method {2} in class {1} called container method getObject( "{0}", null ). Please upgrade your code to calling getObject( "{0}" ) instead, if passing null for the implementation name argument is the intended behaviour.]]></container:text>
@@ -438,6 +477,7 @@
         <container:argument container:index="2" container:name="callingMethodName" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="resourceInformation">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Processing {0}.]]></container:text>
@@ -447,12 +487,14 @@
         <container:argument container:index="0" container:name="resourceLocation" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="unknownVendor">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[No vendor information available.]]></container:text>
         <container:text container:language="de"><![CDATA[Keine Hersteller-Informationen verfügbar.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="noVersionAvailable">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[No version information available for {0}.]]></container:text>
@@ -462,6 +504,7 @@
         <container:argument container:index="0" container:name="className" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="noPackageAvailable">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[No package information available for {0}.]]></container:text>
@@ -471,6 +514,7 @@
         <container:argument container:index="0" container:name="className" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="addedDefaultImplementation">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Default implementation {0} of specification {1} discovered automatically. Version {2} - Vendor {3}]]></container:text>
@@ -483,6 +527,7 @@
         <container:argument container:index="3" container:name="implementationVendor" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="overwrittenDefaultImplementation">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Default implementation {0} of specification {1} got overwritten by implementation {2}.]]></container:text>
@@ -494,6 +539,7 @@
         <container:argument container:index="2" container:name="overwrittenIdentifier" container:type="text"/>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="ignoredModule">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Duplicate module resource {0} ignored during running in an application construction environment. Module got already defined in resource {1}.]]></container:text>

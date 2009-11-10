@@ -21,7 +21,7 @@
   Document   : module.xml
   Author     : Christian Schulte <schulte2005@users.sourceforge.net>
   Version    : $Id$
-  Description: Runtime configuration for the ${pom.name} module.
+  Description: Runtime configuration for the ${project.name} module.
 
 -->
 
@@ -29,15 +29,15 @@
                xmlns:jdtaus="http://jdtaus.org/runtime/container/xml"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://jdtaus.org/runtime/container/xml http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-client-container/jdtaus-module-1.0.xsd"
-               jdtaus:name="${pom.name} Implementation 1.0"
-               jdtaus:description="${pom.description}"
+               jdtaus:name="${project.name} Implementation 1.0"
+               jdtaus:description="${project.description}"
                jdtaus:version="1.0">
 
   <jdtaus:implementations>
     <jdtaus:implementation jdtaus:identifier="org.jdtaus.core.logging.ri.jdk14.JDK14Logger"
                            jdtaus:name="jDTAUS Core SPI"
-                           jdtaus:vendor="${pom.organization.name}"
-                           jdtaus:version="${pom.version}">
+                           jdtaus:vendor="${project.organization.name}"
+                           jdtaus:version="${project.version}">
 
       <jdtaus:implementedSpecifications>
         <jdtaus:implementedSpecification jdtaus:identifier="org.jdtaus.core.logging.spi.Logger-1_0"/>

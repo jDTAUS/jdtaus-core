@@ -104,7 +104,7 @@
       are declared for implementations without the corresponding module
       declaring any messages.]]></action>
     </release>
-    <release version="3.3.2" description="Bugfix release.">
+    <release version="3.3.2" description="Bugfix release." date="2009-11-11">
       <action dev="schulte2005" type="fix"><![CDATA[
       Corrected illegal model errors reported when validating a model containing
       classes inheriting implemented specifications.]]></action>

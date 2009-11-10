@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-  ${pom.name}
+  ${project.name}
   Copyright (c) 2005 Christian Schulte
 
   Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
@@ -24,24 +24,26 @@
   Document   : module.xml
   Author     : Christian Schulte <schulte2005@users.sourceforge.net>
   Version    : $Id$
-  Description: Runtime configuration for the ${pom.name} module.
+  Description: Runtime configuration for the ${project.name} module.
 
 -->
 <container:module xmlns:container="http://jdtaus.org/core/model/container"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://jdtaus.org/core/model/container http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
-                  container:name="${pom.name}"
-                  container:version="${pom.version}"
+                  container:name="${project.name}"
+                  container:version="${project.version}"
                   container:modelVersion="1.4">
 
   <container:documentation container:defaultLanguage="en">
-    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+    <container:text container:language="en"><![CDATA[${project.description}]]></container:text>
   </container:documentation>
   <container:implementations>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.messages.BugReportMessage"
-                              container:name="${pom.name}"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:name="${project.name}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -51,10 +53,12 @@
         <container:reference container:name="bugReport"/>
       </container:messages>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.messages.DeletesBlocksMessage"
-                              container:name="${pom.name}"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:name="${project.name}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -64,10 +68,12 @@
         <container:reference container:name="deletesBlocks"/>
       </container:messages>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.messages.ExceptionMessage"
-                              container:name="${pom.name}"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:name="${project.name}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -88,10 +94,12 @@
         <container:reference container:name="missingObjectStreamField"/>
       </container:messages>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.messages.IllegalPropertyMessage"
-                              container:name="${pom.name}"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:name="${project.name}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -101,10 +109,12 @@
         <container:reference container:name="illegalProperty"/>
       </container:messages>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.messages.InsertsBlocksMessage"
-                              container:name="${pom.name}"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:name="${project.name}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -114,10 +124,12 @@
         <container:reference container:name="insertsBlocks"/>
       </container:messages>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.messages.MandatoryPropertyMessage"
-                              container:name="${pom.name}"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:name="${project.name}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -127,10 +139,12 @@
         <container:reference container:name="mandatoryProperty"/>
       </container:messages>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.messages.UndefinedApplicationStateMessage"
-                              container:name="${pom.name}"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:name="${project.name}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -142,6 +156,7 @@
     </container:implementation>
   </container:implementations>
   <container:messages>
+    <!-- ******************************************************************* -->
     <container:message container:name="bugReport">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information about how to report a bug.]]></container:text>
@@ -177,6 +192,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         </container:argument>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="deletesBlocks">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Progress description when blocks are deleted.]]></container:text>
@@ -186,6 +202,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         <container:text container:language="de"><![CDATA[Entfernt Satzabschnitte.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="insertsBlocks">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Progress description when blocks are inserted.]]></container:text>
@@ -195,6 +212,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         <container:text container:language="de"><![CDATA[Fügt Satzabschnitte ein.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="exceptionInfo">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information about an exception.]]></container:text>
@@ -222,6 +240,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         </container:argument>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="errorInfo">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information about an error.]]></container:text>
@@ -250,6 +269,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         </container:argument>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="noDetailsAvailable">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information that no details are available.]]></container:text>
@@ -259,6 +279,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         <container:text container:language="de"><![CDATA[Keine Details verfügbar.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="missingObjectStreamField">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information that a field in an object stream is missong.]]></container:text>
@@ -268,6 +289,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         <container:text container:language="de"><![CDATA[Fehlende Felder im Datenstrom.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="illegalProperty">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information about an illegal property.]]></container:text>
@@ -277,6 +299,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         <container:text container:language="de"><![CDATA[Ungültige Angaben.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="mandatoryProperty">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information about a mandatory property.]]></container:text>
@@ -286,6 +309,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         <container:text container:language="de"><![CDATA[Fehlende Angaben.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="undefinedApplicationState">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information about an illegal application state.]]></container:text>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-  ${pom.name}
+  ${project.name}
   Copyright (c) 2005 Christian Schulte
 
   Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
@@ -24,25 +24,25 @@
   Document   : module.xml
   Author     : Christian Schulte <schulte2005@users.sourceforge.net>
   Version    : $Id$
-  Description: Runtime configuration for the ${pom.name} module.
+  Description: Runtime configuration for the ${project.name} module.
 
 -->
 <container:module xmlns:container="http://jdtaus.org/core/model/container"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://jdtaus.org/core/model/container http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
-                  container:name="${pom.name}"
-                  container:version="${pom.version}"
+                  container:name="${project.name}"
+                  container:version="${project.version}"
                   container:modelVersion="1.4">
 
   <container:documentation container:defaultLanguage="en">
-    <container:text container:language="en"><![CDATA[${pom.description}]]></container:text>
+    <container:text container:language="en"><![CDATA[${project.description}]]></container:text>
   </container:documentation>
 
   <container:implementations>
     <container:implementation container:identifier="org.jdtaus.core.monitor.ri.DefaultTaskMonitor"
                               container:name="jDTAUS Core SPI"
-                              container:vendor="${pom.organization.name}"
-                              container:version="${pom.version}"
+                              container:vendor="${project.organization.name}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
@@ -98,6 +98,7 @@
     </container:implementation>
   </container:implementations>
   <container:messages>
+    <!-- ******************************************************************* -->
     <container:message container:name="threadStarted">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information about a started thread.]]></container:text>
@@ -114,6 +115,7 @@
         </container:argument>
       </container:arguments>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="threadDied">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information about a dead thread.]]></container:text>
@@ -123,6 +125,7 @@
         <container:text container:language="de"><![CDATA[Thread abnorm beendet. Konsultieren Sie die Protokolle für mögliche Ursachen.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="taskAlreadyStarted">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information about an already running task.]]></container:text>

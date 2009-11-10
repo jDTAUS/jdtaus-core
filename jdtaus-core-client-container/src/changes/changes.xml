@@ -209,5 +209,11 @@
       <action dev="schulte2005" type="update"><![CDATA[
       Maven POM updates.]]></action>
     </release>
+    <release version="1.10" date="2009-11-11"
+             description="Feature enhancements.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      Added support for processing <code>META-INF/jdtaus/container.xslt</code>
+      stylesheets after parsing module resources.]]></action>
+    </release>
   </body>
 </document>

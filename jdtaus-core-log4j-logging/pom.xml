@@ -26,7 +26,7 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.9.2-SNAPSHOT</version>
+    <version>1.10-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jdtaus-core-log4j-logging</artifactId>
@@ -92,7 +92,7 @@
         <artifactId>jdtaus-container-mojo</artifactId>
         <version>3.3.2-SNAPSHOT</version>
         <configuration>
-          <moduleName>${pom.name}</moduleName>
+          <moduleName>${project.name}</moduleName>
         </configuration>
       </plugin>
     </plugins>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-  ${pom.name}
+  ${project.name}
   Copyright (c) 2005 Christian Schulte
 
   Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
@@ -24,31 +24,33 @@
   Document   : module.xml
   Author     : Christian Schulte <schulte2005@users.sourceforge.net>
   Version    : $Id$
-  Description: Runtime configuration for the ${pom.name} module.
+  Description: Runtime configuration for the ${project.name} module.
 
 -->
 <container:module xmlns:container="http://jdtaus.org/core/model/container"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://jdtaus.org/core/model/container http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
-                  container:name="${pom.name} Tests"
-                  container:version="${pom.version}"
+                  container:name="${project.name} Tests"
+                  container:version="${project.version}"
                   container:modelVersion="1.4">
 
   <container:documentation container:defaultLanguage="en">
     <container:text container:language="en"><![CDATA[
-    ${pom.description}]]>
+    ${project.description}]]>
     </container:text>
   </container:documentation>
 
   <container:specifications>
+
+    <!-- ******************************************************************* -->
     <container:specification container:identifier="org.jdtaus.core.container.ri.client.test.TestSpecification"
                              container:vendor="${organization.name}"
-                             container:version="${pom.version}"
+                             container:version="${project.version}"
                              container:scope="singleton"
                              container:multiplicity="many">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
 
@@ -208,15 +210,16 @@
       </container:properties>
     </container:specification>
 
+    <!-- ******************************************************************* -->
     <container:specification container:identifier="org.jdtaus.core.container.ri.client.test.MultitonSpecification"
                              container:vendor="${organization.name}"
-                             container:version="${pom.version}"
+                             container:version="${project.version}"
                              container:scope="multiton"
                              container:multiplicity="many">
 
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[
-        ${pom.description}]]>
+        ${project.description}]]>
         </container:text>
       </container:documentation>
 
@@ -376,62 +379,67 @@
       </container:properties>
     </container:specification>
 
+    <!-- ******************************************************************* -->
     <container:specification container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification"
                              container:vendor="${organization.name}"
-                             container:version="${pom.version}"
+                             container:version="${project.version}"
                              container:scope="singleton"
                              container:multiplicity="one">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
     </container:specification>
 
+    <!-- ******************************************************************* -->
     <container:specification container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification1"
                              container:vendor="${organization.name}"
-                             container:version="${pom.version}"
+                             container:version="${project.version}"
                              container:scope="singleton"
                              container:multiplicity="one">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
     </container:specification>
 
+    <!-- ******************************************************************* -->
     <container:specification container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification2"
                              container:vendor="${organization.name}"
-                             container:version="${pom.version}"
+                             container:version="${project.version}"
                              container:scope="singleton"
                              container:multiplicity="one">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
     </container:specification>
 
+    <!-- ******************************************************************* -->
     <container:specification container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification3"
                              container:vendor="${organization.name}"
-                             container:version="${pom.version}"
+                             container:version="${project.version}"
                              container:scope="singleton"
                              container:multiplicity="one">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
     </container:specification>
 
+    <!-- ******************************************************************* -->
     <container:specification container:identifier="org.jdtaus.core.container.ri.client.test.ContextTestSpecification"
                              container:vendor="${organization.name}"
-                             container:version="${pom.version}"
+                             container:version="${project.version}"
                              container:scope="context"
                              container:multiplicity="one">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
     </container:specification>
@@ -439,33 +447,35 @@
   </container:specifications>
 
   <container:implementations>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.container.ri.client.test.TestImplementation"
-                              container:name="${pom.name}"
+                              container:name="${project.name}"
                               container:vendor="${organization.name}"
-                              container:version="${pom.version}">
+                              container:version="${project.version}">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
 
       <container:specifications>
         <container:reference container:identifier="org.jdtaus.core.container.ri.client.test.TestSpecification"
-                                            container:version="${pom.version}" />
+                                            container:version="${project.version}" />
       </container:specifications>
       <container:dependencies>
         <container:dependency container:name="CycleTestSpecification"
                               container:bound="true"
                               container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification"
-                              container:version="${pom.version}"
-                              container:implementationName="${pom.name} - Cycle Test">
+                              container:version="${project.version}"
+                              container:implementationName="${project.name} - Cycle Test">
 
         </container:dependency>
         <container:dependency container:name="MultitonSpecification"
                               container:bound="true"
                               container:identifier="org.jdtaus.core.container.ri.client.test.MultitonSpecification"
-                              container:version="${pom.version}"
-                              container:implementationName="${pom.name} - Child">
+                              container:version="${project.version}"
+                              container:implementationName="${project.name} - Child">
 
           <container:properties>
             <container:property container:name="boolean" container:type="boolean" container:value="true"/>
@@ -561,21 +571,23 @@
       </container:properties>
 
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.container.ri.client.test.TestChildImplementation"
-                              container:name="${pom.name} - Child"
+                              container:name="${project.name} - Child"
                               container:vendor="${organization.name}"
-                              container:version="${pom.version}"
+                              container:version="${project.version}"
                               container:parent="org.jdtaus.core.container.ri.client.test.TestImplementation"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
 
       <container:specifications>
         <container:reference container:identifier="org.jdtaus.core.container.ri.client.test.MultitonSpecification"
-                                            container:version="${pom.version}" />
+                                            container:version="${project.version}" />
       </container:specifications>
     </container:implementation>
 
@@ -583,125 +595,133 @@
     <!-- Dependency cycle detection test classes.                            -->
     <!--                                                                     -->
     <container:implementation container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestImplementation"
-                              container:name="${pom.name} - Cycle Test"
+                              container:name="${project.name} - Cycle Test"
                               container:vendor="${organization.name}"
-                              container:version="${pom.version}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
 
       <container:specifications>
         <container:reference container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification"
-                                            container:version="${pom.version}" />
+                                            container:version="${project.version}" />
       </container:specifications>
       <container:dependencies>
         <container:dependency container:name="Dependency"
                               container:bound="true"
                               container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification1"
-                              container:version="${pom.version}"
-                              container:implementationName="${pom.name}">
+                              container:version="${project.version}"
+                              container:implementationName="${project.name}">
 
         </container:dependency>
       </container:dependencies>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestImplementation1"
-                              container:name="${pom.name}"
+                              container:name="${project.name}"
                               container:vendor="${organization.name}"
-                              container:version="${pom.version}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
 
       <container:specifications>
         <container:reference container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification1"
-                                            container:version="${pom.version}" />
+                                            container:version="${project.version}" />
       </container:specifications>
       <container:dependencies>
         <container:dependency container:name="Dependency"
                               container:bound="true"
                               container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification2"
-                              container:version="${pom.version}"
-                              container:implementationName="${pom.name}">
+                              container:version="${project.version}"
+                              container:implementationName="${project.name}">
 
         </container:dependency>
       </container:dependencies>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestImplementation2"
-                              container:name="${pom.name}"
+                              container:name="${project.name}"
                               container:vendor="${organization.name}"
-                              container:version="${pom.version}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
 
       <container:specifications>
         <container:reference container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification2"
-                                            container:version="${pom.version}" />
+                                            container:version="${project.version}" />
       </container:specifications>
       <container:dependencies>
         <container:dependency container:name="Dependency"
                               container:bound="true"
                               container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification3"
-                              container:version="${pom.version}"
-                              container:implementationName="${pom.name}">
+                              container:version="${project.version}"
+                              container:implementationName="${project.name}">
 
         </container:dependency>
       </container:dependencies>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestImplementation3"
-                              container:name="${pom.name}"
+                              container:name="${project.name}"
                               container:vendor="${organization.name}"
-                              container:version="${pom.version}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
 
       <container:specifications>
         <container:reference container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification3"
-                                            container:version="${pom.version}" />
+                                            container:version="${project.version}" />
       </container:specifications>
       <container:dependencies>
         <container:dependency container:name="Dependency"
                               container:bound="true"
                               container:identifier="org.jdtaus.core.container.ri.client.test.CycleTestSpecification"
-                              container:version="${pom.version}"
-                              container:implementationName="${pom.name} - Cycle Test"/>
+                              container:version="${project.version}"
+                              container:implementationName="${project.name} - Cycle Test"/>
 
       </container:dependencies>
     </container:implementation>
+
+    <!-- ******************************************************************* -->
     <container:implementation container:identifier="org.jdtaus.core.container.ri.client.test.ContextTestImplementation"
-                              container:name="${pom.name}"
+                              container:name="${project.name}"
                               container:vendor="${organization.name}"
-                              container:version="${pom.version}"
+                              container:version="${project.version}"
                               container:final="true">
 
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[${pom.description}]]>
+        <container:text container:language="en"><![CDATA[${project.description}]]>
         </container:text>
       </container:documentation>
 
       <container:specifications>
         <container:reference container:identifier="org.jdtaus.core.container.ri.client.test.ContextTestSpecification"
-                                            container:version="${pom.version}" />
+                                            container:version="${project.version}" />
       </container:specifications>
       <container:dependencies>
         <container:dependency container:name="Dependency"
                               container:bound="true"
                               container:identifier="org.jdtaus.core.container.ri.client.test.ContextTestSpecification"
-                              container:version="${pom.version}"
-                              container:implementationName="${pom.name}">
+                              container:version="${project.version}"
+                              container:implementationName="${project.name}">
 
         </container:dependency>
       </container:dependencies>
