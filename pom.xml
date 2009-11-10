@@ -314,7 +314,7 @@
             <dependency>
               <artifactId>jdtaus-container-mojo</artifactId>
               <groupId>org.jdtaus.mojo</groupId>
-              <version>3.4-SNAPSHOT</version>
+              <version>3.5-SNAPSHOT</version>
               <scope>runtime</scope>
             </dependency>
             <dependency>
@@ -838,7 +838,7 @@
     </profile>
   </profiles>
   <properties>
-    <jdtausCoreVersion>1.9.2</jdtausCoreVersion>
+    <jdtausCoreVersion>1.9.3-SNAPSHOT</jdtausCoreVersion>
     <mavenJavadocPluginVersion>2.6.1</mavenJavadocPluginVersion>
     <mavenJxrPluginVersion>2.1</mavenJxrPluginVersion>
     <mavenPmdPluginVersion>2.4</mavenPmdPluginVersion>
