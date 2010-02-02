@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 import javax.xml.bind.JAXBException;
@@ -121,6 +122,12 @@ public class ContainerResourceTransformer implements ResourceTransformer
             ioe.initCause( e );
             throw ioe;
         }
+    }
+
+    public void processResource( final String resource, final InputStream in,
+                                 final List relocations ) throws IOException
+    {
+        this.processResource( in );
     }
 
     public boolean hasTransformedResource()
