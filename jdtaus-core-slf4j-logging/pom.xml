@@ -31,8 +31,8 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jdtaus-core-slf4j-logging</artifactId>
   <groupId>org.jdtaus.core.logging</groupId>
-  <name>jDTAUS Core RI Slf4J Logging</name>
-  <description>jDTAUS Slf4J logging reference implementation.</description>
+  <name>jDTAUS Core RI SLF4J Logging</name>
+  <description>jDTAUS SLF4J logging reference implementation.</description>
   <build>
     <resources>
       <resource>

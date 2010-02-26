@@ -8,17 +8,17 @@
     </author>
   </properties>
   <body>
-    <release version="1.0" date="2007-06-01"
-             description="First stable release."/>
-    <release version="1.1" date="2007-07-02"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.0" date="2007-06-01" description="First stable release."/>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.1" date="2007-07-02" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Updated class <code>org.jdtaus.core.text.MessageEvent</code> to support
       multiple messages per instance instead of just a single one.]]>
       </action>
     </release>
-    <release version="1.1.1" date="2007-07-09"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.1.1" date="2007-07-09" description="Maintenance release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Fixed <code>StackOverflowError</code>s thrown by methods
       <code>clone()</code> and <code>toString()</code> of various container
@@ -30,8 +30,8 @@
       thereof.]]>
       </action>
     </release>
-    <release version="1.2" date="2007-08-01"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.2" date="2007-08-01" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Added classes<ul>
       <li><code>org.jdtaus.core.container.MultiplicityConstraintException</code></li>
@@ -54,8 +54,8 @@
       constant <code>EOF</code>.</blockquote></li></ul>]]>
       </action>
     </release>
-    <release version="1.3" date="2007-08-23"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.3" date="2007-08-23" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Updated the message of
       <code>org.jdtaus.core.container.ImplementationException</code> to
@@ -79,8 +79,8 @@
       <code>addMessages(Message[])</code>.</blockquote></li></ul>]]>
       </action>
     </release>
-    <release version="1.4" date="2007-11-04"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.4" date="2007-11-04" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Added<ul>
       <li><code>org.jdtaus.core.lang.ExceptionEvent</code></li>
@@ -89,15 +89,15 @@
       </ul>]]>
       </action>
     </release>
-    <release version="1.4.1" date="2008-03-10"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.4.1" date="2008-03-10" description="Maintenance release.">
       <action dev="schulte2005" type="update"><![CDATA[
       Added various missing serial version UID fields for backwards
       compatibility. Updated to latest mojo releases.]]>
       </action>
     </release>
-    <release version="1.4.2" date="2008-05-20"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.4.2" date="2008-05-20" description="Maintenance release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Updated the <code>clone()</code> method of classes<ul>
       <li><code>org.jdtaus.core.container.Dependencies</code></li>
@@ -118,14 +118,10 @@
       </blockquote>]]>
       </action>
     </release>
-    <release version="1.4.3" date="2008-07-04"
-             description="Maintenance release.">
-      <action dev="schulte2005" type="update"><![CDATA[
-            Maven POM updates.]]>
-      </action>
-    </release>
-    <release version="1.4.4" date="2008-07-13"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.4.3" date="2008-07-04" description="Maintenance release."/>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.4.4" date="2008-07-13" description="Maintenance release.">
       <action dev="schulte2005" type="update"><![CDATA[
       Updated module descriptor to 1.2 model version.]]>
       </action>
@@ -148,25 +144,30 @@
       </blockquote></li></ul>]]>
       </action>
     </release>
-    <release version="1.4.5" date="2008-07-13"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.4.5" date="2008-07-13" description="Maintenance release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Added missing version attribute to complex type <code>Module</code> of
       schema <code>org/jdtaus/core/model/container/jdtaus-container-1.0.xsd</code>.]]>
       </action>
     </release>
-    <release version="1.5" date="2008-10-27"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.5" date="2008-10-27" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
-      Added versioning support to the container model.]]></action>
+      Added versioning support to the container model.]]>
+      </action>
       <action dev="schulte2005" type="update"><![CDATA[
-      Added support for messages to the container model.]]></action>
+      Added support for messages to the container model.]]>
+      </action>
       <action dev="schulte2005" type="update"><![CDATA[
-      Updated the container API to make use of object identity.]]></action>
+      Updated the container API to make use of object identity.]]>
+      </action>
       <action dev="schulte2005" type="update"><![CDATA[
-      Updated the format of any <code>toString</code> method.]]></action>
+      Updated the format of any <code>toString</code> method.]]>
+      </action>
       <action dev="schulte2005" type="update"><![CDATA[
-      Moved any XML schema to the jdtaus-core-schemas artifact.]]></action>
+      Moved any XML schema to the jdtaus-core-schemas artifact.]]>
+      </action>
       <action dev="schulte2005" type="update"><![CDATA[
       Added<ul>
       <li><code>org.jdtaus.core.container.Argument</code></li>
@@ -209,8 +210,8 @@
       </ul>]]>
       </action>
     </release>
-    <release version="1.6" date="2008-10-30"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.6" date="2008-10-30" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Udated<ul>
       <li><code>org.jdtaus.core.container.Container</code><blockquote>
@@ -224,8 +225,8 @@
       implementation.</blockquote></li></ul>]]>
       </action>
     </release>
-    <release version="1.8" date="2008-12-28"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.8" date="2008-12-28" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Udated<ul>
       <li><code>org.jdtaus.core.container.Container</code><blockquote>
@@ -249,25 +250,24 @@
       <code>org.jdtaus.core.lang.ExceptionListener</code>,
       <code>org.jdtaus.core.monitor.TaskListener</code>,
       <code>org.jdtaus.core.text.MessageListener</code> to the module
-      descriptor.]]></action>
+      descriptor.]]>
+      </action>
     </release>
-    <release version="1.9" date="2009-07-02"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.9" date="2009-07-02" description="Maintenance release.">
       <action dev="schulte2005" type="update"><![CDATA[
       Updated any references to the jDTAUS server to point to the SF.net
-      servers.]]></action>
+      servers.]]>
+      </action>
       <action dev="schulte2005" type="fix"><![CDATA[
-      Corrected GPG signatures.]]></action>
+      Corrected GPG signatures.]]>
+      </action>
     </release>
-    <release version="1.9.1" date="2009-11-09"
-             description="Maintenance release.">
-      <action dev="schulte2005" type="update"><![CDATA[
-      Maven POM updates.]]></action>
-    </release>
-    <release version="1.9.2" date="2009-11-11"
-             description="Maintenance release.">
-      <action dev="schulte2005" type="update"><![CDATA[
-      Maven POM updates.]]></action>
-    </release>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.9.1" date="2009-11-09" description="Maintenance release."/>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.9.2" date="2009-11-11" description="Maintenance release."/>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.9.3" date="2010-02-26" description="Maintenance release."/>
   </body>
 </document>

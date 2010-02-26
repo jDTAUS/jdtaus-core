@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+  <properties>
+    <title>Changelog</title>
+    <author email="schulte2005@users.sourceforge.net">Christian Schulte
+    </author>
+  </properties>
+  <body>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.0" date="2007-06-01" description="Maintenance release.">
+      <action dev="schulte2005" type="update"><![CDATA[
+      See<ul>
+      <li><a href="jdtaus-core-api/changes-report.html">jDTAUS Core API</a></li>
+      <li><a href="jdtaus-core-spi/changes-report.html">jDTAUS Core SPI</a></li>
+      <li><a href="jdtaus-core-utilities/changes-report.html">jDTAUS Core Utilities</a></li>
+      <li><a href="jdtaus-core-schemas/changes-report.html">jDTAUS Core Schemas</a></li>
+      <li><a href="jdtaus-core-it/changes-report.html">jDTAUS Core Test Suite</a></li>
+      <li><a href="jdtaus-core-messages/changes-report.html">jDTAUS Core Messages</a></li>
+      <li><a href="jdtaus-core-commons-logging/changes-report.html">jDTAUS Core RI Commons Logging</a></li>
+      <li><a href="jdtaus-core-jdk-logging/changes-report.html">jDTAUS Core RI JDK 1.4 Logging</a></li>
+      <li><a href="jdtaus-core-log4j-logging/changes-report.html">jDTAUS Core RI Log4J Logging</a></li>
+      <li><a href="jdtaus-core-slf4j-logging/changes-report.html">jDTAUS Core RI SLF4J Logging</a></li>
+      <li><a href="jdtaus-core-application-logger/changes-report.html">jDTAUS Core RI Application Logger</a></li>
+      <li><a href="jdtaus-core-client-container/changes-report.html">jDTAUS Core Client Container</a></li>
+      <li><a href="jdtaus-core-servlet-container/changes-report.html">jDTAUS Core RI Servlet Container</a></li>
+      <li><a href="jdtaus-core-entity-resolver/changes-report.html">jDTAUS Core RI Entity Resolver</a></li>
+      <li><a href="jdtaus-core-jdk14-executor/changes-report.html">jDTAUS Core RI JDK 1.4 Executor</a></li>
+      <li><a href="jdtaus-core-memory-manager/changes-report.html">jDTAUS Core RI Memory Manager</a></li>
+      <li><a href="jdtaus-core-runtime/changes-report.html">jDTAUS Core Reference Implementation</a></li>
+      <li><a href="jdtaus-core-task-monitor/changes-report.html">jDTAUS Core RI Task Monitor</a></li>
+      <li><a href="jdtaus-container-mojo/changes-report.html">jDTAUS Core Container Mojo</a></li>
+      <li><a href="jdtaus-resource-mojo/changes-report.html">jDTAUS Core Resource Mojo</a></li>
+      </ul>]]>
+      </action>
+    </release>
+  </body>
+</document>

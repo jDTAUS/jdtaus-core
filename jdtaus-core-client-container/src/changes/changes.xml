@@ -8,10 +8,10 @@
     </author>
   </properties>
   <body>
-    <release version="1.0" date="2007-06-01"
-             description="First stable release."/>
-    <release version="1.1" date="2007-07-02"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.0" date="2007-06-01" description="First stable release."/>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.1" date="2007-07-02" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[<ul>
       <li>Added <code>DependencyCycleException</code> increasing verbosity for
       detected cycles.</li>
@@ -20,9 +20,8 @@
       the implementation is missing to the logged message.</li></ul>]]>
       </action>
     </release>
-    <release version="1.2"
-             date="2007-08-01"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.2" date="2007-08-01" description="Feature enhancements.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Bugfix for unresolved implementations when inheriting implemented
       specifications from a parent.]]>
@@ -41,18 +40,16 @@
       and <code>InheritanceConstraintException</code>.]]>
       </action>
     </release>
-    <release version="1.2.1"
-             date="2007-08-24"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.2.1" date="2007-08-24" description="Maintenance release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Bugfix for an incorrectly reported <code>DependencyCycleException</code>
       instead of an <code>InstantiationException</code> when instantiating an
       implementation fails and the implementation is requested again afterwards.]]>
       </action>
     </release>
-    <release version="1.2.2"
-             date="2007-10-23"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.2.2" date="2007-10-23" description="Maintenance release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Added support for disabling any XML validation of module descriptor files
       by introducing a system property with name
@@ -64,25 +61,22 @@
       module descriptors' "schemaLocation" attribute.]]>
       </action>
     </release>
-    <release version="1.2.3"
-             date="2007-11-03"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.2.3" date="2007-11-03" description="Maintenance release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Improved exception handling by correctly rethrowing caught
       <code>InvocationTargetException</code> instances.]]>
       </action>
     </release>
-    <release version="1.2.4"
-             date="2008-03-10"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.2.4" date="2008-03-10" description="Maintenance release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Added various missing serial version UID fields. Updated to latest
       mojo releases.]]>
       </action>
     </release>
-    <release version="1.3"
-             date="2008-05-20"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.3" date="2008-05-20" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Updated class<ul>
       <li><code>org.jdtaus.core.container.ri.client.DefaultModel</code>
@@ -101,14 +95,10 @@
       support.]]>
       </action>
     </release>
-    <release version="1.3.1" date="2008-07-04"
-             description="Maintenance release.">
-      <action dev="schulte2005" type="update"><![CDATA[
-            Maven POM updates.]]>
-      </action>
-    </release>
-    <release version="1.4" date="2008-07-13"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.3.1" date="2008-07-04" description="Maintenance release."/>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.4" date="2008-07-13" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Added classes<ul>
       <li><code>org.jdtaus.core.container.ri.client.BootstrapResolver</code><blockquote>
@@ -134,20 +124,20 @@
       </ul></blockquote></li></ul>]]>
       </action>
     </release>
-    <release version="1.5" date="2008-10-27"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.5" date="2008-10-27" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Implemented features introduced in jDTAUS Core API 1.5.]]>
       </action>
     </release>
-    <release version="1.5-1" date="2008-10-28"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.5-1" date="2008-10-28" description="Maintenance release.">
       <action dev="schulte2005" type="update"><![CDATA[
       Added missing validation of message templates.]]>
       </action>
     </release>
-    <release version="1.5-2" date="2008-10-30"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.5-2" date="2008-10-30" description="Maintenance release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Updated classes</ul>
       <li><code>org.jdtaus.core.container.ri.client.BootstratEntityResolver</code>
@@ -155,14 +145,14 @@
       due to unresolvable schema resources.</blockquote></li></ul>]]>
       </action>
     </release>
-    <release version="1.6" date="2008-10-31"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.6" date="2008-10-31" description="Feature enhancements.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Implemented features introduced in jDTAUS Core API 1.6.]]>
       </action>
     </release>
-    <release version="1.7" date="2008-12-02"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.7" date="2008-12-02" description="Maintenance release.">
       <action dev="schulte2005" type="update"><![CDATA[
       Added class <code>WeakIdentityHashMap</code> and updated class
       <code>DefaultContainer</code> to use that instead of a
@@ -174,8 +164,8 @@
       collector leading to sporadic re-instantiation.]]>
       </action>
     </release>
-    <release version="1.8" date="2008-12-28"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.8" date="2008-12-28" description="Maintenance release.">
       <action dev="schulte2005" type="update"><![CDATA[
       Updated classloading to not use the thread context classloader by default
       any more. Former behaviour can be enabled by setting the system property
@@ -194,26 +184,29 @@
       final (like java.util.Locale) are now supported. Default implementations
       are now discovered automatically for any automatically discovered
       specification providing a static getDefault method and can be overwritten
-      manually.]]></action>
+      manually.]]>
+      </action>
     </release>
-    <release version="1.9" date="2009-07-02"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.9" date="2009-07-02" description="Maintenance release.">
       <action dev="schulte2005" type="update"><![CDATA[
       Updated any references to the jDTAUS server to point to the SF.net
-      servers.]]></action>
+      servers.]]>
+      </action>
       <action dev="schulte2005" type="fix"><![CDATA[
-      Corrected GPG signatures.]]></action>
+      Corrected GPG signatures.]]>
+      </action>
     </release>
-    <release version="1.9.1" date="2009-11-09"
-             description="Maintenance release.">
-      <action dev="schulte2005" type="update"><![CDATA[
-      Maven POM updates.]]></action>
-    </release>
-    <release version="1.9.2" date="2009-11-11"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.9.1" date="2009-11-09" description="Maintenance release."/>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.9.2" date="2009-11-11" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Added support for processing <code>META-INF/jdtaus/container.xslt</code>
-      stylesheets after parsing module resources.]]></action>
+      stylesheets after parsing module resources.]]>
+      </action>
     </release>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.9.3" date="2010-02-26" description="Maintenance release."/>
   </body>
 </document>

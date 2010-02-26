@@ -8,17 +8,17 @@
     </author>
   </properties>
   <body>
-    <release version="1.0" date="2007-06-01"
-             description="First stable release."/>
-    <release version="1.1" date="2007-08-01"
-             description="Feature enhancement.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.0" date="2007-06-01" description="First stable release."/>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.1" date="2007-08-01" description="Feature enhancement.">
       <action dev="schulte2005" type="update"><![CDATA[
       Added new goal <code>verify-model</code>. Added configuration parameter
       <code>targetEditor</code> to goal <code>generate-container</code>.]]>
       </action>
     </release>
-    <release version="1.2" date="2007-08-24"
-             description="Feature enhancement.">
+    <!-- *********************************************************************************************************** -->
+    <release version="1.2" date="2007-08-24" description="Feature enhancement.">
       <action dev="schulte2005" type="update"><![CDATA[
       Added support for test modules. Added mojo configuration parameters
       <code>testModuleName</code> and <code>mode</code> to goal
@@ -29,8 +29,8 @@
       to goal <code>verify-model</code>.]]>
       </action>
     </release>
-    <release version="2.0" date="2008-03-10"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="2.0" date="2008-03-10" description="Feature enhancements.">
       <action dev="schulte2005" type="update"><![CDATA[
       Updated to generate fields with names according to the property name or
       dependency name instead of numbering the various fields according to the
@@ -38,8 +38,8 @@
       compatible with previous versions of the plugin.]]>
       </action>
     </release>
-    <release version="2.1" date="2008-07-04"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="2.1" date="2008-07-04" description="Maintenance release.">
       <action dev="schulte2005" type="update"><![CDATA[
       Deprecated the <code>mode</code> parameter.]]>
       </action>
@@ -50,14 +50,12 @@
       child-pom regardless of the artifact defining jDTAUS modules or not.]]>
       </action>
     </release>
-    <release version="2.1.1" date="2008-07-13"
-             description="Maintenance release.">
-      <action dev="schulte2005" type="update"><![CDATA[
-      Added site documentation.]]>
-      </action>
+    <!-- *********************************************************************************************************** -->
+    <release version="2.1.1" date="2008-07-13" description="Maintenance release.">
+      <action dev="schulte2005" type="update">Added site documentation.</action>
     </release>
-    <release version="3.0" date="2008-10-27"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="3.0" date="2008-10-27" description="Feature enhancements.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Corrected support for dependencies with scope "provided".]]>
       </action>
@@ -69,45 +67,54 @@
       Added a report for the container model.]]>
       </action>
     </release>
-    <release version="3.1" date="2008-10-30"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="3.1" date="2008-10-30" description="Maintenance release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Corrected dependency resolution to support standalone artifacts.]]>
       </action>
     </release>
-    <release version="3.2" date="2008-12-28"
-             description="Feature enhancements.">
+    <!-- *********************************************************************************************************** -->
+    <release version="3.2" date="2008-12-28" description="Feature enhancements.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Added goals java-container-tests, java-commit and java-commit-tests.]]>
       </action>
     </release>
-    <release version="3.2.1" date="2009-05-18"
-             description="Bugfix release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="3.2.1" date="2009-05-18" description="Bugfix release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Corrected class ContainerResourceTransformer to correctly merge any
       classpath modules. Corrected the verify-jar goal to honour a project's
       classpath artifacts during validation.]]>
       </action>
     </release>
-    <release version="3.3" date="2009-07-02"
-             description="Maintenance release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="3.3" date="2009-07-02" description="Maintenance release.">
       <action dev="schulte2005" type="update"><![CDATA[
       Updated any references to the jDTAUS server to point to the SF.net
-      servers.]]></action>
+      servers.]]>
+      </action>
       <action dev="schulte2005" type="fix"><![CDATA[
-      Corrected GPG signatures.]]></action>
+      Corrected GPG signatures.]]>
+      </action>
     </release>
-    <release version="3.3.1" date="2009-11-09"
-             description="Bugfix release.">
+    <!-- *********************************************************************************************************** -->
+    <release version="3.3.1" date="2009-11-09" description="Bugfix release.">
       <action dev="schulte2005" type="fix"><![CDATA[
       Corrected a <code>NullPointerException</code> thrown when messages
       are declared for implementations without the corresponding module
-      declaring any messages.]]></action>
+      declaring any messages.]]>
+      </action>
     </release>
+    <!-- *********************************************************************************************************** -->
     <release version="3.3.2" description="Bugfix release." date="2009-11-11">
       <action dev="schulte2005" type="fix"><![CDATA[
       Corrected illegal model errors reported when validating a model containing
-      classes inheriting implemented specifications.]]></action>
+      classes inheriting implemented specifications.]]>
+      </action>
+    </release>
+    <!-- *********************************************************************************************************** -->
+    <release version="3.5" description="Maintenance release." date="2010-02-26">
+      <action dev="schulte2005" type="update">Updated to support the 'maven-shade-plugin' 1.3+.</action>
     </release>
   </body>
 </document>
