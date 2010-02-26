@@ -26,7 +26,7 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.9.3-SNAPSHOT</version>
+    <version>1.9.3</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jdtaus-core-task-monitor</artifactId>
@@ -90,7 +90,7 @@
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-        <version>3.5-SNAPSHOT</version>
+        <version>3.5</version>
         <configuration>
           <moduleName>${project.name}</moduleName>
         </configuration>
