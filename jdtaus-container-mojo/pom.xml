@@ -26,13 +26,13 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.9.4-SNAPSHOT</version>
+    <version>1.9.4</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.mojo</groupId>
   <artifactId>jdtaus-container-mojo</artifactId>
   <name>jDTAUS Core Container Mojo</name>
-  <version>3.6-SNAPSHOT</version>
+  <version>3.6</version>
   <packaging>maven-plugin</packaging>
   <description>Source generator for the container model.</description>
   <dependencies>
