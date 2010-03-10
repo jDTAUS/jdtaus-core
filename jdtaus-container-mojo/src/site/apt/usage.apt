@@ -32,12 +32,12 @@ jDTAUS Container Mojo: Usage
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-        <version>3.4</version>
+        <version>3.6</version>
         <dependencies>
           <dependency>
             <groupId>org.jdtaus.core.container</groupId>
             <artifactId>jdtaus-core-client-container</artifactId>
-            <version>1.10</version>
+            <version>1.9.4</version>
           </dependency>
         </dependencies>
         <executions>
@@ -145,12 +145,12 @@ jDTAUS Container Mojo: Usage
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-container-mojo</artifactId>
-      <version>3.4</version>
+      <version>3.6</version>
       <dependencies>
         <dependency>
           <groupId>org.jdtaus.core.container</groupId>
           <artifactId>jdtaus-core-client-container</artifactId>
-          <version>1.10</version>
+          <version>1.9.4</version>
         </dependency>
       </dependencies>
       <executions>
@@ -186,12 +186,12 @@ jDTAUS Container Mojo: Usage
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-container-mojo</artifactId>
-      <version>3.4</version>
+      <version>3.6</version>
       <dependencies>
         <dependency>
           <groupId>org.jdtaus.core.container</groupId>
           <artifactId>jdtaus-core-client-container</artifactId>
-          <version>1.10</version>
+          <version>1.9.4</version>
         </dependency>
       </dependencies>
       <executions>
@@ -229,12 +229,12 @@ jDTAUS Container Mojo: Usage
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-container-mojo</artifactId>
-      <version>3.4</version>
+      <version>3.6</version>
       <dependencies>
         <dependency>
           <groupId>org.jdtaus.core.container</groupId>
           <artifactId>jdtaus-core-client-container</artifactId>
-          <version>1.10</version>
+          <version>1.9.4</version>
         </dependency>
       </dependencies>
       <executions>
