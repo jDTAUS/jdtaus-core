@@ -780,7 +780,7 @@
             </reports>
             <configuration>
               <issueLinkTemplatePerSystem>
-                <MantisBT>https://apps.sourceforge.net/mantisbt/jdtaus/view.php?id=%ISSUE%</MantisBT>
+                <MantisBT>http://apps.sourceforge.net/mantisbt/jdtaus/view.php?id=%ISSUE%</MantisBT>
               </issueLinkTemplatePerSystem>
             </configuration>
           </reportSet>
@@ -835,7 +835,7 @@
     </profile>
   </profiles>
   <properties>
-    <jdtausCoreVersion>1.9.3</jdtausCoreVersion>
+    <jdtausCoreVersion>1.9.4-SNAPSHOT</jdtausCoreVersion>
     <mavenJavadocPluginVersion>2.6.1</mavenJavadocPluginVersion>
     <mavenJxrPluginVersion>2.1</mavenJxrPluginVersion>
     <mavenPmdPluginVersion>2.4</mavenPmdPluginVersion>

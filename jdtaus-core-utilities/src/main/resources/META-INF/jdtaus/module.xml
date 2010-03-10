@@ -588,11 +588,40 @@
       </container:documentation>
 
       <container:dependencies>
+        <container:dependency container:name="Logger"
+                              container:bound="true"
+                              container:identifier="org.jdtaus.core.logging.spi.Logger"
+                              container:version="1.0">
+
+          <container:properties>
+            <container:property container:name="name"
+                                container:type="java.lang.String"
+                                container:value="org.jdtaus.core.sax.util.EntityResolverChain"/>
+
+          </container:properties>
+        </container:dependency>
+
+        <container:dependency container:name="Locale"
+                              container:bound="false"
+                              container:identifier="java.util.Locale"
+                              container:implementationName="default"
+                              container:version="1.1">
+
+        </container:dependency>
+
         <container:dependency container:name="DefaultResolvers"
                               container:bound="true"
                               container:identifier="org.xml.sax.EntityResolver"/>
 
       </container:dependencies>
+      <container:messages>
+        <container:message container:name="noEntityResolvers">
+          <container:template container:defaultLanguage="en">
+            <container:text container:language="en">No entity resolvers found. Standard Java XML parsers fall back to opening regular - possibly remote - URI connections. You should provide at least one ''EntityResolver'' implementation (e.g. jdtaus-core-entity-resolver-${project.version}.jar).</container:text>
+            <container:text container:language="de">Keine ''EntityResolver'' gefunden. Java XML-Parser öffnen standardmäßig reguläre - eventuell entfernte - URI-Verbindungen. Sie sollten mindestens eine ''EntityResolver''-Implementierung (z.B. jdtaus-core-entity-resolver-${project.version}.jar) zur Verfügung stellen.</container:text>
+          </container:template>
+        </container:message>
+      </container:messages>
     </container:implementation>
   </container:implementations>
   <container:messages>
