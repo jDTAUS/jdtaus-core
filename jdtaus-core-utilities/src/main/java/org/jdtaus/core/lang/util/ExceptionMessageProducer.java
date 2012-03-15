@@ -91,7 +91,7 @@ public final class ExceptionMessageProducer implements ExceptionListener
 
     /**
      * {@inheritDoc}
-     * <p>This method resolves exceptions provided by an applications's
+     * <p>This method resolves exceptions provided by an application's
      * {@code ExceptionEventSource} to corresponding {@code MessageEvent}s which
      * an application may react to by registering a listener to its
      * {@code MessageEventSource}. Messages for checked exceptions are resolved
