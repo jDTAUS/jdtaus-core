@@ -25,6 +25,7 @@ package org.jdtaus.core.text.util;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -115,8 +116,9 @@ public final class SwingMessagePane implements MessageListener
     {
         if ( event != null )
         {
-            SwingUtilities.invokeLater(
-                new Runnable()
+            try
+            {
+                SwingUtilities.invokeAndWait( new Runnable()
                 {
 
                     public void run()
@@ -124,11 +126,11 @@ public final class SwingMessagePane implements MessageListener
                         final Object[] messages =
                             new Object[ event.getMessages().length ];
 
-                        for ( int i = 0; i < messages.length &&
-                                         i < getMaximumMessages(); i++ )
+                        for ( int i = 0; i < messages.length
+                                         && i < getMaximumMessages(); i++ )
                         {
-                            messages[i] = event.getMessages()[i].getText(
-                                getLocale() );
+                            messages[i] =
+                                event.getMessages()[i].getText( getLocale() );
 
                         }
 
@@ -179,6 +181,15 @@ public final class SwingMessagePane implements MessageListener
                     }
 
                 } );
+            }
+            catch ( final InterruptedException e )
+            {
+                this.getLogger().error( e );
+            }
+            catch ( final InvocationTargetException e )
+            {
+                this.getLogger().error( e );
+            }
         }
     }
 

@@ -187,5 +187,13 @@
       <code>EntityResolvers</code> are found.]]>
       </action>
     </release>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.9.5" description="Maintenance release.">
+      <action dev="schulte2005" type="fix"><![CDATA[
+      Updated class <code>org.jdtaus.core.text.util.SwingMessagePane</code> to use method
+      <code>SwingUtilities.invokeAndWait</code> instead of <code>SwingUtilities.invokeLater</code>
+      when displaying message events.]]>
+      </action>
+    </release>
   </body>
 </document>
