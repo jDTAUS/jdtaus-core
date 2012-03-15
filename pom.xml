@@ -137,12 +137,12 @@
             <dependency>
               <groupId>javax.xml.parsers</groupId>
               <artifactId>jaxp-api</artifactId>
-              <version>1.4.5</version>
+              <version>1.4.2</version>
             </dependency>
             <dependency>
               <groupId>com.sun.xml.parsers</groupId>
               <artifactId>jaxp-ri</artifactId>
-              <version>1.4.5</version>
+              <version>1.4.2</version>
             </dependency>
             <dependency>
               <groupId>javax.xml.bind</groupId>
@@ -162,7 +162,17 @@
             <dependency>
               <groupId>com.sun.xml.bind</groupId>
               <artifactId>jaxb-xjc</artifactId>
-              <version>1.0.7</version>
+              <version>1.0.6</version>
+            </dependency>
+            <dependency>
+              <groupId>com.sun.xml</groupId>
+              <artifactId>relaxngDatatype</artifactId>
+              <version>1.0</version>
+            </dependency>
+            <dependency>
+              <groupId>xsdlib</groupId>
+              <artifactId>xsdlib</artifactId>
+              <version>20030225</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -622,14 +632,24 @@
         <version>1.0.6</version>
       </dependency>
       <dependency>
+        <groupId>com.sun.xml</groupId>
+        <artifactId>relaxngDatatype</artifactId>
+        <version>1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>xsdlib</groupId>
+        <artifactId>xsdlib</artifactId>
+        <version>20030225</version>
+      </dependency>
+      <dependency>
         <groupId>javax.xml.parsers</groupId>
         <artifactId>jaxp-api</artifactId>
-        <version>1.4.5</version>
+        <version>1.4.2</version>
       </dependency>
       <dependency>
         <groupId>com.sun.xml.parsers</groupId>
         <artifactId>jaxp-ri</artifactId>
-        <version>1.4.5</version>
+        <version>1.4.2</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.common</groupId>
@@ -844,6 +864,30 @@
       </build>
     </profile>
   </profiles>
+  <repositories>
+    <repository>
+      <id>maven1-repository.dev.java.net</id>
+      <name>Java.net Maven 1 Repository (legacy) Override</name>
+      <url>http://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
+      <id>maven2-repository.dev.java.net</id>
+      <name>Java.net Maven 2 Repository Override</name>
+      <url>http://repo.maven.apache.org/maven2</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>maven1-repository.dev.java.net</id>
+      <name>Java.net Maven 1 Repository (legacy) Override</name>
+      <url>http://repo.maven.apache.org/maven2</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>maven2-repository.dev.java.net</id>
+      <name>Java.net Maven 2 Repository Override</name>
+      <url>http://repo.maven.apache.org/maven2</url>
+    </pluginRepository>
+  </pluginRepositories>
   <properties>
     <jdtausCoreVersion>1.9.5-SNAPSHOT</jdtausCoreVersion>
     <mavenJavadocPluginVersion>2.6.1</mavenJavadocPluginVersion>

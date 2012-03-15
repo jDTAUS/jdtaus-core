@@ -90,6 +90,16 @@
       <artifactId>jaxb-impl</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>com.sun.xml</groupId>
+      <artifactId>relaxngDatatype</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>xsdlib</groupId>
+      <artifactId>xsdlib</artifactId>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
   <reporting>
     <plugins>
