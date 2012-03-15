@@ -180,8 +180,8 @@ public final class EntityResolverChain implements EntityResolver
 
     /**
      * Gets the text of message <code>noEntityResolvers</code>.
-     * <blockquote><pre>Keine ''EntityResolver'' gefunden. Java XML-Parser öffnen standardmäßig reguläre - eventuell entfernte - URI-Verbindungen. Sie sollten mindestens eine ''EntityResolver''-Implementierung (z.B. jdtaus-core-entity-resolver-1.9.5-SNAPSHOT.jar) zur Verfügung stellen.</pre></blockquote>
-     * <blockquote><pre>No entity resolvers found. Standard Java XML parsers fall back to opening regular - possibly remote - URI connections. You should provide at least one ''EntityResolver'' implementation (e.g. jdtaus-core-entity-resolver-1.9.5-SNAPSHOT.jar).</pre></blockquote>
+     * <blockquote><pre>Keine ''EntityResolver'' gefunden. Java XML-Parser öffnen standardmäßig reguläre - eventuell entfernte - URI-Verbindungen. Sie sollten mindestens eine ''EntityResolver''-Implementierung (z.B. jdtaus-core-entity-resolver-1.9.5.jar) zur Verfügung stellen.</pre></blockquote>
+     * <blockquote><pre>No entity resolvers found. Standard Java XML parsers fall back to opening regular - possibly remote - URI connections. You should provide at least one ''EntityResolver'' implementation (e.g. jdtaus-core-entity-resolver-1.9.5.jar).</pre></blockquote>
      *
      * @param locale The locale of the message instance to return.
      *
