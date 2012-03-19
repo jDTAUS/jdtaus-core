@@ -79,7 +79,7 @@ public final class DeletesBlocksMessage extends Message
     /**
      * Gets the text of message <code>deletesBlocks</code>.
      * <blockquote><pre>Entfernt Satzabschnitte.</pre></blockquote>
-     * <blockquote><pre>Deletes blocks.</pre></blockquote>
+     * <blockquote><pre>Deleting blocks.</pre></blockquote>
      *
      * @param locale The locale of the message instance to return.
      *

@@ -198,7 +198,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         <container:text container:language="en"><![CDATA[Progress description when blocks are deleted.]]></container:text>
       </container:documentation>
       <container:template container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[Deletes blocks.]]></container:text>
+        <container:text container:language="en"><![CDATA[Deleting blocks.]]></container:text>
         <container:text container:language="de"><![CDATA[Entfernt Satzabschnitte.]]></container:text>
       </container:template>
     </container:message>
@@ -208,7 +208,7 @@ Protokolldateien der Anwendung bei. Die Protokolldateien befinden sich im Verzei
         <container:text container:language="en"><![CDATA[Progress description when blocks are inserted.]]></container:text>
       </container:documentation>
       <container:template container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[Inserts blocks.]]></container:text>
+        <container:text container:language="en"><![CDATA[Inserting blocks.]]></container:text>
         <container:text container:language="de"><![CDATA[Fügt Satzabschnitte ein.]]></container:text>
       </container:template>
     </container:message>
