@@ -751,7 +751,7 @@
       </container:documentation>
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Expected end approximately at {0,date,full} {0,time,medium}.]]></container:text>
-        <container:text container:language="de"><![CDATA[Vorraussichtliches Ende am {0,date,full} um {0,time,medium} Uhr.]]></container:text>
+        <container:text container:language="de"><![CDATA[Voraussichtliches Ende am {0,date,full} um {0,time,medium} Uhr.]]></container:text>
       </container:template>
       <container:arguments>
         <container:argument container:index="0" container:name="expectedEnd" container:type="date">
