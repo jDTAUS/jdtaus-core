@@ -360,11 +360,32 @@
             <container:text container:language="en"><![CDATA[Default number of milliseconds visibility of the dialog is delayed.]]></container:text>
           </container:documentation>
         </container:property>
+
+        <container:property container:name="defaultMinimumTaskDuration"
+                            container:type="java.lang.Integer"
+                            container:value="2000">
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default minimum number of milliseconds a task should be shown in the dialog.]]></container:text>
+          </container:documentation>
+        </container:property>
+        <container:property container:name="defaultColumns"
+                            container:type="java.lang.Integer"
+                            container:value="45">
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default number of columns the preferred width of the progress dialog is computed with.]]></container:text>
+          </container:documentation>
+        </container:property>
       </container:properties>
       <container:messages>
         <container:reference container:name="unknownTaskEventType"/>
         <container:reference container:name="taskAlreadyStarted"/>
         <container:reference container:name="expectedEnd"/>
+        <container:reference container:name="computingExpectedDuration"/>
+        <container:reference container:name="indeterminateDuration"/>
+        <container:reference container:name="taskCompleted"/>
+        <container:reference container:name="taskCancelled"/>
       </container:messages>
     </container:implementation>
 
@@ -407,6 +428,14 @@
 
           <container:documentation container:defaultLanguage="en">
             <container:text container:language="en"><![CDATA[Default maximum number of messages displayed per event.]]></container:text>
+          </container:documentation>
+        </container:property>
+        <container:property container:name="defaultColumns"
+                            container:type="java.lang.Integer"
+                            container:value="50">
+
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Default number of columns the preferred width of the message pane is computed with.]]></container:text>
           </container:documentation>
         </container:property>
       </container:properties>
@@ -762,21 +791,68 @@
       </container:arguments>
     </container:message>
     <!-- ******************************************************************* -->
+    <container:message container:name="computingExpectedDuration">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating the expected duration of a task is being computed.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Computing expected duration...]]></container:text>
+        <container:text container:language="de"><![CDATA[Berechnet voraussichtliche Dauer...]]></container:text>
+      </container:template>
+    </container:message>
+    <!-- ******************************************************************* -->
+    <container:message container:name="indeterminateDuration">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating the a task is indeterminate.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[No duration information available.]]></container:text>
+        <container:text container:language="de"><![CDATA[Keine Laufzeitinformationen verfügbar.]]></container:text>
+      </container:template>
+    </container:message>
+    <!-- ******************************************************************* -->
+    <container:message container:name="taskCompleted">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that a task completed.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Task completed at {0,date,full} {0,time,medium}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Vorgang am {0,date,full} um {0,time,medium} Uhr abgeschlossen.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="completedDate" container:type="date">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[The date the task completed.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <!-- ******************************************************************* -->
+    <container:message container:name="taskCancelled">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Message stating that a task is cancelled.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Cancelled]]></container:text>
+        <container:text container:language="de"><![CDATA[Abgebrochen]]></container:text>
+      </container:template>
+    </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="durationInfo">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Information about a task.]]></container:text>
       </container:documentation>
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Taskinformation:
-    Description ... : {0}
-    Start ......... : {1,date,long} at {1,time,long}
-    End ........... : {2,date,long} at {2,time,long}
-    Duration ...... : {3}ms]]></container:text>
+Description ... : {0}
+Start ......... : {1,date,long} at {1,time,long}
+End ........... : {2,date,long} at {2,time,long}
+Duration ...... : {3}ms]]></container:text>
         <container:text container:language="de"><![CDATA[Taskinformation:
-    Beschreibung ... : {0}
-    Start .......... : {1,date,long} um {1,time,long}
-    Ende ........... : {2,date,long} um {2,time,long}
-    Laufzeit ....... : {3}ms]]></container:text>
+Beschreibung ... : {0}
+Start .......... : {1,date,long} um {1,time,long}
+Ende ........... : {2,date,long} um {2,time,long}
+Laufzeit ....... : {3}ms]]></container:text>
       </container:template>
       <container:arguments>
         <container:argument container:index="0" container:name="taskDescription" container:type="text">

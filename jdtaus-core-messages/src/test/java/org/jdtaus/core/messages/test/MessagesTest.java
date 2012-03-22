@@ -28,9 +28,11 @@ import java.util.Locale;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.jdtaus.core.messages.BugReportMessage;
-import org.jdtaus.core.messages.ExceptionMessage;
 import org.jdtaus.core.messages.DeletesBlocksMessage;
+import org.jdtaus.core.messages.ExceptionMessage;
+import org.jdtaus.core.messages.IllegalNumberMessage;
 import org.jdtaus.core.messages.IllegalPropertyMessage;
+import org.jdtaus.core.messages.IllegalStringMessage;
 import org.jdtaus.core.messages.InsertsBlocksMessage;
 import org.jdtaus.core.messages.MandatoryPropertyMessage;
 import org.jdtaus.core.messages.UndefinedApplicationStateMessage;
@@ -44,32 +46,31 @@ import org.jdtaus.core.text.Message;
  */
 public class MessagesTest extends TestCase
 {
-    //--Tests-------------------------------------------------------------------
 
-    /**
-     * Tests instantiation of each core application message and for non-null
-     * texts for the current default locale.
-     */
+    /** Tests instantiation of each core application message and for non-null texts for the current default locale. */
     public void testMessages() throws Exception
     {
-        this.assertNotNull( new ExceptionMessage(
-                            new IllegalArgumentException( "TEST" ) ) );
-
+        this.assertNotNull( new ExceptionMessage( new IllegalArgumentException( "TEST" ) ) );
         this.assertNotNull( new DeletesBlocksMessage() );
         this.assertNotNull( new InsertsBlocksMessage() );
         this.assertNotNull( new MandatoryPropertyMessage() );
         this.assertNotNull( new IllegalPropertyMessage() );
-        this.assertNotNull(new UndefinedApplicationStateMessage());
-        this.assertNotNull(new BugReportMessage(
-            new File(System.getProperty("user.home")),
-            new URL("http://jdtaus.sourceforge.net"), "TEST"));
+        this.assertNotNull( new UndefinedApplicationStateMessage() );
+        this.assertNotNull( new BugReportMessage( new File( System.getProperty( "user.home" ) ),
+                                                  new URL( "http://jdtaus.sourceforge.net" ), "TEST" ) );
 
+        this.assertNotNull( new IllegalStringMessage( "TEST", new char[]
+            {
+                'A', 'B', 'C'
+            }, new Integer( 10 ), new Integer( 10 ) ) );
+
+        this.assertNotNull( new IllegalNumberMessage( new Integer( 10 ), new Integer( 10 ), new Integer( 10 ) ) );
     }
 
     private void assertNotNull( final Message message )
     {
         Assert.assertNotNull( message.getText( Locale.getDefault() ) );
+        System.out.println( message.getText( Locale.getDefault() ) );
     }
 
-    //-------------------------------------------------------------------Tests--
 }

@@ -195,5 +195,14 @@
       when displaying message events.]]>
       </action>
     </release>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.10" date="2012-03-23" description="New features.">
+      <action dev="schulte2005" type="add"><![CDATA[Added property <code>columns</code> to class
+      <code>org.jdtaus.core.text.util.SwingMessagePane</code>.]]>
+      </action>
+      <action dev="schulte2005" type="add"><![CDATA[Added properties <code>columns</code> and
+      <code>minimumTaskDurationMillis</code> to class <code>org.jdtaus.core.monitor.util.SwingProgressMonitor</code>.]]>
+      </action>
+    </release>
   </body>
 </document>

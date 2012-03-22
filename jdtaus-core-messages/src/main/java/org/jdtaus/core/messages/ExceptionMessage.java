@@ -220,14 +220,8 @@ public final class ExceptionMessage extends Message
 
     /**
      * Gets the text of message <code>exceptionInfo</code>.
-     * <blockquote><pre>Eine {0} ist aufgetreten.
-     *{1}
-     *
-     *</pre></blockquote>
-     * <blockquote><pre>A {0} occured.
-     *{1}
-     *
-     *</pre></blockquote>
+     * <blockquote><pre>Eine {0} ist aufgetreten. {1}</pre></blockquote>
+     * <blockquote><pre>A {0} occured. {1}</pre></blockquote>
      *
      * @param locale The locale of the message instance to return.
      * @param exceptionName Name of the exception.
@@ -251,14 +245,8 @@ public final class ExceptionMessage extends Message
 
     /**
      * Gets the text of message <code>errorInfo</code>.
-     * <blockquote><pre>Ein {0} ist aufgetreten.
-     *{1}
-     *
-     *</pre></blockquote>
-     * <blockquote><pre>A {0} occured.
-     *{1}
-     *
-     *</pre></blockquote>
+     * <blockquote><pre>Ein {0} ist aufgetreten. {1}</pre></blockquote>
+     * <blockquote><pre>A {0} occured. {1}</pre></blockquote>
      *
      * @param locale The locale of the message instance to return.
      * @param errorName Name of the error.

@@ -79,14 +79,8 @@ public final class UndefinedApplicationStateMessage extends Message
 
     /**
      * Gets the text of message <code>undefinedApplicationState</code>.
-     * <blockquote><pre>Die Anwendung arbeitet eventuell nicht mehr korrekt weiter. Ein Neustart wird empfohlen.
-     *Bitte schließen Sie alle momentan geöffneten Dateien und starten die Anwendung erneut.
-     *
-     *</pre></blockquote>
-     * <blockquote><pre>The application may not work correctly any more. A shutdown is recommended!
-     *Please close any open files and restart the application.
-     *
-     *</pre></blockquote>
+     * <blockquote><pre>Die Anwendung arbeitet eventuell nicht mehr korrekt weiter. Ein Neustart wird empfohlen. Bitte schließen Sie alle momentan geöffneten Dateien und starten die Anwendung erneut.</pre></blockquote>
+     * <blockquote><pre>The application may not work correctly any more. A restart is recommended. Please close any open files and restart the application.</pre></blockquote>
      *
      * @param locale The locale of the message instance to return.
      *

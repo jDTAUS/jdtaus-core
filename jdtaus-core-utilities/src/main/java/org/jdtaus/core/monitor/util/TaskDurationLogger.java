@@ -186,15 +186,15 @@ public final class TaskDurationLogger implements TaskListener
     /**
      * Gets the text of message <code>durationInfo</code>.
      * <blockquote><pre>Taskinformation:
-     *    Beschreibung ... : {0}
-     *    Start .......... : {1,date,long} um {1,time,long}
-     *    Ende ........... : {2,date,long} um {2,time,long}
-     *    Laufzeit ....... : {3}ms</pre></blockquote>
+     *Beschreibung ... : {0}
+     *Start .......... : {1,date,long} um {1,time,long}
+     *Ende ........... : {2,date,long} um {2,time,long}
+     *Laufzeit ....... : {3}ms</pre></blockquote>
      * <blockquote><pre>Taskinformation:
-     *    Description ... : {0}
-     *    Start ......... : {1,date,long} at {1,time,long}
-     *    End ........... : {2,date,long} at {2,time,long}
-     *    Duration ...... : {3}ms</pre></blockquote>
+     *Description ... : {0}
+     *Start ......... : {1,date,long} at {1,time,long}
+     *End ........... : {2,date,long} at {2,time,long}
+     *Duration ...... : {3}ms</pre></blockquote>
      *
      * @param locale The locale of the message instance to return.
      * @param taskDescription The description of the task.

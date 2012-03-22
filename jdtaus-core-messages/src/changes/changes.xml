@@ -73,5 +73,15 @@
     <release version="1.9.4" date="2010-03-10" description="Maintenance release."/>
     <!-- *********************************************************************************************************** -->
     <release version="1.9.5" date="2012-03-15" description="Maintenance release."/>
+    <!-- *********************************************************************************************************** -->
+    <!-- *********************************************************************************************************** -->
+    <release version="1.10" date="2012-03-23" description="New features.">
+      <action dev="schulte2005" type="add"><![CDATA[Added class
+      <code>org.jdtaus.core.messages.IllegalStringMessage</code>.]]>
+      </action>
+      <action dev="schulte2005" type="add"><![CDATA[Added class
+      <code>org.jdtaus.core.messages.IllegalNumberMessage</code>.]]>
+      </action>
+    </release>
   </body>
 </document>
