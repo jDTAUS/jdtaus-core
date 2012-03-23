@@ -263,7 +263,7 @@ public final class SwingProgressMonitor implements TaskListener
     private static final long NO_POPUPDECISION = Long.MIN_VALUE;
 
     /** Timer used to delay removal of panels. */
-    private final Timer timer = new Timer( "Swing Progress Monitor", true );
+    private final Timer timer = new Timer( true );
 
     /**
      * Creates a new {@code SwingProgressMonitor} instance taking the parent component to use when displaying progress.

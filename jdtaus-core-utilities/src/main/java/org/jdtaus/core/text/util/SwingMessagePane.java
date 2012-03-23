@@ -141,7 +141,7 @@ public final class SwingMessagePane implements MessageListener
                         {
                             String text = event.getMessages()[i].getText( getLocale() );
 
-                            if ( !text.toLowerCase( Locale.ENGLISH ).contains( "<html>" ) )
+                            if ( text.toLowerCase( Locale.ENGLISH ).indexOf( "<html>" ) == -1 )
                             {
                                 text = "<html>" + text + "<br/></html>";
                             }
