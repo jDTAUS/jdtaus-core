@@ -341,7 +341,7 @@
             <dependency>
               <artifactId>jdtaus-container-mojo</artifactId>
               <groupId>org.jdtaus.mojo</groupId>
-              <version>3.8-SNAPSHOT</version>
+              <version>3.8</version>
               <scope>runtime</scope>
             </dependency>
             <dependency>
