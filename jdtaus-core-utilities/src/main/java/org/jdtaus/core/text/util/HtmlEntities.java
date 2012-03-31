@@ -37,7 +37,7 @@ import java.util.Properties;
  * Provides static methods for encoding/decoding HTML.
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
- * @version $Id: SwingMessagePane.java 8486 2012-03-23 00:07:37Z schulte2005 $
+ * @version $Id$
  * @since 1.11
  */
 class HtmlEntities
