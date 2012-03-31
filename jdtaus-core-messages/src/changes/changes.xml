@@ -83,5 +83,7 @@
       <code>org.jdtaus.core.messages.IllegalNumberMessage</code>.]]>
       </action>
     </release>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.11" date="2012-04-01" description="Maintenance release."/>
   </body>
 </document>

@@ -205,7 +205,7 @@
       </action>
     </release>
     <!-- *********************************************************************************************************** -->
-    <release version="1.11" description="New features.">
+    <release version="1.11" date="2012-04-01" description="New features."/>
       <action dev="schulte2005" type="add"><![CDATA[Added property <code>resizable</code> to class
       <code>org.jdtaus.core.text.util.SwingMessagePane</code>.]]>
       </action>
