@@ -26,7 +26,7 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.11</version>
+    <version>1.12-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jdtaus-core-servlet-container</artifactId>
@@ -85,7 +85,7 @@
       <plugin>
         <artifactId>jdtaus-container-mojo</artifactId>
         <groupId>org.jdtaus.mojo</groupId>
-        <version>3.9</version>
+        <version>3.10-SNAPSHOT</version>
         <configuration>
           <moduleName>${project.name}</moduleName>
         </configuration>
