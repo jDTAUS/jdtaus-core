@@ -112,7 +112,7 @@ class HtmlEntities
 
                 if ( name.startsWith( PROPERTY_PREFIX ) )
                 {
-                    map.put( name.substring( PROPERTY_PREFIX.length() ), Character.valueOf( value.charAt( 0 ) ) );
+                    map.put( name.substring( PROPERTY_PREFIX.length() ), new Character( value.charAt( 0 ) ) );
                 }
             }
 
@@ -182,7 +182,7 @@ class HtmlEntities
 
                 if ( name.startsWith( PROPERTY_PREFIX ) )
                 {
-                    map.put( Character.valueOf( value.charAt( 0 ) ), name.substring( PROPERTY_PREFIX.length() ) );
+                    map.put( new Character( value.charAt( 0 ) ), name.substring( PROPERTY_PREFIX.length() ) );
                 }
             }
 
@@ -209,7 +209,7 @@ class HtmlEntities
 
             for ( int i = 0, s0 = str.length(); i < s0; i++ )
             {
-                final Character c = Character.valueOf( str.charAt( i ) );
+                final Character c = new Character( str.charAt( i ) );
                 final String entityName = toEntity( c );
 
                 if ( entityName != null )

@@ -583,8 +583,7 @@ class HtmlLabel extends JLabel
             int maxRowWidth = 0;
             boolean parsingTag = false;
             text = text.trim();
-            text = text.substring( "<html>".length(), text.length() );
-            text = text.substring( 0, text.length() - "</html>".length() );
+            text = text.substring( "<html>".length(), text.length() - "</html>".length() );
             text = HtmlEntities.unescapeHtml( text );
             final Insets insets = this.getInsets();
             final FontMetrics fontMetrics = this.getFontMetrics( this.getFont() );
