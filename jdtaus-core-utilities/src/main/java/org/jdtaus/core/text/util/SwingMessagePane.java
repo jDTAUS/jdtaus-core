@@ -24,15 +24,22 @@ package org.jdtaus.core.text.util;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.plaf.basic.BasicHTML;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.logging.spi.Logger;
 import org.jdtaus.core.text.MessageEvent;
@@ -89,6 +96,18 @@ public final class SwingMessagePane implements MessageListener
     // This section is managed by jdtaus-container-mojo.
 
     /**
+     * Gets the value of property <code>defaultResizable</code>.
+     *
+     * @return Default resizability of the message pane.
+     */
+    private java.lang.Boolean isDefaultResizable()
+    {
+        return (java.lang.Boolean) ContainerFactory.getContainer().
+            getProperty( this, "defaultResizable" );
+
+    }
+
+    /**
      * Gets the value of property <code>defaultMaximumMessages</code>.
      *
      * @return Default maximum number of messages displayed per event.
@@ -135,50 +154,85 @@ public final class SwingMessagePane implements MessageListener
 
                     public void run()
                     {
-                        final HtmlLabel[] labels = new HtmlLabel[ event.getMessages().length ];
+                        final JPanel panel = new JPanel();
+                        panel.setLayout( new GridBagLayout() );
 
-                        for ( int i = 0; i < labels.length && i < getMaximumMessages(); i++ )
+                        for ( int i = 0, s0 = event.getMessages().length; i < s0 && i < getMaximumMessages(); i++ )
                         {
                             String text = event.getMessages()[i].getText( getLocale() );
 
-                            if ( text.toLowerCase( Locale.ENGLISH ).indexOf( "<html>" ) == -1 )
+                            if ( !BasicHTML.isHTMLString( text ) )
                             {
-                                text = "<html>" + text + "<br/></html>";
+                                text = "<html>" + HtmlEntities.escapeHtml( text ) + "</html>";
                             }
 
-                            labels[i] = new HtmlLabel( getColumns() );
-                            labels[i].setText( text );
+                            final JLabel label = new HtmlLabel( getColumns() );
+                            label.setText( text );
+
+                            final GridBagConstraints c = new GridBagConstraints();
+                            c.anchor = GridBagConstraints.NORTHWEST;
+                            c.fill = GridBagConstraints.BOTH;
+                            c.gridheight = 1;
+                            c.gridwidth = 1;
+                            c.gridx = 0;
+                            c.gridy = i;
+                            c.weightx = 1.0D;
+
+                            panel.add( label, c );
+
+                            if ( !( i + 1 < s0 && i + 1 < getMaximumMessages() ) )
+                            {
+                                final JPanel p = new JPanel();
+                                c.anchor = GridBagConstraints.SOUTH;
+                                c.weighty = 1.0D;
+                                c.gridy = i + 1;
+                                panel.add( p, c );
+                            }
                         }
+
+                        JOptionPane optionPane = null;
+                        JDialog dialog = null;
 
                         switch ( event.getType() )
                         {
                             case MessageEvent.INFORMATION:
-                                JOptionPane.showMessageDialog( getParent(), labels,
-                                                               getInformationMessage( getLocale() ),
-                                                               JOptionPane.INFORMATION_MESSAGE );
-
+                                optionPane = new JOptionPane();
+                                optionPane.setMessage( panel );
+                                optionPane.setMessageType( JOptionPane.INFORMATION_MESSAGE );
+                                dialog = optionPane.createDialog( getParent(), getInformationMessage( getLocale() ) );
+                                dialog.setResizable( isResizable() );
+                                dialog.setVisible( true );
+                                dialog.dispose();
                                 break;
 
                             case MessageEvent.NOTIFICATION:
-                                JOptionPane.showMessageDialog( getParent(), labels,
-                                                               getNotificationMessage( getLocale() ),
-                                                               JOptionPane.INFORMATION_MESSAGE );
-
+                                optionPane = new JOptionPane();
+                                optionPane.setMessage( panel );
+                                optionPane.setMessageType( JOptionPane.INFORMATION_MESSAGE );
+                                dialog = optionPane.createDialog( getParent(), getNotificationMessage( getLocale() ) );
+                                dialog.setResizable( isResizable() );
+                                dialog.setVisible( true );
+                                dialog.dispose();
                                 break;
 
                             case MessageEvent.WARNING:
-                                JOptionPane.showMessageDialog( getParent(), labels,
-                                                               getWarningMessage( getLocale() ),
-                                                               JOptionPane.WARNING_MESSAGE );
-
+                                optionPane = new JOptionPane();
+                                optionPane.setMessage( panel );
+                                optionPane.setMessageType( JOptionPane.WARNING_MESSAGE );
+                                dialog = optionPane.createDialog( getParent(), getWarningMessage( getLocale() ) );
+                                dialog.setResizable( isResizable() );
+                                dialog.setVisible( true );
+                                dialog.dispose();
                                 break;
 
                             case MessageEvent.ERROR:
-                                UIManager.getLookAndFeel().provideErrorFeedback( getParent() );
-                                JOptionPane.showMessageDialog( getParent(), labels,
-                                                               getErrorMessage( getLocale() ),
-                                                               JOptionPane.ERROR_MESSAGE );
-
+                                optionPane = new JOptionPane();
+                                optionPane.setMessage( panel );
+                                optionPane.setMessageType( JOptionPane.ERROR_MESSAGE );
+                                dialog = optionPane.createDialog( getParent(), getErrorMessage( getLocale() ) );
+                                dialog.setResizable( isResizable() );
+                                dialog.setVisible( true );
+                                dialog.dispose();
                                 break;
 
                             default:
@@ -222,6 +276,9 @@ public final class SwingMessagePane implements MessageListener
     /** Number of columns the preferred width of the message pane is computed with. */
     private Integer columns;
 
+    /** Flag indicating the message pane is resizable. */
+    private Boolean resizable;
+
     /**
      * Creates a new {@code SwingMessagePane} instance taking the parent component to use when displaying messages.
      *
@@ -232,7 +289,7 @@ public final class SwingMessagePane implements MessageListener
      */
     public SwingMessagePane( final Component parent )
     {
-        this( parent, Integer.MIN_VALUE, Integer.MIN_VALUE );
+        this( parent, Integer.MIN_VALUE, Integer.MIN_VALUE, false );
     }
 
     /**
@@ -247,7 +304,7 @@ public final class SwingMessagePane implements MessageListener
      */
     public SwingMessagePane( final Component parent, final int maximumMessages )
     {
-        this( parent, Integer.MIN_VALUE, Integer.MIN_VALUE );
+        this( parent, maximumMessages, Integer.MIN_VALUE, false );
     }
 
     /**
@@ -265,6 +322,28 @@ public final class SwingMessagePane implements MessageListener
      * @since 1.10
      */
     public SwingMessagePane( final Component parent, final int maximumMessages, final int columns )
+    {
+        this( parent, maximumMessages, columns, false );
+    }
+
+    /**
+     * Creates a new {@code SwingMessagePane} instance taking the parent component to use when displaying messages, the
+     * maximum number of messages displayed per event, a number of columns to compute the preferred width of the
+     * message pane with and a flag indicating the message pane is resizable.
+     *
+     * @param parent The parent component to use when displaying messages.
+     * @param maximumMessages Maximum number of messages displayed per event.
+     * @param columns Number of columns the preferred width of the message pane should be computed with.
+     * @param resizable {@code true}, if the message pane should be resizable; {@code false} if the message pane should
+     * have a fixed size.
+     *
+     * @throws NullPointerException if {@code parent} is {@code null}.
+     * @throws HeadlessException if this class is used in an environment not providing a keyboard, display, or mouse.
+     *
+     * @since 1.11
+     */
+    public SwingMessagePane( final Component parent, final int maximumMessages, final int columns,
+                             final boolean resizable )
     {
         if ( parent == null )
         {
@@ -286,6 +365,8 @@ public final class SwingMessagePane implements MessageListener
         {
             this.columns = new Integer( columns );
         }
+
+        this.resizable = Boolean.valueOf( resizable );
     }
 
     /**
@@ -345,6 +426,23 @@ public final class SwingMessagePane implements MessageListener
         }
 
         return this.columns.intValue();
+    }
+
+    /**
+     * Gets a flag indicating the message pane is resizable.
+     *
+     * @return {@code true}, if the message pane is resizable; {@code false} if the message pane is not resizable.
+     *
+     * @since 1.11
+     */
+    public boolean isResizable()
+    {
+        if ( this.resizable == null )
+        {
+            this.resizable = this.isDefaultResizable();
+        }
+
+        return this.resizable.booleanValue();
     }
 
     //--------------------------------------------------------SwingMessagePane--
@@ -469,17 +567,64 @@ class HtmlLabel extends JLabel
     {
         super();
         this.columns = columns;
+        this.setVerticalAlignment( SwingConstants.TOP );
+        this.setVerticalTextPosition( SwingConstants.TOP );
     }
 
     public Dimension getPreferredSize()
     {
         final Dimension size = super.getPreferredSize();
+        String text = this.getText();
 
-        if ( this.columns > 0 )
+        if ( this.columns > 0 && text != null && text.length() > 0 )
         {
+            int rows = 1;
+            int currentRowWidth = 0;
+            int maxRowWidth = 0;
+            boolean parsingTag = false;
+            text = text.trim();
+            text = text.substring( "<html>".length(), text.length() );
+            text = text.substring( 0, text.length() - "</html>".length() );
+            text = HtmlEntities.unescapeHtml( text );
             final Insets insets = this.getInsets();
-            final int columnWidth = this.getFontMetrics( this.getFont() ).charWidth( 'W' );
-            size.width = this.columns * columnWidth + insets.left + insets.right;
+            final FontMetrics fontMetrics = this.getFontMetrics( this.getFont() );
+
+            for ( int i = 0, column = 0, s0 = text.length(); i < s0; i++ )
+            {
+                final char c = text.charAt( i );
+
+                if ( c == '<' )
+                {
+                    parsingTag = true;
+                }
+
+                if ( !parsingTag )
+                {
+                    currentRowWidth += fontMetrics.charWidth( c );
+
+                    if ( maxRowWidth < currentRowWidth )
+                    {
+                        maxRowWidth = currentRowWidth;
+                    }
+
+                    column++;
+                }
+
+                if ( parsingTag && c == '>' )
+                {
+                    parsingTag = false;
+                }
+
+                if ( column == this.columns )
+                {
+                    rows++;
+                    column = 0;
+                    currentRowWidth = 0;
+                }
+            }
+
+            size.width = maxRowWidth + insets.left + insets.right;
+            size.height = rows * fontMetrics.getHeight() + insets.top + insets.bottom;
         }
 
         return size;

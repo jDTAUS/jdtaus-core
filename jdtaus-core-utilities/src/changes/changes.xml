@@ -204,5 +204,11 @@
       <code>minimumTaskDurationMillis</code> to class <code>org.jdtaus.core.monitor.util.SwingProgressMonitor</code>.]]>
       </action>
     </release>
+    <!-- *********************************************************************************************************** -->
+    <release version="1.11" description="New features.">
+      <action dev="schulte2005" type="add"><![CDATA[Added property <code>resizable</code> to class
+      <code>org.jdtaus.core.text.util.SwingMessagePane</code>.]]>
+      </action>
+    </release>
   </body>
 </document>
