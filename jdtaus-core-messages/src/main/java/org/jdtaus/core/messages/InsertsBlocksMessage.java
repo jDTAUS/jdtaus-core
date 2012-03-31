@@ -78,8 +78,8 @@ public final class InsertsBlocksMessage extends Message
 
     /**
      * Gets the text of message <code>insertsBlocks</code>.
-     * <blockquote><pre>Fügt Satzabschnitte ein.</pre></blockquote>
-     * <blockquote><pre>Inserting blocks.</pre></blockquote>
+     * <blockquote><pre>Fügt Satzabschnitte ein.</pre></blockquote>
+     * <blockquote><pre>Inserting blocks.</pre></blockquote>
      *
      * @param locale The locale of the message instance to return.
      *

@@ -154,7 +154,7 @@ public final class BugReportMessage extends Message
 
     /**
      * Gets the text of message <code>bugReport</code>.
-     * <blockquote><pre>Bitte berichten Sie dieses Problem entweder unter {1} oder per eMail an {2}. Fügen Sie Ihrem Fehlerbericht bitte eine Kopie der aktuellen Protokolldateien der Anwendung aus Verzeichnis {0} hinzu.</pre></blockquote>
+     * <blockquote><pre>Bitte berichten Sie dieses Problem entweder unter {1} oder per eMail an {2}. Fügen Sie Ihrem Fehlerbericht bitte eine Kopie der aktuellen Protokolldateien der Anwendung aus Verzeichnis {0} bei.</pre></blockquote>
      * <blockquote><pre>Please report this at {1} or send an email to {2} including a copy of the logfiles located in directory {0}.</pre></blockquote>
      *
      * @param locale The locale of the message instance to return.
