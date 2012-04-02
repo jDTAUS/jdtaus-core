@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  jDTAUS
+  Copyright (C) 2012 Christian Schulte <schulte2005@users.sourceforge.net>
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+  $JDTAUS$
+
+-->
+<module xmlns="http://jomc.org/model"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://jomc.org/model http://jomc.sourceforge.net/model/jomc-1.2.xsd"
+        name="${project.name}" version="${project.version}" vendor="${project.organization.name}" modelVersion="1.2">
+
+  <documentation defaultLanguage="en">
+    <text language="en">${project.description}</text>
+  </documentation>
+
+  <implementations>
+    <!-- *********************************************************************************************************** -->
+    <implementation identifier="${project.name} :: Context Scope"
+                    name="jDTAUS Context"
+                    class="org.jdtaus.core.container.ri.jomc.ContextScope" classDeclaration="true"
+                    vendor="${project.organization.name}" version="${project.version}">
+
+      <documentation defaultLanguage="en">
+        <text language="en" type="text/x-javadoc">JOMC {@code Scope} implementation delegating to the jDTAUS {@code Context}.</text>
+      </documentation>
+      <authors>
+        <author name="Christian Schulte" version="1.0" mail="schulte2005@users.sourceforge.net"
+                createDate="2012-02-08T17:56:45Z"/>
+
+      </authors>
+      <specifications>
+        <reference identifier="org.jomc.spi.Scope" version="1.0"/>
+      </specifications>
+    </implementation>
+    <!-- *********************************************************************************************************** -->
+    <implementation identifier="${project.name} :: ObjectManagerContainer"
+                    name="${project.name} :: ObjectManagerContainer"
+                    class="org.jdtaus.core.container.ri.jomc.ObjectManagerContainer" classDeclaration="true"
+                    vendor="${project.organization.name}" version="${project.version}">
+
+      <documentation defaultLanguage="en">
+        <text language="en" type="text/x-javadoc">jDTAUS {@code Container} implementation delegating to the JOMC {@code ObjectManager}.</text>
+      </documentation>
+      <authors>
+        <author name="Christian Schulte" version="1.0" mail="schulte2005@users.sourceforge.net"
+                createDate="2012-02-08T17:56:45Z"/>
+
+      </authors>
+      <specifications>
+        <reference identifier="org.jdtaus.core.container.Container"/>
+      </specifications>
+    </implementation>
+    <!-- *********************************************************************************************************** -->
+    <implementation identifier="${project.name} :: Model ModelProvider"
+                    name="${project.name} :: Model ModelProvider"
+                    class="org.jdtaus.core.container.ri.jomc.ModelModelProvider" classDeclaration="true"
+                    vendor="${project.organization.name}" version="${project.version}">
+
+      <documentation defaultLanguage="en">
+        <text language="en" type="text/x-javadoc">JOMC {@code ModelProvider} providing the jDTAUS {@code Model}.</text>
+      </documentation>
+      <authors>
+        <author name="Christian Schulte" version="1.0" mail="schulte2005@users.sourceforge.net"
+                createDate="2012-02-08T17:56:45Z"/>
+
+      </authors>
+      <specifications>
+        <reference identifier="org.jomc.modlet.ModelProvider"/>
+      </specifications>
+    </implementation>
+  </implementations>
+</module>

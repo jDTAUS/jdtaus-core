@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  jDTAUS
+  Copyright (C) 2012 Christian Schulte <schulte2005@users.sourceforge.net>
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+  $JDTAUS$
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.jdtaus</groupId>
+    <artifactId>jdtaus-lgpl-parent</artifactId>
+    <version>1.6</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jdtaus.core.container</groupId>
+  <artifactId>jdtaus-core-jomc-container</artifactId>
+  <version>1.11-SNAPSHOT</version>
+  <name>jDTAUS Core JOMC Container</name>
+  <description>jDTAUS Core Container implementation backed by JOMC.</description>
+  <url>http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-jomc-container</url>
+  <scm>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-jomc-container/trunk</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-jomc-container/trunk</developerConnection>
+    <url>http://jdtaus.sourceforge.net/project/sources?jdtaus-core/jdtaus-core-jomc-container/trunk</url>
+  </scm>
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.jdtaus</groupId>
+        <artifactId>jdtaus-build-resources</artifactId>
+        <version>${jdtaus-build.version}</version>
+      </extension>
+    </extensions>
+    <resources>
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <source>1.5</source>
+            <target>1.5</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-copy-resources</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.outputDirectory}/META-INF</outputDirectory>
+              <resources>
+                <resource>
+                  <filtering>true</filtering>
+                  <directory>src/main/modlet</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jomc</groupId>
+        <artifactId>maven-jomc-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.jdtaus.common</groupId>
+      <artifactId>jdtaus-core-api</artifactId>
+      <version>${core.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jomc</groupId>
+      <artifactId>jomc-api</artifactId>
+      <version>1.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jomc</groupId>
+      <artifactId>jomc-spi</artifactId>
+      <version>1.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jomc</groupId>
+      <artifactId>jomc-modlet</artifactId>
+      <version>1.2.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jomc</groupId>
+      <artifactId>jomc-model</artifactId>
+      <version>1.2.3</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jdtaus.core.container</groupId>
+      <artifactId>jdtaus-core-client-container</artifactId>
+      <version>${core.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jomc</groupId>
+      <artifactId>jomc-ri</artifactId>
+      <version>1.2.3</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+  <distributionManagement>
+    <site>
+      <id>jdtaus.sourceforge.net</id>
+      <url>scp://shell.sourceforge.net/home/project-web/jdtaus/htdocs/1.0.x/jdtaus-core/jdtaus-core-jomc-container</url>
+    </site>
+  </distributionManagement>
+  <properties>
+    <core.version>1.11</core.version>
+    <maven-jomc-plugin.artifact.version>1.2.4</maven-jomc-plugin.artifact.version>
+    <tagBase>https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags</tagBase>
+  </properties>
+</project>
