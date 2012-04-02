@@ -30,14 +30,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core.container</groupId>
   <artifactId>jdtaus-core-jomc-container</artifactId>
-  <version>1.11-SNAPSHOT</version>
+  <version>1.11</version>
   <name>jDTAUS Core JOMC Container</name>
   <description>jDTAUS Core Container implementation backed by JOMC.</description>
   <url>http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-jomc-container</url>
   <scm>
-    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-jomc-container/trunk</connection>
-    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/jdtaus-core-jomc-container/trunk</developerConnection>
-    <url>http://jdtaus.sourceforge.net/project/sources?jdtaus-core/jdtaus-core-jomc-container/trunk</url>
+    <connection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-jomc-container-1.11</connection>
+    <developerConnection>scm:svn:https://jdtaus.svn.sourceforge.net/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-jomc-container-1.11</developerConnection>
+    <url>http://jdtaus.sourceforge.net/project/sources?jdtaus-core/tags/jdtaus-core-jomc-container-1.11</url>
   </scm>
   <build>
     <extensions>
