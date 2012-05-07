@@ -1,9 +1,7 @@
 /*
  *  jDTAUS Core Utilities
- *  Copyright (c) 2005 Christian Schulte
- *
- *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
- *  <schulte2005@users.sourceforge.net> (+49 2331 3543887)
+ *  Copyright (C) 2005 Christian Schulte
+ *  <schulte2005@users.sourceforge.net>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -32,7 +30,7 @@ import org.jdtaus.core.io.util.ReadAheadFileOperations;
  * Testcase for {@code ReadAheadFileOperations} implementations.
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
- * @version $Id$
+ * @version $JDTAUS$
  */
 public class ReadAheadFileOperationsUnevenTest
     extends ReadAheadFileOperationsTest
@@ -54,6 +52,16 @@ public class ReadAheadFileOperationsUnevenTest
     }
 
     //------------------------------------------------------FileOperationsTest--
+    //--TestCase----------------------------------------------------------------
+
+    protected void runTest() throws Throwable
+    {
+        super.runTest();
+        this.testReadBeyondCacheEof();
+        this.testReadBeyondCacheNoEof();
+    }
+
+    //----------------------------------------------------------------TestCase--
     //--ReadAheadFileOperationsUnevenTest---------------------------------------
 
     /**

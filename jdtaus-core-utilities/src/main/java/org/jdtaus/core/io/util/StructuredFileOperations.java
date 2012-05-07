@@ -1,9 +1,7 @@
 /*
  *  jDTAUS Core Utilities
- *  Copyright (c) 2005 Christian Schulte
- *
- *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
- *  <schulte2005@users.sourceforge.net> (+49 2331 3543887)
+ *  Copyright (C) 2005 Christian Schulte
+ *  <schulte2005@users.sourceforge.net>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -27,12 +25,12 @@ import java.math.BigDecimal;
 import java.util.Locale;
 import javax.swing.event.EventListenerList;
 import org.jdtaus.core.container.ContainerFactory;
-import org.jdtaus.core.messages.DeletesBlocksMessage;
-import org.jdtaus.core.messages.InsertsBlocksMessage;
 import org.jdtaus.core.io.FileOperations;
 import org.jdtaus.core.io.StructuredFile;
 import org.jdtaus.core.io.StructuredFileListener;
 import org.jdtaus.core.lang.spi.MemoryManager;
+import org.jdtaus.core.messages.DeletesBlocksMessage;
+import org.jdtaus.core.messages.InsertsBlocksMessage;
 import org.jdtaus.core.monitor.spi.Task;
 import org.jdtaus.core.monitor.spi.TaskMonitor;
 
@@ -58,7 +56,7 @@ import org.jdtaus.core.monitor.spi.TaskMonitor;
  * underlying {@code FileOperations} implementation are not supported.</p>
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
- * @version $Id$
+ * @version $JDTAUS$
  *
  * @see CoalescingFileOperations
  * @see ReadAheadFileOperations

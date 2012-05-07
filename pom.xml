@@ -2,10 +2,8 @@
 <!--
 
   jDTAUS Core
-  Copyright (c) 2005 Christian Schulte
-
-  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
-  <schulte2005@users.sourceforge.net> (+49 2331 3543887)
+  Copyright (C) 2005 Christian Schulte
+  <schulte2005@users.sourceforge.net>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -153,26 +151,6 @@
               <groupId>com.sun.xml.bind</groupId>
               <artifactId>jaxb-impl</artifactId>
               <version>1.0.6</version>
-            </dependency>
-            <dependency>
-              <groupId>com.sun.xml.bind</groupId>
-              <artifactId>jaxb-libs</artifactId>
-              <version>1.0.6</version>
-            </dependency>
-            <dependency>
-              <groupId>com.sun.xml.bind</groupId>
-              <artifactId>jaxb-xjc</artifactId>
-              <version>1.0.6</version>
-            </dependency>
-            <dependency>
-              <groupId>com.sun.xml</groupId>
-              <artifactId>relaxngDatatype</artifactId>
-              <version>1.0</version>
-            </dependency>
-            <dependency>
-              <groupId>xsdlib</groupId>
-              <artifactId>xsdlib</artifactId>
-              <version>20030225</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -341,7 +319,7 @@
             <dependency>
               <artifactId>jdtaus-container-mojo</artifactId>
               <groupId>org.jdtaus.mojo</groupId>
-              <version>3.9-SNAPSHOT</version>
+              <version>3.10-SNAPSHOT</version>
               <scope>runtime</scope>
             </dependency>
             <dependency>
@@ -627,21 +605,6 @@
         <version>1.0.6</version>
       </dependency>
       <dependency>
-        <groupId>com.sun.xml.bind</groupId>
-        <artifactId>jaxb-libs</artifactId>
-        <version>1.0.6</version>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.xml</groupId>
-        <artifactId>relaxngDatatype</artifactId>
-        <version>1.0</version>
-      </dependency>
-      <dependency>
-        <groupId>xsdlib</groupId>
-        <artifactId>xsdlib</artifactId>
-        <version>20030225</version>
-      </dependency>
-      <dependency>
         <groupId>javax.xml.parsers</groupId>
         <artifactId>jaxp-api</artifactId>
         <version>1.4.2</version>
@@ -890,7 +853,7 @@
     </pluginRepository>
   </pluginRepositories>
   <properties>
-    <jdtausCoreVersion>1.11</jdtausCoreVersion>
+    <jdtausCoreVersion>1.12-SNAPSHOT</jdtausCoreVersion>
     <mavenJavadocPluginVersion>2.6.1</mavenJavadocPluginVersion>
     <mavenJxrPluginVersion>2.1</mavenJxrPluginVersion>
     <mavenPmdPluginVersion>2.4</mavenPmdPluginVersion>

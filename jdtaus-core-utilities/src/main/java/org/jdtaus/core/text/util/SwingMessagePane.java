@@ -1,9 +1,7 @@
 /*
  *  jDTAUS Core Utilities
- *  Copyright (c) 2005 Christian Schulte
- *
- *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
- *  <schulte2005@users.sourceforge.net> (+49 2331 3543887)
+ *  Copyright (C) 2005 Christian Schulte
+ *  <schulte2005@users.sourceforge.net>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -52,7 +50,7 @@ import org.jdtaus.core.text.MessageListener;
  * can be specified by property {@code maximumMessages} (defaults to 25).</p>
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
- * @version $Id$
+ * @version $JDTAUS$
  *
  * @see #onMessage(MessageEvent)
  */
@@ -546,7 +544,7 @@ public final class SwingMessagePane implements MessageListener
  * Extension to {@code JLabel} adding support for a preferred width based on a number of columns.
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
- * @version $Id$
+ * @version $JDTAUS$
  */
 class HtmlLabel extends JLabel
 {

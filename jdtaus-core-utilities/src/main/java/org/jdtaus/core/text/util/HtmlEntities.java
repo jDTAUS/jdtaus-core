@@ -1,9 +1,7 @@
 /*
  *  jDTAUS Core Utilities
  *  Copyright (C) 2012 Christian Schulte
- *
- *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
- *  <schulte2005@users.sourceforge.net> (+49 2331 3543887)
+ *  <schulte2005@users.sourceforge.net>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -37,7 +35,7 @@ import java.util.Properties;
  * Provides static methods for encoding/decoding HTML.
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
- * @version $Id$
+ * @version $JDTAUS$
  * @since 1.11
  */
 class HtmlEntities

@@ -1,6 +1,6 @@
 /*
  *  jDTAUS Core Messages
- *  Copyright (c) 2005 Christian Schulte
+ *  Copyright (C) 2005 Christian Schulte
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -16,7 +16,7 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- *  $Id: Implementation.java.vm 5414 2008-10-27 10:42:09Z schulte2005 $
+ *  $JDTAUS$
  */
 package org.jdtaus.core.messages;
 
@@ -28,7 +28,7 @@ import org.jdtaus.core.text.Message;
  * Message stating that an illegal string was specified.
  *
  * @author Christian Schulte
- * @version $Id: Implementation.java.vm 5414 2008-10-27 10:42:09Z schulte2005 $
+ * @version $JDTAUS$
  * @since 1.10
  */
 public final class IllegalStringMessage extends Message

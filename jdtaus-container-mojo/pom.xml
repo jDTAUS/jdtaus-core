@@ -2,10 +2,8 @@
 <!--
 
   jDTAUS Core
-  Copyright (c) 2005 Christian Schulte
-
-  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
-  <schulte2005@users.sourceforge.net> (+49 2331 3543887)
+  Copyright (C) 2005 Christian Schulte
+  <schulte2005@users.sourceforge.net>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -93,23 +91,8 @@
     </dependency>
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-libs</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.xml</groupId>
-      <artifactId>relaxngDatatype</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>xsdlib</groupId>
-      <artifactId>xsdlib</artifactId>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>

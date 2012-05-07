@@ -1,9 +1,7 @@
 /*
  *  jDTAUS Core Test Suite
- *  Copyright (c) 2005 Christian Schulte
- *
- *  Christian Schulte, Haldener Strasse 72, 58095 Hagen, Germany
- *  <schulte2005@users.sourceforge.net> (+49 2331 3543887)
+ *  Copyright (C) 2005 Christian Schulte
+ *  <schulte2005@users.sourceforge.net>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -25,8 +23,8 @@ package org.jdtaus.core.monitor.spi.it;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import junit.framework.Assert;
 import java.util.Locale;
+import junit.framework.Assert;
 import org.jdtaus.core.monitor.TaskEvent;
 import org.jdtaus.core.monitor.TaskEventSource;
 import org.jdtaus.core.monitor.TaskListener;
@@ -39,7 +37,7 @@ import org.jdtaus.core.text.Message;
  * Testcase for {@code TaskMonitor} implementations.
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
- * @version $Id$
+ * @version $JDTAUS$
  */
 public class TaskMonitorTest extends TaskEventSourceTest
 {

@@ -18,7 +18,7 @@ import org.jdtaus.core.container.Specifications;
  * Mojo to generate test java code.
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
- * @version $Id$
+ * @version $JDTAUS$
  * @goal java-container-tests
  * @phase process-test-resources
  * @requiresDependencyResolution test

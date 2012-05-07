@@ -124,5 +124,7 @@
     <release version="3.8" description="Maintenance release." date="2012-03-23"/>
     <!-- *********************************************************************************************************** -->
     <release version="3.9" description="Maintenance release." date="2012-04-01"/>
+    <!-- *********************************************************************************************************** -->
+    <release version="3.10" date="2012-05-07" description="Maintenance release."/>
   </body>
 </document>

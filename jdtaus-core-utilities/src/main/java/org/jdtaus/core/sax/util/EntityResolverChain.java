@@ -1,6 +1,6 @@
 /*
  *  jDTAUS Core Utilities
- *  Copyright (c) 2005 Christian Schulte <schulte2005@users.sourceforge.net>
+ *  Copyright (C) 2005 Christian Schulte <schulte2005@users.sourceforge.net>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -16,7 +16,7 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- *  $Id$
+ *  $JDTAUS$
  */
 package org.jdtaus.core.sax.util;
 
@@ -33,7 +33,7 @@ import org.xml.sax.SAXException;
  * for resolving entities.
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
- * @version $Id$
+ * @version $JDTAUS$
  */
 public final class EntityResolverChain implements EntityResolver
 {
@@ -180,8 +180,8 @@ public final class EntityResolverChain implements EntityResolver
 
     /**
      * Gets the text of message <code>noEntityResolvers</code>.
-     * <blockquote><pre>Keine ''EntityResolver'' gefunden. Java XML-Parser öffnen standardmäßig reguläre - eventuell entfernte - URI-Verbindungen. Sie sollten mindestens eine ''EntityResolver''-Implementierung (z.B. jdtaus-core-entity-resolver-1.11-SNAPSHOT.jar) zur Verfügung stellen.</pre></blockquote>
-     * <blockquote><pre>No entity resolvers found. Standard Java XML parsers fall back to opening regular - possibly remote - URI connections. You should provide at least one ''EntityResolver'' implementation (e.g. jdtaus-core-entity-resolver-1.11-SNAPSHOT.jar).</pre></blockquote>
+     * <blockquote><pre>Keine ''EntityResolver'' gefunden. Java XML-Parser öffnen standardmäßig reguläre - eventuell entfernte - URI-Verbindungen. Sie sollten mindestens eine ''EntityResolver''-Implementierung (z.B. jdtaus-core-entity-resolver-1.12-SNAPSHOT.jar) zur Verfügung stellen.</pre></blockquote>
+     * <blockquote><pre>No entity resolvers found. Standard Java XML parsers fall back to opening regular - possibly remote - URI connections. You should provide at least one ''EntityResolver'' implementation (e.g. jdtaus-core-entity-resolver-1.12-SNAPSHOT.jar).</pre></blockquote>
      *
      * @param locale The locale of the message instance to return.
      *
