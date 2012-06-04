@@ -27,6 +27,7 @@ package org.jdtaus.core.container.ri.jomc;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.logging.Level;
 import org.jomc.model.Argument;
 import org.jomc.model.ArgumentType;
 import org.jomc.model.Arguments;
@@ -70,13 +71,13 @@ import org.jomc.modlet.ModelException;
  * </dl>
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a> 1.0
- * @version 1.11-SNAPSHOT
+ * @version 1.12-SNAPSHOT
  */
 // </editor-fold>
 // SECTION-END
 // SECTION-START[Annotations]
 // <editor-fold defaultstate="collapsed" desc=" Generated Annotations ">
-@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.2.3", comments = "See http://jomc.sourceforge.net/jomc/1.2/jomc-tools-1.2.3" )
+@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.3", comments = "See http://jomc.sourceforge.net/jomc/1.3/jomc-tools-1.3" )
 // </editor-fold>
 // SECTION-END
 public class ModelModelProvider
@@ -101,11 +102,12 @@ public class ModelModelProvider
             System.setProperty( CONTEXT_CLASSLOADER_PROPERTY_NAME, Boolean.TRUE.toString() );
             Thread.currentThread().setContextClassLoader( context.getClassLoader() );
 
-            final Modules modules = transformModules( org.jdtaus.core.container.ModelFactory.getModel().getModules() );
+            final Modules modules =
+                transformModules( context, org.jdtaus.core.container.ModelFactory.getModel().getModules() );
 
             if ( modules != null )
             {
-                applyInheritanceAttributes( modules );
+                applyInheritanceAttributes( context, modules );
                 provided = model.clone();
                 ModelHelper.addModules( provided, modules );
             }
@@ -129,7 +131,8 @@ public class ModelModelProvider
 
     // SECTION-END
     // SECTION-START[ModelModelProvider]
-    private static Modules transformModules( final org.jdtaus.core.container.Modules jdtausModules )
+    private static Modules transformModules( final ModelContext context,
+                                             final org.jdtaus.core.container.Modules jdtausModules )
     {
         Modules modules = null;
 
@@ -143,7 +146,7 @@ public class ModelModelProvider
 
                 if ( !org.jdtaus.core.container.Model.class.getName().equals( jdtausModule.getName() ) )
                 { // Skip platform module.
-                    modules.getModule().add( transformModule( jdtausModule ) );
+                    modules.getModule().add( transformModule( context, jdtausModule ) );
                 }
             }
         }
@@ -151,24 +154,34 @@ public class ModelModelProvider
         return modules;
     }
 
-    private static Module transformModule( final org.jdtaus.core.container.Module jdtausModule )
+    private static Module transformModule( final ModelContext context,
+                                           final org.jdtaus.core.container.Module jdtausModule )
     {
         Module module = null;
 
         if ( jdtausModule != null )
         {
             module = new Module();
-            module.setDocumentation( transformText( jdtausModule.getDocumentation() ) );
+            module.setDocumentation( transformText( context, jdtausModule.getDocumentation() ) );
             module.setName( jdtausModule.getName() );
             module.setVersion( jdtausModule.getVersion() );
-            module.setSpecifications( transformSpecifications( jdtausModule.getSpecifications() ) );
-            module.setImplementations( transformImplementations( jdtausModule.getImplementations() ) );
+            module.setSpecifications( transformSpecifications( context, jdtausModule.getSpecifications() ) );
+            module.setImplementations( transformImplementations( context, jdtausModule.getImplementations() ) );
+
+            if ( context.isLoggable( Level.FINEST ) )
+            {
+                context.log( Level.FINEST, getModuleInfo( Locale.getDefault(), module.getName(),
+                                                          module.getVersion() == null ? module.getVersion() : "" ),
+                             null );
+
+            }
         }
 
         return module;
     }
 
     private static Implementations transformImplementations(
+        final ModelContext context,
         final org.jdtaus.core.container.Implementations jdtausImplementations )
     {
         Implementations implementations = null;
@@ -176,12 +189,12 @@ public class ModelModelProvider
         if ( jdtausImplementations != null )
         {
             implementations = new Implementations();
-            implementations.setDocumentation( transformText( jdtausImplementations.getDocumentation() ) );
+            implementations.setDocumentation( transformText( context, jdtausImplementations.getDocumentation() ) );
 
             for ( int i = 0, s0 = jdtausImplementations.size(); i < s0; i++ )
             {
                 implementations.getImplementation().add( transformImplementation(
-                    jdtausImplementations.getImplementation( i ) ) );
+                    context, jdtausImplementations.getImplementation( i ) ) );
 
             }
         }
@@ -190,6 +203,7 @@ public class ModelModelProvider
     }
 
     private static Implementation transformImplementation(
+        final ModelContext context,
         final org.jdtaus.core.container.Implementation jdtausImplementation )
     {
         final Implementation implementation = new Implementation();
@@ -200,12 +214,12 @@ public class ModelModelProvider
         implementation.setName( jdtausImplementation.getName() );
         implementation.setVendor( jdtausImplementation.getVendor() );
         implementation.setVersion( jdtausImplementation.getVersion() );
-        implementation.setDocumentation( transformText( jdtausImplementation.getDocumentation() ) );
-        implementation.setProperties( transformProperties( jdtausImplementation.getDeclaredProperties() ) );
-        implementation.setMessages( transformMessages( jdtausImplementation.getDeclaredMessages() ) );
-        implementation.setDependencies( transformDependencies( jdtausImplementation.getDeclaredDependencies() ) );
+        implementation.setDocumentation( transformText( context, jdtausImplementation.getDocumentation() ) );
+        implementation.setProperties( transformProperties( context, jdtausImplementation.getDeclaredProperties() ) );
+        implementation.setMessages( transformMessages( context, jdtausImplementation.getDeclaredMessages() ) );
+        implementation.setDependencies( transformDependencies( context, jdtausImplementation.getDeclaredDependencies() ) );
         implementation.setSpecifications( transformSpecificationReferences(
-            jdtausImplementation.getImplementedSpecifications() ) );
+            context, jdtausImplementation.getImplementedSpecifications() ) );
 
         // The jDTAUS Container has no support for synchronising object accesses. This ensures the state management of
         // the JOMC ObjectManager is in effect.
@@ -227,6 +241,7 @@ public class ModelModelProvider
     }
 
     private static Specifications transformSpecifications(
+        final ModelContext context,
         final org.jdtaus.core.container.Specifications jdtausSpecifications )
     {
         Specifications specifications = null;
@@ -234,12 +249,12 @@ public class ModelModelProvider
         if ( jdtausSpecifications != null )
         {
             specifications = new Specifications();
-            specifications.setDocumentation( transformText( jdtausSpecifications.getDocumentation() ) );
+            specifications.setDocumentation( transformText( context, jdtausSpecifications.getDocumentation() ) );
 
             for ( int i = 0, s0 = jdtausSpecifications.size(); i < s0; i++ )
             {
                 specifications.getSpecification().add( transformSpecification(
-                    jdtausSpecifications.getSpecification( i ) ) );
+                    context, jdtausSpecifications.getSpecification( i ) ) );
 
             }
         }
@@ -248,6 +263,7 @@ public class ModelModelProvider
     }
 
     private static Specifications transformSpecificationReferences(
+        final ModelContext context,
         final org.jdtaus.core.container.Specifications jdtausSpecifications )
     {
         Specifications specifications = null;
@@ -255,7 +271,7 @@ public class ModelModelProvider
         if ( jdtausSpecifications != null )
         {
             specifications = new Specifications();
-            specifications.setDocumentation( transformText( jdtausSpecifications.getDocumentation() ) );
+            specifications.setDocumentation( transformText( context, jdtausSpecifications.getDocumentation() ) );
 
             for ( int i = 0, s0 = jdtausSpecifications.size(); i < s0; i++ )
             {
@@ -270,6 +286,7 @@ public class ModelModelProvider
     }
 
     private static Specification transformSpecification(
+        final ModelContext context,
         final org.jdtaus.core.container.Specification jdtausSpecification )
     {
         final Specification specification = new Specification();
@@ -278,7 +295,7 @@ public class ModelModelProvider
         specification.setIdentifier( jdtausSpecification.getIdentifier() );
         specification.setVendor( jdtausSpecification.getVendor() );
         specification.setVersion( jdtausSpecification.getVersion() );
-        specification.setDocumentation( transformText( jdtausSpecification.getDocumentation() ) );
+        specification.setDocumentation( transformText( context, jdtausSpecification.getDocumentation() ) );
 
         switch ( jdtausSpecification.getMultiplicity() )
         {
@@ -305,11 +322,11 @@ public class ModelModelProvider
 
         }
 
-        specification.setProperties( transformProperties( jdtausSpecification.getProperties() ) );
+        specification.setProperties( transformProperties( context, jdtausSpecification.getProperties() ) );
         return specification;
     }
 
-    private static Texts transformText( final org.jdtaus.core.container.Text jdtausText )
+    private static Texts transformText( final ModelContext context, final org.jdtaus.core.container.Text jdtausText )
     {
         Texts texts = null;
 
@@ -339,32 +356,34 @@ public class ModelModelProvider
         return texts;
     }
 
-    private static Properties transformProperties( final org.jdtaus.core.container.Properties jdtausProperties )
+    private static Properties transformProperties( final ModelContext context,
+                                                   final org.jdtaus.core.container.Properties jdtausProperties )
     {
         Properties properties = null;
 
         if ( jdtausProperties != null )
         {
             properties = new Properties();
-            properties.setDocumentation( transformText( jdtausProperties.getDocumentation() ) );
+            properties.setDocumentation( transformText( context, jdtausProperties.getDocumentation() ) );
 
             for ( int i = 0, s0 = jdtausProperties.size(); i < s0; i++ )
             {
-                properties.getProperty().add( transformProperty( jdtausProperties.getProperty( i ) ) );
+                properties.getProperty().add( transformProperty( context, jdtausProperties.getProperty( i ) ) );
             }
         }
 
         return properties;
     }
 
-    private static Property transformProperty( final org.jdtaus.core.container.Property jdtausProperty )
+    private static Property transformProperty( final ModelContext context,
+                                               final org.jdtaus.core.container.Property jdtausProperty )
     {
         Property property = null;
 
         if ( jdtausProperty != null )
         {
             property = new Property();
-            property.setDocumentation( transformText( jdtausProperty.getDocumentation() ) );
+            property.setDocumentation( transformText( context, jdtausProperty.getDocumentation() ) );
             property.setName( jdtausProperty.getName() );
             property.setFinal( Boolean.FALSE );
             property.setOverride( Boolean.FALSE );
@@ -395,68 +414,72 @@ public class ModelModelProvider
         return property;
     }
 
-    private static Messages transformMessages( final org.jdtaus.core.container.Messages jdtausMessages )
+    private static Messages transformMessages( final ModelContext context,
+                                               final org.jdtaus.core.container.Messages jdtausMessages )
     {
         Messages messages = null;
 
         if ( jdtausMessages != null )
         {
             messages = new Messages();
-            messages.setDocumentation( transformText( jdtausMessages.getDocumentation() ) );
+            messages.setDocumentation( transformText( context, jdtausMessages.getDocumentation() ) );
 
             for ( int i = 0, s0 = jdtausMessages.size(); i < s0; i++ )
             {
-                messages.getMessage().add( transformMessage( jdtausMessages.getMessage( i ) ) );
+                messages.getMessage().add( transformMessage( context, jdtausMessages.getMessage( i ) ) );
             }
         }
 
         return messages;
     }
 
-    private static Message transformMessage( final org.jdtaus.core.container.Message jdtausMessage )
+    private static Message transformMessage( final ModelContext context,
+                                             final org.jdtaus.core.container.Message jdtausMessage )
     {
         Message message = null;
 
         if ( jdtausMessage != null )
         {
             message = new Message();
-            message.setDocumentation( transformText( jdtausMessage.getDocumentation() ) );
+            message.setDocumentation( transformText( context, jdtausMessage.getDocumentation() ) );
             message.setName( jdtausMessage.getName() );
             message.setFinal( Boolean.FALSE );
             message.setOverride( Boolean.FALSE );
-            message.setTemplate( transformText( jdtausMessage.getTemplate() ) );
-            message.setArguments( transformArguments( jdtausMessage.getArguments() ) );
+            message.setTemplate( transformText( context, jdtausMessage.getTemplate() ) );
+            message.setArguments( transformArguments( context, jdtausMessage.getArguments() ) );
         }
 
         return message;
     }
 
-    private static Arguments transformArguments( final org.jdtaus.core.container.Arguments jdtausArguments )
+    private static Arguments transformArguments( final ModelContext context,
+                                                 final org.jdtaus.core.container.Arguments jdtausArguments )
     {
         Arguments arguments = null;
 
         if ( jdtausArguments != null )
         {
             arguments = new Arguments();
-            arguments.setDocumentation( transformText( jdtausArguments.getDocumentation() ) );
+            arguments.setDocumentation( transformText( context, jdtausArguments.getDocumentation() ) );
 
             for ( int i = 0, s0 = jdtausArguments.size(); i < s0; i++ )
             {
-                arguments.getArgument().add( transformArgument( jdtausArguments.getArgument( i ) ) );
+                arguments.getArgument().add( transformArgument( context, jdtausArguments.getArgument( i ) ) );
             }
         }
 
         return arguments;
     }
 
-    private static Argument transformArgument( final org.jdtaus.core.container.Argument jdtausArgument )
+    private static Argument transformArgument( final ModelContext context,
+                                               final org.jdtaus.core.container.Argument jdtausArgument )
     {
         Argument argument = null;
 
         if ( jdtausArgument != null )
         {
             argument = new Argument();
-            argument.setDocumentation( transformText( jdtausArgument.getDocumentation() ) );
+            argument.setDocumentation( transformText( context, jdtausArgument.getDocumentation() ) );
             argument.setIndex( jdtausArgument.getIndex() );
             argument.setName( jdtausArgument.getName() );
 
@@ -484,32 +507,36 @@ public class ModelModelProvider
         return argument;
     }
 
-    private static Dependencies transformDependencies( final org.jdtaus.core.container.Dependencies jdtausDependencies )
+    private static Dependencies transformDependencies( final ModelContext context,
+                                                       final org.jdtaus.core.container.Dependencies jdtausDependencies )
     {
         Dependencies dependencies = null;
 
         if ( jdtausDependencies != null )
         {
             dependencies = new Dependencies();
-            dependencies.setDocumentation( transformText( jdtausDependencies.getDocumentation() ) );
+            dependencies.setDocumentation( transformText( context, jdtausDependencies.getDocumentation() ) );
 
             for ( int i = 0, s0 = jdtausDependencies.size(); i < s0; i++ )
             {
-                dependencies.getDependency().add( transformDependency( jdtausDependencies.getDependency( i ) ) );
+                dependencies.getDependency().add( transformDependency(
+                    context, jdtausDependencies.getDependency( i ) ) );
+
             }
         }
 
         return dependencies;
     }
 
-    private static Dependency transformDependency( final org.jdtaus.core.container.Dependency jdtausDependency )
+    private static Dependency transformDependency( final ModelContext context,
+                                                   final org.jdtaus.core.container.Dependency jdtausDependency )
     {
         Dependency dependency = null;
 
         if ( jdtausDependency != null )
         {
             dependency = new Dependency();
-            dependency.setDocumentation( transformText( jdtausDependency.getDocumentation() ) );
+            dependency.setDocumentation( transformText( context, jdtausDependency.getDocumentation() ) );
             dependency.setName( jdtausDependency.getName() );
             dependency.setFinal( Boolean.FALSE );
             dependency.setOverride( Boolean.FALSE );
@@ -525,13 +552,13 @@ public class ModelModelProvider
             // Cannot set to optional since the JOMC ObjectManager returns null if no implementations are found and
             // jDTAUS implementations expect an empty array.
             dependency.setOptional( Boolean.FALSE );
-            dependency.setProperties( transformProperties( jdtausDependency.getDeclaredProperties() ) );
+            dependency.setProperties( transformProperties( context, jdtausDependency.getDeclaredProperties() ) );
         }
 
         return dependency;
     }
 
-    private static void applyInheritanceAttributes( final Modules modules )
+    private static void applyInheritanceAttributes( final ModelContext context, final Modules modules )
     {
         final InheritanceModel imodel = new InheritanceModel( modules );
 
@@ -540,14 +567,14 @@ public class ModelModelProvider
             for ( int i = 0, s0 = modules.getImplementations().getImplementation().size(); i < s0; i++ )
             {
                 applyInheritanceAttributes(
-                    modules, imodel, modules.getImplementations().getImplementation().get( i ) );
+                    context, modules, imodel, modules.getImplementations().getImplementation().get( i ) );
 
             }
         }
     }
 
-    private static void applyInheritanceAttributes( final Modules modules, final InheritanceModel imodel,
-                                                    final Implementation implementation )
+    private static void applyInheritanceAttributes( final ModelContext context, final Modules modules,
+                                                    final InheritanceModel imodel, final Implementation implementation )
     {
         final Set<String> dependencyNames = imodel.getDependencyNames( implementation.getIdentifier() );
         final Set<String> messageNames = imodel.getMessageNames( implementation.getIdentifier() );
@@ -613,14 +640,14 @@ public class ModelModelProvider
             for ( int i = 0, s0 = implementation.getDependencies().getDependency().size(); i < s0; i++ )
             {
                 applyInheritanceAttributes(
-                    modules, imodel, implementation.getDependencies().getDependency().get( i ) );
+                    context, modules, imodel, implementation.getDependencies().getDependency().get( i ) );
 
             }
         }
     }
 
-    private static void applyInheritanceAttributes( final Modules modules, final InheritanceModel imodel,
-                                                    final Dependency dependency )
+    private static void applyInheritanceAttributes( final ModelContext context, final Modules modules,
+                                                    final InheritanceModel imodel, final Dependency dependency )
     {
         final Set<Implementation> implementations = new HashSet<Implementation>();
 
@@ -660,7 +687,7 @@ public class ModelModelProvider
                     }
                 }
 
-                applyInheritanceAttributes( modules, imodel, d );
+                applyInheritanceAttributes( context, modules, imodel, d );
             }
         }
         if ( dependency.getMessages() != null )
@@ -705,7 +732,7 @@ public class ModelModelProvider
     // SECTION-START[Constructors]
     // <editor-fold defaultstate="collapsed" desc=" Generated Constructors ">
     /** Creates a new {@code ModelModelProvider} instance. */
-    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.2.3", comments = "See http://jomc.sourceforge.net/jomc/1.2/jomc-tools-1.2.3" )
+    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.3", comments = "See http://jomc.sourceforge.net/jomc/1.3/jomc-tools-1.3" )
     public ModelModelProvider()
     {
         // SECTION-START[Default Constructor]
@@ -719,5 +746,78 @@ public class ModelModelProvider
     // SECTION-START[Properties]
     // SECTION-END
     // SECTION-START[Messages]
+    // <editor-fold defaultstate="collapsed" desc=" Generated Messages ">
+    /**
+     * Gets the text of the {@code <moduleInfo>} message.
+     * <p><dl>
+     *   <dt><b>Languages:</b></dt>
+     *     <dd>English (default)</dd>
+     *     <dd>Deutsch</dd>
+     *   <dt><b>Final:</b></dt><dd>No</dd>
+     * </dl></p>
+     * @param locale The locale of the message to return.
+     * @param moduleName Format argument.
+     * @param moduleVersion Format argument.
+     * @return The text of the {@code <moduleInfo>} message for {@code locale}.
+     * @throws org.jomc.ObjectManagementException if getting the message instance fails.
+     */
+    @SuppressWarnings("unused")
+    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.3", comments = "See http://jomc.sourceforge.net/jomc/1.3/jomc-tools-1.3" )
+    private static String getModuleInfo( final java.util.Locale locale, final java.lang.String moduleName, final java.lang.String moduleVersion )
+    {
+        java.io.BufferedReader reader = null;
+        boolean suppressExceptionOnClose = true;
+
+        try
+        {
+            final String message = java.text.MessageFormat.format( java.util.ResourceBundle.getBundle( "org/jdtaus/core/container/ri/jomc/ModelModelProvider", locale ).getString( "moduleInfo" ), moduleName, moduleVersion, (Object) null );
+            final java.lang.StringBuilder builder = new java.lang.StringBuilder( message.length() );
+            reader = new java.io.BufferedReader( new java.io.StringReader( message ) );
+            final String lineSeparator = System.getProperty( "line.separator", "\n" );
+
+            String line;
+            while ( ( line = reader.readLine() ) != null )
+            {
+                builder.append( lineSeparator ).append( line );
+            }
+
+            suppressExceptionOnClose = false;
+            return builder.length() > 0 ? builder.substring( lineSeparator.length() ) : "";
+        }
+        catch( final java.lang.ClassCastException e )
+        {
+            throw new org.jomc.ObjectManagementException( e.getMessage(), e );
+        }
+        catch( final java.lang.IllegalArgumentException e )
+        {
+            throw new org.jomc.ObjectManagementException( e.getMessage(), e );
+        }
+        catch( final java.util.MissingResourceException e )
+        {
+            throw new org.jomc.ObjectManagementException( e.getMessage(), e );
+        }
+        catch( final java.io.IOException e )
+        {
+            throw new org.jomc.ObjectManagementException( e.getMessage(), e );
+        }
+        finally
+        {
+            try
+            {
+                if( reader != null )
+                {
+                    reader.close();
+                }
+            }
+            catch( final java.io.IOException e )
+            {
+                if( !suppressExceptionOnClose )
+                {
+                    throw new org.jomc.ObjectManagementException( e.getMessage(), e );
+                }
+            }
+        }
+    }
+    // </editor-fold>
     // SECTION-END
 }

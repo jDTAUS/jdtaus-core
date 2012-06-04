@@ -45,13 +45,13 @@ import org.jomc.ObjectManagerFactory;
  * </dl>
  *
  * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a> 1.0
- * @version 1.11-SNAPSHOT
+ * @version 1.12-SNAPSHOT
  */
 // </editor-fold>
 // SECTION-END
 // SECTION-START[Annotations]
 // <editor-fold defaultstate="collapsed" desc=" Generated Annotations ">
-@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.2.3", comments = "See http://jomc.sourceforge.net/jomc/1.2/jomc-tools-1.2.3" )
+@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.3", comments = "See http://jomc.sourceforge.net/jomc/1.3/jomc-tools-1.3" )
 // </editor-fold>
 // SECTION-END
 public class ObjectManagerContainer
@@ -147,7 +147,7 @@ public class ObjectManagerContainer
     // SECTION-START[Constructors]
     // <editor-fold defaultstate="collapsed" desc=" Generated Constructors ">
     /** Creates a new {@code ObjectManagerContainer} instance. */
-    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.2.3", comments = "See http://jomc.sourceforge.net/jomc/1.2/jomc-tools-1.2.3" )
+    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.3", comments = "See http://jomc.sourceforge.net/jomc/1.3/jomc-tools-1.3" )
     public ObjectManagerContainer()
     {
         // SECTION-START[Default Constructor]
