@@ -472,7 +472,16 @@ public final class MemoryFileOperations
      */
     public int hashCode()
     {
-        return this.getData().hashCode();
+        // JDK: As of JDK 1.5, Arrays.hashCode( getData() ).
+        final byte[] bytes = getData();
+
+        int result = 1;
+        for ( int i = 0, s0 = bytes.length; i < s0; i++ )
+        {
+            result = 31 * result + bytes[i];
+        }
+
+        return result;
     }
 
     /**
