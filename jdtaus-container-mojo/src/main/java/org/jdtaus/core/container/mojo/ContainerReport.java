@@ -468,10 +468,11 @@ public class ContainerReport extends AbstractMavenReport
                 this.getSink().tableRow();
 
                 this.getSink().tableCell();
-                this.getSink().link( "specification_" + spec.getIdentifier() );
+                this.getSink().link( "#specification_" + spec.getIdentifier() );
                 this.getSink().monospaced();
                 this.getSink().text( spec.getIdentifier() );
                 this.getSink().monospaced_();
+                this.getSink().link_();
                 this.getSink().tableCell_();
 
                 this.getSink().tableCell();
@@ -584,10 +585,11 @@ public class ContainerReport extends AbstractMavenReport
                 this.getSink().tableRow();
 
                 this.getSink().tableCell();
-                this.getSink().link( "implementation_" + impl.getIdentifier() );
+                this.getSink().link( "#implementation_" + impl.getIdentifier() );
                 this.getSink().monospaced();
                 this.getSink().text( impl.getIdentifier() );
                 this.getSink().monospaced_();
+                this.getSink().link_();
                 this.getSink().tableCell_();
 
                 this.getSink().tableCell();
