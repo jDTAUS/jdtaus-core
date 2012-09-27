@@ -34,49 +34,10 @@
   <build>
     <resources>
       <resource>
-        <filtering>true</filtering>
+        <filtering>false</filtering>
         <directory>src/main/resources</directory>
       </resource>
-      <resource>
-        <filtering>false</filtering>
-        <directory>src/site/resources</directory>
-        <targetPath>org/jdtaus/core/model</targetPath>
-        <includes>
-          <include>jdtaus-core-1.0.xsd</include>
-        </includes>
-      </resource>
-      <resource>
-        <filtering>false</filtering>
-        <directory>src/site/resources</directory>
-        <targetPath>org/jdtaus/core/model/container</targetPath>
-        <includes>
-          <include>jdtaus-container-1.0.xsd</include>
-          <include>jdtaus-container-1.1.xsd</include>
-        </includes>
-      </resource>
-      <resource>
-        <filtering>false</filtering>
-        <directory>src/site/resources</directory>
-        <targetPath>org/jdtaus/core/model/monitor</targetPath>
-        <includes>
-          <include>jdtaus-monitor-1.0.xsd</include>
-        </includes>
-      </resource>
-      <resource>
-        <filtering>false</filtering>
-        <directory>src/site/resources</directory>
-        <targetPath>org/jdtaus/core/model/text</targetPath>
-        <includes>
-          <include>jdtaus-text-1.0.xsd</include>
-        </includes>
-      </resource>
     </resources>
-    <testResources>
-      <testResource>
-        <filtering>true</filtering>
-        <directory>src/test/resources</directory>
-      </testResource>
-    </testResources>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -104,7 +65,75 @@
             </archive>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>wagon-maven-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>default-model-schema-upload</id>
+              <phase>deploy</phase>
+              <goals>
+                <goal>upload</goal>
+              </goals>
+              <configuration>
+                <fromDir>src/main/resouces/org/jdtaus/core/model</fromDir>
+                <includes>*.xsd</includes>
+                <serverId>${jdtaus.xsd.distribution.id}</serverId>
+                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas/org/jdtaus/core/model</toDir>
+                <url>${jdtaus.xsd.distribution.url}</url>
+              </configuration>
+            </execution>
+            <execution>
+              <id>default-container-schema-upload</id>
+              <phase>deploy</phase>
+              <goals>
+                <goal>upload</goal>
+              </goals>
+              <configuration>
+                <fromDir>src/main/resouces/org/jdtaus/core/model/container</fromDir>
+                <includes>*.xsd</includes>
+                <serverId>${jdtaus.xsd.distribution.id}</serverId>
+                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas/org/jdtaus/core/model/container</toDir>
+                <url>${jdtaus.xsd.distribution.url}</url>
+              </configuration>
+            </execution>
+            <execution>
+              <id>default-monitor-schema-upload</id>
+              <phase>deploy</phase>
+              <goals>
+                <goal>upload</goal>
+              </goals>
+              <configuration>
+                <fromDir>src/main/resouces/org/jdtaus/core/model/monitor</fromDir>
+                <includes>*.xsd</includes>
+                <serverId>${jdtaus.xsd.distribution.id}</serverId>
+                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas/org/jdtaus/core/model/monitor</toDir>
+                <url>${jdtaus.xsd.distribution.url}</url>
+              </configuration>
+            </execution>
+            <execution>
+              <id>default-text-schema-upload</id>
+              <phase>deploy</phase>
+              <goals>
+                <goal>upload</goal>
+              </goals>
+              <configuration>
+                <fromDir>src/main/resouces/org/jdtaus/core/model/text</fromDir>
+                <includes>*.xsd</includes>
+                <serverId>${jdtaus.xsd.distribution.id}</serverId>
+                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas/org/jdtaus/core/model/text</toDir>
+                <url>${jdtaus.xsd.distribution.url}</url>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>wagon-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
 </project>
