@@ -1,7 +1,7 @@
 /*
  *  jDTAUS Core API
  *  Copyright (C) 2005 Christian Schulte
- *  <schulte2005@users.sourceforge.net>
+ *  <cs@schulte.it>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -25,7 +25,7 @@ package org.jdtaus.core.container;
  * <p>By implementing this interface implementations request custom
  * initialization.</p>
  *
- * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
+ * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  * @deprecated Removed without replacement. Implementations should not perform
  * initialization during instantiation.

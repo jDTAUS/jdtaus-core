@@ -1,7 +1,7 @@
 /*
  *  jDTAUS Core API
  *  Copyright (C) 2005 Christian Schulte
- *  <schulte2005@users.sourceforge.net>
+ *  <cs@schulte.it>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -37,7 +37,7 @@ import org.jdtaus.core.text.Message;
  * presentation descriptions of a task itself and of the work currently
  * performed by a task.</p>
  *
- * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
+ * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  *
  * @see TaskEvent
@@ -373,7 +373,7 @@ public abstract class Task implements Cloneable, Serializable
  * <p><b>Note:</b><br/>
  * This comparator imposes orderings that are inconsistent with equals.</p>
  *
- * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
+ * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
 class AscendingTaskComparator implements Comparator, Serializable
@@ -421,7 +421,7 @@ class AscendingTaskComparator implements Comparator, Serializable
  * <p><b>Note:</b><br/>
  * This comparator imposes orderings that are inconsistent with equals.</p>
  *
- * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
+ * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
 class DescendingTaskComparator

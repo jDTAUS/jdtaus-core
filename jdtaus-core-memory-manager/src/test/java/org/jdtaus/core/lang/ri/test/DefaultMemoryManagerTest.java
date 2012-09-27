@@ -1,7 +1,7 @@
 /*
  *  jDTAUS Core RI Memory Manager
  *  Copyright (C) 2005 Christian Schulte
- *  <schulte2005@users.sourceforge.net>
+ *  <cs@schulte.it>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -27,7 +27,7 @@ import org.jdtaus.core.lang.spi.it.MemoryManagerTest;
 /**
  * Tests the {@link DefaultMemoryManager} implementation.
  *
- * @author <a href="mailto:schulte2005@users.sourceforge.net">Cest.java 2469 2007-04-11 03:03:04Z schulte2005 $
+ * @author <a href="mailto:cs@schulte.it">Cest.java 2469 2007-04-11 03:03:04Z schulte2005 $
  */
 public class DefaultMemoryManagerTest extends MemoryManagerTest
 {

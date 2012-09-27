@@ -1,7 +1,7 @@
 /*
  *  jDTAUS Core RI Client Container
  *  Copyright (C) 2005 Christian Schulte
- *  <schulte2005@users.sourceforge.net>
+ *  <cs@schulte.it>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -93,7 +93,7 @@ import org.xml.sax.SAXParseException;
 /**
  * {@code Model} reference implementation.
  *
- * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
+ * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  *
  * @see <a href="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd">jdtaus-container-1.1.xsd</a>

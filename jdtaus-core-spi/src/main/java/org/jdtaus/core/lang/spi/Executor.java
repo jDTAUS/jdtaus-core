@@ -1,7 +1,7 @@
 /*
  *  jDTAUS Core SPI
  *  Copyright (C) 2005 Christian Schulte
- *  <schulte2005@users.sourceforge.net>
+ *  <cs@schulte.it>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -25,7 +25,7 @@ package org.jdtaus.core.lang.spi;
  * <p>jDTAUS Core SPI {@code Executor} specification to be used by
  * implementations to perform operations asynchronously.</p>
  *
- * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
+ * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  * @see org.jdtaus.core.container.Container
  */

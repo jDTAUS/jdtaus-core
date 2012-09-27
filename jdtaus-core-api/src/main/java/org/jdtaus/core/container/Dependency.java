@@ -1,7 +1,7 @@
 /*
  *  jDTAUS Core API
  *  Copyright (C) 2005 Christian Schulte
- *  <schulte2005@users.sourceforge.net>
+ *  <cs@schulte.it>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -34,7 +34,7 @@ import java.util.TreeMap;
  * {@code bound} flag indicates if the instance of the dependency is bound to
  * the declaring implementation.</p>
  *
- * @author <a href="mailto:schulte2005@users.sourceforge.net">Christian Schulte</a>
+ * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
 public class Dependency extends ModelObject implements Cloneable, Serializable
