@@ -79,7 +79,7 @@
                 <fromDir>src/main/resouces/org/jdtaus/core/model</fromDir>
                 <includes>*.xsd</includes>
                 <serverId>${jdtaus.xsd.distribution.id}</serverId>
-                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas/org/jdtaus/core/model</toDir>
+                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas</toDir>
                 <url>${jdtaus.xsd.distribution.url}</url>
               </configuration>
             </execution>
@@ -93,7 +93,7 @@
                 <fromDir>src/main/resouces/org/jdtaus/core/model/container</fromDir>
                 <includes>*.xsd</includes>
                 <serverId>${jdtaus.xsd.distribution.id}</serverId>
-                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas/org/jdtaus/core/model/container</toDir>
+                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas</toDir>
                 <url>${jdtaus.xsd.distribution.url}</url>
               </configuration>
             </execution>
@@ -107,7 +107,7 @@
                 <fromDir>src/main/resouces/org/jdtaus/core/model/monitor</fromDir>
                 <includes>*.xsd</includes>
                 <serverId>${jdtaus.xsd.distribution.id}</serverId>
-                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas/org/jdtaus/core/model/monitor</toDir>
+                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas</toDir>
                 <url>${jdtaus.xsd.distribution.url}</url>
               </configuration>
             </execution>
@@ -121,7 +121,7 @@
                 <fromDir>src/main/resouces/org/jdtaus/core/model/text</fromDir>
                 <includes>*.xsd</includes>
                 <serverId>${jdtaus.xsd.distribution.id}</serverId>
-                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas/org/jdtaus/core/model/text</toDir>
+                <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas</toDir>
                 <url>${jdtaus.xsd.distribution.url}</url>
               </configuration>
             </execution>
