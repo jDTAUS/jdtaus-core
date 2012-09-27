@@ -76,7 +76,7 @@
                 <goal>upload</goal>
               </goals>
               <configuration>
-                <fromDir>src/main/resouces/org/jdtaus/core/model</fromDir>
+                <fromDir>src/main/resources/org/jdtaus/core/model</fromDir>
                 <includes>*.xsd</includes>
                 <serverId>${jdtaus.xsd.distribution.id}</serverId>
                 <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas</toDir>
@@ -90,7 +90,7 @@
                 <goal>upload</goal>
               </goals>
               <configuration>
-                <fromDir>src/main/resouces/org/jdtaus/core/model/container</fromDir>
+                <fromDir>src/main/resources/org/jdtaus/core/model/container</fromDir>
                 <includes>*.xsd</includes>
                 <serverId>${jdtaus.xsd.distribution.id}</serverId>
                 <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas</toDir>
@@ -104,7 +104,7 @@
                 <goal>upload</goal>
               </goals>
               <configuration>
-                <fromDir>src/main/resouces/org/jdtaus/core/model/monitor</fromDir>
+                <fromDir>src/main/resources/org/jdtaus/core/model/monitor</fromDir>
                 <includes>*.xsd</includes>
                 <serverId>${jdtaus.xsd.distribution.id}</serverId>
                 <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas</toDir>
@@ -118,7 +118,7 @@
                 <goal>upload</goal>
               </goals>
               <configuration>
-                <fromDir>src/main/resouces/org/jdtaus/core/model/text</fromDir>
+                <fromDir>src/main/resources/org/jdtaus/core/model/text</fromDir>
                 <includes>*.xsd</includes>
                 <serverId>${jdtaus.xsd.distribution.id}</serverId>
                 <toDir>1.0.x/jdtaus-core/jdtaus-core-schemas</toDir>
