@@ -29,7 +29,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-utilities</artifactId>
-  <name>jDTAUS Core Utilities</name>
+  <name>jDTAUS Core ⁑ Utilities</name>
   <description>jDTAUS core utility components.</description>
   <build>
     <resources>
@@ -48,36 +48,38 @@
         <directory>src/test/resources</directory>
       </testResource>
     </testResources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <dependencies>
+            <dependency>
+              <groupId>org.jdtaus.core.container</groupId>
+              <artifactId>jdtaus-core-client-container</artifactId>
+              <version>${jdtausCoreVersion}</version>
+              <scope>runtime</scope>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <reportPlugins combine.children="append">
+              <reportPlugin>
+                <groupId>org.jdtaus.mojo</groupId>
+                <artifactId>jdtaus-container-mojo</artifactId>
+                <version>${jdtaus-container-mojo.artifact.version}</version>
+                <configuration>
+                  <moduleName>${project.name}</moduleName>
+                </configuration>
+              </reportPlugin>
+            </reportPlugins>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <argLine>-Xmx256m</argLine>
-          <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <systemPropertyVariables>
-            <java.util.logging.config.file>${project.build.testOutputDirectory}/logging.properties</java.util.logging.config.file>
-          </systemPropertyVariables>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <dependencies>
-          <dependency>
-            <groupId>org.jdtaus.core.container</groupId>
-            <artifactId>jdtaus-core-client-container</artifactId>
-            <version>${jdtausCoreVersion}</version>
-            <scope>runtime</scope>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <locales>en</locales>
-        </configuration>
       </plugin>
     </plugins>
   </build>
@@ -118,16 +120,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.jdtaus.mojo</groupId>
-        <artifactId>jdtaus-container-mojo</artifactId>
-        <version>3.11-SNAPSHOT</version>
-        <configuration>
-          <moduleName>${project.name}</moduleName>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
 </project>

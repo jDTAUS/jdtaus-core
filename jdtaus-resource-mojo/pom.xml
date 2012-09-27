@@ -30,7 +30,7 @@
   <groupId>org.jdtaus.mojo</groupId>
   <artifactId>jdtaus-resource-mojo</artifactId>
   <packaging>maven-plugin</packaging>
-  <name>jDTAUS Core Resource Mojo</name>
+  <name>jDTAUS Core ⁑ Resource Mojo</name>
   <version>3.12-SNAPSHOT</version>
   <description>Source generator for resource bundles.</description>
   <build>
@@ -49,7 +49,7 @@
     <plugins>
       <plugin>
         <groupId>org.codehaus.plexus</groupId>
-        <artifactId>plexus-maven-plugin</artifactId>
+        <artifactId>plexus-component-metadata</artifactId>
       </plugin>
       <plugin>
         <groupId>org.jvnet.jaxb1.maven2</groupId>
@@ -84,15 +84,6 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugin-plugin</artifactId>
-        <version>${mavenPluginPluginVersion}</version>
-      </plugin>
-    </plugins>
-  </reporting>
   <profiles>
     <profile>
       <id>jdk14</id>

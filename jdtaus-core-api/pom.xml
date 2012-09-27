@@ -29,7 +29,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.common</groupId>
   <artifactId>jdtaus-core-api</artifactId>
-  <name>jDTAUS Core API</name>
+  <name>jDTAUS Core ⁑ API</name>
   <description>jDTAUS core application programming interface.</description>
   <build>
     <resources>
@@ -54,6 +54,22 @@
         </includes>
       </testResource>
     </testResources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>clirr-maven-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>check</id>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
@@ -62,14 +78,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>clirr-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>check</id>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
@@ -85,16 +93,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>clirr-maven-plugin</artifactId>
-        <version>${clirrMavenPluginVersion}</version>
-        <configuration>
-          <minSeverity>info</minSeverity>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
 </project>

@@ -29,7 +29,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-runtime</artifactId>
-  <name>jDTAUS Core Reference Implementation</name>
+  <name>jDTAUS Core ⁑ Reference Implementation</name>
   <description>jDTAUS core reference implementation.</description>
   <build>
     <resources>
@@ -44,60 +44,99 @@
         <directory>src/test/resources</directory>
       </testResource>
     </testResources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <dependencies>
+            <dependency>
+              <groupId>org.jdtaus.core.container</groupId>
+              <artifactId>jdtaus-core-client-container</artifactId>
+              <version>${jdtausCoreVersion}</version>
+              <scope>runtime</scope>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <reportPlugins combine.children="append">
+              <reportPlugin>
+                <groupId>org.jdtaus.mojo</groupId>
+                <artifactId>jdtaus-container-mojo</artifactId>
+                <version>${jdtaus-container-mojo.artifact.version}</version>
+                <configuration>
+                  <moduleName>${project.name}</moduleName>
+                </configuration>
+              </reportPlugin>
+            </reportPlugins>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.jdtaus.mojo</groupId>
+          <artifactId>jdtaus-container-mojo</artifactId>
+          <executions>
+            <execution>
+              <id>verify</id>
+              <goals>
+                <goal>verify-jar</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>descriptors</id>
+              <goals>
+                <goal>spring-descriptor</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <locale>en</locale>
+            <factoryBean>org.jdtaus.core.container.ri.spring.ContainerFactoryBean</factoryBean>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <configuration>
+                <artifactSet>
+                  <excludes>
+                    <exclude>javax.xml.parsers:jaxp-api</exclude>
+                    <exclude>com.sun.xml.parsers:jaxp-ri</exclude>
+                  </excludes>
+                </artifactSet>
+                <transformers>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                    <resource>META-INF/MANIFEST.MF</resource>
+                  </transformer>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                    <resource>META-INF/*.SF</resource>
+                  </transformer>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                    <resource>META-INF/*.DSA</resource>
+                  </transformer>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                    <resource>META-INF/*.EC</resource>
+                  </transformer>
+                  <transformer implementation="org.jdtaus.core.container.mojo.ContainerResourceTransformer" />
+                </transformers>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-        <executions>
-          <execution>
-            <id>verify</id>
-            <goals>
-              <goal>verify-jar</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>descriptors</id>
-            <goals>
-              <goal>spring-descriptor</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <locale>en</locale>
-          <factoryBean>org.jdtaus.core.container.ri.spring.ContainerFactoryBean</factoryBean>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <artifactSet>
-                <excludes>
-                  <exclude>javax.xml.parsers:jaxp-api</exclude>
-                  <exclude>com.sun.xml.parsers:jaxp-ri</exclude>
-                </excludes>
-              </artifactSet>
-              <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
-                  <resource>META-INF/MANIFEST.MF</resource>
-                </transformer>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
-                  <resource>META-INF/*.SF</resource>
-                </transformer>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
-                  <resource>META-INF/*.DSA</resource>
-                </transformer>
-                <transformer implementation="org.jdtaus.core.container.mojo.ContainerResourceTransformer" />
-              </transformers>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
@@ -163,94 +202,4 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.jdtaus.mojo</groupId>
-        <artifactId>jdtaus-container-mojo</artifactId>
-        <version>3.11-SNAPSHOT</version>
-        <configuration>
-          <moduleName>${project.name}</moduleName>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
-  <profiles>
-    <profile>
-      <id>jdtaus-release</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-deploy-plugin</artifactId>
-            <configuration>
-              <updateReleaseInfo>true</updateReleaseInfo>
-            </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jarsigner-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>sign</id>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>verify</id>
-                <goals>
-                  <goal>verify</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>sign</id>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
-

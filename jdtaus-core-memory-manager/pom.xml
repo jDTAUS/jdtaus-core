@@ -29,7 +29,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jdtaus-core-memory-manager</artifactId>
   <groupId>org.jdtaus.core.lang</groupId>
-  <name>jDTAUS Core RI Memory Manager</name>
+  <name>jDTAUS Core ⁑ RI Memory Manager</name>
   <description>jDTAUS runtime reference implementation.</description>
   <build>
     <resources>
@@ -44,25 +44,38 @@
         <directory>src/test/resources</directory>
       </testResource>
     </testResources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <dependencies>
+            <dependency>
+              <groupId>org.jdtaus.core.container</groupId>
+              <artifactId>jdtaus-core-client-container</artifactId>
+              <version>${jdtausCoreVersion}</version>
+              <scope>runtime</scope>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <reportPlugins combine.children="append">
+              <reportPlugin>
+                <groupId>org.jdtaus.mojo</groupId>
+                <artifactId>jdtaus-container-mojo</artifactId>
+                <version>${jdtaus-container-mojo.artifact.version}</version>
+                <configuration>
+                  <moduleName>${project.name}</moduleName>
+                </configuration>
+              </reportPlugin>
+            </reportPlugins>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <dependencies>
-          <dependency>
-            <groupId>org.jdtaus.core.container</groupId>
-            <artifactId>jdtaus-core-client-container</artifactId>
-            <version>${jdtausCoreVersion}</version>
-            <scope>runtime</scope>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <locales>en</locales>
-        </configuration>
       </plugin>
     </plugins>
   </build>
@@ -83,16 +96,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <reporting>
-    <plugins>
-      <plugin>
-        <artifactId>jdtaus-container-mojo</artifactId>
-        <groupId>org.jdtaus.mojo</groupId>
-        <version>3.11-SNAPSHOT</version>
-        <configuration>
-          <moduleName>${project.name}</moduleName>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
 </project>

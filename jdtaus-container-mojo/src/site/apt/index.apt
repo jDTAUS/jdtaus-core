@@ -16,40 +16,40 @@ jDTAUS Container Mojo
 
   Currently the Container Mojo has eight goals.
 
-  * {{{clean-sources-mojo.html}jdtaus-container-mojo:clean-sources}} is
+  * {{{./clean-sources-mojo.html}jdtaus-container-mojo:clean-sources}} is
     not bound to any particular lifecycle phase and is used to cleanup a
     projects' source files (currently only removes any trailing spaces).
 
-  * {{{java-container-mojo.html}jdtaus-container-mojo:java-container}}
+  * {{{./java-container-mojo.html}jdtaus-container-mojo:java-container}}
     is bound to the process-resources phase and is used to manage source code
     sections in main java class files backed by a project's container model.
 
-  * {{{java-container-tests-mojo.html}jdtaus-container-mojo:java-container-tests}}
+  * {{{./java-container-tests-mojo.html}jdtaus-container-mojo:java-container-tests}}
     is bound to the process-test-resources phase and is used to manage source
     code sections in test java class files backed by a project's test container
     model.
 
-  * {{{java-commit-mojo.html}jdtaus-container-mojo:java-commit}}
+  * {{{./java-commit-mojo.html}jdtaus-container-mojo:java-commit}}
     is bound to the process-classes phase and is used to commit a project's
     container model to compiled main java classes.
 
-  * {{{java-commit-tests-mojo.html}jdtaus-container-mojo:java-commit-tests}}
+  * {{{./java-commit-tests-mojo.html}jdtaus-container-mojo:java-commit-tests}}
     is bound to the process-test-classes phase and is used to commit a project's
     test container model to compiled test java classes.
 
-  * {{{verify-model-mojo.html}jdtaus-container-mojo:verify-model}}
+  * {{{./verify-model-mojo.html}jdtaus-container-mojo:verify-model}}
     is bound to the verify phase and is used to verify a project's container
     model.
 
-  * {{{verify-jar-mojo.html}jdtaus-container-mojo:verify-jar}}
+  * {{{./verify-jar-mojo.html}jdtaus-container-mojo:verify-jar}}
     is bound to the verify phase and is used to verify a container model stored
     in a jar file.
 
-  * {{{spring-descriptor-mojo.html}jdtaus-container-mojo:spring-descriptor}}
+  * {{{./spring-descriptor-mojo.html}jdtaus-container-mojo:spring-descriptor}}
     is bound to the process-resources phase and is used to generate a spring
     beans XML document from a project's container model.
 
 * Usage
 
   Instructions on how to use the Container Mojo can be found
-  {{{usage.html}here}}.
+  {{{./usage.html}here}}.

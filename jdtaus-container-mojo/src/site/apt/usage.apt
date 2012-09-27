@@ -17,7 +17,7 @@ jDTAUS Container Mojo: Usage
   to the mojo by a corresponding container implementation dependency), the mojo
   will manage the contents of various source code sections based on that data.
 
-  See the {{{../jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
+  See the {{{./../jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
   regarding the jDTAUS Container reference implemenation shown below, which
   expects XML document resources located at classpath location
   <<<META-INF/jdtaus/module.xml>>>.
@@ -32,12 +32,12 @@ jDTAUS Container Mojo: Usage
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-        <version>3.6</version>
+        <version>3.11</version>
         <dependencies>
           <dependency>
             <groupId>org.jdtaus.core.container</groupId>
             <artifactId>jdtaus-core-client-container</artifactId>
-            <version>1.9.4</version>
+            <version>1.13</version>
           </dependency>
         </dependencies>
         <executions>
@@ -145,12 +145,12 @@ jDTAUS Container Mojo: Usage
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-container-mojo</artifactId>
-      <version>3.6</version>
+      <version>3.11</version>
       <dependencies>
         <dependency>
           <groupId>org.jdtaus.core.container</groupId>
           <artifactId>jdtaus-core-client-container</artifactId>
-          <version>1.9.4</version>
+          <version>1.13</version>
         </dependency>
       </dependencies>
       <executions>
@@ -186,12 +186,12 @@ jDTAUS Container Mojo: Usage
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-container-mojo</artifactId>
-      <version>3.6</version>
+      <version>3.11</version>
       <dependencies>
         <dependency>
           <groupId>org.jdtaus.core.container</groupId>
           <artifactId>jdtaus-core-client-container</artifactId>
-          <version>1.9.4</version>
+          <version>1.13</version>
         </dependency>
       </dependencies>
       <executions>
@@ -229,12 +229,12 @@ jDTAUS Container Mojo: Usage
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-container-mojo</artifactId>
-      <version>3.6</version>
+      <version>3.11</version>
       <dependencies>
         <dependency>
           <groupId>org.jdtaus.core.container</groupId>
           <artifactId>jdtaus-core-client-container</artifactId>
-          <version>1.9.4</version>
+          <version>1.13</version>
         </dependency>
       </dependencies>
       <executions>
@@ -253,6 +253,6 @@ jDTAUS Container Mojo: Usage
 +---
 
   <<Note:>> Mapping a jDTAUS Container model to a Spring beans model does not
-  decouple from the jDTAUS Container. The generated spring beans desciptor
+  decouple from the jDTAUS Container. The generated spring beans descriptor
   solely helps in accessing classes managed by the jDTAUS container from a
   spring container.

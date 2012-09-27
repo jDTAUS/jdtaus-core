@@ -35,7 +35,7 @@ public class DefaultContainerTest
 {
 
     private static final String MODULE_NAME =
-        "jDTAUS Core RI Client Container";
+        "jDTAUS Core ⁑ RI Client Container";
 
     public Container getContainer()
     {

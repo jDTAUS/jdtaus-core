@@ -8,8 +8,8 @@ July 2005
 
 jDTAUS Core
 
-  The {{{jdtaus-core-api/project-summary.html}Core API artifact}} provides
-  an {{{jdtaus-core-api/apidocs/index.html}application programming interface}}
+  The {{{./jdtaus-core-api/project-summary.html}Core API artifact}} provides
+  an {{{./jdtaus-core-api/apidocs/index.html}application programming interface}}
   to core services like task monitoring and modular object management and
   configuration. Whenever that API is used at compile time, an application
   assembler needs to provide corresponding implementations at runtime as shown
@@ -18,27 +18,27 @@ jDTAUS Core
 *-------------------+--------------+-------------------------------------------+
 || <<Artifact>>     || <<License>> || <<Description>>                         ||
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-client-container/index.html} jDTAUS Core RI Client Container}} | LGPL | <<<Container>>>, <<<Model>>> and <<<Context>>> reference implementation. {{{jdtaus-core-client-container/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-client-container/index.html} jDTAUS Core RI Client Container}} | LGPL | <<<Container>>>, <<<Model>>> and <<<Context>>> reference implementation. {{{./jdtaus-core-client-container/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-servlet-container/index.html} jDTAUS Core RI Servlet Container}} | LGPL | Web application integration reference implementation. (Only needed when integrating with web applications.) {{{jdtaus-core-servlet-container/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-servlet-container/index.html} jDTAUS Core RI Servlet Container}} | LGPL | Web application integration reference implementation. (Only needed when integrating with web applications.) {{{./jdtaus-core-servlet-container/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-jdk-logging/project-summary.html} jDTAUS Core RI JDK 1.4 Logging}} | LGPL | JDK 1.4 logging reference implementation. {{{jdtaus-core-jdk-logging/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-jdk-logging/project-summary.html} jDTAUS Core RI JDK 1.4 Logging}} | LGPL | JDK 1.4 logging reference implementation. {{{./jdtaus-core-jdk-logging/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-log4j-logging/project-summary.html} jDTAUS Core RI Log4J Logging}} | LGPL | Log4J logging reference implementation. {{{jdtaus-core-log4j-logging/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-log4j-logging/project-summary.html} jDTAUS Core RI Log4J Logging}} | LGPL | Log4J logging reference implementation. {{{./jdtaus-core-log4j-logging/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-commons-logging/project-summary.html} jDTAUS Core RI Commons Logging}} | LGPL | Commons logging reference implementation. {{{jdtaus-core-commons-logging/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-commons-logging/project-summary.html} jDTAUS Core RI Commons Logging}} | LGPL | Commons logging reference implementation. {{{./jdtaus-core-commons-logging/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-slf4j-logging/project-summary.html} jDTAUS Core RI Slf4J Logging}} | LGPL | Slf4J logging reference implementation. {{{jdtaus-core-slf4j-logging/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-slf4j-logging/project-summary.html} jDTAUS Core RI Slf4J Logging}} | LGPL | Slf4J logging reference implementation. {{{./jdtaus-core-slf4j-logging/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-task-monitor/project-summary.html} jDTAUS Core RI Task Monitor}} | LGPL | Task monitoring reference implementation. {{{jdtaus-core-task-monitor/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-task-monitor/project-summary.html} jDTAUS Core RI Task Monitor}} | LGPL | Task monitoring reference implementation. {{{./jdtaus-core-task-monitor/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-memory-manager/project-summary.html} jDTAUS Core RI Memory Manager}} | LGPL | Runtime reference implementation. {{{jdtaus-core-memory-manager/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-memory-manager/project-summary.html} jDTAUS Core RI Memory Manager}} | LGPL | Runtime reference implementation. {{{./jdtaus-core-memory-manager/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-jdk14-executor/project-summary.html} jDTAUS Core RI JDK 1.4 Executor}} | LGPL | JDK 1.4 executor reference implementation. {{{jdtaus-core-jdk14-executor/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-jdk14-executor/project-summary.html} jDTAUS Core RI JDK 1.4 Executor}} | LGPL | JDK 1.4 executor reference implementation. {{{./jdtaus-core-jdk14-executor/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-application-logger/project-summary.html} jDTAUS Core RI Application Logger}} | LGPL | Application logger reference implementation. {{{jdtaus-core-application-logger/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-application-logger/project-summary.html} jDTAUS Core RI Application Logger}} | LGPL | Application logger reference implementation. {{{./jdtaus-core-application-logger/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
-| {{{jdtaus-core-entity-resolver/project-summary.html} jDTAUS Core RI Entity Resolver}} | LGPL | Entity resolver reference implementation. {{{jdtaus-core-entity-resolver/apidocs/}See Javadoc}}|
+| {{{./jdtaus-core-entity-resolver/project-summary.html} jDTAUS Core RI Entity Resolver}} | LGPL | Entity resolver reference implementation. {{{./jdtaus-core-entity-resolver/apidocs/}See Javadoc}}|
 *-------------------+--------------+-------------------------------------------+
 
   <<Note:>> The logging implementations are exclusive. Only one of the artifacts

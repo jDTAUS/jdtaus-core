@@ -29,7 +29,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-it</artifactId>
-  <name>jDTAUS Core Test Suite</name>
+  <name>jDTAUS Core ⁑ Test Suite</name>
   <description>jDTAUS core test suite.</description>
   <build>
     <resources>

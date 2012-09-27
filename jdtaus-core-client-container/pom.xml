@@ -29,7 +29,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jdtaus-core-client-container</artifactId>
   <groupId>org.jdtaus.core.container</groupId>
-  <name>jDTAUS Core RI Client Container</name>
+  <name>jDTAUS Core ⁑ RI Client Container</name>
   <description>jDTAUS container reference implementation.</description>
   <dependencies>
     <dependency>
@@ -73,6 +73,34 @@
         <directory>src/test/resources</directory>
       </testResource>
     </testResources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <dependencies>
+            <dependency>
+              <groupId>org.jdtaus.core.container</groupId>
+              <artifactId>jdtaus-core-client-container</artifactId>
+              <version>${jdtausCoreVersion}</version>
+              <scope>runtime</scope>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <reportPlugins combine.children="append">
+              <reportPlugin>
+                <groupId>org.jdtaus.mojo</groupId>
+                <artifactId>jdtaus-container-mojo</artifactId>
+                <version>${jdtaus-container-mojo.artifact.version}</version>
+                <configuration>
+                  <moduleName>${project.name}</moduleName>
+                </configuration>
+              </reportPlugin>
+            </reportPlugins>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
@@ -84,76 +112,4 @@
       </plugin>
     </plugins>
   </build>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>javacc-maven-plugin</artifactId>
-        <version>${javaccMavenPluginVersion}</version>
-      </plugin>
-    </plugins>
-  </reporting>
-  <profiles>
-    <profile>
-      <id>jdk14</id>
-      <activation>
-        <jdk>1.4</jdk>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>copy-extensions</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>copy</goal>
-                </goals>
-                <configuration>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>javax.xml.parsers</groupId>
-                      <artifactId>jaxp-api</artifactId>
-                      <version>1.4.2</version>
-                    </artifactItem>
-                    <artifactItem>
-                      <groupId>com.sun.xml.parsers</groupId>
-                      <artifactId>jaxp-ri</artifactId>
-                      <version>1.4.2</version>
-                    </artifactItem>
-                  </artifactItems>
-                  <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <argLine>-Djava.endorsed.dirs="${project.build.directory}/endorsed" -Djava.ext.dirs="${project.build.directory}/endorsed"</argLine>
-              <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <systemPropertyVariables>
-                <java.util.logging.config.file>${project.build.testOutputDirectory}/logging.properties</java.util.logging.config.file>
-              </systemPropertyVariables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-      <dependencies>
-        <dependency>
-          <groupId>javax.xml.parsers</groupId>
-          <artifactId>jaxp-api</artifactId>
-          <scope>compile</scope>
-        </dependency>
-        <dependency>
-          <groupId>com.sun.xml.parsers</groupId>
-          <artifactId>jaxp-ri</artifactId>
-          <scope>runtime</scope>
-        </dependency>
-      </dependencies>
-    </profile>
-  </profiles>
 </project>

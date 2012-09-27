@@ -29,7 +29,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-schemas</artifactId>
-  <name>jDTAUS Core XML Schemas</name>
+  <name>jDTAUS Core ⁑ XML Schemas</name>
   <description>jDTAUS core XML schemas.</description>
   <build>
     <resources>
@@ -77,32 +77,34 @@
         <directory>src/test/resources</directory>
       </testResource>
     </testResources>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestSections>
-              <manifestSection>
-                <name>org/jdtaus/core/model/jdtaus-core-1.0.xsd</name>
-              </manifestSection>
-              <manifestSection>
-                <name>org/jdtaus/core/model/container/jdtaus-container-1.0.xsd</name>
-              </manifestSection>
-              <manifestSection>
-                <name>org/jdtaus/core/model/container/jdtaus-container-1.1.xsd</name>
-              </manifestSection>
-              <manifestSection>
-                <name>org/jdtaus/core/model/monitor/jdtaus-monitor-1.0.xsd</name>
-              </manifestSection>
-              <manifestSection>
-                <name>org/jdtaus/core/model/text/jdtaus-text-1.0.xsd</name>
-              </manifestSection>
-            </manifestSections>
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifestSections>
+                <manifestSection>
+                  <name>org/jdtaus/core/model/jdtaus-core-1.0.xsd</name>
+                </manifestSection>
+                <manifestSection>
+                  <name>org/jdtaus/core/model/container/jdtaus-container-1.0.xsd</name>
+                </manifestSection>
+                <manifestSection>
+                  <name>org/jdtaus/core/model/container/jdtaus-container-1.1.xsd</name>
+                </manifestSection>
+                <manifestSection>
+                  <name>org/jdtaus/core/model/monitor/jdtaus-monitor-1.0.xsd</name>
+                </manifestSection>
+                <manifestSection>
+                  <name>org/jdtaus/core/model/text/jdtaus-text-1.0.xsd</name>
+                </manifestSection>
+              </manifestSections>
+            </archive>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>
