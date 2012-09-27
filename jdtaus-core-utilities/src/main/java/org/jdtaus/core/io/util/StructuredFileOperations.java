@@ -558,7 +558,7 @@ public final class StructuredFileOperations implements StructuredFile
         }
 
         this.blockSize = blockSize;
-        this.decimalBlockSize = new BigDecimal( blockSize );
+        this.decimalBlockSize = BigDecimal.valueOf( blockSize );
         this.fileOperations = fileOperations;
         this.assertValidFileLength();
     }
@@ -597,7 +597,7 @@ public final class StructuredFileOperations implements StructuredFile
         }
 
         this.blockSize = blockSize;
-        this.decimalBlockSize = new BigDecimal( blockSize );
+        this.decimalBlockSize = BigDecimal.valueOf( blockSize );
         this.fileOperations = fileOperations;
 
         if ( monitoringThreshold > 0 )
