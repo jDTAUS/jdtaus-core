@@ -27,7 +27,7 @@
           <tr>
             <td>http://jdtaus.org/core/runtime/container/xml</td>
             <td>
-              <a href="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-client-container/jdtaus-module-1.0.xsd">jdtaus-module-1.0.xsd</a>
+              <a href="http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-client-container/jdtaus-module-1.0.xsd">jdtaus-module-1.0.xsd</a>
             </td>
             <td>1.0</td>
             <td>2.0</td>
@@ -35,7 +35,7 @@
           <tr>
             <td>http://jdtaus.org/core/runtime/container/xml</td>
             <td>
-              <a href="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-client-container/jdtaus-module-1.1.xsd">jdtaus-module-1.1.xsd</a>
+              <a href="http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-client-container/jdtaus-module-1.1.xsd">jdtaus-module-1.1.xsd</a>
             </td>
             <td>1.1</td>
             <td>2.0</td>
@@ -43,7 +43,7 @@
           <tr>
             <td>http://jdtaus.org/core/model/container/module</td>
             <td>
-              <a href="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd">jdtaus-module-1.2.xsd</a>
+              <a href="http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd">jdtaus-module-1.2.xsd</a>
             </td>
             <td>1.4</td>
             <td>2.0</td>
@@ -51,7 +51,7 @@
           <tr>
             <td>http://jdtaus.org/core/model/container</td>
             <td>
-              <a href="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd">jdtaus-container-1.1.xsd</a>
+              <a href="http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd">jdtaus-container-1.1.xsd</a>
             </td>
             <td>1.5</td>
             <td></td>

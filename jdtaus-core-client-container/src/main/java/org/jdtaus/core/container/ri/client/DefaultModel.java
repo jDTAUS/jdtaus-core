@@ -96,7 +96,7 @@ import org.xml.sax.SAXParseException;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  *
- * @see <a href="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd">jdtaus-container-1.1.xsd</a>
+ * @see <a href="http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd">jdtaus-container-1.1.xsd</a>
  */
 public class DefaultModel implements Model
 {

@@ -26,7 +26,7 @@
   Example usage:
 
   <xsd:import namespace="http://jdtaus.org/core/model/container"
-              schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd" />
+              schemaLocation="http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd" />
 
   The recommended namespace prefix is "container".
 
@@ -64,7 +64,7 @@
   Example usage:
 
   <xsd:import namespace="http://jdtaus.org/core/model/container"
-              schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd" />
+              schemaLocation="http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd" />
 
   The recommended namespace prefix is "container".]]>
     </xsd:documentation>

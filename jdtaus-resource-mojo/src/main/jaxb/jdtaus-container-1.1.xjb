@@ -3,7 +3,7 @@
   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:container="http://jdtaus.org/core/model/container">
 
-  <jaxb:bindings schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
+  <jaxb:bindings schemaLocation="http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd"
                  node="xs:schema">
 
     <jaxb:schemaBindings>

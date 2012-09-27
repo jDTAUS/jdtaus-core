@@ -29,7 +29,7 @@
   <module:module xmlns="http://jdtaus.org/core/model/container/module"
     xmlns:module="http://jdtaus.org/core/model/container/module"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://jdtaus.org/core/model/container/module http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd"
+    xsi:schemaLocation="http://jdtaus.org/core/model/container/module http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd"
     module:modelVersion="1.2">
 
   </module:module>
@@ -73,14 +73,14 @@
   <module:module xmlns="http://jdtaus.org/core/model/container/module"
     xmlns:module="http://jdtaus.org/core/model/container/module"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://jdtaus.org/core/model/container/module http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd"
+    xsi:schemaLocation="http://jdtaus.org/core/model/container/module http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-client-container/xsd/jdtaus-module-1.2.xsd"
     module:modelVersion="1.2">
 
   </module:module>]]>
     </xsd:documentation>
   </xsd:annotation>
   <xsd:import namespace="http://jdtaus.org/core/model/container"
-              schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-api/xsd/jdtaus-container-1.0.xsd" />
+              schemaLocation="http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-api/xsd/jdtaus-container-1.0.xsd" />
   <!--                                                                       -->
   <!-- Module                                                                -->
   <!--                                                                       -->

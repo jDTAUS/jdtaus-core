@@ -32,5 +32,5 @@
             elementFormDefault="qualified"
             attributeFormDefault="qualified">
 
-  <xsd:include schemaLocation="http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd"/>
+  <xsd:include schemaLocation="http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd"/>
 </xsd:schema>

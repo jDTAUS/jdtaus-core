@@ -29,7 +29,7 @@
   <jdtaus:module xmlns="http://jdtaus.org/runtime/container/xml"
     xmlns:jdtaus="http://jdtaus.org/runtime/container/xml"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://jdtaus.org/runtime/container/xml http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-client-container/jdtaus-module-1.0.xsd"
+    xsi:schemaLocation="http://jdtaus.org/runtime/container/xml http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-client-container/jdtaus-module-1.0.xsd"
     jdtaus:version="1.0">
 
   </jdtaus:module>
@@ -74,7 +74,7 @@
   <jdtaus:module xmlns="http://jdtaus.org/runtime/container/xml"
     xmlns:jdtaus="http://jdtaus.org/runtime/container/xml"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://jdtaus.org/runtime/container/xml http://jdtaus.sourceforge.net/1.0.x/jdtaus-core/jdtaus-core-client-container/jdtaus-module-1.0.xsd"
+    xsi:schemaLocation="http://jdtaus.org/runtime/container/xml http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-client-container/jdtaus-module-1.0.xsd"
     jdtaus:version="1.0">
 
   </jdtaus:module>]]>
