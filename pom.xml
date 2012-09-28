@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.jdtaus</groupId>
     <artifactId>jdtaus-lgpl-parent</artifactId>
-    <version>1.10-SNAPSHOT</version>
+    <version>1.10</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus</groupId>
@@ -192,6 +192,7 @@
     <module>jdtaus-core-api</module>
     <module>jdtaus-container-mojo</module>
     <module>jdtaus-core-client-container</module>
+    <module>jdtaus-core-jomc-container</module>
     <module>jdtaus-core-servlet-container</module>
     <module>jdtaus-core-spi</module>
     <module>jdtaus-core-it</module>
@@ -381,6 +382,36 @@
         <groupId>org.jdtaus.core.lang</groupId>
         <version>${jdtausCoreVersion}</version>
       </dependency>
+      <dependency>
+        <groupId>org.jomc</groupId>
+        <artifactId>jomc-util</artifactId>
+        <version>${jomc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jomc</groupId>
+        <artifactId>jomc-modlet</artifactId>
+        <version>${jomc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jomc</groupId>
+        <artifactId>jomc-model</artifactId>
+        <version>${jomc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jomc</groupId>
+        <artifactId>jomc-api</artifactId>
+        <version>${jomc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jomc</groupId>
+        <artifactId>jomc-spi</artifactId>
+        <version>${jomc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jomc</groupId>
+        <artifactId>jomc-ri</artifactId>
+        <version>${jomc.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <distributionManagement>
@@ -414,5 +445,6 @@
     <jdtausCoreVersion>1.13-SNAPSHOT</jdtausCoreVersion>
     <jdtaus-container-mojo.artifact.version>3.11-SNAPSHOT</jdtaus-container-mojo.artifact.version>
     <jdtaus-resource-mojo.artifact.version>3.12-SNAPSHOT</jdtaus-resource-mojo.artifact.version>
+    <jomc.version>1.3</jomc.version>
   </properties>
 </project>

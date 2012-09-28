@@ -55,7 +55,7 @@ public class MessagesTest extends TestCase
         this.assertNotNull( new IllegalPropertyMessage() );
         this.assertNotNull( new UndefinedApplicationStateMessage() );
         this.assertNotNull( new BugReportMessage( new File( System.getProperty( "user.home" ) ),
-                                                  new URL( "http://jdtaus.sourceforge.net" ), "TEST" ) );
+                                                  new URL( "http://www.jdtaus.org" ), "TEST" ) );
 
         this.assertNotNull( new IllegalStringMessage( "TEST", new char[]
             {
