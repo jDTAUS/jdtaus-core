@@ -21,7 +21,9 @@
 package org.jdtaus.core.monitor.it;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.jdtaus.core.monitor.TaskEventSource;
+import org.jdtaus.core.monitor.TaskListener;
 
 /**
  * Testcase for {@code TaskEventSource} implementations.
@@ -29,7 +31,7 @@ import org.jdtaus.core.monitor.TaskEventSource;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public class TaskEventSourceTest
+public class TaskEventSourceTest extends TestCase
 {
     //--TaskEventSourceTest-----------------------------------------------------
 

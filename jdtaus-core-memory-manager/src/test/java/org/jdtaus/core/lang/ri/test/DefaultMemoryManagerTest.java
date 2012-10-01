@@ -21,7 +21,6 @@
 package org.jdtaus.core.lang.ri.test;
 
 import org.jdtaus.core.lang.ri.DefaultMemoryManager;
-import org.jdtaus.core.lang.spi.MemoryManager;
 import org.jdtaus.core.lang.spi.it.MemoryManagerTest;
 
 /**
@@ -33,13 +32,11 @@ public class DefaultMemoryManagerTest extends MemoryManagerTest
 {
     //--MemoryManagerTest-------------------------------------------------------
 
-    /** The implementation to test. */
-    private final MemoryManager manager = new DefaultMemoryManager();
-
-    public MemoryManager getMemoryManager()
+    /** Creates a new {@code DefaultMemoryManagerTest} instance. */
+    public DefaultMemoryManagerTest()
     {
-        this.setMemoryManager(this.manager);
-        return super.getMemoryManager();
+        super();
+        this.setMemoryManager( new DefaultMemoryManager() );
     }
 
     //-------------------------------------------------------MemoryManagerTest--

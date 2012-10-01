@@ -21,6 +21,7 @@
 package org.jdtaus.core.lang.it;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.jdtaus.core.lang.Runtime;
 
 /**
@@ -29,7 +30,7 @@ import org.jdtaus.core.lang.Runtime;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public class RuntimeTest
+public class RuntimeTest extends TestCase
 {
     //--RuntimeTest-------------------------------------------------------------
 

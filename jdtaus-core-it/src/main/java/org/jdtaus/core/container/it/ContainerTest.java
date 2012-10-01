@@ -20,6 +20,9 @@
  */
 package org.jdtaus.core.container.it;
 
+import java.util.Locale;
+import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.jdtaus.core.container.Container;
 
 /**
@@ -28,7 +31,7 @@ import org.jdtaus.core.container.Container;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public class ContainerTest
+public class ContainerTest extends TestCase
 {
     //--ContainerTest-----------------------------------------------------------
 
@@ -58,5 +61,124 @@ public class ContainerTest
 
     //-----------------------------------------------------------ContainerTest--
     //--Tests-------------------------------------------------------------------
+
+    public void testGetDependency() throws Exception
+    {
+        try
+        {
+            this.getContainer().getDependency( (Object) null, "TEST" );
+            throw new AssertionError( "Expected 'NullPointerException' not thrown." );
+        }
+        catch ( NullPointerException e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
+        }
+
+        try
+        {
+            this.getContainer().getDependency( this, null );
+            throw new AssertionError( "Expected 'NullPointerException' not thrown." );
+        }
+        catch ( NullPointerException e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
+        }
+    }
+
+    public void testGetMessage() throws Exception
+    {
+        try
+        {
+            this.getContainer().getMessage( (Object) null, "TEST", Locale.getDefault(), null );
+            throw new AssertionError( "Expected 'NullPointerException' not thrown." );
+        }
+        catch ( NullPointerException e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
+        }
+        try
+        {
+            this.getContainer().getMessage( this, null, Locale.getDefault(), null );
+            throw new AssertionError( "Expected 'NullPointerException' not thrown." );
+        }
+        catch ( NullPointerException e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
+        }
+        try
+        {
+            this.getContainer().getMessage( this, "TEST", null, null );
+            throw new AssertionError( "Expected 'NullPointerException' not thrown." );
+        }
+        catch ( NullPointerException e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
+        }
+    }
+
+    public void testGetObject() throws Exception
+    {
+        try
+        {
+            this.getContainer().getObject( (Class) null );
+            throw new AssertionError( "Expected 'NullPointerException' not thrown." );
+        }
+        catch ( NullPointerException e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
+        }
+
+        try
+        {
+            this.getContainer().getObject( (Class) null, "TEST" );
+            throw new AssertionError( "Expected 'NullPointerException' not thrown." );
+        }
+        catch ( NullPointerException e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
+        }
+        try
+        {
+            this.getContainer().getObject( this.getClass(), null );
+            throw new AssertionError( "Expected 'NullPointerException' not thrown." );
+        }
+        catch ( NullPointerException e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
+        }
+    }
+
+    public void testGetProperty() throws Exception
+    {
+        try
+        {
+            this.getContainer().getProperty( (Object) null, "TEST" );
+            throw new AssertionError( "Expected 'NullPointerException' not thrown." );
+        }
+        catch ( NullPointerException e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
+        }
+        try
+        {
+            this.getContainer().getProperty( this, null );
+            throw new AssertionError( "Expected 'NullPointerException' not thrown." );
+        }
+        catch ( NullPointerException e )
+        {
+            Assert.assertNotNull( e.getMessage() );
+            System.out.println( e.toString() );
+        }
+    }
+
     //-------------------------------------------------------------------Tests--
 }

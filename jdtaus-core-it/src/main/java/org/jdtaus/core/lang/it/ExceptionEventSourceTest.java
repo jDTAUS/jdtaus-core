@@ -21,6 +21,7 @@
 package org.jdtaus.core.lang.it;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.jdtaus.core.lang.ExceptionEventSource;
 
 /**
@@ -29,7 +30,7 @@ import org.jdtaus.core.lang.ExceptionEventSource;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public abstract class ExceptionEventSourceTest
+public abstract class ExceptionEventSourceTest extends TestCase
 {
     //--ExceptionEventSourceTest------------------------------------------------
 

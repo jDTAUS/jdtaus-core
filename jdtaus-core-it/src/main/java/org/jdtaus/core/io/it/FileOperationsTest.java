@@ -23,6 +23,7 @@ package org.jdtaus.core.io.it;
 import java.io.InputStream;
 import java.util.Arrays;
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.jdtaus.core.io.FileOperations;
 
 /**
@@ -31,7 +32,7 @@ import org.jdtaus.core.io.FileOperations;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public class FileOperationsTest
+public class FileOperationsTest extends TestCase
 {
     //--FileOperationsTest------------------------------------------------------
 
@@ -297,6 +298,7 @@ public class FileOperationsTest
 
         Assert.assertEquals( digits.length, totalRead );
         Assert.assertTrue( Arrays.equals( digits, buf ) );
+        ops.setLength( 0 );
     }
 
     /**
@@ -344,6 +346,7 @@ public class FileOperationsTest
         while ( totalRead < digits.length && read != FileOperations.EOF );
         Assert.assertEquals( digits.length, totalRead );
         Assert.assertTrue( Arrays.equals( digits, buf ) );
+        ops.setLength( 0 );
     }
 
     //-------------------------------------------------------------------Tests--

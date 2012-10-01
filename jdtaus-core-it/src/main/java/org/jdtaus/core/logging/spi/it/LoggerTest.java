@@ -20,6 +20,7 @@
  */
 package org.jdtaus.core.logging.spi.it;
 
+import junit.framework.TestCase;
 import org.jdtaus.core.logging.spi.Logger;
 
 /**
@@ -28,7 +29,7 @@ import org.jdtaus.core.logging.spi.Logger;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public class LoggerTest
+public class LoggerTest extends TestCase
 {
     //--LoggerTest--------------------------------------------------------------
 

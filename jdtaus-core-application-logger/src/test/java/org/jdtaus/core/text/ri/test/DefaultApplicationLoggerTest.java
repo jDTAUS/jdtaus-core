@@ -21,7 +21,6 @@
 package org.jdtaus.core.text.ri.test;
 
 import org.jdtaus.core.text.ri.DefaultApplicationLogger;
-import org.jdtaus.core.text.spi.ApplicationLogger;
 import org.jdtaus.core.text.spi.it.ApplicationLoggerTest;
 
 /**
@@ -34,13 +33,11 @@ public class DefaultApplicationLoggerTest extends ApplicationLoggerTest
 {
     //--ApplicationLoggerTest---------------------------------------------------
 
-    /** The implementation to test. */
-    private final ApplicationLogger def = new DefaultApplicationLogger();
-
-    public ApplicationLogger getApplicationLogger()
+    /** Creates a new {@code DefaultApplicationLoggerTest} instance. */
+    public DefaultApplicationLoggerTest()
     {
-        this.setApplicationLogger( this.def );
-        return super.getApplicationLogger();
+        super();
+        this.setApplicationLogger( new DefaultApplicationLogger() );
     }
 
     //---------------------------------------------------ApplicationLoggerTest--

@@ -21,7 +21,9 @@
 package org.jdtaus.core.text.it;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.jdtaus.core.text.MessageEventSource;
+import org.jdtaus.core.text.MessageListener;
 
 /**
  * Testcase for {@code MessageEventSource} implementations.
@@ -29,7 +31,7 @@ import org.jdtaus.core.text.MessageEventSource;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public class MessageEventSourceTest
+public class MessageEventSourceTest extends TestCase
 {
     //--MessageEventSourceTest--------------------------------------------------
 

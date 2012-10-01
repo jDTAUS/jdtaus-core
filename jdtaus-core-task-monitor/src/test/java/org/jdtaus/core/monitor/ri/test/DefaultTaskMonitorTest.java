@@ -21,7 +21,6 @@
 package org.jdtaus.core.monitor.ri.test;
 
 import org.jdtaus.core.monitor.ri.DefaultTaskMonitor;
-import org.jdtaus.core.monitor.spi.TaskMonitor;
 import org.jdtaus.core.monitor.spi.it.TaskMonitorTest;
 
 /**
@@ -34,13 +33,11 @@ public class DefaultTaskMonitorTest extends TaskMonitorTest
 {
     //--TaskMonitorTest---------------------------------------------------------
 
-    /** The implementation to test. */
-    private final TaskMonitor taskMonitor = new DefaultTaskMonitor();
-
-    public TaskMonitor getTaskMonitor()
+    /** Creates a new {@code DefaultTaskMonitorTest} instance. */
+    public DefaultTaskMonitorTest()
     {
-        this.setTaskMonitor( this.taskMonitor );
-        return super.getTaskMonitor();
+        super();
+        this.setTaskMonitor( new DefaultTaskMonitor() );
     }
 
     //---------------------------------------------------------TaskMonitorTest--
