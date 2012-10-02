@@ -21,6 +21,7 @@
 package org.jdtaus.core.nio.util.test;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.jdtaus.core.nio.util.Charsets;
 
 /**
@@ -29,7 +30,7 @@ import org.jdtaus.core.nio.util.Charsets;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public class CharsetsTest
+public class CharsetsTest extends TestCase
 {
     //--Tests-------------------------------------------------------------------
 

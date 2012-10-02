@@ -21,6 +21,7 @@
 package org.jdtaus.core.container.ri.client.test;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.jdtaus.core.container.Container;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.container.DependencyCycleException;
@@ -31,7 +32,7 @@ import org.jdtaus.core.container.DependencyCycleException;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public class DefaultContainerTest
+public class DefaultContainerTest extends TestCase
 {
 
     private static final String MODULE_NAME =

@@ -20,7 +20,6 @@
  */
 package org.jdtaus.core.container.it.test;
 
-import org.jdtaus.core.container.Container;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.container.it.ContainerTest;
 
@@ -34,17 +33,11 @@ public class DefaultContainerTest extends ContainerTest
 {
     //--ContainerTest-----------------------------------------------------------
 
-    private Container container;
-
-    public Container getContainer()
+    /** Creates a new {@code DefaultContainerTest} instance. */
+    public DefaultContainerTest()
     {
-        if(this.container == null)
-        {
-            this.container = ContainerFactory.getContainer();
-            this.setContainer(this.container);
-        }
-
-        return super.getContainer();
+        super();
+        this.setContainer( ContainerFactory.getContainer() );
     }
 
     //-----------------------------------------------------------ContainerTest--

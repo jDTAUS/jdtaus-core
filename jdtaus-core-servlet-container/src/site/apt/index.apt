@@ -13,4 +13,4 @@ Introduction
   Core Client Container implementation adding support for multi-session web
   environments.
 
-  See {{{apidocs/org/jdtaus/core/container/ri/servlet/ServletFilter.html}ServletFilter}}.
+  See {{{./apidocs/org/jdtaus/core/container/ri/servlet/ServletFilter.html}ServletFilter}}.

@@ -21,7 +21,6 @@
 package org.jdtaus.core.logging.ri.commons.test;
 
 import org.jdtaus.core.logging.ri.commons.CommonsLoggingLogger;
-import org.jdtaus.core.logging.spi.Logger;
 import org.jdtaus.core.logging.spi.it.LoggerTest;
 
 /**
@@ -34,17 +33,14 @@ public class CommonsLoggingLoggerTest extends LoggerTest
 {
     //--CommonsLoggingLoggerTest------------------------------------------------
 
-    /** The implementation to test. */
-    private final Logger logger = new CommonsLoggingLogger();
-
-    public Logger getLogger()
+    /** Creates a new {@code CommonsLoggingLoggerTest} instance. */
+    public CommonsLoggingLoggerTest()
     {
-        this.setLogger( this.logger );
-        return super.getLogger();
+        super();
+        this.setLogger( new CommonsLoggingLogger() );
     }
 
     //------------------------------------------------CommonsLoggingLoggerTest--
     //--Tests-------------------------------------------------------------------
-
     //-------------------------------------------------------------------Tests--
 }
