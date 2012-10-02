@@ -71,7 +71,7 @@ import org.jomc.modlet.ModelException;
  * </dl>
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a> 1.0
- * @version 1.14-SNAPSHOT
+ * @version 1.13
  */
 // </editor-fold>
 // SECTION-END
