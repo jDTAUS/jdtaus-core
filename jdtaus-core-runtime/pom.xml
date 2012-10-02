@@ -523,7 +523,7 @@
                   </goals>
                   <configuration>
                     <fromDir>${project.build.directory}</fromDir>
-                    <includes>jdtaus-core-${project.version}.zip*, jdtaus-core-${project.version}.gz*, jdtaus-core-${project.version}.bz2*</includes>
+                    <includes>*-bin.*</includes>
                     <serverId>${jdtaus.frs.distribution.id}</serverId>
                     <toDir>jdtaus-core</toDir>
                     <url>${jdtaus.frs.distribution.url}</url>
