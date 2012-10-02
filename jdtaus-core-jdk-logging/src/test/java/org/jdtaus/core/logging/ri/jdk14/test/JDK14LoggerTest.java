@@ -21,7 +21,6 @@
 package org.jdtaus.core.logging.ri.jdk14.test;
 
 import org.jdtaus.core.logging.ri.jdk14.JDK14Logger;
-import org.jdtaus.core.logging.spi.Logger;
 import org.jdtaus.core.logging.spi.it.LoggerTest;
 
 /**
@@ -34,17 +33,14 @@ public class JDK14LoggerTest extends LoggerTest
 {
     //--JDK14LoggerTest---------------------------------------------------------
 
-    /** The implementation to test. */
-    private final Logger logger = new JDK14Logger();
-
-    public Logger getLogger()
+    /** Creates a new {@code JDK14LoggerTest} instance. */
+    public JDK14LoggerTest()
     {
-        this.setLogger( this.logger );
-        return super.getLogger();
+        super();
+        this.setLogger( new JDK14Logger() );
     }
 
     //---------------------------------------------------------JDK14LoggerTest--
     //--Tests-------------------------------------------------------------------
-
     //-------------------------------------------------------------------Tests--
 }

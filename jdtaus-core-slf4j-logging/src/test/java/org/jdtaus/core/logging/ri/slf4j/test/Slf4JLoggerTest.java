@@ -21,7 +21,6 @@
 package org.jdtaus.core.logging.ri.slf4j.test;
 
 import org.jdtaus.core.logging.ri.slf4j.Slf4JLogger;
-import org.jdtaus.core.logging.spi.Logger;
 import org.jdtaus.core.logging.spi.it.LoggerTest;
 
 /**
@@ -34,17 +33,14 @@ public class Slf4JLoggerTest extends LoggerTest
 {
     //--Slf4JLoggerTest---------------------------------------------------------
 
-    /** The implementation to test. */
-    private final Logger logger = new Slf4JLogger();
-
-    public Logger getLogger()
+    /** Creates a new {@code Slf4JLoggerTest} instance. */
+    public Slf4JLoggerTest()
     {
-        this.setLogger( this.logger );
-        return super.getLogger();
+        super();
+        this.setLogger( new Slf4JLogger() );
     }
 
     //---------------------------------------------------------Slf4JLoggerTest--
     //--Tests-------------------------------------------------------------------
-
     //-------------------------------------------------------------------Tests--
 }

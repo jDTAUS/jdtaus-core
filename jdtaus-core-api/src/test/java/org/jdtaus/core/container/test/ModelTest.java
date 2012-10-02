@@ -21,6 +21,7 @@
 package org.jdtaus.core.container.test;
 
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.jdtaus.core.container.Dependencies;
 import org.jdtaus.core.container.Dependency;
 import org.jdtaus.core.container.Implementation;
@@ -38,7 +39,7 @@ import org.jdtaus.core.container.Specifications;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public class ModelTest
+public class ModelTest extends TestCase
 {
     //--ModelTest---------------------------------------------------------------
 

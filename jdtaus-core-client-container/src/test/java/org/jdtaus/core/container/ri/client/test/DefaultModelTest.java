@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.jdtaus.core.container.IncompatibleImplementationException;
 import org.jdtaus.core.container.ModelError;
 import org.jdtaus.core.container.ModelFactory;
@@ -36,7 +37,7 @@ import org.jdtaus.core.container.ModelFactory;
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
  * @version $JDTAUS$
  */
-public class DefaultModelTest
+public class DefaultModelTest extends TestCase
 {
 
     private static final String MODEL_LOCATION = "META-INF/jdtaus/module.xml";
