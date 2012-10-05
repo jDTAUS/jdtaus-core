@@ -27,6 +27,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -226,6 +228,10 @@ public class DefaultModel implements Model
         {
             throw new ModelError( e );
         }
+        catch ( URISyntaxException e )
+        {
+            throw new ModelError( e );
+        }
         finally
         {
             this.specifications = null;
@@ -290,11 +296,12 @@ public class DefaultModel implements Model
      * @throws TransformerConfigurationException if creating a transformer
      * fails.
      * @throws TransformerException if transforming documents fails.
+     * @throws URISyntaxException if creating a resource URI fails.
      */
     private Modules readModules()
         throws IOException, ParserConfigurationException, SAXException,
                ParseException, TransformerConfigurationException,
-               TransformerException
+               TransformerException, URISyntaxException
     {
         final Map documents = new HashMap();
         final DocumentBuilderFactory xmlFactory =
@@ -380,7 +387,7 @@ public class DefaultModel implements Model
 
             final Document doc = xmlBuilder.parse( stream );
             stream.close();
-            documents.put( resource, doc );
+            documents.put( new URI( resource.toString() ), doc );
         }
 
         // Transform the XML documents.
@@ -969,7 +976,7 @@ public class DefaultModel implements Model
                 doc = (Document) result.getNode();
             }
 
-            final URL documentResource = (URL) entry.getKey();
+            final URL documentResource = ( (URI) entry.getKey() ).toURL();
             final Element e = doc.getDocumentElement();
             String namespace = doc.getDocumentElement().getNamespaceURI();
 

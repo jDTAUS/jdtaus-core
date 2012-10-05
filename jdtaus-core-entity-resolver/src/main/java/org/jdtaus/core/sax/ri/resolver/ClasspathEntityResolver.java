@@ -241,6 +241,13 @@ public class ClasspathEntityResolver implements EntityResolver
 
                 this.schemaUrls = null;
             }
+            catch ( URISyntaxException e )
+            {
+                this.getLogger().error( this.getDisabledMessage(
+                    this.getLocale(), e.getMessage() ) );
+
+                this.schemaUrls = null;
+            }
         }
 
         return this.schemaUrls != null ? this.schemaUrls : new URL[ 0 ];
@@ -254,11 +261,12 @@ public class ClasspathEntityResolver implements EntityResolver
      * @return URLs of any matching resources.
      *
      * @throws IOException if reading or parsing fails.
+     * @throws URISyntaxException if creating a schema URI fails.
      */
-    private URL[] getSchemaResources() throws IOException
+    private URL[] getSchemaResources() throws IOException, URISyntaxException
     {
         final ClassLoader cl = this.getClass().getClassLoader();
-        final Set schemaResources = new HashSet();
+        final Set/*<URI>*/ schemaResources = new HashSet();
 
         for ( Enumeration e = cl.getResources( "META-INF/MANIFEST.MF" );
               e.hasMoreElements(); )
@@ -286,7 +294,7 @@ public class ClasspathEntityResolver implements EntityResolver
                         final URL schemaUrl =
                             new URL( baseUrl + entry.getKey().toString() );
 
-                        schemaResources.add( schemaUrl );
+                        schemaResources.add( new URI( schemaUrl.toString() ) );
 
                         if ( this.getLogger().isDebugEnabled() )
                         {
@@ -301,9 +309,14 @@ public class ClasspathEntityResolver implements EntityResolver
             }
         }
 
-        return (URL[]) schemaResources.toArray(
-            new URL[ schemaResources.size() ] );
+        final URL[] urls = new URL[ schemaResources.size() ];
+        final Iterator it = schemaResources.iterator();
+        for ( int i = 0; it.hasNext(); i++ )
+        {
+            urls[i] = ( (URI) it.next() ).toURL();
+        }
 
+        return urls;
     }
 
     //-------------------------------------------------ClasspathEntityResolver--
