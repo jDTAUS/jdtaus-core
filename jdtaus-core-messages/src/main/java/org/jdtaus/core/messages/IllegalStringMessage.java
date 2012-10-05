@@ -76,9 +76,22 @@ public final class IllegalStringMessage extends Message
     {
         super();
         this.invalidString = invalidString;
-        this.invalidCharacters = invalidCharacters;
         this.minimumLength = minimumLength;
         this.maximumLength = maximumLength;
+
+        if ( invalidCharacters != null )
+        {
+            this.invalidCharacters = new char[ invalidCharacters.length ];
+
+            for ( int i = 0, s0 = invalidCharacters.length; i < s0; i++ )
+            {
+                this.invalidCharacters[i] = invalidCharacters[i];
+            }
+        }
+        else
+        {
+            this.invalidCharacters = null;
+        }
     }
 
     //----------------------------------------------------IllegalStringMessage--
