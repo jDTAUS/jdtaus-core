@@ -241,124 +241,170 @@ public class JavaResourcesMojo extends AbstractMojo
     private void generateBundles( final Module module )
         throws Exception
     {
-        final Properties bundleHashcodes = new Properties();
-        final File propertiesFile =
-            new File( this.getBuildDirectory(), "bundles.properties" );
+        InputStream in = null;
+        OutputStream out = null;
+        Writer writer = null;
 
-        if ( !propertiesFile.exists() )
+        try
         {
-            propertiesFile.createNewFile();
-        }
+            final Properties bundleHashcodes = new Properties();
+            final File propertiesFile =
+                new File( this.getBuildDirectory(), "bundles.properties" );
 
-        final InputStream in = new FileInputStream( propertiesFile );
-        bundleHashcodes.load( in );
-        in.close();
-
-        for ( Iterator it = module.getImplementations().getImplementation().
-            iterator(); it.hasNext(); )
-        {
-            final Implementation impl = (Implementation) it.next();
-            if ( impl.getMessages() == null )
+            if ( !propertiesFile.exists() && !propertiesFile.createNewFile() )
             {
-                continue;
-            }
+                final MessageFormat fmt =
+                    this.getMessage( "cannotCreateFile" );
 
-            final int bundleHash = this.getModelManager().
-                getHashCode( module, impl );
-
-            final String propertyHash =
-                bundleHashcodes.getProperty( impl.getIdentifier() );
-
-            if ( propertyHash == null ||
-                Integer.valueOf( propertyHash ).intValue() != bundleHash )
-            {
-                bundleHashcodes.setProperty( impl.getIdentifier(),
-                    Integer.toString( bundleHash ) );
-
-                final String bundlePath =
-                    ( this.getModelManager().getJavaPackageName( impl ) +
-                    '.' + this.getModelManager().getJavaTypeName( impl ) ).
-                    replace( '.', File.separatorChar );
-
-                final File bundleFile = new File( this.getSourceDirectory(),
-                    bundlePath + ".java" );
-
-                this.assertDirectoryExistence( bundleFile.getParentFile() );
-
-                final Writer writer =
-                    this.getEncoding() == null
-                    ? new FileWriter( bundleFile )
-                    : new OutputStreamWriter( new FileOutputStream(
-                    bundleFile ),
-                    this.getEncoding() );
-
-                this.getLog().info( this.getMessage( "writingBundle" ).
-                    format( new Object[]
+                throw new MojoExecutionException( fmt.format( new Object[]
                     {
-                        bundleFile.getName()
+                        propertiesFile.getAbsolutePath()
                     } ) );
 
-                this.getBundleGenerator().generateJava( module, impl, writer );
+            }
 
-                writer.close();
+            in = new FileInputStream( propertiesFile );
+            bundleHashcodes.load( in );
+            in.close();
+            in = null;
 
-                final Map bundleProperties = this.getModelManager().
-                    getBundleProperties( module, impl );
-
-                for ( Iterator properties = bundleProperties.entrySet().
-                    iterator(); properties.hasNext(); )
+            for ( Iterator it = module.getImplementations().getImplementation().
+                iterator(); it.hasNext(); )
+            {
+                final Implementation impl = (Implementation) it.next();
+                if ( impl.getMessages() == null )
                 {
-                    final Map.Entry entry = (Map.Entry) properties.next();
-                    final String language = (String) entry.getKey();
-                    final Properties p = (Properties) entry.getValue();
-                    final File file = new File( this.getResourceDirectory(),
-                        bundlePath + "_" + language +
-                        ".properties" );
+                    continue;
+                }
+
+                final int bundleHash =
+                    this.getModelManager().getHashCode( module, impl );
+
+                final String propertyHash =
+                    bundleHashcodes.getProperty( impl.getIdentifier() );
+
+                if ( propertyHash == null || Integer.valueOf( propertyHash ).
+                    intValue() != bundleHash )
+                {
+                    bundleHashcodes.setProperty(
+                        impl.getIdentifier(), Integer.toString( bundleHash ) );
+
+                    final String bundlePath =
+                        ( this.getModelManager().getJavaPackageName( impl )
+                          + '.' + this.getModelManager().getJavaTypeName( impl ) ).
+                        replace( '.', File.separatorChar );
+
+                    final File bundleFile = new File( this.getSourceDirectory(),
+                                                      bundlePath + ".java" );
+
+                    this.assertDirectoryExistence( bundleFile.getParentFile() );
+
+                    writer =
+                        this.getEncoding() == null
+                        ? new FileWriter( bundleFile )
+                        : new OutputStreamWriter( new FileOutputStream(
+                        bundleFile ), this.getEncoding() );
 
                     this.getLog().info( this.getMessage( "writingBundle" ).
                         format( new Object[]
                         {
-                            file.getName()
+                            bundleFile.getName()
                         } ) );
 
-                    this.assertDirectoryExistence( file.getParentFile() );
+                    this.getBundleGenerator().
+                        generateJava( module, impl, writer );
 
-                    final OutputStream out = new FileOutputStream( file );
-                    p.store( out, this.getProject().getName() );
-                    out.close();
+                    writer.close();
+                    writer = null;
 
-                    if ( this.getDefaultLanguage().
-                        equalsIgnoreCase( language ) )
+                    final Map bundleProperties =
+                        this.getModelManager().
+                        getBundleProperties( module, impl );
+
+                    for ( Iterator properties = bundleProperties.entrySet().
+                        iterator(); properties.hasNext(); )
                     {
-                        final File defaultFile =
-                            new File( this.getResourceDirectory(),
-                            bundlePath + ".properties" );
-
-                        this.assertDirectoryExistence(
-                            defaultFile.getParentFile() );
+                        final Map.Entry entry = (Map.Entry) properties.next();
+                        final String language = (String) entry.getKey();
+                        final Properties p = (Properties) entry.getValue();
+                        final File file = new File( this.getResourceDirectory(),
+                                                    bundlePath + "_" + language
+                                                    + ".properties" );
 
                         this.getLog().info( this.getMessage( "writingBundle" ).
                             format( new Object[]
                             {
-                                defaultFile.getName()
+                                file.getName()
                             } ) );
 
-                        final OutputStream defaultOut =
-                            new FileOutputStream( defaultFile );
+                        this.assertDirectoryExistence( file.getParentFile() );
 
-                        p.store( defaultOut, this.getProject().getName() );
-                        defaultOut.close();
+                        out = new FileOutputStream( file );
+                        p.store( out, this.getProject().getName() );
+                        out.close();
+                        out = null;
+
+                        if ( this.getDefaultLanguage().
+                            equalsIgnoreCase( language ) )
+                        {
+                            final File defaultFile =
+                                new File( this.getResourceDirectory(),
+                                          bundlePath + ".properties" );
+
+                            this.assertDirectoryExistence(
+                                defaultFile.getParentFile() );
+
+                            this.getLog().info( this.
+                                getMessage( "writingBundle" ).
+                                format( new Object[]
+                                {
+                                    defaultFile.getName()
+                                } ) );
+
+                            out = new FileOutputStream( defaultFile );
+                            p.store( out, this.getProject().getName() );
+                            out.close();
+                            out = null;
+                        }
+                    }
+                }
+            }
+
+            out = new FileOutputStream( propertiesFile );
+            bundleHashcodes.store( out, this.getClass().getName() + ": "
+                                        + DateFormat.getDateTimeInstance().
+                format( new Date() ) );
+
+            out.close();
+            out = null;
+        }
+        finally
+        {
+            try
+            {
+                if ( in != null )
+                {
+                    in.close();
+                }
+            }
+            finally
+            {
+                try
+                {
+                    if ( out != null )
+                    {
+                        out.close();
+                    }
+                }
+                finally
+                {
+                    if ( writer != null )
+                    {
+                        writer.close();
                     }
                 }
             }
         }
-
-        final OutputStream out = new FileOutputStream( propertiesFile );
-        bundleHashcodes.store( out, this.getClass().getName() + ": " +
-            DateFormat.getDateTimeInstance().
-            format( new Date() ) );
-
-        out.close();
     }
 
     private void assertValidTemplates( final Module module )
@@ -376,7 +422,7 @@ public class JavaResourcesMojo extends AbstractMojo
                 }
 
                 for ( Iterator m = impl.getMessages().getMessage().iterator();
-                    m.hasNext(); )
+                      m.hasNext(); )
                 {
                     this.assertValidMessage( (Message) m.next() );
                 }
@@ -386,7 +432,7 @@ public class JavaResourcesMojo extends AbstractMojo
         if ( module.getMessages() != null )
         {
             for ( Iterator it = module.getMessages().getMessage().iterator();
-                it.hasNext(); )
+                  it.hasNext(); )
             {
                 this.assertValidMessage( (Message) it.next() );
             }
@@ -399,7 +445,7 @@ public class JavaResourcesMojo extends AbstractMojo
         if ( message.getTemplate() != null )
         {
             for ( Iterator it = message.getTemplate().getText().iterator();
-                it.hasNext(); )
+                  it.hasNext(); )
             {
                 final Text text = (Text) it.next();
                 try
