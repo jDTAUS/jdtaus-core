@@ -51,7 +51,7 @@ public class ContextLostException extends IllegalStateException
      * The thread accessing the context.
      * @serial
      */
-    private Thread thread;
+    private transient Thread thread;
 
     /**
      * Creates a new instance of {@code ContextLostException} taking

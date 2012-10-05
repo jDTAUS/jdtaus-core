@@ -51,7 +51,7 @@ public class SessionLostException extends IllegalStateException
      * The thread accessing the session.
      * @serial
      */
-    private Thread thread;
+    private transient Thread thread;
 
     /**
      * Creates a new instance of {@code SessionLostException} taking
