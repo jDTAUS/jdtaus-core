@@ -318,7 +318,7 @@ public final class SwingProgressMonitor implements TaskListener
     public SwingProgressMonitor( final Component parent, final int millisToDecideToPopup, final int millisToPopup,
                                  final int minimumTaskDurationMillis )
     {
-        this( parent, millisToDecideToPopup, millisToPopup, Integer.MIN_VALUE, Integer.MIN_VALUE );
+        this( parent, millisToDecideToPopup, millisToPopup, minimumTaskDurationMillis, Integer.MIN_VALUE );
     }
 
     /**
