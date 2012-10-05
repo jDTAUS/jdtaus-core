@@ -678,9 +678,11 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             reader = null;
 
             writer.close();
+
+            final String content = writer.toString();
             writer = null;
 
-            return writer.toString();
+            return content;
         }
         catch ( IOException e )
         {
