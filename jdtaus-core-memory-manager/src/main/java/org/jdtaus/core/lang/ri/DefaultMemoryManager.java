@@ -333,8 +333,8 @@ public class DefaultMemoryManager implements MemoryManager
 
             if ( available < requested )
             {
-                this.logOutOfMemoryWarning( new Long( requested * 2 ),
-                                            new Long( available * 2 ) );
+                this.logOutOfMemoryWarning( new Long( requested * 2L ),
+                                            new Long( available * 2L ) );
 
                 this.forceGarbageCollection(
                     this.getMaximumRetries() - retries );
@@ -377,8 +377,8 @@ public class DefaultMemoryManager implements MemoryManager
 
             if ( available < requested )
             {
-                this.logOutOfMemoryWarning( new Long( requested * 4 ),
-                                            new Long( available * 4 ) );
+                this.logOutOfMemoryWarning( new Long( requested * 4L ),
+                                            new Long( available * 4L ) );
 
                 this.forceGarbageCollection(
                     this.getMaximumRetries() - retries );
@@ -421,8 +421,8 @@ public class DefaultMemoryManager implements MemoryManager
 
             if ( available < requested )
             {
-                this.logOutOfMemoryWarning( new Long( requested * 8 ),
-                                            new Long( available * 8 ) );
+                this.logOutOfMemoryWarning( new Long( requested * 8L ),
+                                            new Long( available * 8L ) );
 
                 this.forceGarbageCollection(
                     this.getMaximumRetries() - retries );
