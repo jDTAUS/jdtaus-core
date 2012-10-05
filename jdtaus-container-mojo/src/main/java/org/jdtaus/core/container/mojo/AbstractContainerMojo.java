@@ -650,8 +650,8 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         }
 
         String line;
-        final BufferedReader reader;
-        final StringWriter writer = new StringWriter();
+        BufferedReader reader = null;
+        StringWriter writer = null;
 
         try
         {
@@ -667,13 +667,18 @@ public abstract class AbstractContainerMojo extends AbstractMojo
 
             }
 
+            writer = new StringWriter();
+
             while ( ( line = reader.readLine() ) != null )
             {
                 writer.write( line.concat( "\n" ) );
             }
 
             reader.close();
+            reader = null;
+
             writer.close();
+            writer = null;
 
             return writer.toString();
         }
@@ -684,6 +689,34 @@ public abstract class AbstractContainerMojo extends AbstractMojo
 
             mfe.initCause( e );
             throw mfe;
+        }
+        finally
+        {
+            try
+            {
+                if ( reader != null )
+                {
+                    reader.close();
+                }
+            }
+            catch ( final IOException e )
+            {
+                this.getLog().error( e );
+            }
+            finally
+            {
+                try
+                {
+                    if ( writer != null )
+                    {
+                        writer.close();
+                    }
+                }
+                catch ( final IOException e )
+                {
+                    this.getLog().error( e );
+                }
+            }
         }
     }
 
@@ -709,7 +742,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             throw new NullPointerException( "str" );
         }
 
-        final Writer fileWriter;
+        Writer fileWriter = null;
 
         try
         {
@@ -735,6 +768,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
 
                 fileWriter.write( str );
                 fileWriter.close();
+                fileWriter = null;
             }
         }
         catch ( IOException e )
@@ -744,6 +778,20 @@ public abstract class AbstractContainerMojo extends AbstractMojo
 
             mfe.initCause( e );
             throw mfe;
+        }
+        finally
+        {
+            try
+            {
+                if ( fileWriter != null )
+                {
+                    fileWriter.close();
+                }
+            }
+            catch ( final IOException e )
+            {
+                this.getLog().error( e );
+            }
         }
     }
 

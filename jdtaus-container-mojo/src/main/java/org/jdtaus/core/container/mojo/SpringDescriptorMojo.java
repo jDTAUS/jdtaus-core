@@ -23,6 +23,7 @@ package org.jdtaus.core.container.mojo;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Locale;
@@ -115,6 +116,8 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
         final ClassLoader mavenLoader =
                           Thread.currentThread().getContextClassLoader();
 
+        Writer writer = null;
+
         try
         {
             final ClassLoader runtimeLoader =
@@ -158,12 +161,17 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
                                      File.separator + artifact.getName() +
                                      ".java" );
 
-                if ( !source.getParentFile().exists() )
+                if ( !source.getParentFile().exists()
+                     && !source.getParentFile().mkdirs() )
                 {
-                    source.getParentFile().mkdirs();
+                    throw new MojoExecutionException(
+                        SpringDescriptorMojoBundle.getInstance().
+                        getCannotCreateDirectoryMessage(
+                        Locale.getDefault(), source.getParentFile().
+                        getAbsolutePath() ) );
+
                 }
 
-                final Writer writer;
                 if ( this.getEncoding() == null )
                 {
                     writer = new FileWriter( source );
@@ -183,6 +191,7 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
                     FACTORY_BEAN_TEMPLATE_LOCATION, "UTF-8", ctx, writer );
 
                 writer.close();
+                writer = null;
 
                 this.getMavenProject().addCompileSourceRoot(
                     this.getSourceRoot().getAbsolutePath() );
@@ -223,6 +232,18 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
         {
             disableThreadContextClassLoader();
             Thread.currentThread().setContextClassLoader( mavenLoader );
+
+            try
+            {
+                if ( writer != null )
+                {
+                    writer.close();
+                }
+            }
+            catch ( final IOException e )
+            {
+                this.getLog().error( e );
+            }
         }
     }
 

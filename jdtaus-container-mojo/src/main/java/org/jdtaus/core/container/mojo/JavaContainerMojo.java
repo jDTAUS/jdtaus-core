@@ -21,10 +21,10 @@
 package org.jdtaus.core.container.mojo;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.text.ParseException;
@@ -1342,6 +1342,8 @@ public class JavaContainerMojo extends AbstractContainerMojo
                                            final Implementation impl )
         throws MojoExecutionException, MojoFailureException
     {
+        Writer writer = null;
+
         try
         {
             if ( roots == null )
@@ -1366,12 +1368,17 @@ public class JavaContainerMojo extends AbstractContainerMojo
                                    artifact.getPackagePath() + File.separator +
                                    artifact.getName() + ".java" );
 
-                if ( !source.getParentFile().exists() )
+                if ( !source.getParentFile().exists()
+                     && !source.getParentFile().mkdirs() )
                 {
-                    source.getParentFile().mkdirs();
+                    throw new MojoExecutionException(
+                        JavaContainerMojoBundle.getInstance().
+                        getCannotCreateDirectoryMessage(
+                        Locale.getDefault(), source.getParentFile().
+                        getAbsolutePath() ) );
+
                 }
 
-                final Writer writer;
                 if ( this.getEncoding() == null )
                 {
                     writer = new FileWriter( source );
@@ -1415,6 +1422,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
                     IMPLEMENTATION_TEMPLATE_LOCATION, "UTF-8", ctx, writer );
 
                 writer.close();
+                writer = null;
 
                 this.getLog().info( JavaContainerMojoBundle.getInstance().
                     getCreatedFileMessage( Locale.getDefault(),
@@ -1521,7 +1529,23 @@ public class JavaContainerMojo extends AbstractContainerMojo
         }
         catch ( Exception e )
         {
-            throw (MojoFailureException) new MojoFailureException( e.getMessage() ).initCause( e );
+            throw (MojoFailureException) new MojoFailureException(
+                e.getMessage() ).initCause( e );
+
+        }
+        finally
+        {
+            try
+            {
+                if ( writer != null )
+                {
+                    writer.close();
+                }
+            }
+            catch ( final IOException e )
+            {
+                this.getLog().error( e );
+            }
         }
     }
 
@@ -1589,20 +1613,48 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
     protected void writeContainerReport( final Model model,
                                          final String name )
-        throws JAXBException, FileNotFoundException
+        throws JAXBException, IOException, MojoExecutionException
     {
         final File reportFile = new File( this.getOutputDirectory(),
                                           name );
 
-        if ( !reportFile.getParentFile().exists() )
+        if ( !reportFile.getParentFile().exists()
+             && !reportFile.getParentFile().mkdirs() )
         {
-            reportFile.getParentFile().mkdirs();
+            throw new MojoExecutionException(
+                JavaContainerMojoBundle.getInstance().
+                getCannotCreateDirectoryMessage(
+                Locale.getDefault(), reportFile.getParentFile().
+                getAbsolutePath() ) );
+
         }
 
-        this.getModelManager().getContainerMarshaller().marshal(
-            this.getModelManager().getContainerModel( model.getModules() ),
-            new FileOutputStream( reportFile ) );
+        OutputStream out = null;
 
+        try
+        {
+            out = new FileOutputStream( reportFile );
+            this.getModelManager().getContainerMarshaller().marshal(
+                this.getModelManager().getContainerModel( model.getModules() ),
+                out );
+
+            out.close();
+            out = null;
+        }
+        finally
+        {
+            try
+            {
+                if ( out != null )
+                {
+                    out.close();
+                }
+            }
+            catch ( final IOException e )
+            {
+                this.getLog().error( e );
+            }
+        }
     }
 
     //-----------------------------------------------------------ContainerMojo--

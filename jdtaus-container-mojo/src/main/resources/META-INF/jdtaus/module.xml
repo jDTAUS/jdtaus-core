@@ -87,6 +87,7 @@
         <container:reference container:name="localeParamComment"/>
         <container:reference container:name="committedFile"/>
         <container:reference container:name="defaultDependencyDescription"/>
+        <container:reference container:name="cannotCreateDirectory"/>
       </container:messages>
     </container:implementation>
 
@@ -177,6 +178,7 @@
         <container:reference container:name="generatedDescriptor"/>
         <container:reference container:name="emptyDescriptor"/>
         <container:reference container:name="generatedFactoryBean"/>
+        <container:reference container:name="cannotCreateDirectory"/>
       </container:messages>
     </container:implementation>
 
@@ -1149,6 +1151,16 @@
         <container:argument container:index="0" container:name="specificationIdentifier" container:type="text"/>
         <container:argument container:index="1" container:name="multiplicity" container:type="text"/>
         <container:argument container:index="2" container:name="expectedMultiplicity" container:type="text"/>
+      </container:arguments>
+    </container:message>
+    <!-- ******************************************************************* -->
+    <container:message container:name="cannotCreateDirectory">
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Cannot create directory {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Verzeichnis {0} konnte nicht erstellt werden.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="directoryName" container:type="text"/>
       </container:arguments>
     </container:message>
   </container:messages>
