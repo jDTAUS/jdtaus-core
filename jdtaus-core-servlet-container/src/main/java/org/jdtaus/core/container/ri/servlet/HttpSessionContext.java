@@ -41,6 +41,12 @@ public class HttpSessionContext implements Context
 {
     //--Context-----------------------------------------------------------------
 
+    /** Creates a new {@code HttpSessionContext} instance. */
+    public HttpSessionContext()
+    {
+        super();
+    }
+
     public final Collection getObjectKeys()
     {
         return Collections.list( this.getSession().getAttributeNames() );
@@ -92,7 +98,7 @@ public class HttpSessionContext implements Context
         return this.setObject( key, o );
     }
 
-    public final Object removeAttribute( String key )
+    public final Object removeAttribute( final String key )
     {
         return this.removeObject( key );
     }

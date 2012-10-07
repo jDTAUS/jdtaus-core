@@ -104,6 +104,12 @@ public class DefaultContext implements Serializable, Context
      */
     private final Map map = new HashMap( 100 );
 
+    /** Creates a new {@code DefaultContext} instance. */
+    public DefaultContext()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code Map} backing the instance.
      *

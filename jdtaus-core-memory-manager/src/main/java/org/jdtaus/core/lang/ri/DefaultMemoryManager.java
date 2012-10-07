@@ -141,7 +141,7 @@ public class DefaultMemoryManager implements MemoryManager
         return ( all / 100L ) * this.getMaximumPercent();
     }
 
-    public byte[] allocateBytes( int requested ) throws OutOfMemoryError
+    public byte[] allocateBytes( final int requested ) throws OutOfMemoryError
     {
         if ( requested < 0 )
         {
@@ -185,7 +185,7 @@ public class DefaultMemoryManager implements MemoryManager
         return this.getAvailableBytes() / 2;
     }
 
-    public short[] allocateShorts( int requested ) throws OutOfMemoryError
+    public short[] allocateShorts( final int requested ) throws OutOfMemoryError
     {
         if ( requested < 0 )
         {
@@ -229,7 +229,7 @@ public class DefaultMemoryManager implements MemoryManager
         return this.getAvailableBytes() / 4;
     }
 
-    public int[] allocateIntegers( int requested ) throws OutOfMemoryError
+    public int[] allocateIntegers( final int requested ) throws OutOfMemoryError
     {
         if ( requested < 0 )
         {
@@ -273,7 +273,7 @@ public class DefaultMemoryManager implements MemoryManager
         return this.getAvailableBytes() / 8;
     }
 
-    public long[] allocateLongs( int requested ) throws OutOfMemoryError
+    public long[] allocateLongs( final int requested ) throws OutOfMemoryError
     {
         if ( requested < 0 )
         {
@@ -317,7 +317,7 @@ public class DefaultMemoryManager implements MemoryManager
         return this.getAvailableBytes() / 2;
     }
 
-    public char[] allocateChars( int requested ) throws OutOfMemoryError
+    public char[] allocateChars( final int requested ) throws OutOfMemoryError
     {
         if ( requested < 0 )
         {
@@ -361,7 +361,7 @@ public class DefaultMemoryManager implements MemoryManager
         return this.getAvailableBytes() / 4;
     }
 
-    public float[] allocateFloats( int requested ) throws OutOfMemoryError
+    public float[] allocateFloats( final int requested ) throws OutOfMemoryError
     {
         if ( requested < 0 )
         {
@@ -405,7 +405,8 @@ public class DefaultMemoryManager implements MemoryManager
         return this.getAvailableBytes() / 8;
     }
 
-    public double[] allocateDoubles( int requested ) throws OutOfMemoryError
+    public double[] allocateDoubles( final int requested )
+        throws OutOfMemoryError
     {
         if ( requested < 0 )
         {
@@ -449,7 +450,8 @@ public class DefaultMemoryManager implements MemoryManager
         return this.getAvailableBytes();
     }
 
-    public boolean[] allocateBoolean( int requested ) throws OutOfMemoryError
+    public boolean[] allocateBoolean( final int requested )
+        throws OutOfMemoryError
     {
         if ( requested < 0 )
         {

@@ -38,6 +38,12 @@ public class ContainerTest extends TestCase
     /** The implementation to test. */
     private Container container;
 
+    /** Creates a new {@code ContainerTest} instance. */
+    public ContainerTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code Container} implementation tests are performed with.
      *
@@ -69,7 +75,7 @@ public class ContainerTest extends TestCase
             this.getContainer().getDependency( (Object) null, "TEST" );
             throw new AssertionError( "Expected 'NullPointerException' not thrown." );
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -80,7 +86,7 @@ public class ContainerTest extends TestCase
             this.getContainer().getDependency( this, null );
             throw new AssertionError( "Expected 'NullPointerException' not thrown." );
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -94,7 +100,7 @@ public class ContainerTest extends TestCase
             this.getContainer().getMessage( (Object) null, "TEST", Locale.getDefault(), null );
             throw new AssertionError( "Expected 'NullPointerException' not thrown." );
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -104,7 +110,7 @@ public class ContainerTest extends TestCase
             this.getContainer().getMessage( this, null, Locale.getDefault(), null );
             throw new AssertionError( "Expected 'NullPointerException' not thrown." );
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -114,7 +120,7 @@ public class ContainerTest extends TestCase
             this.getContainer().getMessage( this, "TEST", null, null );
             throw new AssertionError( "Expected 'NullPointerException' not thrown." );
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -128,7 +134,7 @@ public class ContainerTest extends TestCase
             this.getContainer().getObject( (Class) null );
             throw new AssertionError( "Expected 'NullPointerException' not thrown." );
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -139,7 +145,7 @@ public class ContainerTest extends TestCase
             this.getContainer().getObject( (Class) null, "TEST" );
             throw new AssertionError( "Expected 'NullPointerException' not thrown." );
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -149,7 +155,7 @@ public class ContainerTest extends TestCase
             this.getContainer().getObject( this.getClass(), null );
             throw new AssertionError( "Expected 'NullPointerException' not thrown." );
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -163,7 +169,7 @@ public class ContainerTest extends TestCase
             this.getContainer().getProperty( (Object) null, "TEST" );
             throw new AssertionError( "Expected 'NullPointerException' not thrown." );
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -173,7 +179,7 @@ public class ContainerTest extends TestCase
             this.getContainer().getProperty( this, null );
             throw new AssertionError( "Expected 'NullPointerException' not thrown." );
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );

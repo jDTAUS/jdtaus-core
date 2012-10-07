@@ -145,19 +145,19 @@ public class DefaultContainer implements Container
 
             }
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new ContainerError( e );
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             throw new ContainerError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new ContainerError( e );
         }
-        catch ( InvocationTargetException e )
+        catch ( final InvocationTargetException e )
         {
             throw new ContainerError( e );
         }
@@ -276,19 +276,19 @@ public class DefaultContainer implements Container
             this.initializeContext( dependencyObject );
             return dependencyObject;
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new ContainerError( e );
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             throw new ContainerError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new ContainerError( e );
         }
-        catch ( InvocationTargetException e )
+        catch ( final InvocationTargetException e )
         {
             throw new ContainerError( e );
         }
@@ -296,6 +296,12 @@ public class DefaultContainer implements Container
 
     //---------------------------------------------------------------Container--
     //--DefaultContainer--------------------------------------------------------
+
+    /** Creates a new {@code DefaultContainer} instance. */
+    public DefaultContainer()
+    {
+        super();
+    }
 
     /**
      * Creates a new instance of an implementation.
@@ -343,7 +349,7 @@ public class DefaultContainer implements Container
 
             return object;
         }
-        catch ( Throwable e )
+        catch ( final Throwable e )
         {
             throw new org.jdtaus.core.container.InstantiationException(
                 impl.getIdentifier(), e );
@@ -404,7 +410,7 @@ public class DefaultContainer implements Container
 
             return object;
         }
-        catch ( Throwable e )
+        catch ( final Throwable e )
         {
             throw new org.jdtaus.core.container.InstantiationException(
                 dep.getImplementation().getIdentifier(), e );
@@ -539,20 +545,20 @@ public class DefaultContainer implements Container
 
             return object;
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             // Cannot happen - method got set accessible.
             throw new AssertionError( e );
         }
-        catch ( InvocationTargetException e )
+        catch ( final InvocationTargetException e )
         {
             throw new ContainerError( e );
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             throw new ContainerError( e );
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new ContainerError( e );
         }
@@ -622,7 +628,7 @@ public class DefaultContainer implements Container
             this.initializeObject( object );
             return object;
         }
-        catch ( Throwable t )
+        catch ( final Throwable t )
         {
             if ( t instanceof Error )
             {
@@ -656,7 +662,7 @@ public class DefaultContainer implements Container
 
                 break;
             }
-            catch ( MissingImplementationException e )
+            catch ( final MissingImplementationException e )
             {
                 if ( exception == null )
                 {
@@ -922,7 +928,7 @@ public class DefaultContainer implements Container
                         {
                             object = this.instantiateObject( instance );
                         }
-                        catch ( Throwable t )
+                        catch ( final Throwable t )
                         {
                             scope.removeObject( instance.getClassName() );
                             if ( t instanceof Error )

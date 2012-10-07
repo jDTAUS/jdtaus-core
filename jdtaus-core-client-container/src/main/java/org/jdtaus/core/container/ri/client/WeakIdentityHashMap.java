@@ -107,14 +107,14 @@ import java.util.WeakHashMap;
 public final class WeakIdentityHashMap implements Map
 {
 
-    /** Maximum capacity of the hash-table backing the implementation. */
-    private static final int MAXIMUM_CAPACITY = 0x40000000; // 2^30
+    /** Maximum capacity of the hash-table backing the implementation (2^30). */
+    private static final int MAXIMUM_CAPACITY = 0x40000000;
 
-    /** Default initial capacity. */
-    private static final int DEFAULT_INITIAL_CAPACITY = 16; // 2^4
+    /** Default initial capacity (2^4). */
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
-    /** Default load factor. */
-    private static final float DEFAULT_LOAD_FACTOR = 0.75f; // 3/4
+    /** Default load factor (3/4). */
+    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     /** The number of times the map got structurally modified. */
     private volatile int modifications;
@@ -128,7 +128,7 @@ public final class WeakIdentityHashMap implements Map
     /** The hash-table backing the map. */
     private Entry[] hashTable;
 
-    /** Queue, to which weak keys are appended, */
+    /** Queue, to which weak keys are appended. */
     private final ReferenceQueue referenceQueue = new ReferenceQueue();
 
     /** The key set view of the map. */
@@ -447,14 +447,14 @@ public final class WeakIdentityHashMap implements Map
      * @throws NullPointerException if {@code map} is {@code null}, or if
      * {@code map} contains {@code null} keys or values.
      */
-    public final void putAll( final Map m )
+    public void putAll( final Map m )
     {
         if ( m == null )
         {
             throw new NullPointerException( "m" );
         }
 
-        for ( Iterator it = m.entrySet().iterator(); it.hasNext(); )
+        for ( final Iterator it = m.entrySet().iterator(); it.hasNext(); )
         {
             final Map.Entry entry = (Map.Entry) it.next();
             this.put( entry.getKey(), entry.getValue() );
@@ -986,7 +986,7 @@ public final class WeakIdentityHashMap implements Map
          * <pre><blockquote>
          * ( e.getKey() == null ? 0 : e.getKey().hashCode() ) ^
          * ( e.getValue() == null ? 0 : e.getValue().hashCode() )
-         * <blockquote></pre></p>
+         * </blockquote></pre></p>
          *
          * @return the hash code value for this map entry.
          */

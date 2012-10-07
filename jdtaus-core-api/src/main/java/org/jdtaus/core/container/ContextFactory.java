@@ -95,19 +95,19 @@ public abstract class ContextFactory
 
             return (Context) ret;
         }
-        catch ( SecurityException e )
+        catch ( final SecurityException e )
         {
             throw new ContextError( e );
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             throw new ContextError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new ContextError( e );
         }
-        catch ( InvocationTargetException e )
+        catch ( final InvocationTargetException e )
         {
             final Throwable targetException = e.getTargetException();
 
@@ -127,11 +127,11 @@ public abstract class ContextFactory
 
             }
         }
-        catch ( ClassCastException e )
+        catch ( final ClassCastException e )
         {
             throw new ContextError( e );
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new ContextError( e );
         }
@@ -166,23 +166,23 @@ public abstract class ContextFactory
             ctor.setAccessible( true );
             return (Context) ctor.newInstance( EMPTY );
         }
-        catch ( SecurityException e )
+        catch ( final SecurityException e )
         {
             throw new ContextError( e );
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             throw new ContextError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new ContextError( e );
         }
-        catch ( java.lang.InstantiationException e )
+        catch ( final java.lang.InstantiationException e )
         {
             throw new ContextError( e );
         }
-        catch ( InvocationTargetException e )
+        catch ( final InvocationTargetException e )
         {
             final Throwable targetException = e.getTargetException();
 
@@ -202,11 +202,11 @@ public abstract class ContextFactory
 
             }
         }
-        catch ( ClassCastException e )
+        catch ( final ClassCastException e )
         {
             throw new ContextError( e );
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new ContextError( e );
         }

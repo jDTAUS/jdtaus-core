@@ -95,19 +95,19 @@ public abstract class ModelFactory
 
             return (Model) ret;
         }
-        catch ( SecurityException e )
+        catch ( final SecurityException e )
         {
             throw new ModelError( e );
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             throw new ModelError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new ModelError( e );
         }
-        catch ( InvocationTargetException e )
+        catch ( final InvocationTargetException e )
         {
             final Throwable targetException = e.getTargetException();
 
@@ -127,11 +127,11 @@ public abstract class ModelFactory
 
             }
         }
-        catch ( ClassCastException e )
+        catch ( final ClassCastException e )
         {
             throw new ModelError( e );
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new ModelError( e );
         }
@@ -165,27 +165,27 @@ public abstract class ModelFactory
             ctor.setAccessible( true );
             return (Model) ctor.newInstance( EMPTY );
         }
-        catch ( SecurityException e )
+        catch ( final SecurityException e )
         {
             throw new ModelError( e );
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             throw new ModelError( e );
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             throw new ModelError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new ModelError( e );
         }
-        catch ( java.lang.InstantiationException e )
+        catch ( final java.lang.InstantiationException e )
         {
             throw new ModelError( e );
         }
-        catch ( InvocationTargetException e )
+        catch ( final InvocationTargetException e )
         {
             final Throwable targetException = e.getTargetException();
 
@@ -205,11 +205,11 @@ public abstract class ModelFactory
 
             }
         }
-        catch ( ClassCastException e )
+        catch ( final ClassCastException e )
         {
             throw new ModelError( e );
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new ModelError( e );
         }

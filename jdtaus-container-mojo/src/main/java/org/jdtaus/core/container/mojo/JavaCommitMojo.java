@@ -58,6 +58,12 @@ import org.jdtaus.core.container.Specification;
 public class JavaCommitMojo extends JavaContainerMojo
 {
 
+    /** Creates a new {@code JavaCommitMojo} instance. */
+    public JavaCommitMojo()
+    {
+        super();
+    }
+
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         final ClassLoader mavenLoader = Thread.currentThread().
@@ -70,7 +76,7 @@ public class JavaCommitMojo extends JavaContainerMojo
 
             enableThreadContextClassLoader();
 
-            Module module = this.getModule();
+            final Module module = this.getModule();
             final Model model = ModelFactory.newModel();
 
             if ( module != null )
@@ -100,19 +106,19 @@ public class JavaCommitMojo extends JavaContainerMojo
                 }
             }
         }
-        catch ( ContextError e )
+        catch ( final ContextError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( ContainerError e )
+        catch ( final ContainerError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( ModelError e )
+        catch ( final ModelError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }

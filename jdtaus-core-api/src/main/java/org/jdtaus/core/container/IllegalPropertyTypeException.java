@@ -68,19 +68,19 @@ public class IllegalPropertyTypeException extends IllegalStateException
      * The name of the property with illegal type.
      * @serial
      */
-    private String name;
+    private final String name;
 
     /**
      * The illegal type.
      * @serial
      */
-    private Class type;
+    private final Class type;
 
     /**
      * The expected type.
      * @serial
      */
-    private Class expectedType;
+    private final Class expectedType;
 
     /**
      * Gets the name of the property with illegal type.

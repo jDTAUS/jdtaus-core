@@ -46,6 +46,12 @@ public class Messages implements Cloneable, Serializable
      */
     private Collection messages;
 
+    /** Creates a new {@code Messages} instance. */
+    public Messages()
+    {
+        super();
+    }
+
     /**
      * Getter for property {@code messages}.
      *
@@ -285,7 +291,7 @@ public class Messages implements Cloneable, Serializable
 
             return ret;
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

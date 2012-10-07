@@ -88,6 +88,12 @@ public class Module extends ModelObject implements Cloneable, Serializable
      */
     private String version;
 
+    /** Creates a new {@code Module} instance. */
+    public Module()
+    {
+        super();
+    }
+
     /**
      * Gets the specifications of the module.
      *
@@ -324,7 +330,7 @@ public class Module extends ModelObject implements Cloneable, Serializable
         {
             return super.clone();
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

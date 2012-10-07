@@ -29,9 +29,9 @@ import org.jdtaus.core.text.Message;
  * A task of execution.
  * <p>A task is a sequence of operations taking time. This class defines
  * properties to be used by applications to query a task for information and for
- * cancelling a task. Property {@code indeterminate} indicates if a task
+ * canceling a task. Property {@code indeterminate} indicates if a task
  * supports properties {@code minimum}, {@code maximum} and {@code progress}.
- * Property {@code cancelable} indicates if a task may be cancelled by an
+ * Property {@code cancelable} indicates if a task may be canceled by an
  * application by setting property {@code cancelled} to {@code true}.
  * Properties {@code description} and {@code progressDescription} hold
  * presentation descriptions of a task itself and of the work currently
@@ -145,7 +145,7 @@ public abstract class Task implements Cloneable, Serializable
      *
      * @return the timestamp this task got created.
      */
-    synchronized public final long getTimestamp()
+    public final synchronized long getTimestamp()
     {
         return this.timestamp;
     }
@@ -155,7 +155,7 @@ public abstract class Task implements Cloneable, Serializable
      *
      * @return description of the task.
      */
-    synchronized public final Message getDescription()
+    public final synchronized Message getDescription()
     {
         return this.description;
     }
@@ -165,7 +165,7 @@ public abstract class Task implements Cloneable, Serializable
      *
      * @return description of the progress of the task or {@code null}.
      */
-    synchronized public final Message getProgressDescription()
+    public final synchronized Message getProgressDescription()
     {
         return this.progressDescription;
     }
@@ -177,7 +177,7 @@ public abstract class Task implements Cloneable, Serializable
      *
      * @throws IllegalStateException if the task is indeterminate.
      */
-    synchronized public final int getMinimum()
+    public final synchronized int getMinimum()
     {
         if ( this.isIndeterminate() )
         {
@@ -194,7 +194,7 @@ public abstract class Task implements Cloneable, Serializable
      *
      * @throws IllegalStateException if the task is indeterminate.
      */
-    synchronized public final int getMaximum()
+    public final synchronized int getMaximum()
     {
         if ( this.isIndeterminate() )
         {
@@ -211,7 +211,7 @@ public abstract class Task implements Cloneable, Serializable
      *
      * @throws IllegalStateException if the task is indeterminate.
      */
-    synchronized public final int getProgress()
+    public final synchronized int getProgress()
     {
         if ( this.isIndeterminate() )
         {
@@ -229,7 +229,7 @@ public abstract class Task implements Cloneable, Serializable
      * unknown length; {@code false} if properties {@code minimum},
      * {@code maximum} and {@code progress} hold progress information.
      */
-    synchronized public final boolean isIndeterminate()
+    public final synchronized boolean isIndeterminate()
     {
         return this.indeterminate;
     }
@@ -240,19 +240,19 @@ public abstract class Task implements Cloneable, Serializable
      * @return {@code true} if the task supports property {@code cancelled};
      * {@code false} if property {@code cancelled} is ignored by the task.
      */
-    synchronized public final boolean isCancelable()
+    public final synchronized boolean isCancelable()
     {
         return this.cancelable;
     }
 
     /**
-     * Flag indicating that the task is cancelled.
+     * Flag indicating that the task is canceled.
      *
-     * @return {@code true} if the task is cancelled; {@code false} else.
+     * @return {@code true} if the task is canceled; {@code false} else.
      *
      * @throws IllegalStateException if the task is not cancelable.
      */
-    synchronized public final boolean isCancelled()
+    public final synchronized boolean isCancelled()
     {
         if ( !this.isCancelable() )
         {
@@ -266,14 +266,14 @@ public abstract class Task implements Cloneable, Serializable
      * Setter for property {@code cancelled}.
      * <p>Applications may request cancellation of a {@code Task} by setting
      * property {@code cancelled} to {@code true}. Implementations indicate
-     * theire support for task cancellation by property {@code cancelable}.</p>
+     * support for task cancellation by property {@code cancelable}.</p>
      *
      * @param value {@code true} to cancel the task; {@code false} else.
      *
      * @throws IllegalStateException if the task is not cancelable or is already
-     * cancelled.
+     * canceled.
      */
-    synchronized public final void setCancelled( final boolean value )
+    public final synchronized void setCancelled( final boolean value )
     {
         if ( !this.isCancelable() || this.isCancelled() )
         {
@@ -359,7 +359,7 @@ public abstract class Task implements Cloneable, Serializable
         {
             return super.clone();
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }
@@ -378,6 +378,12 @@ public abstract class Task implements Cloneable, Serializable
  */
 class AscendingTaskComparator implements Comparator, Serializable
 {
+    /** Creates a new {@code AscendingTaskComparator} instance. */
+    AscendingTaskComparator()
+    {
+        super();
+    }
+
     //--Comparator--------------------------------------------------------------
 
     /**
@@ -427,6 +433,13 @@ class AscendingTaskComparator implements Comparator, Serializable
 class DescendingTaskComparator
     extends AscendingTaskComparator
 {
+
+    /** Creates a new {@code DescendingTaskComparator} instance. */
+    DescendingTaskComparator()
+    {
+        super();
+    }
+
     //--Comparator--------------------------------------------------------------
 
     /**

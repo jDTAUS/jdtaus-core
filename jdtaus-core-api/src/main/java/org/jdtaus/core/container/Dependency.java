@@ -78,6 +78,12 @@ public class Dependency extends ModelObject implements Cloneable, Serializable
      */
     private boolean bound;
 
+    /** Creates a new {@code Dependency} instance. */
+    public Dependency()
+    {
+        super();
+    }
+
     /**
      * Gets the name of the dependency.
      *
@@ -190,8 +196,8 @@ public class Dependency extends ModelObject implements Cloneable, Serializable
 
         dependencyProperties.putAll( implementationProperties );
 
-        for ( Iterator it = declaredProperties.entrySet().iterator();
-            it.hasNext();)
+        for ( final Iterator it = declaredProperties.entrySet().iterator();
+              it.hasNext(); )
         {
             final Map.Entry entry = (Map.Entry) it.next();
             final String propertyName = (String) entry.getKey();
@@ -210,8 +216,8 @@ public class Dependency extends ModelObject implements Cloneable, Serializable
                         dependencyProperty.getType() );
 
                 }
-                if ( property.getDocumentation().getValue() == null &&
-                    dependencyProperty.getDocumentation().
+                if ( property.getDocumentation().getValue() == null
+                     && dependencyProperty.getDocumentation().
                     getValue() != null )
                 {
                     property.setDocumentation(
@@ -225,7 +231,7 @@ public class Dependency extends ModelObject implements Cloneable, Serializable
 
         final Properties p = new Properties();
         p.setProperties( (Property[]) dependencyProperties.values().toArray(
-                         new Property[ dependencyProperties.size() ] ) );
+            new Property[ dependencyProperties.size() ] ) );
 
         return p;
     }
@@ -275,7 +281,7 @@ public class Dependency extends ModelObject implements Cloneable, Serializable
      * @param value {@code true} if the dependency object should be bound to the
      * declaring implementation; {@code false} if not.
      */
-    public void setBound( boolean value )
+    public void setBound( final boolean value )
     {
         this.bound = value;
     }
@@ -294,13 +300,13 @@ public class Dependency extends ModelObject implements Cloneable, Serializable
             append( ", implementation=" ).
             append( this.implementation == null
                     ? "null"
-                    : this.implementation.getIdentifier() + "@" +
-                    this.implementation.getVersion() ).
+                    : this.implementation.getIdentifier() + "@"
+                      + this.implementation.getVersion() ).
             append( ", specification=" ).
             append( this.specification == null
                     ? "null"
-                    : this.specification.getIdentifier() + "@" +
-                    this.specification.getVersion() ).
+                    : this.specification.getIdentifier() + "@"
+                      + this.specification.getVersion() ).
             append( ", properties=" ).append( this.properties ).
             append( '}' ).toString();
 
@@ -335,13 +341,13 @@ public class Dependency extends ModelObject implements Cloneable, Serializable
         if ( !equal && o instanceof Dependency )
         {
             final Dependency that = (Dependency) o;
-            equal = this.getName().equals( that.getName() ) &&
-                ( this.implementation == null
-                ? that.implementation == null
-                : this.implementation.equals( that.implementation ) ) &&
-                ( this.specification == null
-                ? that.specification == null
-                : this.specification.equals( that.specification ) );
+            equal = this.getName().equals( that.getName() )
+                    && ( this.implementation == null
+                         ? that.implementation == null
+                         : this.implementation.equals( that.implementation ) )
+                    && ( this.specification == null
+                         ? that.specification == null
+                         : this.specification.equals( that.specification ) );
 
         }
 
@@ -355,13 +361,11 @@ public class Dependency extends ModelObject implements Cloneable, Serializable
      */
     public int hashCode()
     {
-        return this.getName().hashCode() +
-            ( this.implementation == null
-            ? 0
-            : this.implementation.hashCode() ) +
-            ( this.specification == null
-            ? 0
-            : this.specification.hashCode() );
+        return this.getName().hashCode()
+               + ( this.implementation == null
+                   ? 0 : this.implementation.hashCode() )
+               + ( this.specification == null
+                   ? 0 : this.specification.hashCode() );
 
     }
 
@@ -377,7 +381,7 @@ public class Dependency extends ModelObject implements Cloneable, Serializable
         {
             return super.clone();
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

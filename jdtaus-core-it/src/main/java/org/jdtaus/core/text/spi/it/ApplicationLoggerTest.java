@@ -54,6 +54,12 @@ public class ApplicationLoggerTest extends MessageEventSourceTest
     /** Implementation to test. */
     private ApplicationLogger logger;
 
+    /** Creates a new {@code ApplicationLoggerTest} instance. */
+    public ApplicationLoggerTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code ApplicationLogger} implementation tests are performed
      * with.
@@ -85,6 +91,12 @@ public class ApplicationLoggerTest extends MessageEventSourceTest
 
         /** The last event provided to this listener. */
         private MessageEvent lastEvent;
+
+        /** Creates a new {@code TestMessageListener} instance. */
+        public TestMessageListener()
+        {
+            super();
+        }
 
         /**
          * Gets the last event provided to this listener.
@@ -120,7 +132,7 @@ public class ApplicationLoggerTest extends MessageEventSourceTest
             this.getApplicationLogger().log( null );
             throw new AssertionError();
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -154,8 +166,8 @@ public class ApplicationLoggerTest extends MessageEventSourceTest
 
         this.getMessageEventSource().addMessageListener( listener );
 
-        MessageEvent evt = new MessageEvent( this, message,
-                                             MessageEvent.INFORMATION );
+        final MessageEvent evt =
+            new MessageEvent( this, message, MessageEvent.INFORMATION );
 
         this.getApplicationLogger().log( evt );
         Assert.assertNotNull( listener.getLastEvent() );

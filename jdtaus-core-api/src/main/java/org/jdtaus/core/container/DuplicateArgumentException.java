@@ -59,7 +59,7 @@ public class DuplicateArgumentException extends IllegalArgumentException
      * The name of the duplicate argument.
      * @serial
      */
-    private String name;
+    private final String name;
 
     /**
      * Gets the name of the duplicate argument.

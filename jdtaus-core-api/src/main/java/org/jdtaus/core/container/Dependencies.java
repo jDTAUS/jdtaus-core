@@ -60,6 +60,12 @@ public class Dependencies extends ModelObject implements Cloneable, Serializable
      */
     private int hashCode;
 
+    /** Creates a new {@code Dependencies} instance. */
+    public Dependencies()
+    {
+        super();
+    }
+
     /**
      * Gets all dependencies of the collection.
      *
@@ -256,7 +262,7 @@ public class Dependencies extends ModelObject implements Cloneable, Serializable
             ret.setDependencies( cloned );
             return ret;
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

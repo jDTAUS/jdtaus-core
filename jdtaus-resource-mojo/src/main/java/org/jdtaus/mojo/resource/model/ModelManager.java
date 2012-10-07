@@ -42,6 +42,12 @@ import org.xml.sax.SAXException;
 public class ModelManager
 {
 
+    /** Creates a new {@code ModelManager} instance. */
+    public ModelManager()
+    {
+        super();
+    }
+
     /**
      * Unmarshals a given module descriptor.
      *
@@ -99,8 +105,8 @@ public class ModelManager
 
         if ( module.getMessages() != null )
         {
-            for ( Iterator it = module.getMessages().getMessage().iterator();
-                it.hasNext(); )
+            for ( final Iterator it = module.getMessages().getMessage().
+                iterator(); it.hasNext(); )
             {
                 final Message current = (Message) it.next();
                 if ( current.getName().equals( messageName ) )
@@ -142,13 +148,14 @@ public class ModelManager
 
         if ( implementation.getMessages() != null )
         {
-            for ( Iterator it = implementation.getMessages().getMessage().
+            for ( final Iterator it = implementation.getMessages().getMessage().
                 iterator(); it.hasNext(); )
             {
                 final Message message = (Message) it.next();
                 bundleHash = 37 * bundleHash + message.getName().hashCode();
-                for ( Iterator t = message.getTemplate().getText().iterator();
-                    t.hasNext(); )
+
+                for ( final Iterator t = message.getTemplate().getText().
+                    iterator(); t.hasNext(); )
                 {
                     final Text text = (Text) t.next();
                     bundleHash = 37 * bundleHash + text.getLanguage().hashCode();
@@ -157,8 +164,8 @@ public class ModelManager
 
                 if ( message.getArguments() != null )
                 {
-                    for ( Iterator a = message.getArguments().getArgument().
-                        iterator(); a.hasNext(); )
+                    for ( final Iterator a = message.getArguments().
+                        getArgument().iterator(); a.hasNext(); )
                     {
                         final Argument argument = (Argument) a.next();
                         bundleHash = 37 * bundleHash + argument.getName().
@@ -171,8 +178,8 @@ public class ModelManager
                 }
             }
 
-            for ( Iterator it = implementation.getMessages().getReference().
-                iterator(); it.hasNext(); )
+            for ( final Iterator it = implementation.getMessages().
+                getReference().iterator(); it.hasNext(); )
             {
                 final MessageReference messageReference =
                     (MessageReference) it.next();
@@ -180,8 +187,8 @@ public class ModelManager
                 final Message message =
                     this.getMessage( module, messageReference.getName() );
 
-                for ( Iterator t = message.getTemplate().getText().iterator();
-                    t.hasNext(); )
+                for ( final Iterator t = message.getTemplate().getText().
+                    iterator(); t.hasNext(); )
                 {
                     final Text text = (Text) t.next();
                     bundleHash = 37 * bundleHash + text.getLanguage().hashCode();
@@ -190,8 +197,8 @@ public class ModelManager
 
                 if ( message.getArguments() != null )
                 {
-                    for ( Iterator a = message.getArguments().getArgument().
-                        iterator(); a.hasNext(); )
+                    for ( final Iterator a = message.getArguments().
+                        getArgument().iterator(); a.hasNext(); )
                     {
                         final Argument argument = (Argument) a.next();
                         bundleHash = 37 * bundleHash + argument.getName().
@@ -237,12 +244,12 @@ public class ModelManager
 
         if ( implementation.getMessages() != null )
         {
-            for ( Iterator it = implementation.getMessages().getMessage().
+            for ( final Iterator it = implementation.getMessages().getMessage().
                 iterator(); it.hasNext(); )
             {
                 final Message message = (Message) it.next();
-                for ( Iterator t = message.getTemplate().getText().iterator();
-                    t.hasNext(); )
+                for ( final Iterator t = message.getTemplate().getText().
+                    iterator(); t.hasNext(); )
                 {
                     final Text text = (Text) t.next();
                     final String language = text.getLanguage().toLowerCase();
@@ -262,8 +269,8 @@ public class ModelManager
                 }
             }
 
-            for ( Iterator it = implementation.getMessages().getReference().
-                iterator(); it.hasNext(); )
+            for ( final Iterator it = implementation.getMessages().
+                getReference().iterator(); it.hasNext(); )
             {
                 final MessageReference messageReference =
                     (MessageReference) it.next();
@@ -271,8 +278,8 @@ public class ModelManager
                 final Message message =
                     this.getMessage( module, messageReference.getName() );
 
-                for ( Iterator t = message.getTemplate().getText().iterator();
-                    t.hasNext(); )
+                for ( final Iterator t = message.getTemplate().getText().
+                    iterator(); t.hasNext(); )
                 {
                     final Text text = (Text) t.next();
                     final String language = text.getLanguage().toLowerCase();
@@ -363,9 +370,11 @@ public class ModelManager
     }
 
     /**
-     * Gets the method name of a java accessor method for a given message.
+     * Gets the method name of a Java accessor method for a given message.
      *
      * @param message the message to return the accessor method name for.
+     *
+     * @return The method name of a Java accessor method for {@code message}.
      *
      * @throws NullPointerException if {@code text} is {@code null}.
      */
@@ -388,7 +397,7 @@ public class ModelManager
     /**
      * Gets the java classpath location of an implementation bundle.
      *
-     * @return implementation the implementation to return the bundle's java
+     * @param implementation the implementation to return the bundle's java
      * classpath location of.
      *
      * @return the java classpath location of the bundle of

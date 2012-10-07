@@ -39,6 +39,12 @@ import org.codehaus.plexus.util.DirectoryScanner;
 public class CleanMojo extends AbstractContainerMojo
 {
 
+    /** Creates a new {@code CleanMojo} instance. */
+    public CleanMojo()
+    {
+        super();
+    }
+
     /**
      * Scans a project's source directory for files to clean.
      *
@@ -59,8 +65,9 @@ public class CleanMojo extends AbstractContainerMojo
             scanner.addDefaultExcludes();
             scanner.scan();
 
-            for ( Iterator it = Arrays.asList( scanner.getIncludedFiles() ).
-                iterator(); it.hasNext();)
+            for ( final Iterator it =
+                Arrays.asList( scanner.getIncludedFiles() ).iterator();
+                  it.hasNext(); )
             {
                 files.add( new File( sourceDirectory, (String) it.next() ) );
             }
@@ -76,7 +83,7 @@ public class CleanMojo extends AbstractContainerMojo
         final Collection sources = this.getCleanSources();
         final SourceEditor editor = new RemoveTrailingSpacesEditor();
 
-        for ( Iterator it = sources.iterator(); it.hasNext();)
+        for ( final Iterator it = sources.iterator(); it.hasNext();)
         {
             final File file = (File) it.next();
             final String content = this.load( file );
@@ -103,6 +110,12 @@ public class CleanMojo extends AbstractContainerMojo
     {
 
         private boolean modified;
+
+        /** Creates a new {@code RemoveTrailingSpacesEditor} instance. */
+        public RemoveTrailingSpacesEditor()
+        {
+            super();
+        }
 
         public String editLine( final String line ) throws MojoFailureException
         {

@@ -39,6 +39,12 @@ public class FileOperationsTest extends TestCase
     /** The implementation to test. */
     private FileOperations fileOperations;
 
+    /** Creates a new {@code FileOperationsTest} instance. */
+    public FileOperationsTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code FileOperations} implementation tests are performed with.
      *
@@ -77,6 +83,8 @@ public class FileOperationsTest extends TestCase
     /**
      * Checks that a given {@code String} contains exactly the same contents
      * as the content of {@code getTestFile()}.
+     *
+     * @param testfile The string to test.
      *
      * @throws RuntimeException if {@code testfile} does not hold the same
      * characters than the contents of the testfile.
@@ -142,7 +150,7 @@ public class FileOperationsTest extends TestCase
             ops.setLength( Long.MIN_VALUE );
             throw new AssertionError( String.valueOf( Long.MIN_VALUE ) );
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );

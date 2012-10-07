@@ -65,6 +65,12 @@ public class BundleGenerator
      */
     private ModelManager modelManager;
 
+    /** Creates a new {@code BundleGenerator} instance. */
+    public BundleGenerator()
+    {
+        super();
+    }
+
     /**
      * Generates a java source file for a bundle.
      *

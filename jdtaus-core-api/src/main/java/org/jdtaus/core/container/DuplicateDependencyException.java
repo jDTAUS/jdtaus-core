@@ -59,7 +59,7 @@ public class DuplicateDependencyException extends IllegalArgumentException
      * The name of the duplicate dependency.
      * @serial
      */
-    private String name;
+    private final String name;
 
     /**
      * Gets the name of the duplicate dependency.

@@ -54,6 +54,12 @@ public class Text implements Cloneable, Serializable
      */
     private final Map values = new TreeMap();
 
+    /** Creates a new {@code Text} instance. */
+    public Text()
+    {
+        super();
+    }
+
     /**
      * Gets the value of the text for the default language.
      *
@@ -129,7 +135,8 @@ public class Text implements Cloneable, Serializable
         final Locale[] locales = new Locale[ this.values.size() ];
         int i = locales.length - 1;
 
-        for ( Iterator it = this.values.keySet().iterator(); it.hasNext();)
+        for ( final Iterator it = this.values.keySet().iterator();
+              it.hasNext(); )
         {
             locales[i--] = new Locale( (String) it.next() );
         }
@@ -186,7 +193,7 @@ public class Text implements Cloneable, Serializable
         {
             return super.clone();
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

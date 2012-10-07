@@ -59,7 +59,7 @@ public class DuplicateModuleException extends IllegalArgumentException
      * The name of the duplicate module.
      * @serial
      */
-    private String name;
+    private final String name;
 
     /**
      * Gets the name of the duplicate module.

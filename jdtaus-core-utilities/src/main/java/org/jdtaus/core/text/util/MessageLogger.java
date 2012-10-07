@@ -84,6 +84,15 @@ public final class MessageLogger implements MessageListener
     }
 
     //---------------------------------------------------------MessageListener--
+    //--MessageLogger-----------------------------------------------------------
+
+    /** Creates a new {@code MessageLogger} instance. */
+    public MessageLogger()
+    {
+        super();
+    }
+
+    //-----------------------------------------------------------MessageLogger--
     //--Dependencies------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausDependencies

@@ -56,6 +56,12 @@ public abstract class StructuredFileTest extends TestCase
     //------------------------------------------------------------------Fields--
     //--StructuredFileTest------------------------------------------------------
 
+    /** Creates a new {@code StructuredFileTest} instance. */
+    public StructuredFileTest()
+    {
+        super();
+    }
+
     /**
      * Reads the contents of the {@code StructuredFile} implementation
      * beeing tested as an array of byte.

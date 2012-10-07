@@ -86,6 +86,12 @@ public class VerifyModelMojo extends AbstractContainerMojo
     /** Flag indicating model violations. */
     private boolean validModel;
 
+    /** Creates a new {@code VerifyModelMojo} instance. */
+    public VerifyModelMojo()
+    {
+        super();
+    }
+
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         // Setup all runtime dependencies to be available for classloading.
@@ -116,19 +122,19 @@ public class VerifyModelMojo extends AbstractContainerMojo
 
             }
         }
-        catch ( ContextError e )
+        catch ( final ContextError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( ContainerError e )
+        catch ( final ContainerError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( ModelError e )
+        catch ( final ModelError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
@@ -225,7 +231,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
                 getContextClassLoader() );
 
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             this.validModel = false;
 
@@ -257,7 +263,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
                         getImplementation( impl.getName() );
 
                 }
-                catch ( MissingImplementationException e )
+                catch ( final MissingImplementationException e )
                 {
                     this.validModel = false;
 
@@ -268,10 +274,14 @@ public class VerifyModelMojo extends AbstractContainerMojo
                         interfaces[i].getName() ) );
 
                 }
-                catch ( MissingSpecificationException e )
+                catch ( final MissingSpecificationException e )
                 {
                     // Classes are allowed to implement additional interfaces
                     // not defined in the model.
+                    if ( this.getLog().isDebugEnabled() )
+                    {
+                        this.getLog().debug( e.getMessage() );
+                    }
                 }
             }
         }
@@ -319,7 +329,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
 
                     }
                 }
-                catch ( NoSuchMethodException e )
+                catch ( final NoSuchMethodException e )
                 {
                     this.validModel = false;
 
@@ -367,7 +377,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
      */
     private Dependencies getUnresolvedDependencies( final Model model )
     {
-        String unresolvedName = "Unresolved-";
+        final String unresolvedName = "Unresolved-";
         final Collection deps = new LinkedList();
 
         for ( int m = model.getModules().size() - 1; m >= 0; m-- )
@@ -419,7 +429,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
             ImplementationElement committedImpl = null;
             if ( committedModule.getImplementations() != null )
             {
-                for ( Iterator it = committedModule.getImplementations().
+                for ( final Iterator it = committedModule.getImplementations().
                     getImplementation().iterator(); it.hasNext(); )
                 {
                     final ImplementationElement i =
@@ -437,7 +447,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
             {
                 if ( committedImpl.getDependencies() != null )
                 {
-                    for ( Iterator it = committedImpl.getDependencies().
+                    for ( final Iterator it = committedImpl.getDependencies().
                         getDependency().iterator(); it.hasNext(); )
                     {
                         final DependencyElement d =
@@ -471,7 +481,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
                                 this.validModel = false;
                             }
                         }
-                        catch ( MissingDependencyException e )
+                        catch ( final MissingDependencyException e )
                         {
                             this.getLog().error(
                                 VerifyModelMojoBundle.getInstance().
@@ -486,7 +496,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
 
                 if ( committedImpl.getProperties() != null )
                 {
-                    for ( Iterator it = committedImpl.getProperties().
+                    for ( final Iterator it = committedImpl.getProperties().
                         getProperty().iterator(); it.hasNext(); )
                     {
                         final PropertyElement p = (PropertyElement) it.next();
@@ -512,7 +522,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
                                 this.validModel = false;
                             }
                         }
-                        catch ( MissingPropertyException e )
+                        catch ( final MissingPropertyException e )
                         {
                             this.getLog().error(
                                 VerifyModelMojoBundle.getInstance().
@@ -527,15 +537,15 @@ public class VerifyModelMojo extends AbstractContainerMojo
 
                 if ( committedImpl.getMessages() != null )
                 {
-                    for ( Iterator it = committedImpl.getMessages().getMessage().
-                        iterator(); it.hasNext(); )
+                    for ( final Iterator it = committedImpl.getMessages().
+                        getMessage().iterator(); it.hasNext(); )
                     {
                         final MessageElement m = (MessageElement) it.next();
                         try
                         {
                             impl.getMessages().getMessage( m.getName() );
                         }
-                        catch ( MissingMessageException e )
+                        catch ( final MissingMessageException e )
                         {
                             this.getLog().error(
                                 VerifyModelMojoBundle.getInstance().
@@ -551,7 +561,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
 
             if ( committedModule.getSpecifications() != null )
             {
-                for ( Iterator it = committedModule.getSpecifications().
+                for ( final Iterator it = committedModule.getSpecifications().
                     getSpecification().iterator(); it.hasNext(); )
                 {
                     final SpecificationElement s = (SpecificationElement) it.next();
@@ -576,7 +586,7 @@ public class VerifyModelMojo extends AbstractContainerMojo
                             this.validModel = false;
                         }
                     }
-                    catch ( MissingSpecificationException e )
+                    catch ( final MissingSpecificationException e )
                     {
                         this.getLog().debug( e.getMessage() );
                     }

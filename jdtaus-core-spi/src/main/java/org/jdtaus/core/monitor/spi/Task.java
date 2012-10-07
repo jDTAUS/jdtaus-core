@@ -39,6 +39,12 @@ public final class Task extends org.jdtaus.core.monitor.Task
     //---------------------------------------------------------------Constants--
     //--Task--------------------------------------------------------------------
 
+    /** Creates a new {@code Task} instance. */
+    public Task()
+    {
+        super();
+    }
+
     /**
      * Setter for property {@code description}.
      *
@@ -46,7 +52,7 @@ public final class Task extends org.jdtaus.core.monitor.Task
      *
      * @throws NullPointerException if {@code description} is {@code null}.
      */
-    synchronized public void setDescription( final Message description )
+    public synchronized void setDescription( final Message description )
     {
         if ( description == null )
         {
@@ -64,7 +70,7 @@ public final class Task extends org.jdtaus.core.monitor.Task
      * @throws NullPointerException if {@code progressDescription} is
      * {@code null}.
      */
-    synchronized public void setProgressDescription(
+    public synchronized void setProgressDescription(
         final Message progressDescription )
     {
         if ( progressDescription == null )
@@ -82,7 +88,7 @@ public final class Task extends org.jdtaus.core.monitor.Task
      *
      * @throws IllegalStateException if the task is indeterminate.
      */
-    synchronized public void setMinimum( int minimum )
+    public synchronized void setMinimum( final int minimum )
     {
         if ( this.isIndeterminate() )
         {
@@ -99,7 +105,7 @@ public final class Task extends org.jdtaus.core.monitor.Task
      *
      * @throws IllegalStateException if the task is indeterminate.
      */
-    synchronized public void setMaximum( int maximum )
+    public synchronized void setMaximum( final int maximum )
     {
         if ( this.isIndeterminate() )
         {
@@ -119,7 +125,7 @@ public final class Task extends org.jdtaus.core.monitor.Task
      * @throws IllegalArgumentException if {@code progress} is lower than
      * the minimum of the range or greater than the maximum of the range.
      */
-    synchronized public void setProgress( final int progress )
+    public synchronized void setProgress( final int progress )
     {
         if ( this.isIndeterminate() )
         {
@@ -140,7 +146,7 @@ public final class Task extends org.jdtaus.core.monitor.Task
      * are of unknown length; {@code false} to support properties
      * {@code minimum}, {@code maximum} and {@code progress}.
      */
-    synchronized public void setIndeterminate( final boolean indeterminate )
+    public synchronized void setIndeterminate( final boolean indeterminate )
     {
         this.indeterminate = indeterminate;
     }
@@ -152,7 +158,7 @@ public final class Task extends org.jdtaus.core.monitor.Task
      * {@code cancelled}; {@code false} to indicate that property
      * {@code cancelled} is not supported.
      */
-    synchronized public void setCancelable( final boolean cancelable )
+    public synchronized void setCancelable( final boolean cancelable )
     {
         this.cancelable = cancelable;
     }

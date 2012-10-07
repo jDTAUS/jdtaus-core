@@ -69,6 +69,15 @@ public final class IllegalPropertyMessage extends Message
     }
 
     //-----------------------------------------------------------------Message--
+    //--IllegalPropertyMessage--------------------------------------------------
+
+    /** Creates a new {@code IllegalPropertyMessage} instance. */
+    public IllegalPropertyMessage()
+    {
+        super();
+    }
+
+    //--------------------------------------------------IllegalPropertyMessage--
     //--Messages----------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages

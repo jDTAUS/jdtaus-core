@@ -101,7 +101,7 @@ public class ModelManager extends AbstractLogEnabled
      *
      * @return a {@code Marshaller} for marshalling the container model.
      *
-     * @throws JAXBexception if creating a {@code Marshaller} fails.
+     * @throws JAXBException if creating a {@code Marshaller} fails.
      */
     public Marshaller getContainerMarshaller() throws JAXBException
     {
@@ -133,7 +133,7 @@ public class ModelManager extends AbstractLogEnabled
      *
      * @return a {@code Marshaller} for marshalling the spring container model.
      *
-     * @throws JAXBexception if creating a {@code Marshaller} fails.
+     * @throws JAXBException if creating a {@code Marshaller} fails.
      */
     public Marshaller getSpringMarshaller() throws JAXBException
     {
@@ -164,7 +164,7 @@ public class ModelManager extends AbstractLogEnabled
      *
      * @return a {@code Unmarshaller} for unmarshalling the container model.
      *
-     * @throws JAXBexception if creating an {@code Unmarshaller} fails.
+     * @throws JAXBException if creating an {@code Unmarshaller} fails.
      */
     public Unmarshaller getContainerUnmarshaller() throws JAXBException
     {
@@ -181,7 +181,7 @@ public class ModelManager extends AbstractLogEnabled
      * @return a {@code Unmarshaller} for unmarshalling the spring container
      * model.
      *
-     * @throws JAXBexception if creating an {@code Unmarshaller} fails.
+     * @throws JAXBException if creating an {@code Unmarshaller} fails.
      */
     public Unmarshaller getSpringUnmarshaller() throws JAXBException
     {
@@ -347,7 +347,7 @@ public class ModelManager extends AbstractLogEnabled
      * Maps a container {@code Specification} instance to the plugin's
      * model.
      *
-     * @param specificaction The container model to map.
+     * @param specification The container model to map.
      *
      * @return {@code specificaction} mapped to the plugin's model.
      *
@@ -534,7 +534,7 @@ public class ModelManager extends AbstractLogEnabled
      *
      * @param factoryBeanClassName the name of the {@code FactoryBean}
      * implementation class.
-     * @param model the container model to map.
+     * @param cModules the container model to map.
      *
      * @return {@code model} mapped to the spring container model.
      *
@@ -845,7 +845,7 @@ public class ModelManager extends AbstractLogEnabled
         throws JAXBException
     {
         final ObjectFactory f = new ObjectFactory();
-        SpecificationsElement specs = f.createSpecificationsElement();
+        final SpecificationsElement specs = f.createSpecificationsElement();
 
         for ( int i = cSpecifications.size() - 1; i >= 0; i-- )
         {
@@ -1218,8 +1218,8 @@ public class ModelManager extends AbstractLogEnabled
 
         if ( module.getMessages() != null )
         {
-            for ( Iterator it = module.getMessages().getMessage().iterator();
-                  it.hasNext(); )
+            for ( final Iterator it = module.getMessages().getMessage().
+                iterator(); it.hasNext(); )
             {
                 final Message current = (Message) it.next();
                 if ( current.getName().equals( name ) )
@@ -1247,7 +1247,8 @@ public class ModelManager extends AbstractLogEnabled
         final Specifications specs, final String identifier )
     {
         SpecificationElement s = null;
-        for ( Iterator it = specs.getSpecification().iterator(); it.hasNext(); )
+        for ( final Iterator it = specs.getSpecification().iterator();
+              it.hasNext(); )
         {
             final SpecificationElement e = (SpecificationElement) it.next();
             if ( identifier.equals( e.getIdentifier() ) )

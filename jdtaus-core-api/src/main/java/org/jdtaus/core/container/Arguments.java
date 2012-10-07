@@ -61,6 +61,12 @@ public class Arguments extends ModelObject
      */
     private int hashCode;
 
+    /** Creates a new {@code Arguments} instance. */
+    public Arguments()
+    {
+        super();
+    }
+
     /**
      * Gets the arguments of the collection.
      *
@@ -258,7 +264,7 @@ public class Arguments extends ModelObject
             ret.setArguments( cloned );
             return ret;
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

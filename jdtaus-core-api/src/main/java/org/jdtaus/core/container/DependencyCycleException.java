@@ -82,6 +82,7 @@ public class DependencyCycleException extends IllegalStateException
                                           identifier1,
                                           identifier2 ) );
 
+        this.implementations = null;
     }
 
     //------------------------------------------------------------Constructors--
@@ -91,7 +92,7 @@ public class DependencyCycleException extends IllegalStateException
      * The implementations introducing a cycle.
      * @serial
      */
-    private Implementation[] implementations;
+    private final Implementation[] implementations;
 
     /**
      * Gets the implementation introducing a cycle.

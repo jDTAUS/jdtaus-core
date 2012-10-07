@@ -104,7 +104,7 @@ public class ContainerReport extends AbstractMavenReport
     private boolean linkJavadoc;
 
     /**
-     * Generates the site report
+     * Generates the site report.
      *
      * @component
      * @required
@@ -282,7 +282,7 @@ public class ContainerReport extends AbstractMavenReport
 
             this.getSink().body_();
         }
-        catch ( ContextError e )
+        catch ( final ContextError e )
         {
             final MavenReportException mre =
                 new MavenReportException( e.getMessage() );
@@ -290,7 +290,7 @@ public class ContainerReport extends AbstractMavenReport
             mre.initCause( e );
             throw mre;
         }
-        catch ( ContainerError e )
+        catch ( final ContainerError e )
         {
             final MavenReportException mre =
                 new MavenReportException( e.getMessage() );
@@ -298,7 +298,7 @@ public class ContainerReport extends AbstractMavenReport
             mre.initCause( e );
             throw mre;
         }
-        catch ( ModelError e )
+        catch ( final ModelError e )
         {
             final MavenReportException mre =
                 new MavenReportException( e.getMessage() );
@@ -306,7 +306,7 @@ public class ContainerReport extends AbstractMavenReport
             mre.initCause( e );
             throw mre;
         }
-        catch ( MissingModuleException e )
+        catch ( final MissingModuleException e )
         {
             this.getSink().paragraph();
             this.getSink().text( ContainerReportBundle.getInstance().
@@ -317,7 +317,7 @@ public class ContainerReport extends AbstractMavenReport
             this.getSink().section1_();
             this.getSink().body_();
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw new MavenReportException( e.getMessage(), e );
         }
@@ -330,6 +330,12 @@ public class ContainerReport extends AbstractMavenReport
 
     //-----------------------------------------------------AbstractMavenReport--
     //--ContainerReport---------------------------------------------------------
+
+    /** Creates a new {@code ContainerReport} instance. */
+    public ContainerReport()
+    {
+        super();
+    }
 
     private void generateModuleReport( final Module model,
                                        final Locale locale )
@@ -1191,7 +1197,7 @@ public class ContainerReport extends AbstractMavenReport
      */
     private Dependencies getUnresolvedDependencies( final Model model )
     {
-        String unresolvedName = "Unresolved";
+        final String unresolvedName = "Unresolved";
         final Collection deps = new LinkedList();
 
         for ( int m = model.getModules().size() - 1; m >= 0; m-- )

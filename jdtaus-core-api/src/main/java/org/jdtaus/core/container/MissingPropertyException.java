@@ -59,7 +59,7 @@ public class MissingPropertyException extends IllegalStateException
      * The name of the missing property.
      * @serial
      */
-    private String name;
+    private final String name;
 
     /**
      * Gets the name of the missing property.

@@ -60,6 +60,12 @@ public class Properties extends ModelObject implements Cloneable, Serializable
      */
     private int hashCode;
 
+    /** Creates a new {@code Properties} instance. */
+    public Properties()
+    {
+        super();
+    }
+
     /**
      * Gets the properties of the collection.
      *
@@ -195,7 +201,7 @@ public class Properties extends ModelObject implements Cloneable, Serializable
             }
 
         }
-        catch ( MissingPropertyException e )
+        catch ( final MissingPropertyException e )
         {
             final Collection props = Arrays.asList( this.getProperties() );
             props.add( property );
@@ -306,7 +312,7 @@ public class Properties extends ModelObject implements Cloneable, Serializable
             ret.setProperties( cloned );
             return ret;
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

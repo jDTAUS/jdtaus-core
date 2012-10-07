@@ -230,7 +230,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
                     this.getLog().debug( module.toString() );
                 }
             }
-            catch ( MissingModuleException e )
+            catch ( final MissingModuleException e )
             {
                 this.getLog().info( JavaContainerMojoBundle.getInstance().
                     getSkippingMainModuleMessage( Locale.getDefault() ) );
@@ -263,7 +263,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
                     this.getLog().debug( module.toString() );
                 }
             }
-            catch ( MissingModuleException e )
+            catch ( final MissingModuleException e )
             {
                 this.getLog().info( JavaContainerMojoBundle.getInstance().
                     getSkippingTestModuleMessage( Locale.getDefault() ) );
@@ -354,19 +354,19 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
             }
         }
-        catch ( ContextError e )
+        catch ( final ContextError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( ContainerError e )
+        catch ( final ContainerError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( ModelError e )
+        catch ( final ModelError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
@@ -384,13 +384,20 @@ public class JavaContainerMojo extends AbstractContainerMojo
     private static final String IMPLEMENTATION_TEMPLATE_LOCATION =
         "META-INF/templates/Implementation.java.vm";
 
+    /** Creates a new {@code JavaContainerMojo} instance. */
+    public JavaContainerMojo()
+    {
+        super();
+    }
+
     /** Adds dependency getters to an implementation. */
-    private class DependencyEditor implements AbstractContainerMojo.SourceEditor
+    private final class DependencyEditor
+        implements AbstractContainerMojo.SourceEditor
     {
 
-        private boolean editing = false;
+        private boolean editing;
 
-        private boolean modified = false;
+        private boolean modified;
 
         private final String fileName;
 
@@ -417,7 +424,8 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
         public String editLine( final String line ) throws MojoFailureException
         {
-            String replacement = null; // Replace with nothing.
+            // Replace with nothing by default.
+            String replacement = null;
 
             if ( line == null && this.editing )
             {
@@ -556,12 +564,13 @@ public class JavaContainerMojo extends AbstractContainerMojo
     }
 
     /** Adds property getters to an implementation. */
-    private class PropertyEditor implements AbstractContainerMojo.SourceEditor
+    private final class PropertyEditor
+        implements AbstractContainerMojo.SourceEditor
     {
 
-        private boolean editing = false;
+        private boolean editing;
 
-        private boolean modified = false;
+        private boolean modified;
 
         private final String fileName;
 
@@ -588,7 +597,8 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
         public String editLine( final String line ) throws MojoFailureException
         {
-            String replacement = null; // Replace with nothing.
+            // Replace with nothing by default.
+            String replacement = null;
 
             if ( line == null && this.editing )
             {
@@ -748,13 +758,13 @@ public class JavaContainerMojo extends AbstractContainerMojo
     }
 
     /** Adds implementation constructors. */
-    private class ConstructorsEditor implements
-        AbstractContainerMojo.SourceEditor
+    private final class ConstructorsEditor
+        implements AbstractContainerMojo.SourceEditor
     {
 
-        private boolean editing = false;
+        private boolean editing;
 
-        private boolean modified = false;
+        private boolean modified;
 
         private final String fileName;
 
@@ -782,7 +792,8 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
         public String editLine( final String line ) throws MojoFailureException
         {
-            String replacement = null; // Replace with nothing.
+            // Replace with nothing by default.
+            String replacement = null;
 
             if ( line == null && this.editing )
             {
@@ -868,12 +879,13 @@ public class JavaContainerMojo extends AbstractContainerMojo
     }
 
     /** Adds message getters to an implementation. */
-    private class MessageEditor implements AbstractContainerMojo.SourceEditor
+    private final class MessageEditor
+        implements AbstractContainerMojo.SourceEditor
     {
 
-        private boolean editing = false;
+        private boolean editing;
 
-        private boolean modified = false;
+        private boolean modified;
 
         private final String fileName;
 
@@ -900,7 +912,8 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
         public String editLine( final String line ) throws MojoFailureException
         {
-            String replacement = null; // Replace with nothing.
+            // Replace with nothing by default.
+            String replacement = null;
 
             if ( line == null && this.editing )
             {
@@ -1227,21 +1240,24 @@ public class JavaContainerMojo extends AbstractContainerMojo
                     buf.append( "}\n\n" );
                 }
             }
-            catch ( ParseException e )
+            catch ( final ParseException e )
             {
-                throw (MojoFailureException) new MojoFailureException( e.getMessage() ).initCause( e );
+                throw (MojoFailureException) new MojoFailureException(
+                    e.getMessage() ).initCause( e );
+
             }
         }
 
     }
 
     /** Cleans a section. */
-    private class RemovingEditor implements AbstractContainerMojo.SourceEditor
+    private final class RemovingEditor
+        implements AbstractContainerMojo.SourceEditor
     {
 
-        private boolean editing = false;
+        private boolean editing;
 
-        private boolean modified = false;
+        private boolean modified;
 
         private final String fileName;
 
@@ -1271,7 +1287,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
             this.endingMarker = endingMarker;
         }
 
-        public String editLine( String line ) throws MojoFailureException
+        public String editLine( final String line ) throws MojoFailureException
         {
             if ( line == null && this.editing )
             {
@@ -1282,7 +1298,9 @@ public class JavaContainerMojo extends AbstractContainerMojo
 
             }
 
-            String replacement = null; // Replace with nothing.
+            // Replace with nothing by default.
+            String replacement = null;
+
             if ( line != null && this.startingMarker.equals( line.trim() ) )
             {
                 // Skip all input up to the ending marker.
@@ -1527,7 +1545,7 @@ public class JavaContainerMojo extends AbstractContainerMojo
                 this.save( source, edited );
             }
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw (MojoFailureException) new MojoFailureException(
                 e.getMessage() ).initCause( e );

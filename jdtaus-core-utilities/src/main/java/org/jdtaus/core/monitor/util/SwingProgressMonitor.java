@@ -815,7 +815,7 @@ public final class SwingProgressMonitor implements TaskListener
                 else if ( now - this.popupDecisionMillis > this.getMillisToDecideToPopup() )
                 {
                     // If any task's operation runs longer than millisToPopup, show the dialog.
-                    for ( Iterator it = this.tasks.entrySet().iterator(); it.hasNext(); )
+                    for ( final Iterator it = this.tasks.entrySet().iterator(); it.hasNext(); )
                     {
                         final Map.Entry entry = (Map.Entry) it.next();
                         final MonitorState state = (MonitorState) entry.getValue();

@@ -68,6 +68,12 @@ public class Property extends ModelObject implements Cloneable, Serializable
      */
     private boolean api;
 
+    /** Creates a new {@code Property} instance. */
+    public Property()
+    {
+        super();
+    }
+
     /**
      * Gets the name of the property.
      *
@@ -240,7 +246,7 @@ public class Property extends ModelObject implements Cloneable, Serializable
         {
             return super.clone();
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

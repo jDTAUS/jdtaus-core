@@ -37,6 +37,12 @@ public class MemoryManagerTest extends RuntimeTest
     /** Implementation to test. */
     private MemoryManager manager;
 
+    /** Creates a new {@code MemoryManagerTest} instance. */
+    public MemoryManagerTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code MemoryManager} implementation tests are performed with.
      *
@@ -76,7 +82,7 @@ public class MemoryManagerTest extends RuntimeTest
             this.getMemoryManager().allocateBoolean( Integer.MIN_VALUE );
             throw new AssertionError();
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -87,7 +93,7 @@ public class MemoryManagerTest extends RuntimeTest
             this.getMemoryManager().allocateBytes( Integer.MIN_VALUE );
             throw new AssertionError();
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -98,7 +104,7 @@ public class MemoryManagerTest extends RuntimeTest
             this.getMemoryManager().allocateChars( Integer.MIN_VALUE );
             throw new AssertionError();
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -109,7 +115,7 @@ public class MemoryManagerTest extends RuntimeTest
             this.getMemoryManager().allocateDoubles( Integer.MIN_VALUE );
             throw new AssertionError();
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -120,7 +126,7 @@ public class MemoryManagerTest extends RuntimeTest
             this.getMemoryManager().allocateFloats( Integer.MIN_VALUE );
             throw new AssertionError();
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -131,7 +137,7 @@ public class MemoryManagerTest extends RuntimeTest
             this.getMemoryManager().allocateIntegers( Integer.MIN_VALUE );
             throw new AssertionError();
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -142,7 +148,7 @@ public class MemoryManagerTest extends RuntimeTest
             this.getMemoryManager().allocateLongs( Integer.MIN_VALUE );
             throw new AssertionError();
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -153,7 +159,7 @@ public class MemoryManagerTest extends RuntimeTest
             this.getMemoryManager().allocateShorts( Integer.MIN_VALUE );
             throw new AssertionError();
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );

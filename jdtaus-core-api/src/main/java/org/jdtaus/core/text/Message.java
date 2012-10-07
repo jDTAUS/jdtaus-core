@@ -195,7 +195,7 @@ public abstract class Message implements Cloneable, Serializable
         {
             return super.clone();
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }
@@ -214,6 +214,13 @@ public abstract class Message implements Cloneable, Serializable
  */
 class AscendingMessageComparator implements Comparator, Serializable
 {
+
+    /** Creates a new {@code AscendingMessageComparator} instance. */
+    AscendingMessageComparator()
+    {
+        super();
+    }
+
     //--Comparator--------------------------------------------------------------
 
     /**
@@ -263,6 +270,13 @@ class AscendingMessageComparator implements Comparator, Serializable
 class DescendingMessageComparator
     extends AscendingMessageComparator
 {
+
+    /** Creates a new {@code DescendingMessageComparator} instance. */
+    DescendingMessageComparator()
+    {
+        super();
+    }
+
     //--Comparator--------------------------------------------------------------
 
     /**

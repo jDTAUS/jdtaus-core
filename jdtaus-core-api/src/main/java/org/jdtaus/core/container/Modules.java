@@ -89,6 +89,12 @@ public class Modules extends ModelObject implements Cloneable, Serializable
      */
     private int hashCode;
 
+    /** Creates a new {@code Modules} instance. */
+    public Modules()
+    {
+        super();
+    }
+
     /**
      * Gets the modules of the collection.
      *
@@ -503,7 +509,7 @@ public class Modules extends ModelObject implements Cloneable, Serializable
             ret.setModules( cloned );
             return ret;
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

@@ -58,6 +58,12 @@ public class TaskMonitorTest extends TaskEventSourceTest
     /** Implementation to test. */
     private TaskMonitor monitor;
 
+    /** Creates a new {@code TaskMonitorTest} instance. */
+    public TaskMonitorTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code TaskMonitor} implementation tests are performed with.
      *
@@ -86,7 +92,12 @@ public class TaskMonitorTest extends TaskEventSourceTest
     {
 
         /** @serial */
-        String text = TaskMonitorTest.class.getName();
+        private String text = TaskMonitorTest.class.getName();
+
+        public TestMessage()
+        {
+            super();
+        }
 
         public Object[] getFormatArguments( final Locale locale )
         {
@@ -227,7 +238,7 @@ public class TaskMonitorTest extends TaskEventSourceTest
             this.getTaskMonitor().monitor( null );
             throw new AssertionError();
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -238,7 +249,7 @@ public class TaskMonitorTest extends TaskEventSourceTest
             this.getTaskMonitor().finish( null );
             throw new AssertionError();
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -383,7 +394,7 @@ public class TaskMonitorTest extends TaskEventSourceTest
                         }
                         getTaskMonitor().finish( task );
                     }
-                    catch ( InterruptedException e )
+                    catch ( final InterruptedException e )
                     {
                         throw new AssertionError( e );
                     }
@@ -395,7 +406,7 @@ public class TaskMonitorTest extends TaskEventSourceTest
             thread.start();
         }
 
-        for ( Iterator it = threads.iterator(); it.hasNext();)
+        for ( final Iterator it = threads.iterator(); it.hasNext();)
         {
             ( ( Thread ) it.next() ).join();
         }

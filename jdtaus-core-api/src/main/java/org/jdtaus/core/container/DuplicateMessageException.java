@@ -59,7 +59,7 @@ public class DuplicateMessageException extends IllegalArgumentException
      * The name of the duplicate message.
      * @serial
      */
-    private String name;
+    private final String name;
 
     /**
      * Gets the name of the duplicate message.

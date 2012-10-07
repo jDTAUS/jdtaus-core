@@ -116,6 +116,12 @@ public class JavaResourcesMojo extends AbstractMojo
     /** @component */
     private ModelManager modelManager;
 
+    /** Creates a new {@code JavaResourcesMojo} instance. */
+    public JavaResourcesMojo()
+    {
+        super();
+    }
+
     private MavenProject getProject()
     {
         return this.project;
@@ -203,7 +209,7 @@ public class JavaResourcesMojo extends AbstractMojo
                 }
             }
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
@@ -268,8 +274,8 @@ public class JavaResourcesMojo extends AbstractMojo
             in.close();
             in = null;
 
-            for ( Iterator it = module.getImplementations().getImplementation().
-                iterator(); it.hasNext(); )
+            for ( final Iterator it = module.getImplementations().
+                getImplementation().iterator(); it.hasNext(); )
             {
                 final Implementation impl = (Implementation) it.next();
                 if ( impl.getMessages() == null )
@@ -321,10 +327,10 @@ public class JavaResourcesMojo extends AbstractMojo
                         this.getModelManager().
                         getBundleProperties( module, impl );
 
-                    for ( Iterator properties = bundleProperties.entrySet().
-                        iterator(); properties.hasNext(); )
+                    for ( final Iterator it2 = bundleProperties.entrySet().
+                        iterator(); it2.hasNext(); )
                     {
-                        final Map.Entry entry = (Map.Entry) properties.next();
+                        final Map.Entry entry = (Map.Entry) it2.next();
                         final String language = (String) entry.getKey();
                         final Properties p = (Properties) entry.getValue();
                         final File file = new File( this.getResourceDirectory(),
@@ -412,8 +418,8 @@ public class JavaResourcesMojo extends AbstractMojo
     {
         if ( module.getImplementations() != null )
         {
-            for ( Iterator it = module.getImplementations().getImplementation().
-                iterator(); it.hasNext(); )
+            for ( final Iterator it = module.getImplementations().
+                getImplementation().iterator(); it.hasNext(); )
             {
                 final Implementation impl = (Implementation) it.next();
                 if ( impl.getMessages() == null )
@@ -421,8 +427,8 @@ public class JavaResourcesMojo extends AbstractMojo
                     continue;
                 }
 
-                for ( Iterator m = impl.getMessages().getMessage().iterator();
-                      m.hasNext(); )
+                for ( final Iterator m = impl.getMessages().getMessage().
+                    iterator(); m.hasNext(); )
                 {
                     this.assertValidMessage( (Message) m.next() );
                 }
@@ -431,8 +437,8 @@ public class JavaResourcesMojo extends AbstractMojo
 
         if ( module.getMessages() != null )
         {
-            for ( Iterator it = module.getMessages().getMessage().iterator();
-                  it.hasNext(); )
+            for ( final Iterator it = module.getMessages().getMessage().
+                iterator(); it.hasNext(); )
             {
                 this.assertValidMessage( (Message) it.next() );
             }
@@ -444,15 +450,15 @@ public class JavaResourcesMojo extends AbstractMojo
     {
         if ( message.getTemplate() != null )
         {
-            for ( Iterator it = message.getTemplate().getText().iterator();
-                  it.hasNext(); )
+            for ( final Iterator it = message.getTemplate().getText().
+                iterator(); it.hasNext(); )
             {
                 final Text text = (Text) it.next();
                 try
                 {
                     new MessageFormat( text.getValue() );
                 }
-                catch ( IllegalArgumentException e )
+                catch ( final IllegalArgumentException e )
                 {
                     final MessageFormat fmt =
                         this.getMessage( "illegalTemplate" );

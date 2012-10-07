@@ -44,6 +44,12 @@ public class VerifyJarMojo extends VerifyModelMojo
      */
     private File jarFile;
 
+    /** Creates a new {@code VerifyJarMojo} instance. */
+    public VerifyJarMojo()
+    {
+        super();
+    }
+
     public void execute() throws MojoExecutionException, MojoFailureException
     {
         this.getLog().info( VerifyJarMojoBundle.getInstance().

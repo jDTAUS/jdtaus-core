@@ -59,7 +59,7 @@ public class MissingMessageException extends IllegalStateException
      * The name of the missing message.
      * @serial
      */
-    private String name;
+    private final String name;
 
     /**
      * Gets the name of the missing message.

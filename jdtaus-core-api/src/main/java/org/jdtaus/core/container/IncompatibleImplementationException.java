@@ -69,11 +69,11 @@ public class IncompatibleImplementationException
         final String requiredVersion )
     {
         super( IncompatibleImplementationExceptionBundle.getInstance().
-               getIncompatibleImplementationMessage(
-               Locale.getDefault(), ( implementedVersion != null
-               ? new Integer( 0 )
-               : new Integer( 1 ) ), specificationIdentifier, specifiedVersion,
-               implementationIdentifier, implementedVersion, requiredVersion ) );
+            getIncompatibleImplementationMessage(
+            Locale.getDefault(),
+            implementedVersion != null ? new Integer( 0 ) : new Integer( 1 ),
+            specificationIdentifier, specifiedVersion, implementationIdentifier,
+            implementedVersion, requiredVersion ) );
 
         this.specificationIdentifier = specificationIdentifier;
         this.specifiedVersion = specifiedVersion;
@@ -89,34 +89,34 @@ public class IncompatibleImplementationException
      * The identifier of the specification.
      * @serial
      */
-    private String specificationIdentifier;
+    private final String specificationIdentifier;
 
     /**
      * The version of the specification in use.
      * @serial
      */
-    private String specifiedVersion;
+    private final String specifiedVersion;
 
     /**
      * The identifier of the implementation not implementing the specification
      * version in use.
      * @serial
      */
-    private String implementationIdentifier;
+    private final String implementationIdentifier;
 
     /**
      * The implemented version of the specification in use or {@code null} if
      * the implementation does not implement the specification.
      * @serial
      */
-    private String implementedVersion;
+    private final String implementedVersion;
 
     /**
      * The version the implementation depends on or {@code null} if the
      * implementation does not depend on the specification.
      * @serial
      */
-    private String requiredVersion;
+    private final String requiredVersion;
 
     /**
      * Gets the identifier of the specification.

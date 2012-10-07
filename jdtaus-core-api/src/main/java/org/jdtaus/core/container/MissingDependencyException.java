@@ -59,7 +59,7 @@ public class MissingDependencyException extends IllegalStateException
      * The identifier of the missing dependency.
      * @serial
      */
-    private String identifier;
+    private final String identifier;
 
     /**
      * Gets the identifier of the missing dependency.

@@ -36,6 +36,12 @@ public class LoggerTest extends TestCase
     /** Implementation to test. */
     private Logger logger;
 
+    /** Creates a new {@code LoggerTest} instance. */
+    public LoggerTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code Logger} implementation tests are performed with.
      *

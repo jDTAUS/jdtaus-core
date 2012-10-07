@@ -120,7 +120,7 @@ public class ServletFilter implements Filter
      */
     public static Locale getLocale()
     {
-        Locale locale = (Locale) LOCALES.get();
+        final Locale locale = (Locale) LOCALES.get();
         return locale == null ? Locale.getDefault() : locale;
     }
 
@@ -134,7 +134,7 @@ public class ServletFilter implements Filter
      *
      * @see ServletContextFactories
      */
-    public void init( FilterConfig filterConfig ) throws ServletException
+    public void init( final FilterConfig filterConfig ) throws ServletException
     {
         this.servletContext = filterConfig.getServletContext();
 
@@ -227,6 +227,12 @@ public class ServletFilter implements Filter
     //------------------------------------------------------------------Filter--
     //--ServletFilter-----------------------------------------------------------
 
+    /** Creates a new {@code ServletFilter} instance. */
+    public ServletFilter()
+    {
+        super();
+    }
+
     private void removeThreadLocal( final ThreadLocal threadLocal )
     {
         try
@@ -237,22 +243,22 @@ public class ServletFilter implements Filter
 
             removeMethod.invoke( threadLocal, null );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             threadLocal.set( null );
             this.servletContext.log( e.getMessage(), e );
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             threadLocal.set( null );
             this.servletContext.log( e.getMessage(), e );
         }
-        catch ( InvocationTargetException e )
+        catch ( final InvocationTargetException e )
         {
             threadLocal.set( null );
             this.servletContext.log( e.getMessage(), e );
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             threadLocal.set( null );
         }

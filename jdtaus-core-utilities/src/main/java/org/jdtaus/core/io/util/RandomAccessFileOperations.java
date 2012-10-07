@@ -107,7 +107,7 @@ public final class RandomAccessFileOperations implements FileOperations
 
     }
 
-    public void setLength( long newLength ) throws IOException
+    public void setLength( final long newLength ) throws IOException
     {
         if ( newLength < 0L )
         {
@@ -127,14 +127,15 @@ public final class RandomAccessFileOperations implements FileOperations
         return this.getRandomAccessFile().getFilePointer();
     }
 
-    public void setFilePointer( long pos ) throws IOException
+    public void setFilePointer( final long pos ) throws IOException
     {
         this.assertNotClosed();
 
         this.getRandomAccessFile().seek( pos );
     }
 
-    public void write( byte[] buf, int off, int len ) throws IOException
+    public void write( final byte[] buf, final int off, final int len )
+        throws IOException
     {
         this.assertNotClosed();
 
@@ -150,7 +151,8 @@ public final class RandomAccessFileOperations implements FileOperations
         }
     }
 
-    public int read( byte[] buf, int off, int len ) throws IOException
+    public int read( final byte[] buf, final int off, final int len )
+        throws IOException
     {
         this.assertNotClosed();
 

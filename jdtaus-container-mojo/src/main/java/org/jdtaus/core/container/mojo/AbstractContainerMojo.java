@@ -188,7 +188,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         elements.add( this.getMavenProject().getBuild().getOutputDirectory() );
 
         int i = 0;
-        for ( Iterator it = this.getMavenProject().getRuntimeArtifacts().
+        for ( final Iterator it = this.getMavenProject().getRuntimeArtifacts().
             iterator(); it.hasNext(); )
         {
             final Artifact a = (Artifact) it.next();
@@ -212,7 +212,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         }
 
         i = 0;
-        for ( Iterator it = this.getMavenProject().getCompileArtifacts().
+        for ( final Iterator it = this.getMavenProject().getCompileArtifacts().
             iterator(); it.hasNext(); )
         {
             final Artifact a = (Artifact) it.next();
@@ -256,7 +256,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             getTestOutputDirectory() );
 
         int i = 0;
-        for ( Iterator it = this.getMavenProject().getTestArtifacts().
+        for ( final Iterator it = this.getMavenProject().getTestArtifacts().
             iterator(); it.hasNext(); )
         {
             final Artifact a = (Artifact) it.next();
@@ -440,15 +440,15 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         File file;
         String source;
         File ret = null;
-        final Iterator it;
-        final String fileName = className.replace( '.', File.separatorChar ).
-            concat( ".java" );
+        final String fileName =
+            className.replace( '.', File.separatorChar ).concat( ".java" );
 
-        for ( it = roots.iterator(); it.hasNext(); )
+        for ( final Iterator it = roots.iterator(); it.hasNext(); )
         {
             source = (String) it.next();
             file =
-            new File( source.concat( File.separator ).concat( fileName ) );
+                new File( source.concat( File.separator ).concat( fileName ) );
+
             if ( file.canRead() && file.canWrite() )
             {
                 ret = file;
@@ -475,14 +475,12 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         File parentRoot;
         String sourceRoot;
         DirectoryScanner scanner;
-        final Iterator i;
-        Iterator j;
         final Collection files = new LinkedList();
 
-        for ( i = this.getMavenProject().getCompileSourceRoots().iterator();
-              i.hasNext(); )
+        for ( final Iterator it = this.getMavenProject().
+            getCompileSourceRoots().iterator(); it.hasNext(); )
         {
-            sourceRoot = (String) i.next();
+            sourceRoot = (String) it.next();
             parentRoot = new File( sourceRoot );
 
             if ( !parentRoot.exists() || !parentRoot.isDirectory() )
@@ -496,10 +494,11 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             scanner.addDefaultExcludes();
             scanner.scan();
 
-            for ( j = Arrays.asList( scanner.getIncludedFiles() ).iterator();
-                  j.hasNext(); )
+            for ( final Iterator it2 =
+                Arrays.asList( scanner.getIncludedFiles() ).iterator();
+                  it2.hasNext(); )
             {
-                file = new File( parentRoot, (String) j.next() );
+                file = new File( parentRoot, (String) it2.next() );
                 files.add( file );
             }
         }
@@ -519,14 +518,12 @@ public abstract class AbstractContainerMojo extends AbstractMojo
         File parentRoot;
         String sourceRoot;
         DirectoryScanner scanner;
-        final Iterator i;
-        Iterator j;
         final Collection files = new LinkedList();
 
-        for ( i = this.getMavenProject().getTestCompileSourceRoots().iterator();
-              i.hasNext(); )
+        for ( final Iterator it = this.getMavenProject().
+            getTestCompileSourceRoots().iterator(); it.hasNext(); )
         {
-            sourceRoot = (String) i.next();
+            sourceRoot = (String) it.next();
             parentRoot = new File( sourceRoot );
 
             if ( !parentRoot.exists() || !parentRoot.isDirectory() )
@@ -540,10 +537,11 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             scanner.addDefaultExcludes();
             scanner.scan();
 
-            for ( j = Arrays.asList( scanner.getIncludedFiles() ).iterator();
-                  j.hasNext(); )
+            for ( final Iterator it2 =
+                Arrays.asList( scanner.getIncludedFiles() ).iterator();
+                  it2.hasNext(); )
             {
-                file = new File( parentRoot, (String) j.next() );
+                file = new File( parentRoot, (String) it2.next() );
                 files.add( file );
             }
         }
@@ -621,7 +619,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             return replacement + '\n';
 
         }
-        catch ( IOException e )
+        catch ( final IOException e )
         {
             final MojoFailureException mfe =
                 new MojoFailureException( e.getMessage() );
@@ -684,7 +682,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
 
             return content;
         }
-        catch ( IOException e )
+        catch ( final IOException e )
         {
             final MojoFailureException mfe =
                 new MojoFailureException( e.getMessage() );
@@ -773,7 +771,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
                 fileWriter = null;
             }
         }
-        catch ( IOException e )
+        catch ( final IOException e )
         {
             final MojoFailureException mfe =
                 new MojoFailureException( e.getMessage() );
@@ -832,25 +830,26 @@ public abstract class AbstractContainerMojo extends AbstractMojo
     protected final ClassLoader getRuntimeClassLoader(
         final ClassLoader parent ) throws MojoFailureException
     {
-        final Iterator it;
         final Collection urls = new LinkedList();
 
         try
         {
             int i = 0;
-            for ( it = this.getClasspathElements().iterator(); it.hasNext(); )
+            for ( final Iterator it = this.getClasspathElements().
+                iterator(); it.hasNext(); )
             {
                 final String element = (String) it.next();
                 final URL url = new File( element ).toURI().toURL();
-                if ( !urls.contains( url ) &&
-                     this.isClasspathElementIncluded( element ) )
+
+                if ( !urls.contains( url )
+                     && this.isClasspathElementIncluded( element ) )
                 {
                     urls.add( url );
 
                     if ( this.getLog().isDebugEnabled() )
                     {
-                        this.getLog().debug( "runtime[" + i++ + "]=" +
-                                             url.toExternalForm() );
+                        this.getLog().debug( "runtime[" + i++ + "]="
+                                             + url.toExternalForm() );
 
                     }
                 }
@@ -860,7 +859,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
                 (URL[]) urls.toArray( new URL[ urls.size() ] ), parent );
 
         }
-        catch ( DependencyResolutionRequiredException e )
+        catch ( final DependencyResolutionRequiredException e )
         {
             final MojoFailureException mfe =
                 new MojoFailureException( e.getMessage() );
@@ -868,7 +867,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             mfe.initCause( e );
             throw mfe;
         }
-        catch ( MalformedURLException e )
+        catch ( final MalformedURLException e )
         {
             final MojoFailureException mfe =
                 new MojoFailureException( e.getMessage() );
@@ -920,7 +919,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
                 (URL[]) urls.toArray( new URL[ urls.size() ] ), parent );
 
         }
-        catch ( MalformedURLException e )
+        catch ( final MalformedURLException e )
         {
             final MojoFailureException mfe =
                 new MojoFailureException( e.getMessage() );
@@ -928,7 +927,7 @@ public abstract class AbstractContainerMojo extends AbstractMojo
             mfe.initCause( e );
             throw mfe;
         }
-        catch ( DependencyResolutionRequiredException e )
+        catch ( final DependencyResolutionRequiredException e )
         {
             final MojoFailureException mfe =
                 new MojoFailureException( e.getMessage() );

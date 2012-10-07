@@ -67,6 +67,12 @@ public class Message extends ModelObject implements Cloneable, Serializable
      */
     private Arguments arguments;
 
+    /** Creates a new {@code Message} instance. */
+    public Message()
+    {
+        super();
+    }
+
     /**
      * Gets the name of the message.
      *
@@ -210,7 +216,7 @@ public class Message extends ModelObject implements Cloneable, Serializable
         {
             return super.clone();
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

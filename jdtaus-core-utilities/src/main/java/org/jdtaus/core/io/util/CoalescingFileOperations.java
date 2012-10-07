@@ -457,7 +457,8 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         Node previous = null;
         boolean dirty = false;
 
-        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext(); )
+        for ( final Iterator it = this.root.entrySet().iterator();
+              it.hasNext(); )
         {
             final Map.Entry entry = (Map.Entry) it.next();
             final long block = ( (Long) entry.getKey() ).longValue();
@@ -521,7 +522,8 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         }
 
         // Reset cache state.
-        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext(); )
+        for ( final Iterator it = this.root.entrySet().iterator();
+              it.hasNext(); )
         {
             final Map.Entry entry = (Map.Entry) it.next();
             final Node current = (Node) entry.getValue();
@@ -547,13 +549,18 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
         private static final int NO_CACHEINDEX = Integer.MIN_VALUE;
 
-        long block;
+        private Node()
+        {
+            super();
+        }
 
-        int cacheIndex = NO_CACHEINDEX;
+        private long block;
 
-        int length;
+        private int cacheIndex = NO_CACHEINDEX;
 
-        boolean dirty;
+        private int length;
+
+        private boolean dirty;
 
     }
 
@@ -863,7 +870,7 @@ public final class CoalescingFileOperations implements FlushableFileOperations
 
                 // Update the length field of the node for the block checking
                 // for a possible end of file condition.
-                long pos = nodes[i].block * this.getBlockSize();
+                final long pos = nodes[i].block * this.getBlockSize();
                 if ( pos > this.getLength() )
                 { // Node is behind the end of the file.
                     nodes[i].length = FileOperations.EOF;
@@ -917,7 +924,8 @@ public final class CoalescingFileOperations implements FlushableFileOperations
         int defragIndex = 0;
 
         // Step through the cached blocks and defragment the cache.
-        for ( Iterator it = this.root.entrySet().iterator(); it.hasNext(); )
+        for ( final Iterator it = this.root.entrySet().iterator();
+              it.hasNext(); )
         {
             final Map.Entry entry = (Map.Entry) it.next();
             final long block = ( (Long) entry.getKey() ).longValue();

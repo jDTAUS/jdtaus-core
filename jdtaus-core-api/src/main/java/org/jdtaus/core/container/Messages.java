@@ -60,6 +60,12 @@ public class Messages extends ModelObject implements Cloneable, Serializable
      */
     private int hashCode;
 
+    /** Creates a new {@code Messages} instance. */
+    public Messages()
+    {
+        super();
+    }
+
     /**
      * Gets the messages of the collection.
      *
@@ -255,7 +261,7 @@ public class Messages extends ModelObject implements Cloneable, Serializable
             ret.setMessages( cloned );
             return ret;
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

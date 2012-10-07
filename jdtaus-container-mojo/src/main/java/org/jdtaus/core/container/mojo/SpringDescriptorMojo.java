@@ -79,6 +79,12 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
      */
     protected File sourceRoot;
 
+    /** Creates a new {@code SpringDescriptorMojo} instance. */
+    public SpringDescriptorMojo()
+    {
+        super();
+    }
+
     /**
      * Gets the spring descriptor file to write.
      *
@@ -212,19 +218,19 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
 
             }
         }
-        catch ( ContextError e )
+        catch ( final ContextError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( ContainerError e )
+        catch ( final ContainerError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( ModelError e )
+        catch ( final ModelError e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             throw new MojoExecutionException( e.getMessage(), e );
         }

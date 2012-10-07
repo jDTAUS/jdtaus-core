@@ -61,6 +61,12 @@ public class Specifications extends ModelObject
      */
     private int hashCode;
 
+    /** Creates a new {@code Specifications} instance. */
+    public Specifications()
+    {
+        super();
+    }
+
     /**
      * Gets the specifications of the collection.
      *
@@ -261,7 +267,7 @@ public class Specifications extends ModelObject
             ret.setSpecifications( cloned );
             return ret;
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

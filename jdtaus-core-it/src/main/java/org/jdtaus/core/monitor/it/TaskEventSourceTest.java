@@ -38,6 +38,12 @@ public class TaskEventSourceTest extends TestCase
     /** Implementation to test. */
     private TaskEventSource source;
 
+    /** Creates a new {@code TaskEventSourceTest} instance. */
+    public TaskEventSourceTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code TaskEventSource} implementation tests are performed with.
      *
@@ -77,7 +83,7 @@ public class TaskEventSourceTest extends TestCase
             this.getTaskEventSource().addTaskListener( null );
             throw new AssertionError();
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -99,7 +105,7 @@ public class TaskEventSourceTest extends TestCase
             this.getTaskEventSource().removeTaskListener( null );
             throw new AssertionError();
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );

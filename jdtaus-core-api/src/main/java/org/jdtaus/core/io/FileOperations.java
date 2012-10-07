@@ -38,7 +38,7 @@ public interface FileOperations
      * Constant returned by the {@link #read(byte[],int,int)} method if the
      * end of the file has been reached.
      */
-    final int EOF = -1;
+    int EOF = -1;
 
     /**
      * Gets the length of the file.

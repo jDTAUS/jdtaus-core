@@ -60,7 +60,7 @@ public class DuplicateImplementationException extends IllegalArgumentException
      * The identifier of the duplicate implementation.
      * @serial
      */
-    private String identifier;
+    private final String identifier;
 
     /**
      * Gets the identifier of the duplicate implementation.

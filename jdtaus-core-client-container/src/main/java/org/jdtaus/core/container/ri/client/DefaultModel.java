@@ -135,7 +135,7 @@ public class DefaultModel implements Model
         "META-INF/jdtaus/container.xslt";
 
     /** Model versions supported by this implementation. */
-    private static final String SUPPORTED_MODEL_VERSIONS[] =
+    private static final String[] SUPPORTED_MODEL_VERSIONS =
     {
         "1.0", "1.1", "1.2", "1.3", "1.4"
     };
@@ -158,13 +158,13 @@ public class DefaultModel implements Model
     /** Constant for the version of the platform module. */
     private static final String PLATFORM_MODULE_VERSION = "1.0";
 
-    /** Constant for model version 1.1 */
+    /** Constant for model version 1.1. */
     private static final String V_1_1 = "1.1";
 
-    /** Constant for model version 1.3 */
+    /** Constant for model version 1.3. */
     private static final String V_1_3 = "1.3";
 
-    /** Constant for model version 1.4 */
+    /** Constant for model version 1.4. */
     private static final String V_1_4 = "1.4";
 
     /** Constant for the maximum supported model version. */
@@ -204,31 +204,31 @@ public class DefaultModel implements Model
             this.assertOverwrittenProperties();
             this.assertImplementedProperties();
         }
-        catch ( ParserConfigurationException e )
+        catch ( final ParserConfigurationException e )
         {
             throw new ModelError( e );
         }
-        catch ( SAXException e )
+        catch ( final SAXException e )
         {
             throw new ModelError( e );
         }
-        catch ( IOException e )
+        catch ( final IOException e )
         {
             throw new ModelError( e );
         }
-        catch ( ParseException e )
+        catch ( final ParseException e )
         {
             throw new ModelError( e );
         }
-        catch ( TransformerConfigurationException e )
+        catch ( final TransformerConfigurationException e )
         {
             throw new ModelError( e );
         }
-        catch ( TransformerException e )
+        catch ( final TransformerException e )
         {
             throw new ModelError( e );
         }
-        catch ( URISyntaxException e )
+        catch ( final URISyntaxException e )
         {
             throw new ModelError( e );
         }
@@ -293,15 +293,13 @@ public class DefaultModel implements Model
      * @throws ParserConfigurationException if configuring the parser fails.
      * @throws SAXException if parsing documents fails.
      * @throws ParseException if parsing versions fails.
-     * @throws TransformerConfigurationException if creating a transformer
-     * fails.
-     * @throws TransformerException if transforming documents fails.
+     * @throws TransformerException if creating a transformer fails or if
+     * transforming documents fails.
      * @throws URISyntaxException if creating a resource URI fails.
      */
     private Modules readModules()
         throws IOException, ParserConfigurationException, SAXException,
-               ParseException, TransformerConfigurationException,
-               TransformerException, URISyntaxException
+               ParseException, TransformerException, URISyntaxException
     {
         final Map documents = new HashMap();
         final DocumentBuilderFactory xmlFactory =
@@ -317,7 +315,7 @@ public class DefaultModel implements Model
             xmlFactory.setValidating( true );
             xmlFactory.setAttribute( SCHEMA_LANGUAGE_KEY, SCHEMA_LANGUAGE );
         }
-        catch ( IllegalArgumentException e )
+        catch ( final IllegalArgumentException e )
         {
             LOGGER.log( Level.CONFIG, e.getMessage() );
             LOGGER.log( Level.WARNING, DefaultModelBundle.getInstance().
@@ -409,7 +407,7 @@ public class DefaultModel implements Model
 
                 assert references != null : "Expected specification meta-data.";
 
-                for ( Iterator it = references.iterator(); it.hasNext(); )
+                for ( final Iterator it = references.iterator(); it.hasNext(); )
                 {
                     final Specification reference = (Specification) it.next();
                     reference.setModuleName( module.getName() );
@@ -431,7 +429,7 @@ public class DefaultModel implements Model
 
     private void linkParentImplementations()
     {
-        for ( Iterator it = this.implementations.entrySet().iterator();
+        for ( final Iterator it = this.implementations.entrySet().iterator();
               it.hasNext(); )
         {
             final Map.Entry e = (Map.Entry) it.next();
@@ -460,7 +458,7 @@ public class DefaultModel implements Model
 
     private void linkImplementedSpecifications()
     {
-        for ( Iterator it = this.implementations.values().iterator();
+        for ( final Iterator it = this.implementations.values().iterator();
               it.hasNext(); )
         {
             final Implementation implementation = (Implementation) it.next();
@@ -478,7 +476,7 @@ public class DefaultModel implements Model
 
                 assert specs != null : "Expected specification meta-data.";
 
-                for ( Iterator s = specs.iterator(); s.hasNext(); )
+                for ( final Iterator s = specs.iterator(); s.hasNext(); )
                 {
                     final Specification spec = (Specification) s.next();
                     final Collection col = new LinkedList(
@@ -500,7 +498,7 @@ public class DefaultModel implements Model
 
     private void linkDependencies()
     {
-        for ( Iterator it = this.implementations.values().iterator();
+        for ( final Iterator it = this.implementations.values().iterator();
               it.hasNext(); )
         {
             final Implementation implementation = (Implementation) it.next();
@@ -543,7 +541,7 @@ public class DefaultModel implements Model
                         specs.getSpecification( j ).getIdentifier() );
 
                 }
-                catch ( MissingSpecificationException e )
+                catch ( final MissingSpecificationException e )
                 {
                     if ( !this.addPlatformSpecification(
                         specs.getSpecification( j ).getIdentifier(), true ) )
@@ -562,7 +560,7 @@ public class DefaultModel implements Model
                         getIdentifier() );
 
                 }
-                catch ( MissingSpecificationException e )
+                catch ( final MissingSpecificationException e )
                 {
                     if ( !this.addPlatformSpecification(
                         deps.getDependency( j ).getSpecification().
@@ -621,7 +619,7 @@ public class DefaultModel implements Model
 
                         }
                     }
-                    catch ( ParseException e )
+                    catch ( final ParseException e )
                     {
                         final IncompatibleImplementationException iie =
                             new IncompatibleImplementationException(
@@ -666,7 +664,7 @@ public class DefaultModel implements Model
 
                         }
                     }
-                    catch ( ParseException e )
+                    catch ( final ParseException e )
                     {
                         final IncompatibleImplementationException iie =
                             new IncompatibleImplementationException(
@@ -726,7 +724,7 @@ public class DefaultModel implements Model
 
                         dependencyProperty.setApi( true );
                     }
-                    catch ( MissingPropertyException e )
+                    catch ( final MissingPropertyException e )
                     {
                         if ( VersionParser.compare(
                             dep.getSpecification().getModelVersion(),
@@ -804,7 +802,7 @@ public class DefaultModel implements Model
 
                         }
                     }
-                    catch ( MissingPropertyException e )
+                    catch ( final MissingPropertyException e )
                     {
                         if ( VersionParser.compare( impl.getModelVersion(),
                                                     V_1_3 ) >= 0 )
@@ -851,7 +849,7 @@ public class DefaultModel implements Model
         }
 
         Specification specification = null;
-        for ( Iterator it = c.iterator(); it.hasNext(); )
+        for ( final Iterator it = c.iterator(); it.hasNext(); )
         {
             final Specification s = (Specification) it.next();
 
@@ -891,15 +889,14 @@ public class DefaultModel implements Model
     }
 
     private Modules transformDocuments( final Map xml )
-        throws ParseException, IOException, TransformerConfigurationException,
-               TransformerException
+        throws ParseException, IOException, TransformerException
     {
         final Modules mods = new Modules();
         mods.setModelVersion( MODEL_VERSION );
 
         final List list = new LinkedList();
 
-        for ( Iterator it = xml.entrySet().iterator(); it.hasNext(); )
+        for ( final Iterator it = xml.entrySet().iterator(); it.hasNext(); )
         {
             final Map.Entry entry = (Map.Entry) it.next();
             Document doc = (Document) entry.getValue();
@@ -908,7 +905,7 @@ public class DefaultModel implements Model
             final Enumeration transformers = ClassLoaderFactory.loadResources(
                 this.getClass(), TRANSFORMATION_LOCATION );
 
-            for ( ; transformers.hasMoreElements(); )
+            while ( transformers.hasMoreElements() )
             {
                 final URL rsrc = (URL) transformers.nextElement();
 
@@ -1140,7 +1137,7 @@ public class DefaultModel implements Model
 
         // Merge any provided platform modules.
         Module providedPlatformModule = null;
-        for ( Iterator it = list.iterator(); it.hasNext(); )
+        for ( final Iterator it = list.iterator(); it.hasNext(); )
         {
             final Module module = (Module) it.next();
             if ( PLATFORM_MODULE_NAME.equals( module.getName() ) )
@@ -1427,7 +1424,7 @@ public class DefaultModel implements Model
         Collections.sort( arguments, new Comparator()
         {
 
-            public int compare( Object o1, Object o2 )
+            public int compare( final Object o1, final Object o2 )
             {
                 return ( (Argument) o1 ).getIndex() -
                        ( (Argument) o2 ).getIndex();
@@ -1472,7 +1469,7 @@ public class DefaultModel implements Model
                 {
                     module.setSpecifications(
                         this.transformSpecifications(
-                        modelVersion, namespace, ( (Element) l.item( i ) ) ) );
+                        modelVersion, namespace, (Element) l.item( i ) ) );
 
                     break;
                 }
@@ -1530,7 +1527,7 @@ public class DefaultModel implements Model
                     module.setImplementations(
                         this.transformImplementations(
                         modelVersion, namespace, module,
-                        ( (Element) l.item( i ) ) ) );
+                        (Element) l.item( i ) ) );
 
                     break;
                 }
@@ -1707,7 +1704,7 @@ public class DefaultModel implements Model
                     impl.setDependencies(
                         this.transformDependencies(
                         modelVersion, namespace, identifier,
-                        ( (Element) l.item( i ) ) ) );
+                        (Element) l.item( i ) ) );
 
                     break;
                 }
@@ -2033,7 +2030,7 @@ public class DefaultModel implements Model
                         {
                             new MessageFormat( text );
                         }
-                        catch ( IllegalArgumentException e )
+                        catch ( final IllegalArgumentException e )
                         {
                             final ModelError modelError = new ModelError(
                                 DefaultModelBundle.getInstance().
@@ -2052,7 +2049,7 @@ public class DefaultModel implements Model
                         {
                             new MessageFormat( template.getValue() );
                         }
-                        catch ( IllegalArgumentException e )
+                        catch ( final IllegalArgumentException e )
                         {
                             final ModelError modelError = new ModelError(
                                 DefaultModelBundle.getInstance().
@@ -2290,7 +2287,7 @@ public class DefaultModel implements Model
                                                                platformSpec );
 
                             }
-                            catch ( DuplicateSpecificationException e )
+                            catch ( final DuplicateSpecificationException e )
                             {
                                 // Specification already created.
                             }
@@ -2323,7 +2320,7 @@ public class DefaultModel implements Model
                 validPlatformSpec = false;
             }
         }
-        catch ( ClassNotFoundException ex )
+        catch ( final ClassNotFoundException ex )
         {
             LOGGER.log( Level.WARNING, DefaultModelBundle.getInstance().
                 getClassNotFoundMessage( Locale.getDefault(), identifier ) );
@@ -2451,7 +2448,7 @@ public class DefaultModel implements Model
                 }
             }
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             // No static accessor.
         }
@@ -2589,15 +2586,15 @@ public class DefaultModel implements Model
                     } ) );
 
             }
-            catch ( SecurityException e )
+            catch ( final SecurityException e )
             {
                 throw new ModelError( e );
             }
-            catch ( NoSuchMethodException e )
+            catch ( final NoSuchMethodException e )
             {
                 throw new ModelError( e );
             }
-            catch ( InvocationTargetException e )
+            catch ( final InvocationTargetException e )
             {
                 final Throwable targetException = e.getTargetException();
 
@@ -2617,11 +2614,11 @@ public class DefaultModel implements Model
 
                 }
             }
-            catch ( IllegalAccessException e )
+            catch ( final IllegalAccessException e )
             {
                 throw new ModelError( e );
             }
-            catch ( InstantiationException e )
+            catch ( final InstantiationException e )
             {
                 throw new ModelError( e );
             }

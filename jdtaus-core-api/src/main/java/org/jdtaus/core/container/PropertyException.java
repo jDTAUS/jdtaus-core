@@ -83,13 +83,13 @@ public class PropertyException extends IllegalStateException
      * The name of the invalid property.
      * @serial
      */
-    private String name;
+    private final String name;
 
     /**
      * The value of the invalid property.
      * @serial
      */
-    private Object value;
+    private final Object value;
 
     /**
      * Gets the name of the invalid property.

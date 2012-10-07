@@ -123,7 +123,7 @@ public class BootstrapEntityResolver implements EntityResolver
                 }
             }
         }
-        catch ( URISyntaxException e )
+        catch ( final URISyntaxException e )
         {
             Logger.getLogger( this.getClass().getName() ).log(
                 Level.WARNING,
@@ -138,4 +138,13 @@ public class BootstrapEntityResolver implements EntityResolver
     }
 
     //----------------------------------------------------------EntityResolver--
+    //--BootstrapEntityResolver-------------------------------------------------
+
+    /** Creates a new {@code BootstrapEntityResolver} instance. */
+    public BootstrapEntityResolver()
+    {
+        super();
+    }
+
+    //-------------------------------------------------BootstrapEntityResolver--
 }

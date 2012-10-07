@@ -73,6 +73,12 @@ public class Argument extends ModelObject implements Cloneable, Serializable
      */
     private int type;
 
+    /** Creates a new {@code Argument} instance. */
+    public Argument()
+    {
+        super();
+    }
+
     /**
      * Gets the index of the argument.
      *
@@ -245,7 +251,7 @@ public class Argument extends ModelObject implements Cloneable, Serializable
         {
             return super.clone();
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

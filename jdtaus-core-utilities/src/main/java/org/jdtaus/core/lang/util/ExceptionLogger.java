@@ -88,4 +88,13 @@ public final class ExceptionLogger implements ExceptionListener
     }
 
     //-------------------------------------------------------ExceptionListener--
+    //--ExceptionLogger---------------------------------------------------------
+
+    /** Creates a new {@code ExceptionLogger} instance. */
+    public ExceptionLogger()
+    {
+        super();
+    }
+
+    //---------------------------------------------------------ExceptionLogger--
 }

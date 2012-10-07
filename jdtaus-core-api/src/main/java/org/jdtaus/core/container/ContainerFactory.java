@@ -95,19 +95,19 @@ public abstract class ContainerFactory
 
             return (Container) ret;
         }
-        catch ( SecurityException e )
+        catch ( final SecurityException e )
         {
             throw new ContainerError( e );
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             throw new ContainerError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new ContainerError( e );
         }
-        catch ( InvocationTargetException e )
+        catch ( final InvocationTargetException e )
         {
             final Throwable targetException = e.getTargetException();
 
@@ -126,11 +126,11 @@ public abstract class ContainerFactory
                                           : targetException );
             }
         }
-        catch ( ClassCastException e )
+        catch ( final ClassCastException e )
         {
             throw new ContainerError( e );
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new ContainerError( e );
         }
@@ -165,23 +165,23 @@ public abstract class ContainerFactory
             ctor.setAccessible( true );
             return (Container) ctor.newInstance( EMPTY );
         }
-        catch ( SecurityException e )
+        catch ( final SecurityException e )
         {
             throw new ContainerError( e );
         }
-        catch ( NoSuchMethodException e )
+        catch ( final NoSuchMethodException e )
         {
             throw new ContainerError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new ContainerError( e );
         }
-        catch ( java.lang.InstantiationException e )
+        catch ( final java.lang.InstantiationException e )
         {
             throw new ContainerError( e );
         }
-        catch ( InvocationTargetException e )
+        catch ( final InvocationTargetException e )
         {
             final Throwable targetException = e.getTargetException();
 
@@ -201,11 +201,11 @@ public abstract class ContainerFactory
 
             }
         }
-        catch ( ClassCastException e )
+        catch ( final ClassCastException e )
         {
             throw new ContainerError( e );
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new ContainerError( e );
         }

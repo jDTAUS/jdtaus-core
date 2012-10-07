@@ -266,10 +266,15 @@ public class DefaultTaskMonitor implements TaskMonitor
 
         Message progressDescription;
 
+        private TaskState()
+        {
+            super();
+        }
+
     }
 
     /** Thread monitoring all currently running {@code Task}s for changes. */
-    private class MonitorThread extends Thread
+    private final class MonitorThread extends Thread
     {
 
         /** Milliseconds per poll interval. */
@@ -292,7 +297,7 @@ public class DefaultTaskMonitor implements TaskMonitor
                     Thread.sleep( this.pollIntervalMillis );
                     this.checkTasks();
                 }
-                catch ( InterruptedException e )
+                catch ( final InterruptedException e )
                 {
                     this.checkTasks();
                 }
@@ -315,8 +320,8 @@ public class DefaultTaskMonitor implements TaskMonitor
         {
             synchronized ( DefaultTaskMonitor.this.stateMap )
             {
-                for ( Iterator it = DefaultTaskMonitor.this.stateMap.keySet().
-                    iterator(); it.hasNext(); )
+                for ( final Iterator it = DefaultTaskMonitor.this.stateMap.
+                    keySet().iterator(); it.hasNext(); )
                 {
                     final Task task = (Task) it.next();
                     if ( changedState( task ) )
@@ -347,12 +352,13 @@ public class DefaultTaskMonitor implements TaskMonitor
         }
 
         if ( !this.monitorThread.isAlive() )
-        { // Monitoring died for some reason; start a new thread.
+        {
+            // Monitoring died for some reason; start a new thread.
             this.getLogger().warn( this.getThreadDiedMessage(
                 this.getLocale() ) );
 
             this.monitorThread =
-            new MonitorThread( this.getPollIntervalMillis() );
+                new MonitorThread( this.getPollIntervalMillis() );
 
             this.monitorThread.start();
         }

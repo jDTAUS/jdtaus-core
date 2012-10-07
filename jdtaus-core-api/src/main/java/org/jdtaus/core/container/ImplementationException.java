@@ -108,7 +108,7 @@ public class ImplementationException extends IllegalStateException
      * The failing implementation.
      * @serial
      */
-    private Implementation implementation;
+    private final Implementation implementation;
 
     /**
      * Gets the failing implementation.

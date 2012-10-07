@@ -127,9 +127,15 @@ public final class BlockingGlassPane extends JComponent
     //--BlockingGlassPane-------------------------------------------------------
 
     /** {@code KeyEventDispatcher} used for blocking. */
-    private class BlockingDispatcher implements Serializable,
-        KeyEventDispatcher
+    private final class BlockingDispatcher
+        implements Serializable, KeyEventDispatcher
     {
+
+        /** Creates a new {@code BlockingDispatcher} instance. */
+        private BlockingDispatcher()
+        {
+            super();
+        }
 
         public boolean dispatchKeyEvent( final KeyEvent e )
         {

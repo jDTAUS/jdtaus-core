@@ -69,6 +69,15 @@ public final class InsertsBlocksMessage extends Message
     }
 
     //-----------------------------------------------------------------Message--
+    //--InsertsBlocksMessage----------------------------------------------------
+
+    /** Creates a new {@code InsertsBlocksMessage} instance. */
+    public InsertsBlocksMessage()
+    {
+        super();
+    }
+
+    //----------------------------------------------------InsertsBlocksMessage--
     //--Messages----------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages

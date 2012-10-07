@@ -65,7 +65,7 @@ public class InstantiationException extends IllegalStateException
      * failed.
      * @serial
      */
-    private String identifier;
+    private final String identifier;
 
     /**
      * Gets the identifier of the implementation for which creating an instance

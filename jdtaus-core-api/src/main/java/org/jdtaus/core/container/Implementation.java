@@ -123,6 +123,12 @@ public class Implementation extends ModelObject
      */
     private boolean finalFlag;
 
+    /** Creates a new {@code Implementation} instance. */
+    public Implementation()
+    {
+        super();
+    }
+
     /**
      * Gets the name of the module holding the implementation.
      *
@@ -774,7 +780,7 @@ public class Implementation extends ModelObject
         {
             return super.clone();
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

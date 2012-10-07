@@ -175,6 +175,12 @@ public class Specification extends ModelObject
      */
     private Properties properties;
 
+    /** Creates a new {@code Specification} instance. */
+    public Specification()
+    {
+        super();
+    }
+
     /**
      * Gets the name of the module holding the specification.
      *
@@ -271,7 +277,7 @@ public class Specification extends ModelObject
      * @see PropertyOverwriteConstraintException
      * @deprecated Replaced by {@link #setScope(int) setScope(value ? SCOPE_SINGLETON : SCOPE_MULTITON)}.
      */
-    public void setSingleton( boolean value )
+    public void setSingleton( final boolean value )
     {
         this.scope = value ? SCOPE_SINGLETON : SCOPE_MULTITON;
     }
@@ -338,7 +344,7 @@ public class Specification extends ModelObject
      * state must be retained across method invocations for implementations to
      * operate as specified.
      */
-    public void setStateless( boolean value )
+    public void setStateless( final boolean value )
     {
         this.stateless = value;
     }
@@ -634,7 +640,7 @@ public class Specification extends ModelObject
         {
             return super.clone();
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

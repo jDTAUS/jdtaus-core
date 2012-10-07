@@ -34,6 +34,12 @@ public abstract class ExceptionEventSourceTest extends TestCase
 {
     //--ExceptionEventSourceTest------------------------------------------------
 
+    /** Creates a new {@code ExceptionEventSourceTest} instance. */
+    public ExceptionEventSourceTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code ExceptionEventSource} implementation tests are performed
      * with.
@@ -62,7 +68,7 @@ public abstract class ExceptionEventSourceTest extends TestCase
             this.getExceptionEventSource().addExceptionListener( null );
             throw new AssertionError();
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -73,7 +79,7 @@ public abstract class ExceptionEventSourceTest extends TestCase
             this.getExceptionEventSource().removeExceptionListener( null );
             throw new AssertionError();
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );

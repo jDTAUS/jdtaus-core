@@ -70,6 +70,15 @@ public final class UndefinedApplicationStateMessage extends Message
     }
 
     //-----------------------------------------------------------------Message--
+    //--UndefinedApplicationStateMessage----------------------------------------
+
+    /** Creates a new {@code UndefinedApplicationStateMessage} instance. */
+    public UndefinedApplicationStateMessage()
+    {
+        super();
+    }
+
+    //----------------------------------------UndefinedApplicationStateMessage--
     //--Messages----------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages

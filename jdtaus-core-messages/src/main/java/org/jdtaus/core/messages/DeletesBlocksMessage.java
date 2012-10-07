@@ -69,6 +69,15 @@ public final class DeletesBlocksMessage extends Message
     }
 
     //-----------------------------------------------------------------Message--
+    //--DeletesBlocksMessage----------------------------------------------------
+
+    /** Creates a new {@code DeletesBlocksMessage} instance. */
+    public DeletesBlocksMessage()
+    {
+        super();
+    }
+
+    //----------------------------------------------------DeletesBlocksMessage--
     //--Messages----------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages

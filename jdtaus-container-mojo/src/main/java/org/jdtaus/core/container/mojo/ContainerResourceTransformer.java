@@ -61,19 +61,25 @@ public class ContainerResourceTransformer implements ResourceTransformer
 {
 
     /** Location to transform. */
-    String location = "META-INF/jdtaus/module.xml";
+    private String location = "META-INF/jdtaus/module.xml";
 
     /**
      * Name of the module to merge all modules in or {@code null} to not merge
      * a single module.
      */
-    String mergeModule;
+    private String mergeModule;
 
     /** Processed models. */
     private Modules modules;
 
     /** @plexus.requirement */
     private ModelManager modelManager = new ModelManager();
+
+    /** Creates a new {@code ContainerResourceTransformer} instance. */
+    public ContainerResourceTransformer()
+    {
+        super();
+    }
 
     /**
      * Gets the {@code ModelManager} instance.
@@ -114,7 +120,7 @@ public class ContainerResourceTransformer implements ResourceTransformer
 
             }
         }
-        catch ( JAXBException e )
+        catch ( final JAXBException e )
         {
             final IOException ioe = new IOException( e.getMessage() );
             ioe.initCause( e );
@@ -144,7 +150,7 @@ public class ContainerResourceTransformer implements ResourceTransformer
             final ResourceLoader resourceLoader =
                 new ResourceLoader( this.getClass().getClassLoader() );
 
-            for ( Iterator it = this.modules.getModule().iterator();
+            for ( final Iterator it = this.modules.getModule().iterator();
                   it.hasNext(); )
             {
                 final Module module = (Module) it.next();
@@ -185,7 +191,7 @@ public class ContainerResourceTransformer implements ResourceTransformer
                     throw new MissingModuleException( this.mergeModule );
                 }
 
-                for ( Iterator it = linkedModules.getModule().iterator();
+                for ( final Iterator it = linkedModules.getModule().iterator();
                       it.hasNext(); )
                 {
                     final Module current = (Module) it.next();
@@ -215,25 +221,25 @@ public class ContainerResourceTransformer implements ResourceTransformer
 
             this.modules = null;
         }
-        catch ( Exception e )
+        catch ( final Exception e )
         {
             final IOException ioe = new IOException( e.getMessage() );
             ioe.initCause( e );
             throw ioe;
         }
-        catch ( ModelError e )
+        catch ( final ModelError e )
         {
             final IOException ioe = new IOException( e.getMessage() );
             ioe.initCause( e );
             throw ioe;
         }
-        catch ( ContextError e )
+        catch ( final ContextError e )
         {
             final IOException ioe = new IOException( e.getMessage() );
             ioe.initCause( e );
             throw ioe;
         }
-        catch ( ContainerError e )
+        catch ( final ContainerError e )
         {
             final IOException ioe = new IOException( e.getMessage() );
             ioe.initCause( e );
@@ -249,7 +255,8 @@ public class ContainerResourceTransformer implements ResourceTransformer
     {
         Module module = null;
 
-        for ( Iterator it = modules.getModule().iterator(); it.hasNext(); )
+        for ( final Iterator it = modules.getModule().iterator();
+              it.hasNext(); )
         {
             final Module current = (Module) it.next();
             if ( current.getName().equals( name ) )
@@ -266,7 +273,8 @@ public class ContainerResourceTransformer implements ResourceTransformer
     {
         Message message = null;
 
-        for ( Iterator it = messages.getMessage().iterator(); it.hasNext(); )
+        for ( final Iterator it = messages.getMessage().iterator();
+              it.hasNext(); )
         {
             final Message current = (Message) it.next();
             if ( current.getName().equals( name ) )
@@ -315,13 +323,13 @@ public class ContainerResourceTransformer implements ResourceTransformer
                 mergedModule.setImplementations( f.createImplementations() );
             }
 
-            for ( Iterator it = module.getImplementations().getImplementation().
-                iterator(); it.hasNext(); )
+            for ( final Iterator it = module.getImplementations().
+                getImplementation().iterator(); it.hasNext(); )
             {
                 final Implementation impl = (Implementation) it.next();
                 if ( impl.getMessages() != null )
                 {
-                    for ( Iterator m = impl.getMessages().getReference().
+                    for ( final Iterator m = impl.getMessages().getReference().
                         iterator(); m.hasNext(); )
                     {
                         final MessageReference ref =

@@ -59,7 +59,7 @@ public class MissingModuleException extends IllegalStateException
      * The name of the missing module.
      * @serial
      */
-    private String name;
+    private final String name;
 
     /**
      * Gets the name of the missing module.

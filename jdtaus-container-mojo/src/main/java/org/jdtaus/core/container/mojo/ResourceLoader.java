@@ -82,7 +82,7 @@ final class ResourceLoader extends URLClassLoader
         {
             thisClass = Class.forName( name, true, this.delegate );
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             thisClass = super.findClass( name );
         }
@@ -131,7 +131,7 @@ final class ResourceLoader extends URLClassLoader
     /**
      * Adds a resource to the instance.
      *
-     * @param name the name of the resource to add.
+     * @param location the location of the resource to add.
      * @param resource the resource to add.
      */
     public void addResource( final String location, final URL resource )

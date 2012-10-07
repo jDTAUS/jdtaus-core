@@ -114,16 +114,17 @@ public class Charsets
 
                 if ( providerFiles != null )
                 {
-                    for (; providerFiles.hasMoreElements();)
+                    while ( providerFiles.hasMoreElements() )
                     {
                         final URL url = ( URL ) providerFiles.nextElement();
-                        final InputStream in = url.openStream();
+                        BufferedReader reader = null;
 
                         try
                         {
                             String line;
-                            final BufferedReader reader = new BufferedReader(
-                                new InputStreamReader( in, "UTF-8" ) );
+                            reader = new BufferedReader(
+                                new InputStreamReader( url.openStream(),
+                                                       "UTF-8" ) );
 
                             while ( ( line = reader.readLine() ) != null )
                             {
@@ -132,15 +133,22 @@ public class Charsets
                                 // reflection.
                                 if ( line.indexOf( '#' ) < 0 )
                                 {
-                                    providers.add( classLoader.loadClass( line ).
-                                                   newInstance() );
+                                    providers.add(
+                                        classLoader.loadClass( line ).
+                                        newInstance() );
 
                                 }
                             }
+
+                            reader.close();
+                            reader = null;
                         }
                         finally
                         {
-                            in.close();
+                            if ( reader != null )
+                            {
+                                reader.close();
+                            }
                         }
                     }
                 }
@@ -154,7 +162,7 @@ public class Charsets
             synchronized ( Charsets.class )
             {
                 // Search all available providers for a charset matching "name".
-                for ( Iterator it = providers.iterator(); it.hasNext();)
+                for ( final Iterator it = providers.iterator(); it.hasNext();)
                 {
                     charset =
                         ( ( CharsetProvider ) it.next() ).charsetForName( name );
@@ -233,19 +241,19 @@ public class Charsets
                 buf.get( ret );
             }
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new AssertionError( e );
         }
-        catch ( InstantiationException e )
+        catch ( final InstantiationException e )
         {
             throw new AssertionError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new AssertionError( e );
         }
-        catch ( IOException e )
+        catch ( final IOException e )
         {
             throw new AssertionError( e );
         }
@@ -297,19 +305,19 @@ public class Charsets
                 ret = String.valueOf( c );
             }
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new AssertionError( e );
         }
-        catch ( InstantiationException e )
+        catch ( final InstantiationException e )
         {
             throw new AssertionError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new AssertionError( e );
         }
-        catch ( IOException e )
+        catch ( final IOException e )
         {
             throw new AssertionError( e );
         }
@@ -376,19 +384,19 @@ public class Charsets
                 ret = String.valueOf( c );
             }
         }
-        catch ( ClassNotFoundException e )
+        catch ( final ClassNotFoundException e )
         {
             throw new AssertionError( e );
         }
-        catch ( InstantiationException e )
+        catch ( final InstantiationException e )
         {
             throw new AssertionError( e );
         }
-        catch ( IllegalAccessException e )
+        catch ( final IllegalAccessException e )
         {
             throw new AssertionError( e );
         }
-        catch ( IOException e )
+        catch ( final IOException e )
         {
             throw new AssertionError( e );
         }

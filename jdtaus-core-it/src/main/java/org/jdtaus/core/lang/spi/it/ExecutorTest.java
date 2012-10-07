@@ -49,6 +49,12 @@ public abstract class ExecutorTest extends ExceptionEventSourceTest
     //------------------------------------------------ExceptionEventSourceTest--
     //--ExecutorTest------------------------------------------------------------
 
+    /** Creates a new {@code ExecutorTest} instance. */
+    public ExecutorTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code Executor} implementation tests are performed with.
      *
@@ -62,6 +68,12 @@ public abstract class ExecutorTest extends ExceptionEventSourceTest
     /** Exception expected to be reported. */
     public static final class ExecutionException extends RuntimeException
     {
+
+        public ExecutionException()
+        {
+            super();
+        }
+
     }
 
     /** {@code Runnable} throwing {@code ExecutionException}. */
@@ -81,6 +93,12 @@ public abstract class ExecutorTest extends ExceptionEventSourceTest
 
         /** The last reported event. */
         private ExceptionEvent event;
+
+        /** Creates a new {@code TestListener} instance. */
+        public TestListener()
+        {
+            super();
+        }
 
         /**
          * Gets the last reported event.
@@ -115,7 +133,7 @@ public abstract class ExecutorTest extends ExceptionEventSourceTest
             this.getExecutor().executeAsynchronously( null );
             throw new AssertionError();
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );

@@ -60,7 +60,7 @@ public class DuplicateSpecificationException extends IllegalArgumentException
      * The identifier of the duplicate specification.
      * @serial
      */
-    private String identifier;
+    private final String identifier;
 
     /**
      * Gets the identifier of the duplicate specification.

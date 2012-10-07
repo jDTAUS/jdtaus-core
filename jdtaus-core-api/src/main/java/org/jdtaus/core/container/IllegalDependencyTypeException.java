@@ -71,25 +71,25 @@ public class IllegalDependencyTypeException extends IllegalStateException
      * The identifier of the implementation with a dependency of illegal type.
      * @serial
      */
-    private String implementationIdentifier;
+    private final String implementationIdentifier;
 
     /**
      * The name of the dependency with illegal type.
      * @serial
      */
-    private String name;
+    private final String name;
 
     /**
      * The illegal type.
      * @serial
      */
-    private String type;
+    private final String type;
 
     /**
      * The expected type.
      * @serial
      */
-    private String expectedType;
+    private final String expectedType;
 
     /**
      * Gets the identifier of the implementation with a dependency of illegal

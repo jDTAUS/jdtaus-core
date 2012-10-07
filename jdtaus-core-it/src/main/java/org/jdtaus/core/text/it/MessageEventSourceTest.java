@@ -38,6 +38,12 @@ public class MessageEventSourceTest extends TestCase
     /** Implementation to test. */
     private MessageEventSource source;
 
+    /** Creates a new {@code MessageEventSourceTest} instance. */
+    public MessageEventSourceTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code MessageEventSource} implementation tests are performed
      * with.
@@ -79,7 +85,7 @@ public class MessageEventSourceTest extends TestCase
             this.getMessageEventSource().addMessageListener( null );
             throw new AssertionError();
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );
@@ -102,7 +108,7 @@ public class MessageEventSourceTest extends TestCase
             this.getMessageEventSource().removeMessageListener( null );
             throw new AssertionError();
         }
-        catch ( NullPointerException e )
+        catch ( final NullPointerException e )
         {
             Assert.assertNotNull( e.getMessage() );
             System.out.println( e.toString() );

@@ -37,6 +37,12 @@ public class RuntimeTest extends TestCase
     /** Implementation to test. */
     private Runtime runtime;
 
+    /** Creates a new {@code RuntimeTest} instance. */
+    public RuntimeTest()
+    {
+        super();
+    }
+
     /**
      * Gets the {@code Runtime} implementation tests are performed with.
      *

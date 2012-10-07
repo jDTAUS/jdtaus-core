@@ -61,6 +61,12 @@ public class Implementations extends ModelObject
      */
     private int hashCode;
 
+    /** Creates a new {@code Implementations} instance. */
+    public Implementations()
+    {
+        super();
+    }
+
     /**
      * Gets all implementations of the collection.
      *
@@ -264,7 +270,7 @@ public class Implementations extends ModelObject
             ret.setImplementations( cloned );
             return ret;
         }
-        catch ( CloneNotSupportedException e )
+        catch ( final CloneNotSupportedException e )
         {
             throw new AssertionError( e );
         }

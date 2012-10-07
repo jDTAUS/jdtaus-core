@@ -69,6 +69,15 @@ public final class MandatoryPropertyMessage extends Message
     }
 
     //-----------------------------------------------------------------Message--
+    //--MandatoryPropertyMessage------------------------------------------------
+
+    /** Creates a new {@code MandatoryPropertyMessage} instance. */
+    public MandatoryPropertyMessage()
+    {
+        super();
+    }
+
+    //------------------------------------------------MandatoryPropertyMessage--
     //--Messages----------------------------------------------------------------
 
 // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:jdtausMessages

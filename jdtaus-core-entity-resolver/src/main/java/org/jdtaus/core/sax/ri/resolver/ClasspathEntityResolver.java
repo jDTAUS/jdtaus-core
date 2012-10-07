@@ -170,7 +170,7 @@ public class ClasspathEntityResolver implements EntityResolver
 
             }
         }
-        catch ( URISyntaxException e )
+        catch ( final URISyntaxException e )
         {
             this.getLogger().warn( this.getUnsupportedSystemIdUriMessage(
                 this.getLocale(), systemId, e.getMessage() ) );
@@ -234,14 +234,14 @@ public class ClasspathEntityResolver implements EntityResolver
             {
                 this.schemaUrls = this.getSchemaResources();
             }
-            catch ( IOException e )
+            catch ( final IOException e )
             {
                 this.getLogger().error( this.getDisabledMessage(
                     this.getLocale(), e.getMessage() ) );
 
                 this.schemaUrls = null;
             }
-            catch ( URISyntaxException e )
+            catch ( final URISyntaxException e )
             {
                 this.getLogger().error( this.getDisabledMessage(
                     this.getLocale(), e.getMessage() ) );
@@ -268,7 +268,7 @@ public class ClasspathEntityResolver implements EntityResolver
         final ClassLoader cl = this.getClass().getClassLoader();
         final Set/*<URI>*/ schemaResources = new HashSet();
 
-        for ( Enumeration e = cl.getResources( "META-INF/MANIFEST.MF" );
+        for ( final Enumeration e = cl.getResources( "META-INF/MANIFEST.MF" );
               e.hasMoreElements(); )
         {
             final String[] extensions = this.getSchemaExtensions();
@@ -282,7 +282,7 @@ public class ClasspathEntityResolver implements EntityResolver
 
             manifestStream.close();
 
-            for ( Iterator it = mf.getEntries().entrySet().iterator();
+            for ( final Iterator it = mf.getEntries().entrySet().iterator();
                   it.hasNext(); )
             {
                 final Map.Entry entry = (Map.Entry) it.next();

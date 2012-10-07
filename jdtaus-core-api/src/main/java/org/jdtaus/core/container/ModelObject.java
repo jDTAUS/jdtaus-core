@@ -50,6 +50,12 @@ public class ModelObject implements Serializable
      */
     private Text documentation;
 
+    /** Creates a new {@code ModelObject} instance. */
+    public ModelObject()
+    {
+        super();
+    }
+
     /**
      * Gets the model version of the object.
      *
