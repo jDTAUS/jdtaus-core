@@ -49,6 +49,9 @@
       </container:documentation>
       <container:messages>
         <container:reference container:name="bugReport"/>
+        <container:reference container:name="bugReportUrl"/>
+        <container:reference container:name="bugReportEmail"/>
+        <container:reference container:name="bugReportUrlAndEmail"/>
       </container:messages>
     </container:implementation>
 
@@ -195,8 +198,25 @@
         <container:text container:language="en"><![CDATA[Information about how to report a bug.]]></container:text>
       </container:documentation>
       <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Please report this including a copy of the logfiles located in directory {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Bitte melden Sie dieses Problem. Fügen Sie Ihrem Fehlerbericht bitte eine Kopie der aktuellen Protokolldateien der Anwendung aus Verzeichnis {0} bei.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="logDirectory" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Directory holding the application's logfiles.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <!-- ******************************************************************* -->
+    <container:message container:name="bugReportUrlAndEmail">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about how to report a bug.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Please report this at {1} or send an email to {2} including a copy of the logfiles located in directory {0}.]]></container:text>
-        <container:text container:language="de"><![CDATA[Bitte berichten Sie dieses Problem entweder unter {1} oder per eMail an {2}. Fügen Sie Ihrem Fehlerbericht bitte eine Kopie der aktuellen Protokolldateien der Anwendung aus Verzeichnis {0} bei.]]></container:text>
+        <container:text container:language="de"><![CDATA[Bitte melden Sie dieses Problem entweder unter {1} oder per eMail an {2}. Fügen Sie Ihrem Fehlerbericht bitte eine Kopie der aktuellen Protokolldateien der Anwendung aus Verzeichnis {0} bei.]]></container:text>
       </container:template>
       <container:arguments>
         <container:argument container:index="0" container:name="logDirectory" container:type="text">
@@ -212,6 +232,50 @@
         <container:argument container:index="2" container:name="reportAddress" container:type="text">
           <container:documentation container:defaultLanguage="en">
             <container:text container:language="en"><![CDATA[Email address to alternatively send bugreports to.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <!-- ******************************************************************* -->
+    <container:message container:name="bugReportUrl">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about how to report a bug.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Please report this at {1} including a copy of the logfiles located in directory {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Bitte melden Sie dieses Problem unter {1}. Fügen Sie Ihrem Fehlerbericht bitte eine Kopie der aktuellen Protokolldateien der Anwendung aus Verzeichnis {0} bei.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="logDirectory" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Directory holding the application's logfiles.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="trackerUrl" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[URL to the application's online bugtracking system.]]></container:text>
+          </container:documentation>
+        </container:argument>
+      </container:arguments>
+    </container:message>
+    <!-- ******************************************************************* -->
+    <container:message container:name="bugReportEmail">
+      <container:documentation container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Information about how to report a bug.]]></container:text>
+      </container:documentation>
+      <container:template container:defaultLanguage="en">
+        <container:text container:language="en"><![CDATA[Please report this by sending an email to {1} including a copy of the logfiles located in directory {0}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Bitte melden Sie dieses Problem per eMail an {1}. Fügen Sie Ihrem Fehlerbericht bitte eine Kopie der aktuellen Protokolldateien der Anwendung aus Verzeichnis {0} bei.]]></container:text>
+      </container:template>
+      <container:arguments>
+        <container:argument container:index="0" container:name="logDirectory" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Directory holding the application's logfiles.]]></container:text>
+          </container:documentation>
+        </container:argument>
+        <container:argument container:index="1" container:name="reportAddress" container:type="text">
+          <container:documentation container:defaultLanguage="en">
+            <container:text container:language="en"><![CDATA[Email address to send bugreports to.]]></container:text>
           </container:documentation>
         </container:argument>
       </container:arguments>

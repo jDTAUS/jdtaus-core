@@ -103,7 +103,7 @@ public final class ExceptionMessageProducer implements ExceptionListener
      * the instance got constructed using the constructor taking that
      * information.</p>
      *
-     * @param event the event holding the exception.
+     * @param event The event holding the exception.
      *
      * @see ExceptionMessageResolver#resolve(Exception)
      */
@@ -123,10 +123,9 @@ public final class ExceptionMessageProducer implements ExceptionListener
 
                 if ( this.logDirectory != null )
                 {
-                    messages.addMessage(
-                        new BugReportMessage( this.logDirectory,
-                                              this.trackerUrl,
-                                              this.reportAddress ) );
+                    messages.addMessage( new BugReportMessage(
+                        this.logDirectory, this.trackerUrl,
+                        this.reportAddress ) );
 
                 }
             }
@@ -150,7 +149,7 @@ public final class ExceptionMessageProducer implements ExceptionListener
     }
 
     //-------------------------------------------------------ExceptionListener--
-    //--ExceptionReporter-------------------------------------------------------
+    //--ExceptionMessageProducer------------------------------------------------
 
     /**
      * Directory holding the application's log files.
@@ -181,13 +180,76 @@ public final class ExceptionMessageProducer implements ExceptionListener
 
     /**
      * Creates a new {@code ExceptionMessageProducer} instance taking the
+     * application's logfile directory and an URL to the application's online
+     * bugtracking system.
+     *
+     * @param logDirectory The directory holding the application's logfiles.
+     * @param trackerUrl An URL to the application's online bugtracking system.
+     *
+     * @throws NullPointerException if either {@code logDirectory} or
+     * {@code trackerUrl} is {@code null}.
+     *
+     * @since 1.14
+     */
+    public ExceptionMessageProducer( final File logDirectory,
+                                     final URL trackerUrl )
+    {
+        super();
+        if ( logDirectory == null )
+        {
+            throw new NullPointerException( "logDirectory" );
+        }
+        if ( trackerUrl == null )
+        {
+            throw new NullPointerException( "trackerUrl" );
+        }
+
+        this.logDirectory = logDirectory;
+        this.trackerUrl = trackerUrl;
+        this.reportAddress = null;
+    }
+
+    /**
+     * Creates a new {@code ExceptionMessageProducer} instance taking the
+     * application's logfile directory and an email address where to send
+     * bugreports to.
+     *
+     * @param logDirectory The directory holding the application's logfiles.
+     * @param reportAddress An email address to alternatively send bugreports
+     * to.
+     *
+     * @throws NullPointerException if either {@code logDirectory} or
+     * {@code reportAddress} is {@code null}.
+     *
+     * @since 1.14
+     */
+    public ExceptionMessageProducer( final File logDirectory,
+                                     final String reportAddress )
+    {
+        super();
+        if ( logDirectory == null )
+        {
+            throw new NullPointerException( "logDirectory" );
+        }
+        if ( reportAddress == null )
+        {
+            throw new NullPointerException( "reportAddress" );
+        }
+
+        this.logDirectory = logDirectory;
+        this.trackerUrl = null;
+        this.reportAddress = reportAddress;
+    }
+
+    /**
+     * Creates a new {@code ExceptionMessageProducer} instance taking the
      * application's logfile directory, an URL to the application's online
      * bugtracking system, and an email address where to send bugreports to
      * alternatively.
      *
-     * @param logDirectory the directory holding the application's logfiles.
-     * @param trackerUrl an URL to the application's online bugtracking system.
-     * @param reportAddress an email address to alternatively send bugreports
+     * @param logDirectory The directory holding the application's logfiles.
+     * @param trackerUrl An URL to the application's online bugtracking system.
+     * @param reportAddress An email address to alternatively send bugreports
      * to.
      *
      * @throws NullPointerException if either {@code logDirectory},
@@ -221,7 +283,7 @@ public final class ExceptionMessageProducer implements ExceptionListener
      * available {@code ExceptionMessageResolver} implementation stopping at the
      * first implementation not returning {@code null}.
      *
-     * @param exception the exception to resolve application messages for.
+     * @param exception The exception to resolve application messages for.
      *
      * @throws NullPointerException if {@code exception} is {@code null}.
      */
@@ -252,5 +314,5 @@ public final class ExceptionMessageProducer implements ExceptionListener
         return messages;
     }
 
-    //-------------------------------------------------------ExceptionReporter--
+    //------------------------------------------------ExceptionMessageProducer--
 }
