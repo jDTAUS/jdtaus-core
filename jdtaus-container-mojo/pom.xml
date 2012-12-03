@@ -152,4 +152,7 @@
       </dependencies>
     </profile>
   </profiles>
+  <properties>
+    <maven.javadoc.memory>64m</maven.javadoc.memory>
+  </properties>
 </project>

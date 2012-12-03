@@ -120,4 +120,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <properties>
+    <maven.surefire.memory>128m</maven.surefire.memory>
+  </properties>
 </project>
