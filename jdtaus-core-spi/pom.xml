@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-spi</artifactId>
   <groupId>org.jdtaus.core</groupId>
   <name>jDTAUS Core ⁑ SPI</name>
-  <description>jDTAUS core implementation programming interface.</description>
+  <description>Core implementation programming interface.</description>
   <build>
     <resources>
       <resource>

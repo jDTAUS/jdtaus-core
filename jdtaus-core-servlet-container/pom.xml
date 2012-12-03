@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-servlet-container</artifactId>
   <groupId>org.jdtaus.core.container</groupId>
   <name>jDTAUS Core ⁑ RI Servlet Container</name>
-  <description>jDTAUS core web application integration reference implementation.</description>
+  <description>Core web application integration.</description>
   <build>
     <resources>
       <resource>

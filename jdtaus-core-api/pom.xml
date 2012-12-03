@@ -30,7 +30,7 @@
   <groupId>org.jdtaus.common</groupId>
   <artifactId>jdtaus-core-api</artifactId>
   <name>jDTAUS Core ⁑ API</name>
-  <description>jDTAUS core application programming interface.</description>
+  <description>Application programming interface to core services like task monitoring and modular object management and configuration.</description>
   <build>
     <resources>
       <resource>

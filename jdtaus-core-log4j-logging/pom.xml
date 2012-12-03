@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-log4j-logging</artifactId>
   <groupId>org.jdtaus.core.logging</groupId>
   <name>jDTAUS Core ⁑ RI Log4J Logging</name>
-  <description>jDTAUS Log4J logging reference implementation.</description>
+  <description>Log4J logging Logger implementation.</description>
   <build>
     <resources>
       <resource>

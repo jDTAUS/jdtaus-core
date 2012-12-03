@@ -32,7 +32,7 @@
   <artifactId>jdtaus-core-jomc-container</artifactId>
   <version>1.14-SNAPSHOT</version>
   <name>jDTAUS Core ⁑ JOMC Container</name>
-  <description>jDTAUS Core Container implementation backed by JOMC.</description>
+  <description>Container implementation backed by JOMC.</description>
   <build>
     <resources>
       <resource>

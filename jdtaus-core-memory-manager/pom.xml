@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-memory-manager</artifactId>
   <groupId>org.jdtaus.core.lang</groupId>
   <name>jDTAUS Core ⁑ RI Memory Manager</name>
-  <description>jDTAUS runtime reference implementation.</description>
+  <description>Runtime and MemoryManager reference implementation.</description>
   <build>
     <resources>
       <resource>

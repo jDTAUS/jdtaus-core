@@ -30,7 +30,7 @@
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-it</artifactId>
   <name>jDTAUS Core ⁑ Test Suite</name>
-  <description>jDTAUS core test suite.</description>
+  <description>Core test suite.</description>
   <build>
     <resources>
       <resource>

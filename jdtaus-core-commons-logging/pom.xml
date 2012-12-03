@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-commons-logging</artifactId>
   <groupId>org.jdtaus.core.logging</groupId>
   <name>jDTAUS Core ⁑ RI Commons Logging</name>
-  <description>jDTAUS commons logging reference implementation.</description>
+  <description>Commons logging Logger implementation.</description>
   <build>
     <resources>
       <resource>

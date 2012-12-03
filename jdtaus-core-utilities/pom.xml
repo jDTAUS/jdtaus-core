@@ -30,7 +30,7 @@
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-utilities</artifactId>
   <name>jDTAUS Core ⁑ Utilities</name>
-  <description>jDTAUS core utility components.</description>
+  <description>Core utility components.</description>
   <build>
     <resources>
       <resource>

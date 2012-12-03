@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-slf4j-logging</artifactId>
   <groupId>org.jdtaus.core.logging</groupId>
   <name>jDTAUS Core ⁑ RI SLF4J Logging</name>
-  <description>jDTAUS SLF4J logging reference implementation.</description>
+  <description>SLF4J logging Logger implementation.</description>
   <build>
     <resources>
       <resource>

@@ -33,7 +33,7 @@
   <name>jDTAUS Core</name>
   <version>1.14-SNAPSHOT</version>
   <url>${jdtaus.artifacts.url}/jdtaus-core</url>
-  <description>jDTAUS Core parent module.</description>
+  <description>Core services like task monitoring and modular object management and configuration.</description>
   <prerequisites>
     <maven>2.0.10</maven>
   </prerequisites>

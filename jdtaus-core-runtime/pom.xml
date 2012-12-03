@@ -30,7 +30,7 @@
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-runtime</artifactId>
   <name>jDTAUS Core ⁑ Reference Implementation</name>
-  <description>jDTAUS core reference implementation.</description>
+  <description>Core reference implementation.</description>
   <build>
     <resources>
       <resource>

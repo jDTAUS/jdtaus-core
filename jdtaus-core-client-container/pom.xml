@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-client-container</artifactId>
   <groupId>org.jdtaus.core.container</groupId>
   <name>jDTAUS Core ⁑ RI Client Container</name>
-  <description>jDTAUS container reference implementation.</description>
+  <description>Container, Context and Model reference implementation.</description>
   <dependencies>
     <dependency>
       <groupId>org.jdtaus.common</groupId>

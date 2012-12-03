@@ -30,7 +30,7 @@
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-messages</artifactId>
   <name>jDTAUS Core ⁑ Messages</name>
-  <description>jDTAUS core application messages.</description>
+  <description>Core application messages.</description>
   <build>
     <resources>
       <resource>

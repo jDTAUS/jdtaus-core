@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-application-logger</artifactId>
   <groupId>org.jdtaus.core.text</groupId>
   <name>jDTAUS Core ⁑ RI Application Logger</name>
-  <description>jDTAUS application logger reference implementation.</description>
+  <description>MessageEventSource and ApplicationLogger reference implementation.</description>
   <build>
     <resources>
       <resource>

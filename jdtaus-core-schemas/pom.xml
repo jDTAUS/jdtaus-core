@@ -30,7 +30,7 @@
   <groupId>org.jdtaus.core</groupId>
   <artifactId>jdtaus-core-schemas</artifactId>
   <name>jDTAUS Core ⁑ XML Schemas</name>
-  <description>jDTAUS core XML schemas.</description>
+  <description>Core XML schemas.</description>
   <build>
     <resources>
       <resource>

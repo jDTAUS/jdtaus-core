@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-task-monitor</artifactId>
   <groupId>org.jdtaus.core.monitor</groupId>
   <name>jDTAUS Core ⁑ RI Task Monitor</name>
-  <description>jDTAUS task monitoring reference implementation.</description>
+  <description>TaskEventSource and TaskMonitor reference implementation.</description>
   <build>
     <resources>
       <resource>

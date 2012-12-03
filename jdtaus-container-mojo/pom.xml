@@ -32,7 +32,7 @@
   <name>jDTAUS Core ⁑ Container Mojo</name>
   <version>3.12-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
-  <description>Source generator for the container model.</description>
+  <description>Collection of tools dealing with the Container model.</description>
   <dependencies>
     <dependency>
       <groupId>org.jdtaus.common</groupId>

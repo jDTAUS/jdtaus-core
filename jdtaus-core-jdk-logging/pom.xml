@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-jdk-logging</artifactId>
   <groupId>org.jdtaus.core.logging</groupId>
   <name>jDTAUS Core ⁑ RI JDK 1.4 Logging</name>
-  <description>jDTAUS JDK 1.4 logging reference implementation.</description>
+  <description>JDK logging Logger implementation.</description>
   <build>
     <resources>
       <resource>

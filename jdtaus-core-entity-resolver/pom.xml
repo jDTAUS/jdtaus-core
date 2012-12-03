@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-entity-resolver</artifactId>
   <groupId>org.jdtaus.core.sax</groupId>
   <name>jDTAUS Core ⁑ RI Entity Resolver</name>
-  <description>jDTAUS XML entity resolver resolving XML schemas from classpath resources.</description>
+  <description>SAX EntityResolver resolving XML schemas from classpath resources.</description>
   <build>
     <resources>
       <resource>

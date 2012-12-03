@@ -30,7 +30,7 @@
   <artifactId>jdtaus-core-jdk14-executor</artifactId>
   <groupId>org.jdtaus.core.lang</groupId>
   <name>jDTAUS Core ⁑ RI JDK 1.4 Executor</name>
-  <description>jDTAUS JDK 1.4 executor reference implementation.</description>
+  <description>ExceptionEventSource, Executor and ExceptionHandler reference implementation.</description>
   <build>
     <resources>
       <resource>
