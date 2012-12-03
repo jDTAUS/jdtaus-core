@@ -90,7 +90,6 @@
       </container:properties>
       <container:messages>
         <container:reference container:name="threadStarted"/>
-        <container:reference container:name="threadDied"/>
         <container:reference container:name="taskAlreadyStarted"/>
       </container:messages>
     </container:implementation>
@@ -112,16 +111,6 @@
           </container:documentation>
         </container:argument>
       </container:arguments>
-    </container:message>
-    <!-- ******************************************************************* -->
-    <container:message container:name="threadDied">
-      <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[Information about a dead thread.]]></container:text>
-      </container:documentation>
-      <container:template container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[The monitor thread terminated abnormally. Consult the logs for any causes.]]></container:text>
-        <container:text container:language="de"><![CDATA[Thread abnorm beendet. Konsultieren Sie die Protokolle für mögliche Ursachen.]]></container:text>
-      </container:template>
     </container:message>
     <!-- ******************************************************************* -->
     <container:message container:name="taskAlreadyStarted">

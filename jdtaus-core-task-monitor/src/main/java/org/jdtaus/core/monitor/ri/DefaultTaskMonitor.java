@@ -177,9 +177,9 @@ public class DefaultTaskMonitor implements TaskMonitor
 
         synchronized ( this.stateMap )
         {
-            this.checkMonitorThread();
-            this.createTaskState( task );
             this.fireTaskEvent( new TaskEvent( task, TaskEvent.STARTED ) );
+            this.createTaskState( task );
+            this.checkMonitorThread();
         }
     }
 
@@ -290,16 +290,18 @@ public class DefaultTaskMonitor implements TaskMonitor
         /** {@inheritDoc} */
         public void run()
         {
-            while ( true )
+            boolean monitoring = true;
+
+            while ( monitoring )
             {
                 try
                 {
                     Thread.sleep( this.pollIntervalMillis );
-                    this.checkTasks();
+                    monitoring = this.checkTasks();
                 }
                 catch ( final InterruptedException e )
                 {
-                    this.checkTasks();
+                    monitoring = this.checkTasks();
                 }
             }
         }
@@ -307,16 +309,20 @@ public class DefaultTaskMonitor implements TaskMonitor
         public void start()
         {
             super.start();
-            getLogger().debug( getThreadStartedMessage(
-                getLocale(), new Long( this.pollIntervalMillis ) ) );
 
+            if ( getLogger().isDebugEnabled() )
+            {
+                getLogger().debug( getThreadStartedMessage(
+                    getLocale(), new Long( this.pollIntervalMillis ) ) );
+
+            }
         }
 
         /**
          * Checks the state of all currently running tasks for changes and
          * fires corresponding events.
          */
-        private void checkTasks()
+        private boolean checkTasks()
         {
             synchronized ( DefaultTaskMonitor.this.stateMap )
             {
@@ -331,6 +337,8 @@ public class DefaultTaskMonitor implements TaskMonitor
 
                     }
                 }
+
+                return !DefaultTaskMonitor.this.stateMap.isEmpty();
             }
         }
 
@@ -343,20 +351,9 @@ public class DefaultTaskMonitor implements TaskMonitor
      */
     private synchronized void checkMonitorThread()
     {
-        if ( this.monitorThread == null )
+        if ( this.monitorThread == null
+             || !this.monitorThread.isAlive() )
         {
-            this.monitorThread =
-            new MonitorThread( this.getPollIntervalMillis() );
-
-            this.monitorThread.start();
-        }
-
-        if ( !this.monitorThread.isAlive() )
-        {
-            // Monitoring died for some reason; start a new thread.
-            this.getLogger().warn( this.getThreadDiedMessage(
-                this.getLocale() ) );
-
             this.monitorThread =
                 new MonitorThread( this.getPollIntervalMillis() );
 
@@ -549,8 +546,8 @@ public class DefaultTaskMonitor implements TaskMonitor
             state.progressDescription = task.getProgressDescription();
             changedState = true;
         }
-        else if ( state.progressDescription != null &&
-                  !state.progressDescription.getText( this.getLocale() ).
+        else if ( state.progressDescription != null
+                  && !state.progressDescription.getText( this.getLocale() ).
             equals( task.getProgressDescription().getText(
             this.getLocale() ) ) )
         {
@@ -585,22 +582,6 @@ public class DefaultTaskMonitor implements TaskMonitor
                 {
                     periodMillis
                 });
-
-    }
-
-    /**
-     * Gets the text of message <code>threadDied</code>.
-     * <blockquote><pre>Thread abnorm beendet. Konsultieren Sie die Protokolle für mögliche Ursachen.</pre></blockquote>
-     * <blockquote><pre>The monitor thread terminated abnormally. Consult the logs for any causes.</pre></blockquote>
-     *
-     * @param locale The locale of the message instance to return.
-     *
-     * @return Information about a dead thread.
-     */
-    private String getThreadDiedMessage( final Locale locale )
-    {
-        return ContainerFactory.getContainer().
-            getMessage( this, "threadDied", locale, null );
 
     }
 
