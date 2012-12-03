@@ -22,12 +22,13 @@ package org.jdtaus.core.text.util;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FontMetrics;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 import javax.swing.JDialog;
@@ -36,8 +37,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicHTML;
+import javax.swing.text.View;
 import org.jdtaus.core.container.ContainerFactory;
 import org.jdtaus.core.logging.spi.Logger;
 import org.jdtaus.core.text.MessageEvent;
@@ -567,64 +568,48 @@ class HtmlLabel extends JLabel
         this.columns = columns;
         this.setVerticalAlignment( SwingConstants.TOP );
         this.setVerticalTextPosition( SwingConstants.TOP );
+
+        if ( columns > 0 )
+        {
+            this.addPropertyChangeListener( new PropertyChangeListener()
+            {
+
+                public void propertyChange( final PropertyChangeEvent evt )
+                {
+                    if ( ( "text".equals( evt.getPropertyName() )
+                           || "font".equals( evt.getPropertyName() )
+                           || "border".equals( evt.getPropertyName() ) )
+                         && getText() != null
+                         && BasicHTML.isHTMLString( getText() ) )
+                    {
+                        setPreferredSize( computePreferredSize() );
+                    }
+                }
+
+            } );
+        }
     }
 
-    public Dimension getPreferredSize()
+    private Dimension computePreferredSize()
     {
-        final Dimension size = super.getPreferredSize();
-        String text = this.getText();
+        Dimension preferredSize = null;
+        final Insets insets = this.getInsets();
+        final int width = this.columns * this.getFontMetrics( this.getFont() ).charWidth( 'W' )
+                          + ( insets != null ? insets.left + insets.right : 0 );
 
-        if ( this.columns > 0 && text != null && text.length() > 0 )
+        final JLabel label = new JLabel( this.getText() );
+        final Object html = label.getClientProperty( BasicHTML.propertyKey );
+
+        if ( html instanceof View )
         {
-            int rows = 1;
-            int currentRowWidth = 0;
-            int maxRowWidth = 0;
-            boolean parsingTag = false;
-            text = text.trim();
-            text = text.substring( "<html>".length(), text.length() - "</html>".length() );
-            text = HtmlEntities.unescapeHtml( text );
-            final Insets insets = this.getInsets();
-            final FontMetrics fontMetrics = this.getFontMetrics( this.getFont() );
+            final View view = (View) html;
+            view.setSize( width, 0 );
+            preferredSize = new Dimension( (int) view.getPreferredSpan( View.X_AXIS ),
+                                           (int) view.getPreferredSpan( View.Y_AXIS ) );
 
-            for ( int i = 0, column = 0, s0 = text.length(); i < s0; i++ )
-            {
-                final char c = text.charAt( i );
-
-                if ( c == '<' )
-                {
-                    parsingTag = true;
-                }
-
-                if ( !parsingTag )
-                {
-                    currentRowWidth += fontMetrics.charWidth( c );
-
-                    if ( maxRowWidth < currentRowWidth )
-                    {
-                        maxRowWidth = currentRowWidth;
-                    }
-
-                    column++;
-                }
-
-                if ( parsingTag && c == '>' )
-                {
-                    parsingTag = false;
-                }
-
-                if ( column == this.columns )
-                {
-                    rows++;
-                    column = 0;
-                    currentRowWidth = 0;
-                }
-            }
-
-            size.width = maxRowWidth + insets.left + insets.right;
-            size.height = rows * fontMetrics.getHeight() + insets.top + insets.bottom;
         }
 
-        return size;
+        return preferredSize;
     }
 
 }

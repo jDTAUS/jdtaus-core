@@ -430,7 +430,7 @@
         </container:property>
         <container:property container:name="defaultColumns"
                             container:type="java.lang.Integer"
-                            container:value="70">
+                            container:value="45">
 
           <container:documentation container:defaultLanguage="en">
             <container:text container:language="en"><![CDATA[Default number of columns the preferred width of the message pane is computed with.]]></container:text>
@@ -741,6 +741,7 @@
         <container:text container:language="de"><![CDATA[Instanz geschlossen - keine E/A-Operationen möglich.]]></container:text>
       </container:template>
     </container:message>
+    <!-- ******************************************************************* -->
     <container:message container:name="unknownTaskEventType">
       <container:documentation container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Message stating that an unknown task event got ignored.]]></container:text>
