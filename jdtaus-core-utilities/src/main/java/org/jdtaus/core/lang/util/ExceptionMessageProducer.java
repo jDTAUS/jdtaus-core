@@ -180,6 +180,29 @@ public final class ExceptionMessageProducer implements ExceptionListener
 
     /**
      * Creates a new {@code ExceptionMessageProducer} instance taking the
+     * application's logfile directory.
+     *
+     * @param logDirectory The directory holding the application's logfiles.
+     *
+     * @throws NullPointerException if {@code logDirectory} is {@code null}.
+     *
+     * @since 1.14
+     */
+    public ExceptionMessageProducer( final File logDirectory )
+    {
+        super();
+        if ( logDirectory == null )
+        {
+            throw new NullPointerException( "logDirectory" );
+        }
+
+        this.logDirectory = logDirectory;
+        this.trackerUrl = null;
+        this.reportAddress = null;
+    }
+
+    /**
+     * Creates a new {@code ExceptionMessageProducer} instance taking the
      * application's logfile directory and an URL to the application's online
      * bugtracking system.
      *
