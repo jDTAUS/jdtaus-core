@@ -1,0 +1,14 @@
+  -----
+jDTAUS Core Servlet Container
+  -----
+Christian Schulte
+  -----
+October 2012
+  -----
+
+Einleitung
+
+  Dieses Artefakt stellt Klassen zur Verwendung bei der Integration von jDTAUS
+  in Webanwendungen zur Verfügung.
+
+  Siehe {{{./apidocs/org/jdtaus/core/container/ri/servlet/ServletFilter.html}ServletFilter}}.

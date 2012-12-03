@@ -848,8 +848,8 @@
     <!-- ******************************************************************* -->
     <container:message container:name="incompatibleImplementation">
       <container:template container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[{0,choice,0#Implementation "{3}" implements version "{4}" of specification "{1}". Required implementation level is "{2}".|1#Implementation "{3}" depends on version "{5}" of specification "{1}". Available specification level is "{2}".}.]]></container:text>
-        <container:text container:language="de"><![CDATA[{0,choice,0#Implementierung "{3}" implementiert Version "{4}" der Spezifikation "{1}". Benötigte Implementierungsstufe ist "{2}"|1#Implementierung "{3}" hängt von Version "{5}" der Spezifikation "{1}" ab. Verfügbare Spezifikationsstufe ist "{2}".}]]></container:text>
+        <container:text container:language="en"><![CDATA[{0,choice,0#Implementation "{3}" implements version "{4}" of specification "{1}". Required implementation level is "{2}".|1#Implementation "{3}" depends on version "{5}" of specification "{1}". Available specification level is "{2}".}]]></container:text>
+        <container:text container:language="de"><![CDATA[{0,choice,0#Implementierung "{3}" implementiert Version "{4}" der Spezifikation "{1}". Benötigte Implementierungsstufe ist "{2}".|1#Implementierung "{3}" hängt von Version "{5}" der Spezifikation "{1}" ab. Verfügbare Spezifikationsstufe ist "{2}".}]]></container:text>
       </container:template>
       <container:arguments>
         <container:argument container:index="0" container:name="incompatibilityType" container:type="number"/>

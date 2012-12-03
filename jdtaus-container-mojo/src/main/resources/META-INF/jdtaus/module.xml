@@ -294,8 +294,8 @@
     <!-- ******************************************************************* -->
     <container:message container:name="missingMarkers">
       <container:template container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[{0} is missing in {1}.]]></container:text>
-        <container:text container:language="de"><![CDATA[{0} ist nicht in {1} vorhanden.]]></container:text>
+        <container:text container:language="en"><![CDATA[Marker {0} not found in {1}.]]></container:text>
+        <container:text container:language="de"><![CDATA[Abschnittsmarkierung {0} nicht in {1} gefunden.]]></container:text>
       </container:template>
       <container:arguments>
         <container:argument container:index="0" container:name="marker" container:type="text"/>
@@ -312,7 +312,7 @@
      */
 ]]></container:text>
         <container:text container:language="de"><![CDATA[/**
-     * Ermittelt die Implementierung der <code>{0}</code> Dependency.
+     * Ermittelt die Implementierung der <code>{0}</code> Anforderung.
      *
      * @return {1}
      */
@@ -457,8 +457,8 @@
     <!-- ******************************************************************* -->
     <container:message container:name="defaultArgumentDescription">
       <container:template container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[format argument.]]></container:text>
-        <container:text container:language="de"><![CDATA[Formatierungs-Argument.]]></container:text>
+        <container:text container:language="en"><![CDATA[format parameter.]]></container:text>
+        <container:text container:language="de"><![CDATA[Formatierungs-Parameter.]]></container:text>
       </container:template>
     </container:message>
     <!-- ******************************************************************* -->
@@ -472,7 +472,7 @@
     <container:message container:name="dependenciesTableDescription">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[The following table lists all dependencies of the implementation.]]></container:text>
-        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet alle Abnängigkeiten der Implementierung.]]></container:text>
+        <container:text container:language="de"><![CDATA[Die folgende Tabelle beinhaltet alle Abhängigkeiten der Implementierung.]]></container:text>
       </container:template>
     </container:message>
     <!-- ******************************************************************* -->
@@ -643,7 +643,7 @@
     <container:message container:name="moduleSpecScopeHeader">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Scope]]></container:text>
-        <container:text container:language="de"><![CDATA[Gültigkeitsbereich]]></container:text>
+        <container:text container:language="de"><![CDATA[Geltungsbereich]]></container:text>
       </container:template>
     </container:message>
     <!-- ******************************************************************* -->
@@ -785,7 +785,7 @@
     <!-- ******************************************************************* -->
     <container:message container:name="reportDescription">
       <container:template container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[Information about this module's container configuration.]]></container:text>
+        <container:text container:language="en"><![CDATA[Information about this module''s container configuration.]]></container:text>
         <container:text container:language="de"><![CDATA[Informationen über die Container-Konfiguration dieses Moduls.]]></container:text>
       </container:template>
     </container:message>
@@ -1027,7 +1027,7 @@
     <container:message container:name="messageTemplatesHeader">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Templates]]></container:text>
-        <container:text container:language="de"><![CDATA[Schablonen]]></container:text>
+        <container:text container:language="de"><![CDATA[Vorlagen]]></container:text>
       </container:template>
     </container:message>
     <!-- ******************************************************************* -->

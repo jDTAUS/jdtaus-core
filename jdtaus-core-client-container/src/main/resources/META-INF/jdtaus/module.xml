@@ -412,7 +412,7 @@
     <container:message container:name="unsupportedScope">
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Unknown scope "{1}" of specification "{0}".]]></container:text>
-        <container:text container:language="de"><![CDATA[Unbekannter Gültigkeitsbereich "{1}" der Spezifikation "{0}".]]></container:text>
+        <container:text container:language="de"><![CDATA[Unbekannter Geltungsbereich "{1}" der Spezifikation "{0}".]]></container:text>
       </container:template>
       <container:arguments>
         <container:argument container:index="0" container:name="unknownScope" container:type="text"/>

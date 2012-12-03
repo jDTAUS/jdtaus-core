@@ -270,8 +270,7 @@
       <container:arguments>
         <container:argument container:index="0" container:name="errorName" container:type="text">
           <container:documentation container:defaultLanguage="en">
-            <container:text container:language="en"><![CDATA[Name of the error.]]>
-            </container:text>
+            <container:text container:language="en"><![CDATA[Name of the error.]]></container:text>
           </container:documentation>
         </container:argument>
         <container:argument container:index="1" container:name="errorMessage" container:type="text">
@@ -294,7 +293,7 @@
     <!-- ******************************************************************* -->
     <container:message container:name="missingObjectStreamField">
       <container:documentation container:defaultLanguage="en">
-        <container:text container:language="en"><![CDATA[Information that a field in an object stream is missong.]]></container:text>
+        <container:text container:language="en"><![CDATA[Information that a field in an object stream is missing.]]></container:text>
       </container:documentation>
       <container:template container:defaultLanguage="en">
         <container:text container:language="en"><![CDATA[Missing fields in object stream.]]></container:text>

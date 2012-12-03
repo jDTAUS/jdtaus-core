@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  jDTAUS
+  Copyright (C) 2005 Christian Schulte
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  $JDTAUS$
+
+-->
+<project xmlns="http://maven.apache.org/DECORATION/1.3.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
+  <body>
+    <menu name="jDTAUS Core" inherit="top">
+      <item name="Start" href="${project.url}/index.html"/>
+    </menu>
+    <menu name="Specification">
+      <item name="API" href="${project.url}/jdtaus-core-api/index.html"/>
+      <item name="SPI" href="${project.url}/jdtaus-core-spi/index.html"/>
+      <item name="Schemas" href="${project.url}/jdtaus-core-schemas/index.html"/>
+    </menu>
+    <menu name="Implementation">
+      <item name="Application Logger" href="${project.url}/jdtaus-core-application-logger/index.html"/>
+      <item name="Entity Resolver" href="${project.url}/jdtaus-core-entity-resolver/index.html"/>
+      <item name="JDK1.4 Executor" href="${project.url}/jdtaus-core-jdk14-executor/index.html"/>
+      <item name="Memory Manager" href="${project.url}/jdtaus-core-memory-manager/index.html"/>
+      <item name="Task Monitor" href="${project.url}/jdtaus-core-task-monitor/index.html"/>
+      <item name="Client Container" href="${project.url}/jdtaus-core-client-container/index.html"/>
+      <item name="JOMC Container" href="${project.url}/jdtaus-core-jomc-container/index.html"/>
+      <item name="Servlet Container" href="${project.url}/jdtaus-core-servlet-container/index.html"/>
+      <item name="Commons Logging" href="${project.url}/jdtaus-core-commons-logging/index.html"/>
+      <item name="JDK Logging" href="${project.url}/jdtaus-core-jdk-logging/index.html"/>
+      <item name="Log4J Logging" href="${project.url}/jdtaus-core-log4j-logging/index.html"/>
+      <item name="SLF4J Logging" href="${project.url}/jdtaus-core-slf4j-logging/index.html"/>
+      <item name="Messages" href="${project.url}/jdtaus-core-messages/index.html"/>
+      <item name="Utilities" href="${project.url}/jdtaus-core-utilities/index.html"/>
+    </menu>
+    <menu name="Maven Plugins">
+      <item name="Container Mojo" href="${project.url}/jdtaus-container-mojo/index.html"/>
+      <item name="Resource Mojo" href="${project.url}/jdtaus-resource-mojo/index.html"/>
+    </menu>
+  </body>
+</project>

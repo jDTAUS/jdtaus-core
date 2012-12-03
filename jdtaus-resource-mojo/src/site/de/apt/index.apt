@@ -1,0 +1,25 @@
+  -----
+jDTAUS Resource Plugin
+  -----
+Christian Schulte
+  -----
+October 2012
+  -----
+
+jDTAUS Resource Plugin
+
+  Das Resource Plugin ist eine Zusammenstellung von Werkzeugen zur Verwaltung
+  von Projektressourcen auf Basis des jDTAUS Core Container Modells.
+
+* Kommandos
+
+  Momentan stellt das Resource Plugin ein Kommando zur Verfügung.
+
+  * {{{./java-resources-mojo.html}jdtaus-resource-mojo:java-resources}} ist an
+    die <<<process-resources>>> Phase gebunden und wird zur Erstellung von
+    Projektressourcen sowie entsprechender Quelltextdateien zum Zugriff auf
+    diese Ressourcen verwendet.
+
+* Anwendung
+
+  Einige Anwendungsbeispiele des Plugins finden Sie  {{{./usage.html}hier}}.

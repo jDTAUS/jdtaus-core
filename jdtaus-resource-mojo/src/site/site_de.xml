@@ -2,7 +2,7 @@
 <!--
 
   jDTAUS
-  Copyright (C) 2005 Christian Schulte
+  Copyright (C) 2012 Christian Schulte
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -26,9 +26,9 @@
          xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
   <body>
     <menu name="Resource Plugin">
-      <item name="Introduction" href="${project.url}/index.html"/>
-      <item name="Usage" href="${project.url}/usage.html"/>
-      <item name="Reference" href="${project.url}/plugin-info.html"/>
+      <item name="Einleitung" href="${project.url}/de/index.html"/>
+      <item name="Anwendung" href="${project.url}/de/usage.html"/>
+      <item name="Referenz" href="${project.url}/de/plugin-info.html"/>
     </menu>
   </body>
 </project>

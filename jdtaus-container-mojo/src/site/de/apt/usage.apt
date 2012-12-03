@@ -1,27 +1,24 @@
   -----
-Usage
+Anwendungsbeispiele
   -----
 Christian Schulte
   -----
-July 2008
+October 2012
   -----
 
-Usage
+Anwendungsbeispiele
 
-* Managing source code sections in java source files
+* Verwaltung von Quelltextabschnitten
 
-  The <<<java-container>>>, <<<java-container-tests>>>, <<<java-commit>>> and
-  <<<java-commit-tests>>> goals of the plugin are used in a parent pom of a
-  multi-module project by providing a configuration as shown below. For each
-  project providing container model data (as determined by the container
-  implementation provided to the plugin by a corresponding container
-  implementation dependency), the plugin will manage the contents of various
-  source code sections based on that data.
+  Die <<<java-container>>>, <<<java-container-tests>>>, <<<java-commit>>> und
+  <<<java-commit-tests>>> Kommandos des Plugins werden in einem Eltern-POM
+  eines multi-modul Projekts wie folgt konfiguriert. Für jedes Projekt, für das
+  die als Abhängigkeit des Plugins konfigurierte Container-Implementierung
+  Modelldaten ermittelt, verwaltet das Plugin Quelltextabschnitte auf Basis
+  dieser Modelldaten.
 
-  See the {{{http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
-  XML schema regarding the jDTAUS Container reference implemenation, which
-  expects XML document resources located at classpath location
-  <<<META-INF/jdtaus/module.xml>>>.
+  XML-Schema: {{{http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
+  Ort entsprechender Dokumente: <<<META-INF/jdtaus/module.xml>>>
 
 +---
 ...
@@ -100,10 +97,10 @@ Usage
 </build>
 +---
 
-  <<Note:>> The default plugin configuration expects the following section
-  markers to be present in source files of java classes defined in a project's
-  container model. Any non-existent source file will be created in the source
-  root configured via the sourceRoot parameter.
+  <<Hinweis:>> Die Standardwerte der Pluginparameter erfordern die folgenden
+  Abschnittsmarkierungen in Quelltextdateien. Nicht existierende Dateien werden
+  im über den <<<sourceRoot>>> Parameter des Plugins konfigurierten Verzeichnis
+  erstellt.
 
 +---
     //--Constructors------------------------------------------------------------
@@ -116,27 +113,28 @@ Usage
     //----------------------------------------------------------------Messages--
 +---
 
-* Removing trailing spaces from a projects' source files
+* Entfernung nachfolgender Leerzeichen in Quelltextdateien
 
-  The <<<jdtaus-container-mojo:clean-sources>>> goal of the Container Plugin is
-  not bound to any lifecycle phase and is intended to be invoked on its own or
-  to be added to a multi-module parent project.
+  Das <<<jdtaus-container-mojo:clean-sources>>> Kommando des Plugins ist an
+  keine Phase gebunden. Es wird entweder unabghängig oder in einem Eltern-POM
+  eines multi-modul Projekts verwendet.
 
-  To remove any trailing spaces from a projects' source files, execute the
-  following command in that project's base directory.
+  Um nachfolgende Leerzeichen aus den Quelltextdateien eines Projekts zu
+  entfernen, führen Sie folgendes Kommando im Basisverzeichnis des Projekts
+  aus.
 
 +---
   mvn org.jdtaus.mojo:jdtaus-container-mojo:clean-sources
 +---
 
-* Validating a set of runtime artifacts to form a valid container model.
+* Validierung des Container-Modells einer Menge von Artefakten
 
-  The <<<jdtaus-container-mojo:verify-model>>> goal of the Container Plugin is
-  bound to the <<<verify>>> lifecycle phase. It is intended to be used on
-  projects creating a final distribution artifact of an application and will
-  fail a build for any problems leading to an invalid container runtime.
+  Das <<<jdtaus-container-mojo:verify-model>>> Kommando des Container Plugins
+  ist an die <<<verify>>> Phase gebunden. Es kommt in Projekten zur Erstellung
+  einer finalen Auslieferungseinheit zum Einsatz um die Erstellung bei
+  ungültigen Modelldaten entsprechend abzubrechen.
 
-  To use the goal, add the following to the final distribution project.
+  Konfigurieren Sie das Plugin wie folgt, um das Kommando auszuführen.
 
 +---
 ...
@@ -169,15 +167,15 @@ Usage
 ...
 +---
 
-* Validating a single jar file to contain valid container model data
+* Validierung des Container-Modells eines einzelnen Java-Archivs
 
-  The <<<jdtaus-container-mojo:verify-jar>>> goal of the Container Plugin is
-  bound to the <<<verify>>> lifecycle phase. It is intended to be used for
-  validating a single jar file to contain valid container model data and will
-  fail a build for any problems.
+  Das <<<jdtaus-container-mojo:verify-jar>>> Kommando des Container Plugins ist
+  an die <<<verify>>> Phase gebunden. Es wird zur Validierung des Container
+  Modells eines einzelnen Java-Archivs verwendet.
 
-  To use the goal, add the following to the project and adjust the value of the
-  jarFile attribute accordingly.
+  Konfigurieren Sie das Plugin wie folgt, um das Kommando auszuführen. Mittels
+  des 'jarFile' Parameters kann das zu validierende Java-Archiv entsprechend
+  angegeben werden.
 
 +---
 ...
@@ -213,14 +211,13 @@ Usage
 ...
 +---
 
-* Creating a spring beans document from a project's container model
+* Erstellung eines Spring-Beans Dokuments aus einem Container-Modell
 
-  The <<<jdtaus-container-mojo:spring-descriptor>>> goal of the Container Plugin
-  is bound to the <<<process-resources>>> lifecycle phase. It is intended to be
-  used for creating a spring beans document with information compatible with the
-  project's container model.
+  Das <<<jdtaus-container-mojo:spring-descriptor>>> Kommando des Container
+  Plugins ist an die <<<process-resources>>> Phase gebunden. Es wird verwendet
+  um ein Spring-Beans Dokument aus einem Container-Modell zu erstellen.
 
-  To use the goal, add the following to the project.
+  Konfigurieren Sie das Plugin wie folgt, um das Kommando auszuführen.
 
 +---
 ...
@@ -253,7 +250,7 @@ Usage
 ...
 +---
 
-  <<Note:>> Mapping a jDTAUS Container model to a Spring beans model does not
-  decouple from the jDTAUS Container. The generated spring beans descriptor
-  solely helps in accessing classes managed by the jDTAUS container from a
-  spring container.
+  <<Hinweis:>> Das erstellte Spring-Beans Dokument dient der Vereinfachung der
+  Verwendung von auf dem jDTAUS Container basierenden Klassen mit einem
+  Spring-Beans Container. Die Klassen benötigen weiterhin eine entsprechende
+  jDTAUS Container-Implementierung.

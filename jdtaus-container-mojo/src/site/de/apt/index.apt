@@ -1,0 +1,56 @@
+  -----
+jDTAUS Container Plugin
+  -----
+Christian Schulte
+  -----
+October 2012
+  -----
+
+jDTAUS Container Plugin
+
+  Das Container Plugin ist eine Zusammenstellung von Werkzeugen zur Anwendung
+  des jDTAUS Core Container Modells. Das Haupteinsatzgebiet ist die Verwaltung
+  von Quelltextabschnitten auf Basis dieses Modells.
+
+* Kommandos
+
+  Momentan stellt das Container Plugin acht Kommandos zur Verfügung.
+
+  * {{{./clean-sources-mojo.html}jdtaus-container-mojo:clean-sources}} ist
+    an keine spezielle Phase gebunden und wird verwendet, um den Quelltext eines
+    Projekts zu bereinigen.
+
+  * {{{./java-container-mojo.html}jdtaus-container-mojo:java-container}} ist
+    and die <<<process-resources>>> Phase gebunden und wird zur Verwaltung von
+    Quelltextabschnitten der Hauptklassen eines Projekts verwendet.
+
+  * {{{./java-container-tests-mojo.html}jdtaus-container-mojo:java-container-tests}}
+    ist an die <<<process-test-resources>>> Phase gebunden und wird zur
+    Verwaltung von Quelltextabschnitten der Testklassen eines Projekts
+    verwendet.
+
+  * {{{./java-commit-mojo.html}jdtaus-container-mojo:java-commit}} ist an die
+    <<<process-classes>>> Phase gebunden und wird zur Festschreibung des
+    Container Modells der Hauptklassen eines Projekts verwendet.
+
+  * {{{./java-commit-tests-mojo.html}jdtaus-container-mojo:java-commit-tests}}
+    ist an die <<<process-test-classes>>> Phase gebunden und wird zur
+    Festschreibung des Container Modells der Testklassen eines Projekts
+    verwendet.
+
+  * {{{./verify-model-mojo.html}jdtaus-container-mojo:verify-model}} ist an die
+    <<<verify>>> Phase gebunden und wird zur Validierung des Container Modells
+    der Hauptklassen eines Projekts verwendet.
+
+  * {{{./verify-jar-mojo.html}jdtaus-container-mojo:verify-jar}} ist and die
+    <<<verify>>> Phase gebunden und wird zur Validierung des Container Modells
+    eines Java-Archivs verwendet.
+
+  * {{{./spring-descriptor-mojo.html}jdtaus-container-mojo:spring-descriptor}}
+    ist and die <<<process-resources>>> Phase gebunden und wird zur Erzeugung
+    eines Spring-Beans XML Dokuments aus dem Container Modell eines Projekts
+    verwendet.
+
+* Anwendung
+
+  Einige Anwendungsbeispiele des Plugins finden Sie  {{{./usage.html}hier}}.

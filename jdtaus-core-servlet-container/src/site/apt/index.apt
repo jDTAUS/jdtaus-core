@@ -8,9 +8,7 @@ July 2005
 
 Introduction
 
-  The jDTAUS Core Servlet Container artifact provides the reference
-  implementation for jDTAUS web application integration. It extends the jDTAUS
-  Core Client Container implementation adding support for multi-session web
-  environments.
+  This artifact provides classes for use when integrating jDTAUS with
+  webapplications.
 
   See {{{./apidocs/org/jdtaus/core/container/ri/servlet/ServletFilter.html}ServletFilter}}.

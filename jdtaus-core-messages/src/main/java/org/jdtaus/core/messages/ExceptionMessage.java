@@ -289,7 +289,7 @@ public final class ExceptionMessage extends Message
      *
      * @param locale The locale of the message instance to return.
      *
-     * @return Information that a field in an object stream is missong.
+     * @return Information that a field in an object stream is missing.
      */
     private String getMissingObjectStreamFieldMessage( final Locale locale )
     {

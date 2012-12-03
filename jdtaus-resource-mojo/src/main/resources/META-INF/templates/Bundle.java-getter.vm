@@ -8,16 +8,7 @@
    * #end
 
    */
-#if(!$message.getArguments() || $message.getArguments().getArgument().isEmpty() )
-  String $modelManager.getJavaAccessorMethodName( $message )
-  (
-    final Locale locale
-  )
-  {
-    return this.getMessage( "$message.getName()", locale );
-  }
 #end
-#if($message.getArguments() && !$message.getArguments().getArgument().isEmpty() )
   String $modelManager.getJavaAccessorMethodName( $message )
   (
       Locale locale
@@ -53,5 +44,3 @@
         } );
 
   }
-#end
-#end

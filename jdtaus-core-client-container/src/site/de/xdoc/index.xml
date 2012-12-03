@@ -5,21 +5,21 @@
     <author email="cs@schulte.it">Christian Schulte</author>
   </properties>
   <body>
-    <section name="Introduction">
+    <section name="Einleitung">
       <p>
-        This artifact provides <code>Container</code>, <code>Context</code> and
-        <code>Model</code> implementations.
+        Dieses Artefakt stellt <code>Container</code>, <code>Context</code>
+        und <code>Model</code> Implementierungen zur Verfügung.
       </p>
       <p>
-        The <code>Model</code> implementation expects XML documents conforming
-        to the schemas listed in the following table at location
-        <code>META-INF/jdtaus/module.xml</code>.
+        Die <code>Model</code>-Implementierung erwartet XML-Dokumente an
+        <code>META-INF/jdtaus/module.xml</code> konform zu den folgenden
+        XML-Schemata.
         <table>
           <tr>
-            <th>Namespace</th>
-            <th>Location</th>
-            <th>Since version</th>
-            <th>Removal in version</th>
+            <th>Namensraum</th>
+            <th>Ort</th>
+            <th>Seit Version</th>
+            <th>Entfernung in Version</th>
           </tr>
           <tr>
             <td>http://jdtaus.org/core/runtime/container/xml</td>
