@@ -25,12 +25,12 @@
   <parent>
     <artifactId>jdtaus-core</artifactId>
     <groupId>org.jdtaus</groupId>
-    <version>1.14-SNAPSHOT</version>
+    <version>1.15-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus.core.container</groupId>
   <artifactId>jdtaus-core-jomc-container</artifactId>
-  <version>1.14-SNAPSHOT</version>
+  <version>1.15-SNAPSHOT</version>
   <name>jDTAUS Core ⁑ JOMC Container</name>
   <description>Container implementation backed by JOMC.</description>
   <build>
