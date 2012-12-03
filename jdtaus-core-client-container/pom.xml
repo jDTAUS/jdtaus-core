@@ -69,7 +69,7 @@
             <dependency>
               <groupId>org.jdtaus.core.container</groupId>
               <artifactId>jdtaus-core-client-container</artifactId>
-              <version>${core.version}</version>
+              <version>${project.version}</version>
               <scope>runtime</scope>
             </dependency>
           </dependencies>

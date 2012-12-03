@@ -119,7 +119,7 @@
     <dependency>
       <groupId>org.jomc</groupId>
       <artifactId>jomc-ri</artifactId>
-      <version>${jomc.version}</version>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
   <properties>
