@@ -1,19 +1,21 @@
   -----
-Anwendungsbeispiele
+Usage
   -----
 Christian Schulte
   -----
-October 2012
+July 2008
   -----
 
-Anwendungsbeispiele
+Usage
 
-* Erstellung von <<<ResourceBundle>>>s
+* Generating ResourceBundle bundles together with corresponding accessor
+  classes
 
-  Das <<<jdtaus-resource-mojo:java-resources>>> Kommando des Resource Plugins
-  ist an die <<<process-resources>>> Phase gebunden. Es wird zur Erstellung von
-  <<<ResourceBundle>>>-Zugriffsklassen mit zugehörigen <<<Properties>>>-Dateien
-  verwendet. Konfigurieren Sie das Plugin hierzu wie folgt.
+  The <<<jdtaus-resource-mojo:java-resources>>> goal of the Resource Plugin is
+  bound to the <<<process-resources>>> phase in the build lifecycle. The mojo
+  needs to be setup manually in a project to get executed. To generate an
+  accessor class for a ResourceBundle which is backed by properties file
+  resources of your project add the following to the project's pom.xml.
 
 +---
 ...
@@ -23,7 +25,7 @@ Anwendungsbeispiele
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-resource-mojo</artifactId>
-      <version>3.13</version>
+      <version>${jdtaus-resource-mojo.artifact.version}</version>
       <executions>
         <execution>
           <id>jdtaus-generate</id>
@@ -39,8 +41,8 @@ Anwendungsbeispiele
 ...
 +---
 
-  Fügen Sie zusätzlich ein entsprechendes Container-Modell-Dokument unter
-  <<<src/main/resources/META-INF/jdtaus/module.xml>>> zum Projekt hinzu.
+  and add a module descriptor to the project (searched for at
+  src/main/resources/META-INF/jdtaus/module.xml by default) like so
 
 +---
 <?xml version="1.0" encoding="UTF-8"?>
@@ -76,4 +78,9 @@ Anwendungsbeispiele
 </container:module>
 +---
 
-  XML-Schema: {{{http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
+  The goal processes the specified messages and generates accessor classes
+  together with corresponding properties files for all messages from the
+  module descriptor.
+
+  See the {{{http://xml.jdtaus.org/1.0.x/jdtaus-core/jdtaus-core-schemas/jdtaus-container-1.1.xsd}jdtaus-container-1.1.xsd}}
+  XML schema regarding the document structure.

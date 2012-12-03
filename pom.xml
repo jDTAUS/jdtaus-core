@@ -123,7 +123,7 @@
             <dependency>
               <artifactId>jdtaus-core-client-container</artifactId>
               <groupId>org.jdtaus.core.container</groupId>
-              <version>${jdtausCoreVersion}</version>
+              <version>${core.version}</version>
               <scope>runtime</scope>
             </dependency>
           </dependencies>
@@ -149,7 +149,7 @@
             <dependency>
               <groupId>org.jdtaus.core.container</groupId>
               <artifactId>jdtaus-core-client-container</artifactId>
-              <version>${jdtausCoreVersion}</version>
+              <version>${core.version}</version>
               <scope>runtime</scope>
             </dependency>
           </dependencies>
@@ -314,92 +314,92 @@
       <dependency>
         <groupId>org.jdtaus.common</groupId>
         <artifactId>jdtaus-core-api</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core.container</groupId>
         <artifactId>jdtaus-core-client-container</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <artifactId>jdtaus-core-servlet-container</artifactId>
         <groupId>org.jdtaus.core.container</groupId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core.container</groupId>
         <artifactId>jdtaus-core-jomc-container</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core</groupId>
         <artifactId>jdtaus-core-spi</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core</groupId>
         <artifactId>jdtaus-core-it</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core.logging</groupId>
         <artifactId>jdtaus-core-jdk-logging</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core.logging</groupId>
         <artifactId>jdtaus-core-log4j-logging</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core.logging</groupId>
         <artifactId>jdtaus-core-slf4j-logging</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core.logging</groupId>
         <artifactId>jdtaus-core-commons-logging</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core</groupId>
         <artifactId>jdtaus-core-messages</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core</groupId>
         <artifactId>jdtaus-core-schemas</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core.monitor</groupId>
         <artifactId>jdtaus-core-task-monitor</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core.lang</groupId>
         <artifactId>jdtaus-core-memory-manager</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jdtaus.core.text</groupId>
         <artifactId>jdtaus-core-application-logger</artifactId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <artifactId>jdtaus-core-entity-resolver</artifactId>
         <groupId>org.jdtaus.core.sax</groupId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <artifactId>jdtaus-core-utilities</artifactId>
         <groupId>org.jdtaus.core</groupId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <artifactId>jdtaus-core-jdk14-executor</artifactId>
         <groupId>org.jdtaus.core.lang</groupId>
-        <version>${jdtausCoreVersion}</version>
+        <version>${core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jomc</groupId>
@@ -462,7 +462,7 @@
     <mojo.animal-sniffer.signature.artifactId>java14</mojo.animal-sniffer.signature.artifactId>
     <mojo.animal-sniffer.signature.artifactVersion>1.0</mojo.animal-sniffer.signature.artifactVersion>
     <jdtaus.trac.query>order=id&amp;version=${project.version}&amp;component=jDTAUS Core|${project.name}</jdtaus.trac.query>
-    <jdtausCoreVersion>1.14-SNAPSHOT</jdtausCoreVersion>
+    <core.version>1.14-SNAPSHOT</core.version>
     <jdtaus-container-mojo.artifact.version>3.12-SNAPSHOT</jdtaus-container-mojo.artifact.version>
     <jdtaus-resource-mojo.artifact.version>3.13-SNAPSHOT</jdtaus-resource-mojo.artifact.version>
     <jomc.version>1.3</jomc.version>

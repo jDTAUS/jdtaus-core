@@ -30,12 +30,12 @@ Anwendungsbeispiele
       <plugin>
         <groupId>org.jdtaus.mojo</groupId>
         <artifactId>jdtaus-container-mojo</artifactId>
-        <version>3.12</version>
+        <version>${jdtaus-container-mojo.artifact.version}</version>
         <dependencies>
           <dependency>
             <groupId>org.jdtaus.core.container</groupId>
             <artifactId>jdtaus-core-client-container</artifactId>
-            <version>1.14</version>
+            <version>${core.version}</version>
           </dependency>
         </dependencies>
         <executions>
@@ -144,12 +144,12 @@ Anwendungsbeispiele
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-container-mojo</artifactId>
-      <version>3.12</version>
+      <version>${jdtaus-container-mojo.artifact.version}</version>
       <dependencies>
         <dependency>
           <groupId>org.jdtaus.core.container</groupId>
           <artifactId>jdtaus-core-client-container</artifactId>
-          <version>1.14</version>
+          <version>${core.version}</version>
         </dependency>
       </dependencies>
       <executions>
@@ -185,12 +185,12 @@ Anwendungsbeispiele
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-container-mojo</artifactId>
-      <version>3.12</version>
+      <version>${jdtaus-container-mojo.artifact.version}</version>
       <dependencies>
         <dependency>
           <groupId>org.jdtaus.core.container</groupId>
           <artifactId>jdtaus-core-client-container</artifactId>
-          <version>1.14</version>
+          <version>${core.version}</version>
         </dependency>
       </dependencies>
       <executions>
@@ -227,12 +227,12 @@ Anwendungsbeispiele
     <plugin>
       <groupId>org.jdtaus.mojo</groupId>
       <artifactId>jdtaus-container-mojo</artifactId>
-      <version>3.12</version>
+      <version>${jdtaus-container-mojo.artifact.version}</version>
       <dependencies>
         <dependency>
           <groupId>org.jdtaus.core.container</groupId>
           <artifactId>jdtaus-core-client-container</artifactId>
-          <version>1.14</version>
+          <version>${core.version}</version>
         </dependency>
       </dependencies>
       <executions>
