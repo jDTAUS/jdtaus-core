@@ -42,6 +42,11 @@
     <developerConnection>scm:svn:http://svn.jdtaus.org/svnroot/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</developerConnection>
     <url>http://svn.jdtaus.org/jdtaus-core/branches/jdtaus-core-1.x</url>
   </scm>
+  <contributors>
+    <contributor>
+      <name>Thomas Münz</name>
+    </contributor>
+  </contributors>
   <build>
     <extensions>
       <extension>
