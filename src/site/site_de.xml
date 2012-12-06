@@ -29,29 +29,29 @@
       <item name="Start" href="${project.url}/de/index.html"/>
     </menu>
     <menu name="Spezifikation">
-      <item name="API" href="${project.url}/de/jdtaus-core-api/index.html"/>
-      <item name="SPI" href="${project.url}/de/jdtaus-core-spi/index.html"/>
-      <item name="Schemata" href="${project.url}/de/jdtaus-core-schemas/index.html"/>
+      <item name="API" href="${project.url}/jdtaus-core-api/de/index.html"/>
+      <item name="SPI" href="${project.url}/jdtaus-core-spi/de/index.html"/>
+      <item name="Schemata" href="${project.url}/jdtaus-core-schemas/de/index.html"/>
     </menu>
     <menu name="Implementierung">
-      <item name="Application Logger" href="${project.url}/de/jdtaus-core-application-logger/index.html"/>
-      <item name="Entity Resolver" href="${project.url}/de/jdtaus-core-entity-resolver/index.html"/>
-      <item name="JDK1.4 Executor" href="${project.url}/de/jdtaus-core-jdk14-executor/index.html"/>
-      <item name="Memory Manager" href="${project.url}/de/jdtaus-core-memory-manager/index.html"/>
-      <item name="Task Monitor" href="${project.url}/de/jdtaus-core-task-monitor/index.html"/>
-      <item name="Client Container" href="${project.url}/de/jdtaus-core-client-container/index.html"/>
-      <item name="JOMC Container" href="${project.url}/de/jdtaus-core-jomc-container/index.html"/>
-      <item name="Servlet Container" href="${project.url}/de/jdtaus-core-servlet-container/index.html"/>
-      <item name="Commons Logging" href="${project.url}/de/jdtaus-core-commons-logging/index.html"/>
-      <item name="JDK Logging" href="${project.url}/de/jdtaus-core-jdk-logging/index.html"/>
-      <item name="Log4J Logging" href="${project.url}/de/jdtaus-core-log4j-logging/index.html"/>
-      <item name="SLF4J Logging" href="${project.url}/de/jdtaus-core-slf4j-logging/index.html"/>
-      <item name="Messages" href="${project.url}/de/jdtaus-core-messages/index.html"/>
-      <item name="Utilities" href="${project.url}/de/jdtaus-core-utilities/index.html"/>
+      <item name="Application Logger" href="${project.url}/jdtaus-core-application-logger/de/index.html"/>
+      <item name="Entity Resolver" href="${project.url}/jdtaus-core-entity-resolver/de/index.html"/>
+      <item name="JDK1.4 Executor" href="${project.url}/jdtaus-core-jdk14-executor/de/index.html"/>
+      <item name="Memory Manager" href="${project.url}/jdtaus-core-memory-manager/de/index.html"/>
+      <item name="Task Monitor" href="${project.url}/jdtaus-core-task-monitor/de/index.html"/>
+      <item name="Client Container" href="${project.url}/jdtaus-core-client-container/de/index.html"/>
+      <item name="JOMC Container" href="${project.url}/jdtaus-core-jomc-container/de/index.html"/>
+      <item name="Servlet Container" href="${project.url}/jdtaus-core-servlet-container/de/index.html"/>
+      <item name="Commons Logging" href="${project.url}/jdtaus-core-commons-logging/de/index.html"/>
+      <item name="JDK Logging" href="${project.url}/jdtaus-core-jdk-logging/de/index.html"/>
+      <item name="Log4J Logging" href="${project.url}/jdtaus-core-log4j-logging/de/index.html"/>
+      <item name="SLF4J Logging" href="${project.url}/jdtaus-core-slf4j-logging/de/index.html"/>
+      <item name="Messages" href="${project.url}/jdtaus-core-messages/de/index.html"/>
+      <item name="Utilities" href="${project.url}/jdtaus-core-utilities/de/index.html"/>
     </menu>
     <menu name="Maven Plugins">
-      <item name="Container Mojo" href="${project.url}/de/jdtaus-container-mojo/index.html"/>
-      <item name="Resource Mojo" href="${project.url}/de/jdtaus-resource-mojo/index.html"/>
+      <item name="Container Mojo" href="${project.url}/jdtaus-container-mojo/de/index.html"/>
+      <item name="Resource Mojo" href="${project.url}/jdtaus-resource-mojo/de/index.html"/>
     </menu>
   </body>
   <custom>
