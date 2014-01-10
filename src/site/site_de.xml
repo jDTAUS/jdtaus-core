@@ -25,33 +25,30 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd">
   <body>
-    <menu name="jDTAUS Core" inherit="top">
-      <item name="Start" href="${project.url}/de/index.html"/>
+    <menu name="Core Spezifikationen" inherit="top">
+      <item name="API" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-api/de/index.html"/>
+      <item name="SPI" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-spi/de/index.html"/>
+      <item name="Schemata" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-schemas/de/index.html"/>
     </menu>
-    <menu name="Spezifikation">
-      <item name="API" href="${project.url}/jdtaus-core-api/de/index.html"/>
-      <item name="SPI" href="${project.url}/jdtaus-core-spi/de/index.html"/>
-      <item name="Schemata" href="${project.url}/jdtaus-core-schemas/de/index.html"/>
+    <menu name="Core Implementierungen" inherit="top">
+      <item name="Application Logger" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-application-logger/de/index.html"/>
+      <item name="Entity Resolver" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-entity-resolver/de/index.html"/>
+      <item name="JDK1.4 Executor" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-jdk14-executor/de/index.html"/>
+      <item name="Memory Manager" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-memory-manager/de/index.html"/>
+      <item name="Task Monitor" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-task-monitor/de/index.html"/>
+      <item name="Client Container" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-client-container/de/index.html"/>
+      <item name="JOMC Container" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-jomc-container/de/index.html"/>
+      <item name="Servlet Container" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-servlet-container/de/index.html"/>
+      <item name="Commons Logging" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-commons-logging/de/index.html"/>
+      <item name="JDK Logging" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-jdk-logging/de/index.html"/>
+      <item name="Log4J Logging" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-log4j-logging/de/index.html"/>
+      <item name="SLF4J Logging" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-slf4j-logging/de/index.html"/>
+      <item name="Messages" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-messages/de/index.html"/>
+      <item name="Utilities" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-core-utilities/de/index.html"/>
     </menu>
-    <menu name="Implementierung">
-      <item name="Application Logger" href="${project.url}/jdtaus-core-application-logger/de/index.html"/>
-      <item name="Entity Resolver" href="${project.url}/jdtaus-core-entity-resolver/de/index.html"/>
-      <item name="JDK1.4 Executor" href="${project.url}/jdtaus-core-jdk14-executor/de/index.html"/>
-      <item name="Memory Manager" href="${project.url}/jdtaus-core-memory-manager/de/index.html"/>
-      <item name="Task Monitor" href="${project.url}/jdtaus-core-task-monitor/de/index.html"/>
-      <item name="Client Container" href="${project.url}/jdtaus-core-client-container/de/index.html"/>
-      <item name="JOMC Container" href="${project.url}/jdtaus-core-jomc-container/de/index.html"/>
-      <item name="Servlet Container" href="${project.url}/jdtaus-core-servlet-container/de/index.html"/>
-      <item name="Commons Logging" href="${project.url}/jdtaus-core-commons-logging/de/index.html"/>
-      <item name="JDK Logging" href="${project.url}/jdtaus-core-jdk-logging/de/index.html"/>
-      <item name="Log4J Logging" href="${project.url}/jdtaus-core-log4j-logging/de/index.html"/>
-      <item name="SLF4J Logging" href="${project.url}/jdtaus-core-slf4j-logging/de/index.html"/>
-      <item name="Messages" href="${project.url}/jdtaus-core-messages/de/index.html"/>
-      <item name="Utilities" href="${project.url}/jdtaus-core-utilities/de/index.html"/>
-    </menu>
-    <menu name="Maven Plugins">
-      <item name="Container Mojo" href="${project.url}/jdtaus-container-mojo/de/index.html"/>
-      <item name="Resource Mojo" href="${project.url}/jdtaus-resource-mojo/de/index.html"/>
+    <menu name="Core Maven Plugins" inherit="top">
+      <item name="Container Mojo" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-container-mojo/de/index.html"/>
+      <item name="Resource Mojo" href="${jdtaus.artifacts.url}/jdtaus-core/jdtaus-resource-mojo/de/index.html"/>
     </menu>
   </body>
   <custom>
