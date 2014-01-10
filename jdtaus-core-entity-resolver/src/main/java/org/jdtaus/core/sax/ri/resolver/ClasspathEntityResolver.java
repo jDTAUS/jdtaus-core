@@ -200,7 +200,7 @@ public class ClasspathEntityResolver implements EntityResolver
     {
         if ( schemaExtensions != null && schemaExtensions.length > 0 )
         {
-            this.schemaExtensions = schemaExtensions;
+            this.schemaExtensions = (String[]) schemaExtensions.clone();
         }
     }
 

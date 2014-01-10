@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Locale;
@@ -123,6 +124,7 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
                           Thread.currentThread().getContextClassLoader();
 
         Writer writer = null;
+        OutputStream out = null;
 
         try
         {
@@ -143,9 +145,14 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
                     this.getSpringDescriptorFile().getParentFile().mkdirs();
                 }
 
+                out = new FileOutputStream(
+                    this.getSpringDescriptorFile() );
+
                 this.getModelManager().getSpringMarshaller().
-                    marshal( springModel, new FileOutputStream(
-                    this.getSpringDescriptorFile() ) );
+                    marshal( springModel, out );
+
+                out.close();
+                out = null;
 
                 this.getLog().info(
                     SpringDescriptorMojoBundle.getInstance().
@@ -238,6 +245,18 @@ public class SpringDescriptorMojo extends AbstractContainerMojo
         {
             disableThreadContextClassLoader();
             Thread.currentThread().setContextClassLoader( mavenLoader );
+
+            try
+            {
+                if ( out != null )
+                {
+                    out.close();
+                }
+            }
+            catch ( final IOException e )
+            {
+                this.getLog().error( e );
+            }
 
             try
             {

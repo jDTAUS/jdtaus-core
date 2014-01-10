@@ -102,7 +102,7 @@ public final class EntityResolverChain implements EntityResolver
 
         if ( resolvers != null && resolvers.length > 0 )
         {
-            this.resolvers = resolvers;
+            this.resolvers = (EntityResolver[]) resolvers.clone();
         }
     }
 
@@ -125,7 +125,7 @@ public final class EntityResolverChain implements EntityResolver
             }
         }
 
-        return this.resolvers;
+        return (EntityResolver[]) this.resolvers.clone();
     }
 
     //-----------------------------------------------------EntityResolverChain--

@@ -82,17 +82,6 @@ public abstract class StructuredFileTest extends TestCase
     //------------------------------------------------------StructuredFileTest--
     //--Helpermethods-----------------------------------------------------------
 
-    private byte[] getRandomBlock( final int size )
-    {
-        final byte[] random = new byte[ size ];
-        for ( int i = 0; i < random.length; i++ )
-        {
-            random[i] = ( byte ) ( Math.random() * 0xFF );
-        }
-
-        return random;
-    }
-
     private byte[] getFilledBlock( final int size, final byte fill )
     {
         final byte[] filled = new byte[ size ];
@@ -170,7 +159,7 @@ public abstract class StructuredFileTest extends TestCase
      */
     public void testReadWriteBlock() throws Exception
     {
-        final long startTime = System.currentTimeMillis();
+//        final long startTime = System.currentTimeMillis();
 
         int i;
         int j;

@@ -356,7 +356,7 @@ public final class MemoryFileOperations
             throw new NullPointerException( "buf" );
         }
 
-        this.data = buf;
+        this.data = (byte[]) buf.clone();
         this.length = buf.length;
         this.filePointer = 0L;
     }

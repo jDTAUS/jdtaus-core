@@ -982,7 +982,7 @@ public class DefaultModel implements Model
                 throw new ModelError(
                     DefaultModelBundle.getInstance().
                     getUnknownNamespaceMessage(
-                    Locale.getDefault(), namespace,
+                    Locale.getDefault(), null,
                     doc.getDocumentElement().getNodeName() ) );
 
             }
@@ -2625,7 +2625,7 @@ public class DefaultModel implements Model
         }
         else
         {
-            property.setValue( value );
+            property.setValue( null );
         }
     }
 

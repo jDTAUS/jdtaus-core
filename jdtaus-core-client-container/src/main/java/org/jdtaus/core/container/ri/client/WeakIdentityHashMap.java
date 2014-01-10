@@ -117,7 +117,7 @@ public final class WeakIdentityHashMap implements Map
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     /** The number of times the map got structurally modified. */
-    private volatile int modifications;
+    private int modifications;
 
     /** The number of mappings held by the map. */
     private int size;
