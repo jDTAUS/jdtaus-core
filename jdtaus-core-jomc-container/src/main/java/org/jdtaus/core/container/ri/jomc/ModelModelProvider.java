@@ -61,8 +61,8 @@ import org.jomc.modlet.ModelException;
  * JOMC {@code ModelProvider} providing the jDTAUS {@code Model}.
  *
  * <dl>
- *   <dt><b>Identifier:</b></dt><dd>jDTAUS Core &#8273; JOMC Container &#8273; Model ModelProvider</dd>
- *   <dt><b>Name:</b></dt><dd>jDTAUS Core &#8273; JOMC Container &#8273; Model ModelProvider</dd>
+ *   <dt><b>Identifier:</b></dt><dd>jDTAUS Core ⁑ JOMC Container ⁑ Model ModelProvider</dd>
+ *   <dt><b>Name:</b></dt><dd>jDTAUS Core ⁑ JOMC Container ⁑ Model ModelProvider</dd>
  *   <dt><b>Specifications:</b></dt>
  *     <dd>org.jomc.modlet.ModelProvider</dd>
  *   <dt><b>Abstract:</b></dt><dd>No</dd>
@@ -77,7 +77,7 @@ import org.jomc.modlet.ModelException;
 // SECTION-END
 // SECTION-START[Annotations]
 // <editor-fold defaultstate="collapsed" desc=" Generated Annotations ">
-@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.3", comments = "See http://jomc.sourceforge.net/jomc/1.3/jomc-tools-1.3" )
+@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.5", comments = "See http://www.jomc.org/jomc/1.5/jomc-tools-1.5" )
 // </editor-fold>
 // SECTION-END
 public class ModelModelProvider
@@ -732,7 +732,7 @@ public class ModelModelProvider
     // SECTION-START[Constructors]
     // <editor-fold defaultstate="collapsed" desc=" Generated Constructors ">
     /** Creates a new {@code ModelModelProvider} instance. */
-    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.3", comments = "See http://jomc.sourceforge.net/jomc/1.3/jomc-tools-1.3" )
+    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.5", comments = "See http://www.jomc.org/jomc/1.5/jomc-tools-1.5" )
     public ModelModelProvider()
     {
         // SECTION-START[Default Constructor]
@@ -759,18 +759,16 @@ public class ModelModelProvider
      * @param moduleName Format argument.
      * @param moduleVersion Format argument.
      * @return The text of the {@code <moduleInfo>} message for {@code locale}.
-     * @throws org.jomc.ObjectManagementException if getting the message instance fails.
      */
     @SuppressWarnings("unused")
-    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.3", comments = "See http://jomc.sourceforge.net/jomc/1.3/jomc-tools-1.3" )
+    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.5", comments = "See http://www.jomc.org/jomc/1.5/jomc-tools-1.5" )
     private static String getModuleInfo( final java.util.Locale locale, final java.lang.String moduleName, final java.lang.String moduleVersion )
     {
         java.io.BufferedReader reader = null;
-        boolean suppressExceptionOnClose = true;
 
         try
         {
-            final String message = java.text.MessageFormat.format( java.util.ResourceBundle.getBundle( "org/jdtaus/core/container/ri/jomc/ModelModelProvider", locale ).getString( "moduleInfo" ), moduleName, moduleVersion, (Object) null );
+            final String message = java.text.MessageFormat.format( java.util.ResourceBundle.getBundle( "org.jdtaus.core.container.ri.jomc.ModelModelProvider", locale ).getString( "moduleInfo" ), moduleName, moduleVersion, (Object) null );
             final java.lang.StringBuilder builder = new java.lang.StringBuilder( message.length() );
             reader = new java.io.BufferedReader( new java.io.StringReader( message ) );
             final String lineSeparator = System.getProperty( "line.separator", "\n" );
@@ -781,24 +779,13 @@ public class ModelModelProvider
                 builder.append( lineSeparator ).append( line );
             }
 
-            suppressExceptionOnClose = false;
+            reader.close();
+            reader = null;
             return builder.length() > 0 ? builder.substring( lineSeparator.length() ) : "";
-        }
-        catch( final java.lang.ClassCastException e )
-        {
-            throw new org.jomc.ObjectManagementException( e.getMessage(), e );
-        }
-        catch( final java.lang.IllegalArgumentException e )
-        {
-            throw new org.jomc.ObjectManagementException( e.getMessage(), e );
-        }
-        catch( final java.util.MissingResourceException e )
-        {
-            throw new org.jomc.ObjectManagementException( e.getMessage(), e );
         }
         catch( final java.io.IOException e )
         {
-            throw new org.jomc.ObjectManagementException( e.getMessage(), e );
+            throw new java.lang.AssertionError( e );
         }
         finally
         {
@@ -811,10 +798,7 @@ public class ModelModelProvider
             }
             catch( final java.io.IOException e )
             {
-                if( !suppressExceptionOnClose )
-                {
-                    throw new org.jomc.ObjectManagementException( e.getMessage(), e );
-                }
+                throw new java.lang.AssertionError( e );
             }
         }
     }
