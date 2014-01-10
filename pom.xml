@@ -31,7 +31,7 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.15-SNAPSHOT</version>
+  <version>1.16-SNAPSHOT</version>
   <url>${jdtaus.artifacts.url}/jdtaus-core</url>
   <description>Core services like task monitoring and modular object management and configuration.</description>
   <prerequisites>
@@ -466,9 +466,9 @@
     <mojo.animal-sniffer.signature.artifactId>java14</mojo.animal-sniffer.signature.artifactId>
     <mojo.animal-sniffer.signature.artifactVersion>1.0</mojo.animal-sniffer.signature.artifactVersion>
     <jdtaus.trac.query>order=id&amp;version=${project.version}&amp;component=jDTAUS Core|${project.name}</jdtaus.trac.query>
-    <core.version>1.15-SNAPSHOT</core.version>
-    <jdtaus-container-mojo.artifact.version>3.13-SNAPSHOT</jdtaus-container-mojo.artifact.version>
-    <jdtaus-resource-mojo.artifact.version>3.14-SNAPSHOT</jdtaus-resource-mojo.artifact.version>
+    <core.version>1.16-SNAPSHOT</core.version>
+    <jdtaus-container-mojo.artifact.version>3.14-SNAPSHOT</jdtaus-container-mojo.artifact.version>
+    <jdtaus-resource-mojo.artifact.version>3.15-SNAPSHOT</jdtaus-resource-mojo.artifact.version>
     <jomc.version>1.5</jomc.version>
   </properties>
 </project>
