@@ -121,6 +121,6 @@
     </dependency>
   </dependencies>
   <properties>
-    <maven.surefire.memory>128m</maven.surefire.memory>
+    <maven.surefire.memory>256m</maven.surefire.memory>
   </properties>
 </project>
