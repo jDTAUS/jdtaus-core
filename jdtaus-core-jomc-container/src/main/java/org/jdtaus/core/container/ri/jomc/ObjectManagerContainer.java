@@ -35,8 +35,8 @@ import org.jomc.ObjectManagerFactory;
  * jDTAUS {@code Container} implementation delegating to the JOMC {@code ObjectManager}.
  *
  * <dl>
- *   <dt><b>Identifier:</b></dt><dd>jDTAUS Core &#8273; JOMC Container &#8273; ObjectManagerContainer</dd>
- *   <dt><b>Name:</b></dt><dd>jDTAUS Core &#8273; JOMC Container &#8273; ObjectManagerContainer</dd>
+ *   <dt><b>Identifier:</b></dt><dd>jDTAUS Core ⁑ JOMC Container ⁑ ObjectManagerContainer</dd>
+ *   <dt><b>Name:</b></dt><dd>jDTAUS Core ⁑ JOMC Container ⁑ ObjectManagerContainer</dd>
  *   <dt><b>Specifications:</b></dt>
  *     <dd>org.jdtaus.core.container.Container</dd>
  *   <dt><b>Abstract:</b></dt><dd>No</dd>
@@ -45,13 +45,13 @@ import org.jomc.ObjectManagerFactory;
  * </dl>
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a> 1.0
- * @version 1.15-SNAPSHOT
+ * @version 1.15
  */
 // </editor-fold>
 // SECTION-END
 // SECTION-START[Annotations]
 // <editor-fold defaultstate="collapsed" desc=" Generated Annotations ">
-@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.3", comments = "See http://jomc.sourceforge.net/jomc/1.3/jomc-tools-1.3" )
+@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.5", comments = "See http://www.jomc.org/jomc/1.5/jomc-tools-1.5" )
 // </editor-fold>
 // SECTION-END
 public class ObjectManagerContainer
@@ -147,7 +147,7 @@ public class ObjectManagerContainer
     // SECTION-START[Constructors]
     // <editor-fold defaultstate="collapsed" desc=" Generated Constructors ">
     /** Creates a new {@code ObjectManagerContainer} instance. */
-    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.3", comments = "See http://jomc.sourceforge.net/jomc/1.3/jomc-tools-1.3" )
+    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.5", comments = "See http://www.jomc.org/jomc/1.5/jomc-tools-1.5" )
     public ObjectManagerContainer()
     {
         // SECTION-START[Default Constructor]

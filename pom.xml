@@ -31,16 +31,16 @@
   <artifactId>jdtaus-core</artifactId>
   <packaging>pom</packaging>
   <name>jDTAUS Core</name>
-  <version>1.15-SNAPSHOT</version>
+  <version>1.15</version>
   <url>${jdtaus.artifacts.url}/jdtaus-core</url>
   <description>Core services like task monitoring and modular object management and configuration.</description>
   <prerequisites>
     <maven>2.0.10</maven>
   </prerequisites>
   <scm>
-    <connection>scm:svn:http://svn.jdtaus.org/svnroot/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</connection>
-    <developerConnection>scm:svn:http://svn.jdtaus.org/svnroot/jdtaus/jdtaus-core/branches/jdtaus-core-1.x</developerConnection>
-    <url>http://svn.jdtaus.org/jdtaus-core/branches/jdtaus-core-1.x</url>
+    <connection>scm:svn:http://svn.jdtaus.org/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-1.15</connection>
+    <developerConnection>scm:svn:http://svn.jdtaus.org/svnroot/jdtaus/jdtaus-core/tags/jdtaus-core-1.15</developerConnection>
+    <url>http://svn.jdtaus.org/jdtaus-core/tags/jdtaus-core-1.15</url>
   </scm>
   <contributors>
     <contributor>
@@ -229,17 +229,17 @@
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
-        <version>1.2.16</version>
+        <version>1.2.17</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>1.6.4</version>
+        <version>1.6.6</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-jdk14</artifactId>
-        <version>1.6.4</version>
+        <version>1.6.6</version>
       </dependency>
       <dependency>
         <groupId>javax.servlet</groupId>
@@ -466,9 +466,9 @@
     <mojo.animal-sniffer.signature.artifactId>java14</mojo.animal-sniffer.signature.artifactId>
     <mojo.animal-sniffer.signature.artifactVersion>1.0</mojo.animal-sniffer.signature.artifactVersion>
     <jdtaus.trac.query>order=id&amp;version=${project.version}&amp;component=jDTAUS Core|${project.name}</jdtaus.trac.query>
-    <core.version>1.15-SNAPSHOT</core.version>
-    <jdtaus-container-mojo.artifact.version>3.13-SNAPSHOT</jdtaus-container-mojo.artifact.version>
-    <jdtaus-resource-mojo.artifact.version>3.14-SNAPSHOT</jdtaus-resource-mojo.artifact.version>
-    <jomc.version>1.3</jomc.version>
+    <core.version>1.15</core.version>
+    <jdtaus-container-mojo.artifact.version>3.13</jdtaus-container-mojo.artifact.version>
+    <jdtaus-resource-mojo.artifact.version>3.14</jdtaus-resource-mojo.artifact.version>
+    <jomc.version>1.5</jomc.version>
   </properties>
 </project>
